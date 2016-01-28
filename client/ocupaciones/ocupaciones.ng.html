@@ -1,0 +1,89 @@
+<h2>Ocupaciones</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse"
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaocupacion" ng-click="nuevaOcupacion()">
+				 {{nuevo == true ? 'Nuevo' : 'Cancelar'}}		
+		</a>
+		<div class="collapse" id="collapseExample">
+			<form class="form-horizontal" role="form">
+				<div class="well">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="col-sm-2">
+								<label> Clave </label>
+								<input type="text" class="form-control" placeholder="Clave" ng-model="ocupacion.clave" >
+					    </div>
+					    <div class="col-sm-8">
+						    <label>Descripción</label>
+					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="ocupacion.descripcion" >
+					    </div>
+			    	</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="submit" ng-click="guardar(ocupacion)" value="Guardar" class="btn btn-primary" ng-show="action">
+						<input type="submit" ng-click="actualizar(ocupacion)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					</div>
+				</div>	  
+		  </form>
+		</div>
+	</div>
+</div>
+<br/>
+<!-- List -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th width="30%"><div class="text-center">Clave</div></th>
+					<th width="30%"><div class="text-center">Descripción</div></th>				
+					<th width="10%">
+						<div class="text-center">
+							Estatus
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
+							Acciones
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="ocupacion in ocupaciones">
+			    <td>{{ocupacion.clave}} </td>
+			    <td>{{ocupacion.descripcion}} </td>
+			    <td>
+				    <div class="text-center">
+				    	<span ng-if="ocupacion.estatus" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!ocupacion.estatus" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
+				    <div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left">
+							    <li><a href="#" ng-click="editar(ocupacion._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cambiarEstatus(ocupacion._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  </ul>
+							</div>
+				    </div>				    
+			    </td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+

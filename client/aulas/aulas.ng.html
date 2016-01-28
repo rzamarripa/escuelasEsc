@@ -1,0 +1,120 @@
+<h2>Aulas</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoaula" ng-click="nuevoAula()">
+		 {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		</a>		
+		<div class="collapse" id="collapseExample">
+			<form class="form-horizontal" role="form" data-parsley-validate>
+		  	<div class="well">	    
+			    <div class="row">
+			    	<div class="col-sm-4">					    
+				    	<label>Clave</label>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="aula.clave" required>
+			    	</div>
+			    	<div class="col-sm-4">					    
+				    	<label>Nombre</label>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="aula.nombre" required>
+			    	</div>
+			    	<!--
+			    	<div class="col-sm-4">
+			    		<div class="col-sm-4">
+						<label >Departamento academico</label>
+						<ui-select ng-model="seccion.deptoAcademico"
+					             theme="bootstrap"
+					             ng-disabled="disabled"
+					             reset-search-input="false">
+					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
+					    <ui-select-choices repeat="deptoAcademico._id as deptoAcademico in deptosAcademicos | filter: $select.search">
+					      <div ng-bind-html="deptoAcademico.descripcionCorta | highlight: $select.search"></div>
+					    </ui-select-choices>
+					  </ui-select>
+					</div> -->
+
+          <div class="col-sm-4">
+						<label >Sección</label>
+						<ui-select ng-model="aula.seccion_id"
+					             theme="bootstrap"
+					             ng-disabled="disabled"
+					             reset-search-input="false">
+					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
+					    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
+					      <div ng-bind-html="seccion.descripcionCorta | highlight: $select.search"></div>
+					    </ui-select-choices>
+					  </ui-select>
+					</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-sm-12">
+					    <label>Descripción</label>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="aula.descripcion"></textarea>
+			    	</div>
+			    </div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="submit" ng-click="guardar(aula)" value="Guardar" class="btn btn-primary" ng-show="action">
+						<input type="submit" ng-click="actualizar(aula)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					</div>
+				</div>	  
+		  </form>
+		</div>
+	</div>
+</div>
+<br/>
+<!-- List -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th width="10%"><div class="text-center">Nombre</div></th>
+					<th width="20%"><div class="text-center">Descripción</div></th>	
+					<th width="10%">
+						<div class="text-center">
+							Estatus
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
+							Acciones
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="aula in aulas">
+			    <td>{{aula.nombre}}</td>
+			    <td>{{aula.descripcion}} </td>
+			    <td>
+				    <div class="text-center">
+				    	<span ng-if="aula.estatus" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!aula.estatus" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
+				    <div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left">
+							    <li><a href="#" ng-click="editar(aula._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cambiarEstatus(aula._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  </ul>
+							</div>
+				    </div>				    
+			    </td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+

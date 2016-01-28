@@ -1,0 +1,123 @@
+<h2>Materias</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaMateria" ng-click="nuevaMateria()">
+		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		</a>
+		
+		<div class="collapse" id="collapseExample">
+			<form  id="uno" class="form-horizontal" role="form" ng-submit="submit()" data-collection2-schema="Materias">
+		  	<div class="well">
+		  		<div class="row">
+		  			<div class="col-sm-6">
+		  				{{validForm}}
+		  			</div>
+		  		</div>
+		  		<div class="row">
+		  			<div class="col-sm-6">
+						
+							<ui-select ng-model="materia.deptoAcademico_id"
+						             theme="bootstrap"
+						             ng-disabled="disabled"
+						             reset-search-input="false"
+						             collection2-validate>
+						    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
+						    <ui-select-choices repeat="deptoAcademico._id as deptoAcademico in deptosAcademicos | filter: $select.search">
+						      <div ng-bind-html="deptoAcademico.descripcionCorta | highlight: $select.search"></div>
+						    </ui-select-choices>
+						  </ui-select>
+						</div>
+					</div>	    
+			    <div class="row">
+			    	<div class="col-sm-4">					    
+				    	
+				    	<input type="text" class="form-control"  ng-model="materia.clave" collection2-validate>
+			    	</div>
+			    	<div class="col-sm-4">
+			    		
+				    	<input type="text" class="form-control"  ng-model="materia.etiqueta"  collection2-validate>
+			    	</div>
+			    	<div class="col-sm-4">
+
+				    	<input type="text" class="form-control"  ng-model="materia.descripcionCorta"  collection2-validate>
+			    	</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-sm-12">
+
+					    <textarea class="form-control" ng-model="materia.descripcion" collection2-validate></textarea>
+			    	</div>
+			    </div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="submit" value="Guardar" class="btn btn-primary" ng-show="action">
+						<input type="submit" ng-click="actualizar(materia)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					</div>
+				</div>	  
+		  </form>
+		</div>
+	</div>
+</div>
+<br/>
+<!-- List -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th width="10%"><div class="text-center">Dep. Académico</div></th>
+					<th width="10%"><div class="text-center">Clave</div></th>
+					<th width="20%"><div class="text-center">Etiqueta</div></th>
+					<th width="10%"><div class="text-center">Descripción Corta</div></th>
+					<th width="30%"><div class="text-center">Descripción Larga</div></th>		
+					<th width="10%">
+						<div class="text-center">
+							Estatus
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
+							Acciones
+						</div>
+					</th>
+	
+
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="materia in materias">
+		    	<td>{{getDeptoAcademico(materia.deptoAcademico_id)}}</td>
+			    <td>{{materia.clave}}</td>
+			    <td>{{materia.etiqueta}}</td>
+			    <td>{{materia.descripcionCorta}}</td>
+			    <td>{{materia.descripcion}} </td>
+			    <td>
+				    <div class="text-center">
+				    	<span ng-if="materia.estatus" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!materia.estatus" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
+				    <div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left">
+							    <li><a href="#" ng-click="editar(materia._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							  </ul>
+							</div>
+				    </div>				    
+			    </td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>

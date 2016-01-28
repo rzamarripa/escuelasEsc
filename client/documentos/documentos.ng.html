@@ -1,0 +1,82 @@
+<h2>Documentos</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevodocumento" ng-click="nuevoDocumento()">
+		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		</a>		
+		<div class="collapse" id="collapseExample">
+			<form class="form-horizontal" role="form" data-parsley-validate>
+		  	<div class="well">	    
+			    <div class="row">
+			    	<div class="col-sm-4">					    
+				    	<label>Documento</label>
+				    	<input type="text" class="form-control" placeholder="Nombre de documento" ng-model="documento.nombre" required>
+			    	</div>    	   			    
+			    </div>
+			</div> 
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="submit" ng-click="guardar(documento)" value="Guardar" class="btn btn-primary" ng-show="action">
+						<input type="submit" ng-click="actualizar(documento)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					</div>
+				</div>	  
+		  </form>
+		</div>
+	</div>
+</div>
+<br/>
+<!-- List -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th width="10%"><div class="text-center">Nombre</div></th>
+		
+					<th width="10%">
+						<div class="text-center">
+							Estatus
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
+							Acciones
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="documento in documentos">
+			    <td>{{documento.nombre}}</td>
+			    <td>
+				    <div class="text-center">
+				    	<span ng-if="documento.estatus" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!documento.estatus" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
+				    <div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left">
+							    <li><a href="#" ng-click="editar(documento._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cambiarEstatus(documento._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  </ul>
+							</div>
+				    </div>				    
+			    </td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+

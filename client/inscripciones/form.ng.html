@@ -1,0 +1,279 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark">
+			<i class="fa fa-pencil-square-o fa-fw "></i> 
+				Asistente de
+			<span>&gt; 
+				Inscripción
+			</span>
+		</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-primary" href="./inscripciones">
+		  Listar Inscripciones
+		</a>
+	</div>
+</div>
+<br/>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" id="wid-id-0" role="widget">
+			
+			<header role="heading">
+				<span class="widget-icon"> <i class="fa fa-check"></i> </span>
+				<h2>Proceso de Inscripción </h2>
+	
+			<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+	
+			<div role="content">
+	
+				<div class="jarviswidget-editbox">
+	
+				</div>
+
+				<div class="widget-body">	
+					<div class="row">
+						<form class="form-horizontal" role="form" data-parsley-validate>
+							<div id="bootstrap-wizard-1" class="col-sm-12">
+								<div class="form-bootstrapWizard">
+									<ul class="bootstrapWizard form-wizard">
+										<li class="active" data-target="#step1">
+											<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Información Básica</span></a>
+										</li>
+										<li data-target="#step2">
+											<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Información Académica</span></a>
+										</li>
+										<li data-target="#step3">
+											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Ubicar al Alumno</span></a>
+										</li>
+										<li data-target="#step4">
+											<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar Inscripción</span></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab1">
+										<br>
+										<h3><strong>Paso 1 </strong> - Información Básica</h3>
+										<div class="row">
+											<div class="col-sm-12">												
+										  	<div class="well">
+											    <div class="row">
+														<div class="col-sm-8">
+															<label>Alumno</label>
+																<ui-select ng-model="inscripcion.alumno_id"
+														             theme="bootstrap"
+														             ng-disabled="disabled"
+														             reset-search-input="false"
+														             on-select="getAlumnoSeleccionado(inscripcion.alumno_id)">
+														    <ui-select-match placeholder="Seleccione">
+														    	{{$select.selected.nombre}} 
+														    	{{$select.selected.apPaterno}} 
+														    	{{$select.selected.apMaterno}}
+														    </ui-select-match>
+														    <ui-select-choices repeat="alumno._id as alumno in alumnos | filter: $select.search">
+														      <div ng-bind-html="alumno.nombre + ' ' + alumno.apPaterno + ' ' + alumno.apMaterno | highlight: $select.search"></div>
+														    </ui-select-choices>
+														  </ui-select>
+														</div>
+														<div class="col-sm-3">
+															<label for="fechaNac">Fecha de Inscripción</label>
+															<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="inscripcion.fechaInscripcion"/>
+														</div>
+											    </div>
+											    <br/>
+											    <br/>
+											    <br/>
+											    <br/>
+											    <div class="row" ng-show="alumnoSeleccionado.activo">
+											    	<div class="col-sm-2 profile-pic">
+															<img src="{{alumnoSeleccionado.fotografia}}" >															
+														</div>
+														<div class="col-sm-6">
+															<h1>
+																{{alumnoSeleccionado.nombre}} 
+																<span class="semi-bold">{{alumnoSeleccionado.apPaterno}} {{alumnoSeleccionado.apMaterno}}</span>
+																<br>
+															</h1>
+															<ul class="list-unstyled">
+																<li ng-show="alumnoSeleccionado.tel1">
+																	<p class="text-muted">
+																		<i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{alumnoSeleccionado.tel1}}</span>
+																	</p>
+																</li>
+																<li ng-show="alumnoSeleccionado.correo">
+																	<p class="text-muted">
+																		<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{alumno.correo}}">{{alumnoSeleccionado.correo}}</a>
+																	</p>
+																</li>
+																<li ng-show="alumnoSeleccionado.fechaNac">
+																	<p class="text-muted">
+																		<i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{alumnoSeleccionado.fechaNac | date:"dd-MM-yyyy"}}</span>
+																	</p>
+																</li>
+															</ul>
+															<br>
+															<div ng-show="alumnoSeleccionado.observacionesGenerales">
+																<p class="font-sm">
+																	<i>Un poco acerca de mi...</i>
+																</p>
+																<p class="font-xs">
+																	{{alumnoSeleccionado.observacionesGenerales}}
+																</p>
+															</div>															
+														</div>
+											    </div>
+										  	</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab2">
+										<br>
+										<h3><strong>Paso 2</strong> - Información Académica</h3>
+	
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="well">
+											    <div class="row">
+														<div class="col-sm-3">
+															<label >Ciclo Escolar</label>
+															<ui-select ng-model="inscripcion.ciclo_id"
+														             theme="bootstrap"
+														             ng-disabled="disabled"
+														             reset-search-input="false">
+														    <ui-select-match placeholder="Seleccione">{{$select.selected.anioEscolar}} {{$select.selected.complementoEscolar}}</ui-select-match>
+														    <ui-select-choices repeat="ciclo._id as ciclo in ciclos | filter: $select.search">
+														      <div ng-bind-html="ciclo.anioEscolar + ' ' + ciclo.complementoEscolar | highlight: $select.search"></div>
+														    </ui-select-choices>
+														  </ui-select>
+														</div>
+											    	<div class="col-sm-6">
+															<label >Secciones</label>
+															<ui-select ng-model="inscripcion.seccion_id"
+														             theme="bootstrap"
+														             ng-disabled="disabled"
+														             reset-search-input="false">
+														    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
+														    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
+														      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
+														    </ui-select-choices>
+														  </ui-select>
+														</div>
+														<div class="col-sm-3">
+															<label >Tipo de Ingreso</label>
+															<ui-select ng-model="inscripcion.tipoIngreso_id"
+														             theme="bootstrap"
+														             ng-disabled="disabled"
+														             reset-search-input="false">
+														    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
+														    <ui-select-choices repeat="tipoIngreso._id as tipoIngreso in tiposIngresos | filter: $select.search">
+														      <div ng-bind-html="tipoIngreso.descripcion | highlight: $select.search"></div>
+														    </ui-select-choices>
+														  </ui-select>
+														</div>
+											    </div>
+										  	</div>	
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab3">
+										<br>
+										<h3><strong>Paso 3</strong> - Ubicar al Alumno</h3>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="well">
+											    <div class="row">
+											  		<div class="col-sm-4">												  		
+															<label >Grupo</label>
+															<ui-select ng-model="inscripcion.grupo_id"
+														             theme="bootstrap"
+														             ng-disabled="disabled"
+														             reset-search-input="false"
+														             on-select="hayCupo(inscripcion.grupo_id)">
+														    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}}</ui-select-match>
+														    <ui-select-choices repeat="grupo._id as grupo in grupos | filter: $select.search">
+														      <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
+														    </ui-select-choices>
+														  </ui-select>
+											  		</div>														  
+													  <div class="col-sm-1" style="text-align: left">
+														  <div style="display: inline-block; vertical-align: middle; float: none;">
+														  	<h1 class="text-center text-{{cupo == 'check' ? 'success' : 'danger'}}">
+															  	<strong><i class="fa fa-{{cupo}} fa-lg"></i></strong>
+															  </h1>
+														  </div>															  
+														</div>
+														<div class="col-sm-4">
+															<label >Plan de Estudios</label>
+															<ui-select ng-model="inscripcion.planEstudio_id"
+														             theme="bootstrap"
+														             ng-disabled="disabled"
+														             reset-search-input="false">
+														    <ui-select-match placeholder="Seleccione">{{$select.selected.clave}}</ui-select-match>
+														    <ui-select-choices repeat="planEstudio._id as planEstudio in planesEstudio | filter: $select.search">
+														      <div ng-bind-html="planEstudio.clave | highlight: $select.search"></div>
+														    </ui-select-choices>
+														  </ui-select>
+														</div>
+											  	</div>
+										  	</div>	
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab4">
+										<br>
+										<h3><strong>Paso 4</strong> - Guardar Inscripción</h3>
+										<br>
+										<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Alumno Inscrito</strong></h1>
+										<h4 class="text-center">Click Inscribir para Finalizar</h4>
+										<button ng-click="guardar(inscripcion)" class="btn btn-lg btn-primary">Inscribir</button>
+										<br>
+										<br>
+									</div>
+	
+									<div class="form-actions">
+										<div class="row">
+											<div class="col-sm-12">
+												<ul class="pager wizard no-margin">
+													<!--<li class="previous first disabled">
+													<a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
+													</li>-->
+													<li class="previous disabled">
+														<a href="javascript:void(0);" class="btn btn-lg btn-default"> Atrás </a>
+													</li>
+													<!--<li class="next last">
+													<a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
+													</li>-->
+													<li class="next">
+														<a href="javascript:void(0);" class="btn btn-lg txt-color-darken btn-primary"> Siguiente </a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('#bootstrap-wizard-1').bootstrapWizard({
+    'tabClass': 'form-wizard',
+    'onNext': function (tab, navigation, index) {
+      
+        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
+          'complete');
+        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
+        .html('<i class="fa fa-check"></i>');
+
+    }
+  });
+</script>

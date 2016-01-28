@@ -1,0 +1,108 @@
+<h2>Generaciones</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevogeneracion" ng-click="nuevoGeneracion()">
+		 {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		</a>
+		<div class="collapse" id="collapseExample">
+			<form class="form-horizontal" role="form" data-parsley-validate>
+		  	<div class="well">	    
+			    <div class="row">
+			    	<div class="col-sm-12">	
+			    	<div class="col-sm-4">
+						<label for="inicial">Fecha Inicial</label>
+						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="generacion.inicial"/>
+					</div>
+					<div class="col-sm-4">
+						<label for="final">Fecha final</label>
+						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="generacion.final"/>
+					</div>			 			  
+					    <div class="col-sm-4">
+						    <label>Nombre</label>
+					    	<input type="text" class="form-control" placeholder="Nombre" ng-model="generacion.nombre" required>
+					    </div>
+			    	</div>
+			    </div>  
+			    </div> 
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="submit" ng-click="guardar(generacion)" value="Guardar" class="btn btn-primary" ng-show="action">
+						<input type="submit" ng-click="actualizar(generacion)" value="Actualizar" class="btn btn-primary" ng-show="!action">	
+
+					</div>
+				</div>
+				  
+		  </form>
+		</div>
+	</div>
+</div>
+<br/>
+
+<!--<div class="generaciones-form">
+    <form action="filtro">
+     <input type="date" name="filtro[fechaInicial]">
+     <input type="date" name="filtro[fechaFinal]">
+     <button class="btn btn-primary" type="submit">Buscar</button>
+  </form>
+  </div>-->
+
+
+<!-- List -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+                <thead>
+                	<tr>
+					<th width="10%"><div class="text-center">Nombre</div></th>
+					<th width="10%"><div class="text-center">Fecha Inicial</div></th>
+					<th width="10%"><div class="text-center">Fecha Final</div></th>
+										
+					
+					<th width="10%">
+						<div class="text-center">
+							Estatus
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
+							Acciones
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="generacion in generaciones">
+			    <td>{{generacion.nombre}}</td>
+			    <td>{{generacion.inicial | date:"dd-MM-yyyy"}}</td>
+			    <td>{{generacion.final | date:"dd-MM-yyyy"}}</td>
+
+			    <td>
+				    <div class="text-center">
+				    	<span ng-if="generacion.estatus" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!generacion.estatus" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
+				    <div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left">
+							    <li><a href="#" ng-click="editar(generacion._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							  <li><a href="#" ng-click="cambiarEstatus(generacion._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  </ul>
+							</div>
+				    </div>				    
+			    </td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>

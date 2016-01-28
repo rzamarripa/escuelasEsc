@@ -1,0 +1,149 @@
+<h2>Maestros</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevomaestro" ng-click="nuevoMaestro()">
+		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		</a>
+		<div class="collapse" id="collapseExample">
+			<form class="form-horizontal" role="form" data-parsley-validate>
+		  	<div class="well">	    
+			    <div class="row">
+			    	<div class="col-sm-4">					    
+				    	<label>Nombre de usuario</label>
+				    	<input type="text" class="form-control" placeholder="Nombre de usuario" ng-model="maestro.nombreUsuario" required>
+			    	</div>    	   
+			    	<div class="col-sm-4">					    
+				    	<label>Contraseña</label>
+				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="maestro.contrasena" required>
+			    	</div>		    				    	    
+			    	<div class="col-sm-4">					    
+				    	<label>Confirmar Contraseña</label>
+				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="maestro.confirmarContrasena" required>
+			    	</div>
+					</div>
+				</div> 
+			  <div class="well">	
+			    <div class="row">
+			    	<div class="col-sm-1">					    
+				    	<label>Título</label>
+				    	<input type="text" class="form-control" placeholder="Título" ng-model="maestro.titulo" required>
+			    	</div>
+			    	<div class="col-sm-3">					    
+				    	<label>Nombre</label>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="maestro.nombre" required>
+			    	</div>
+			    	<div class="col-sm-4">					    
+				    	<label>Apellido Paterno</label>
+				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="maestro.apPaterno" required>
+			    	</div>
+			    	<div class="col-sm-4">					    
+				    	<label>Apellido Materno</label>
+				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="maestro.apMaterno" required>
+			    	</div>
+			    </div>
+			    <div class="row">
+			    	<div class="col-sm-4">					    
+				    	<label>Correo</label>
+				    	<input type="text" class="form-control" placeholder="Correo" ng-model="maestro.correo" required>
+			    	</div>
+			    	<div class="col-sm-4">
+				    		 <label>Género</label>
+					    <select ng-model="maestro.genero" class="form-control">
+							  <option value="Masculino">Masculino</option>
+							  <option value="Femenino">Femenino</option>
+							</select>
+			    	</div>			    	
+			    </div>
+			  </div>
+	    	<div class="well">
+	    		<div class="row">
+			    	<div class="col-sm-4">					    
+				    	<label>Direccción </label>
+				    	<input type="text" class="form-control" placeholder="Direccción" ng-model="maestro.direccion">
+			    	</div>
+			    	<div class="col-sm-4">					    
+				    	<label>Ciudad </label>
+				    	<input type="text" class="form-control" placeholder="Ciudad" ng-model="maestro.ciudad">
+			    	</div>
+			    	<div class="col-sm-4">					    
+				    	<label>Estado </label>
+				    	<input type="text" class="form-control" placeholder="Estado" ng-model="maestro.estado">
+			    	</div>
+			    	<div class="col-sm-4">
+							<label for="talla">Fotografía</label>
+							<button class="btn btn-primary" ng-click="tomarFoto()"><i class="fa fa-camera"></i></button>
+							<img width="100px" ng-src="{{maestro.fotografia}}" ng-class="{'img-thumbnail': !!maestro.fotografia}" />
+			    	</div>
+					</div>
+	    	</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<input type="submit" ng-click="guardar(maestro)" value="Guardar" class="btn btn-primary" ng-show="action">
+						<input type="submit" ng-click="actualizar(maestro)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					</div>
+				</div>	  
+		  </form>
+		</div>
+	</div>
+</div>
+<br/>
+<!-- List -->
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th width="12%">Foto</th>
+					<th width="20%"><div class="text-center">Nombre</div></th>
+					<th width="20%">Nombre de Usuario</th>
+					<th>Correo</th>
+					<th width="10%">
+						<div class="text-center">
+							Estatus
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
+							Acciones
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="maestro in maestros">
+		    	<td><img ng-class="{'img-thumbnail': !!maestro.fotografia}" width="100px" ng-src="{{maestro.fotografia}}"/> </td>
+			    <td>{{maestro.nombre}} {{maestro.apPaterno}} {{maestro.apMaterno}}</td>
+			    <td>{{maestro.nombreUsuario}}</td>
+			    <td>{{maestro.correo}}</td>
+			    <td>
+				    <div class="text-center">
+				    	<span ng-if="maestro.estatus" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!maestro.estatus" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
+				    <div class="text-center">
+					    <div class="btn-group">
+							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu text-left">
+							    <li><a href="#" ng-click="editar(maestro._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cambiarEstatus(maestro._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  </ul>
+							</div>
+				    </div>				    
+			    </td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+

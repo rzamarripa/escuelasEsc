@@ -1,0 +1,138 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+		<h1 class="page-title txt-color-blueDark"><i class="fa fa-calendar fa-fw "></i> 
+			Calendario
+			<span>&gt;
+			De Horarios
+			</span>
+		</h1>
+	</div>
+</div>
+<div class="row" style="margin-bottom: 20px;">
+	<div class="col-sm-8">
+		<input type="text" id="nombreHorario" class="form-control input-lg" ng-model="horario.nombre" placeholder="Nombre del Horario"/>
+	</div>
+	<div class="col-sm-4">
+		<input type="submit" ng-click="guardarHorario()" value="Guardar" class="btn btn-primary btn-block btn-lg" ng-show="action">
+		<input type="submit" ng-click="modificarHorario(horario)" value="Actualizar" class="btn btn-primary btn-block btn-lg" ng-show="!action">
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12 col-md-12 col-lg-3" style="padding-right: 0px;">
+		<div class="jarviswidget jarviswidget-color-blueDark">
+			<header>
+				<span class="widget-icon"> <i class="fa fa-{{actionAgregar ? 'plus' : 'pencil'}}"></i> </span>
+				<h2> Agrega Clases </h2>
+			</header>
+		<div>
+		<div class="widget-body">
+			<form id="add-event-form">
+				<fieldset>
+					<div class="form-group">
+						<label for="materiaNuevaMateria">Materia</label>
+						<ui-select ng-model="clase.materia_id"
+					             theme="bootstrap"
+					             ng-disabled="disabled"
+					             reset-search-input="false">
+					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
+					    <ui-select-choices repeat="mat._id as mat in materias | filter: $select.search">
+					      <div ng-bind-html="mat.descripcionCorta | highlight: $select.search"></div>
+					    </ui-select-choices>
+					  </ui-select>
+					</div>
+
+					<div class="form-group">
+						<label >Maestro</label>
+						<ui-select ng-model="clase.maestro_id"
+					             theme="bootstrap"
+					             ng-disabled="disabled"
+					             reset-search-input="false"
+					             on-select="muestraMateriasMaestro(clase.maestro_id)">
+					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}} {{$select.selected.apPaterno}}</ui-select-match>
+					    <ui-select-choices repeat="maestro._id as maestro in maestros | filter: $select.search">
+					      <div ng-bind-html="maestro.nombre + ' ' + maestro.apPaterno | highlight: $select.search"></div>
+					    </ui-select-choices>
+					  </ui-select>
+					</div>
+					<div class="form-group">
+						<label>Aulas</label>
+						<ui-select ng-model="clase.aula_id"
+					             theme="bootstrap"
+					             ng-disabled="disabled"
+					             reset-search-input="false"
+					             on-select="muestraAulasMaestro(clase.aula_id)">
+					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}}</ui-select-match>
+					    <ui-select-choices repeat="aula._id as aula in aulas | filter: $select.search">
+					      <div ng-bind-html="aula.nombre | highlight: $select.search"></div>
+					    </ui-select-choices>
+					  </ui-select>
+					</div>
+
+					<div class="form-group">
+						<label for="fechaNac">Inicio</label>
+						<input date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="clase.start"/>
+					</div>
+					
+					<div class="form-group">
+						<label for="fechaNac">Fin</label>
+						<input date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="clase.end"/>
+					</div>
+					
+					<div class="form-group">
+						<label>Seleccionar el color de la clase</label>
+						<div class="btn-group btn-group-justified btn-select-tick" data-toggle="buttons">
+							<label class="btn bg-color-darken" ng-click='clase.className = "bg-color-darken";'>
+								<input type="radio" name="priority" id="option1" value="bg-color-darken txt-color-white">
+								<i class="fa fa-check txt-color-white"></i> </label>
+							<label class="btn bg-color-blue" ng-click='clase.className = "bg-color-blue";'>
+								<input type="radio" name="priority" id="option2" value="bg-color-blue txt-color-white">
+								<i class="fa fa-check txt-color-white"></i> </label>
+							<label class="btn bg-color-pink" ng-click='clase.className = "bg-color-pink";'>
+								<input type="radio" name="priority" id="option3" value="bg-color-pink txt-color-white">
+								<i class="fa fa-check txt-color-white"></i> </label>
+							<label class="btn bg-color-greenLight" ng-click='clase.className = "bg-color-greenLight";'>
+								<input type="radio" name="priority" id="option4" value="bg-color-greenLight txt-color-white">
+								<i class="fa fa-check txt-color-white"></i> </label>
+							<label class="btn bg-color-blueLight" ng-click='clase.className = "bg-color-blueLight";'>
+								<input type="radio" name="priority" id="option5" value="bg-color-blueLight txt-color-white">
+								<i class="fa fa-check txt-color-white"></i> </label>
+							<label class="btn bg-color-red active" ng-click='clase.className = "bg-color-red";'>
+								<input type="radio" name="priority" id="option6" value="bg-color-red txt-color-white">
+								<i class="fa fa-check txt-color-white"></i> </label>
+						</div>
+					</div>
+
+				</fieldset>
+				<div class="form-actions">
+					<div class="row">
+						<div class="col-sm-4">
+							<a href="#" ng-click="agregarClase(clase);" class="btn btn-default pull-left" ng-show="actionAgregar"><i class="fa fa-plus fa-lg"></i></a>
+							<a href="#" ng-click="modificarClase(clase);" class="btn btn-default pull-left" ng-show="!actionAgregar"><i class="fa fa-check fa-lg"></i></a>
+						</div>
+						<div class="col-sm-4 text-center">
+							<a href="#" ng-click="cancelarClase();" class="btn btn-warning" ng-show="!actionAgregar"><i class="fa fa-close fa-lg"></i></a>
+						</div>
+						<div class="col-sm-4">
+							<a href="#" ng-click="eliminarClase();" class="btn btn-danger pull-right" ng-show="!actionAgregar"><i class="fa fa-trash fa-lg"></i></a>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-12 col-lg-9">
+		<div class="jarviswidget jarviswidget-color-blueDark">
+			<header>
+				<span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+				<h2> Horario de Clases </h2>				
+			</header>
+			<div>
+				<div class="widget-body">
+					<div ui-calendar="uiConfig.calendar" class="calendar" ng-model="eventSources"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
