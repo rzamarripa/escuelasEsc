@@ -86,17 +86,17 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.alumnos', {
       url: '/alumnos',
       templateUrl: 'client/alumnos/alumnos.ng.html',
-      controller: 'AlumnosCtrl',
+      controller: 'AlumnosCtrl as al',
     })
     .state('root.nuevoAlumno', {
       url: '/nuevoAlumno',
       templateUrl: 'client/alumnos/form.ng.html',
-      controller: 'AlumnosCtrl',
+      controller: 'AlumnosCtrl as al',
     })
     .state('root.editarAlumno', {
       url: '/editarAlumno/:id',
       templateUrl: 'client/alumnos/form.ng.html',
-      controller: 'AlumnosDetalleCtrl',
+      controller: 'AlumnosDetalleCtrl as al',
     })
     .state('root.alumnoDetalle', {
       url: '/alumnos/:id',
@@ -106,7 +106,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.ciclos', {
       url: '/ciclos',
       templateUrl: 'client/ciclos/ciclos.ng.html',
-      controller: 'CiclosCtrl',
+      controller: 'CiclosCtrl as cl',
     })
     .state('root.deptosAcademicos', {
       url: '/deptosAcademicos',
@@ -245,7 +245,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     })
     .state('root.trabajadores', {
       url: '/trabajadores',
-      templateUrl: 'client/trabajadores/trabajadores.ng.html',
+      templateUrl: 'client/empleados/trabajadores.ng.html',
       controller: 'TrabajadoresCtrl',
     })
     .state('root.nuevoHorario', {

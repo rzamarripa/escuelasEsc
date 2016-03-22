@@ -1,52 +1,60 @@
 <h2>Ciclos</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevociclo" ng-click="nuevoCiclo()">
-		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{cl.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevociclo" ng-click="cl.nuevoCiclo()">
+		  {{cl.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form"  ng-submit="submit()"  data-collection2-schema="Ciclos">
+			<form class="form-horizontal" role="form" >
 		  	<div class="well">	    
 			  	<div id="errores"></div>
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 					    <div class="col-sm-6">
-					    	<input type="text" class="form-control" ng-model="ciclo.anioEscolar" collection2-validate>
+						    <label>Año Escolar</label>
+					    	<input type="text" class="form-control" ng-model="cl.ciclo.anioEscolar" >
 					    </div>
 					    <div class="col-sm-6">
-					    	<input type="text" class="form-control" ng-model="ciclo.complementoEscolar" collection2-validate>
+						    <label>Comp. Escolar</label>
+					    	<input type="text" class="form-control" ng-model="cl.ciclo.complementoEscolar" >
 					    </div>
 			    	</div>
 			    	<div class="col-sm-4">
-					    <input type="text" class="form-control" ng-model="ciclo.descripcion" collection2-validate>
+				    	<label>Descripción</label>
+					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion" >
 			    	</div>
 			    	<div class="col-sm-4">				    	
 					    <div class="col-sm-6">
-					    	<input type="text" class="form-control" ng-model="ciclo.anioAdministrativo" collection2-validate>
+						    <label>Año Admin</label>
+					    	<input type="text" class="form-control" ng-model="cl.ciclo.anioAdministrativo" >
 					    </div>
 					    <div class="col-sm-6">
-					    	<input type="text" class="form-control" ng-model="ciclo.complementoAdministrativo" collection2-validate>
+						    <label>Comp. Admin</label>
+					    	<input type="text" class="form-control" ng-model="ciclo.complementoAdministrativo" >
 					    </div>
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="ciclo.fechaInicio" collection2-validate/>
+				    	<label>Fecha Inicio</label>
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaInicio" />
 			    	</div>
 			    	<div class="col-sm-4">
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="ciclo.fechaFin" collection2-validate/>
+				    	<label>Fecha Fin</label>
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaFin" />
 			    	</div>
 			    	<div class="col-sm-4">
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="ciclo.fechaBase" collection2-validate/>
+				    	<label>Fecha Base</label>
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaBase" />
 			    	</div>
 			    </div>				  
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(ciclo)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" value="Guardar" ng-click="cl.guardar(cl.ciclo)" class="btn btn-primary" ng-show="cl.action">
+						<input type="submit" ng-click="cl.actualizar(cl.ciclo)" value="Actualizar" class="btn btn-primary" ng-show="!cl.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -79,7 +87,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="ciclo in ciclos">
+		    <tr ng-repeat="ciclo in cl.ciclos">
 			    <td>{{ciclo.anioEscolar}} {{ciclo.complementoEscolar}}</td>
 			    <td>{{ciclo.descripcion}} </td>
 			    <td>{{ciclo.anioAdministrativo}} {{ciclo.complementoAdministrativo}} </td>
@@ -103,9 +111,9 @@
 							    <span class="caret"></span>
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
-							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(ciclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(ciclo._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  <ul class="dropdown-menu text-left dropdown-menu-right">
+							    <li><a href="#" ng-click="cl.editar(ciclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cl.cambiarEstatus(ciclo._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -1,71 +1,64 @@
-angular.module("casserole").controller("CiclosCtrl", ['$scope', '$meteor', '$state', '$stateParams','toastr',  function($scope, $meteor, $state, $stateParams, toastr)
-{	
-  $scope.ciclos = $meteor.collection(Ciclos).subscribe("ciclos");
-  $scope.action = true;  
+angular
+  .module('casserole')
+  .controller('CiclosCtrl', CiclosCtrl);
+ 
+function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
+	let rc = $reactive(this).attach($scope);
+  rc.action = true;    
+	rc.subscribe('ciclos');
+  
+  rc.helpers({
+	  ciclos : () => {
+		  return Ciclos.find();
+	  }
+  });
   	  
-  $scope.nuevo = true;	  
-  $scope.nuevoCiclo = function()
+  rc.nuevo = true;	  
+  rc.nuevoCiclo = function()
   {
-     $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.ciclo = {};
-    /*
-    $scope.ciclo.anioEscolar = 2016;
-    $scope.ciclo.complementoEscolar = 21;
-    //$scope.ciclo.descripcion = "prueba";
-    $scope.ciclo.anioAdministrativo = 2016;
-    $scope.ciclo.complementoAdministrativo = 20;
-    $scope.ciclo.fechaInicio = new Date();
-    $scope.ciclo.fechaFin = new Date();
-    $scope.ciclo.fechaBase = new Date();
-    */
-
+    rc.action = true;
+    rc.nuevo = !rc.nuevo;
+    rc.ciclo = {};		
   };
-$scope.submit = function(){
-		$scope.submitted=true;
-		$scope.ciclo.estatus = true;
-		console.log($scope.validForm);
-		if($scope.validForm == true){
-			$scope.guardar($scope.materia)
-		}
-	}
-  $scope.guardar = function(ciclo)
+	
+  rc.guardar = function(ciclo)
 	{
-		
-		console.log($scope.ciclo);
-		$scope.ciclos.save(ciclo);
+		rc.ciclo.estatus = true;
+		console.log(rc.ciclo);
+		Ciclos.insert(rc.ciclo);
 		toastr.success('Ciclo guardado.');
-		$scope.ciclo = {};
+		rc.ciclo = {};
 		$('.collapse').collapse('show');
-		$scope.nuevo = true;
+		rc.nuevo = true;
 		state.go('root.ciclos');
 	};
 	
-	$scope.editar = function(id)
+	rc.editar = function(id)
 	{
-    $scope.ciclo = $meteor.object(Ciclos, id, false);
-    $scope.action = false;
+    rc.ciclo = Ciclos.findOne({_id:id});
+    rc.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
-
+    rc.nuevo = false;
 	};
 	
-	$scope.actualizar = function(ciclo)
+	rc.actualizar = function(ciclo)
 	{
-		$scope.ciclo.save();
+		var idTemp = ciclo._id;
+		delete ciclo._id;		
+		Ciclos.update({_id:idTemp},{$set:ciclo});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		rc.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	rc.cambiarEstatus = function(id)
 	{
-		var ciclo = $meteor.object(Ciclos, id, false);
+		var ciclo = Ciclos.findOne({_id:id});
 		if(ciclo.estatus == true)
 			ciclo.estatus = false;
 		else
 			ciclo.estatus = true;
 		
-		ciclo.save();
+		Ciclos.update({_id:id}, {$set : {estatus : ciclo.estatus}});
 	};
 	
-}]);
+};

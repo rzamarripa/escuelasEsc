@@ -87,8 +87,6 @@
 					<th width="15%"><div class="text-center">Dirección </div></th>
 					<th width="10%"><div class="text-center">Teléfono</div></th>
 					<th width="10%"><div class="text-center">correo</div></th>
-	
-						
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -103,12 +101,11 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="trabajador in trabajadores">
-		    	<td><img ng-show="tieneFoto(trabajador)" width="100px" ng-src="{{trabajador.fotografia}}" class="img-thumbnail"/> </td>
+		    	<td><img width="100px" ng-src="{{trabajador.fotografia}}" ng-class="{'img-thumbnail': !!trabajador.fotografia}"/> </td>
 			    <td><a href="/trabajador/{{trabajador._id}}" > {{trabajador.nombre}} {{trabajador.apPaterno}} {{trabajador.apMaterno}}</a></td>
 			    <td>{{trabajador.direccion}} </td>
 			    <td>{{trabajador.telefono}} </td>
 			    <td>{{trabajador.correo}} </td>
-			    
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="trabajador.estatus" class="label label-success">
@@ -119,7 +116,6 @@
 							</span>
 				    </div>
 			    </td>
-			    
 			    <td>
 				    <div class="text-center">
 					    <div class="btn-group">

@@ -1,14 +1,14 @@
 angular.module("casserole").controller("TrabajadoresCtrl", ['$scope', '$meteor', '$state', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
 {
   $scope.trabajadores = $meteor.collection(Trabajadores).subscribe("trabajadores");
-    $scope.deptosAcademicos = $meteor.collection(function(){return DeptosAcademicos.find();}).subscribe("deptosAcademicos");
+  $scope.deptosAcademicos = $meteor.collection(function(){return DeptosAcademicos.find();}).subscribe("deptosAcademicos");
 
   $scope.action = true; 
   $scope.nuevo = true;  
 	
   $scope.nuevoTrabajador = function()
   {
-     $scope.action = true;
+		$scope.action = true;
     $scope.nuevo = !$scope.nuevo;
     $scope.trabajador = {}; 
   };
@@ -28,8 +28,6 @@ angular.module("casserole").controller("TrabajadoresCtrl", ['$scope', '$meteor',
 				  else
 				    console.log('success!');
 				}
-				
-     
 		});
 		$scope.trabajador.estatus = true;
 		$scope.trabajadores.save(trabajador);
@@ -70,12 +68,14 @@ angular.module("casserole").controller("TrabajadoresCtrl", ['$scope', '$meteor',
 		})
 	};
 
+/*
   $scope.tieneFoto = function(trabajador){
-		if (typeof(trabajador.fotografia) !== "undefined")
+		if (typeof trabajador.fotografia !== "undefined")
 			return true;
 		else
 			return false;
 	}	
+*/
 }]);
 
 

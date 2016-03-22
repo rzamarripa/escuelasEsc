@@ -1,3 +1,4 @@
+/*
 SimpleSchema.messages({
   required: "[label] es requerido",
   minString: "[label] debe contener al menos [min] caracteres",
@@ -66,8 +67,9 @@ angular.module('smartadmin').directive('collection2Schema', ['$rootScope', funct
 
       $.listen('parsley:field:success', function (fieldInstance) {
           fieldInstance.$element.popover('destroy');
-      });*/
+      });
 
     }
   };
 }]);
+*/

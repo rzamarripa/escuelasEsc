@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" ui-sref="root.nuevoAlumno" ng-click="nuevoAlumno()">
+		<a class="btn btn-primary" ui-sref="root.nuevoAlumno" ng-click="al.nuevoAlumno()">
 		  Nuevo
 		</a>
 	</div>
@@ -19,7 +19,7 @@
 <br>
 <div class="row">
 	<div class="col-sm-12">
-		<label>Buscar: <input ng-model="buscar.nombre" class="form-control"></label>
+		<label>Buscar: <input ng-model="al.buscar.nombre" class="form-control"></label>
 		<table class="table table-bordered table-responsive">
 			<thead>
 				<tr>
@@ -41,7 +41,7 @@
 				</tr>
 			</thead>
 			<tbody>		
-		    <tr ng-repeat="alumno in alumnos | filter:buscar">
+		    <tr ng-repeat="alumno in al.alumnos">
 			    <td><img width="100px" ng-src="{{alumno.fotografia}}" ng-class="{'img-thumbnail': !!alumno.fotografia}"/> </td>
 			    <td><a href="/alumnos/{{alumno._id}}" > {{alumno.matricula}}</a></td>
 			    <td><a href="/alumnos/{{alumno._id}}" > {{alumno.nombre}} {{alumno.apPaterno}} {{alumno.apMaterno}}</a></td>			    

@@ -1,44 +1,66 @@
-angular.module("casserole").controller("AlumnosCtrl", ['$scope', '$meteor', '$state', 'toastr', function($scope, $meteor, $state, toastr) {
+angular
+  .module('casserole')
+  .controller('AlumnosCtrl', AlumnosCtrl);
+ 
+function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
+	let rc = $reactive(this).attach($scope);
+	$(document).ready(function() {
+	  $(".select2").select2();
+	});
 
-  $scope.action = true;
-  $scope.alumno = {};
+  rc.action = true;
+  rc.alumno = {};
+  rc.buscar = {};
+  rc.buscar.nombre = 'rob';
 
-	$scope.ocupaciones = $scope.$meteorCollection(function () {
-    return Ocupaciones.find();
-  }).subscribe("ocupaciones");
-
-  $scope.alumnos = $scope.$meteorCollection(function (){
-    return Alumnos.find();
-  }).subscribe("alumnos");
+	rc.subscribe('alumnos', () => {
+    return [{
+	    options : { limit: 10 },
+	    where : { nombre : this.getReactively('buscar.nombre') }
+    }] ;
+  });
   
-  $scope.guardar = function (alumno) {
-		$scope.alumno.estatus = true;
-		$scope.$meteorCollection(Alumnos).save(alumno).then(function (docto) {
-			Meteor.call('createUsuario', alumno, 'alumno');
-      toastr.success('Alumno guardado.');
-			$state.go("root.alumnoDetalle",{"id":docto[0]._id});
-
-			$('.collapse').collapse('hide');
-			$scope.nuevo = true;
-		});		
-
+  rc.subscribe('ocupaciones');
+  
+	rc.helpers({
+		alumnos : () => {
+			return Alumnos.find();
+		},
+	  ocupaciones : () => {
+		  return Ocupaciones.find();
+	  }
+  });
+  
+  rc.guardar = function (alumno) {
+	  console.log(alumno);
+		rc.alumno.estatus = true;
+		rc.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
+		Alumnos.insert(rc.alumno, function(err, doc){
+			Meteor.call('createUsuario', rc.alumno, 'alumno');
+			toastr.success('Alumno guardado.');
+			$state.go('root.alumnoDetalle',{'id':doc});			
+			rc.nuevo = true;
+		});
 	};
 	
-  $scope.nuevoAlumno = function () {
-    $scope.action = true;
-    $scope.alumno = {};    
+  rc.nuevoAlumno = function () {
+    rc.action = true;
+    rc.alumno = {};    
   };
-  
-  $scope.tomarFoto = function () {
+  	
+	rc.cambiarEstatus = function (id) {
+		var alumno = Alumnos.findOne({_id:id});
+    rc.alumno.estatus = !alumno.estatus;
+		rc.alumno.save();
+	};
+	
+	rc.refreshOcupaciones = function(query){
+		console.log(query);
+	}
+	
+	rc.tomarFoto = function () {
 		$meteor.getPicture().then(function(data){
-			$scope.alumno.fotografia = data;
+			rc.alumno.fotografia = data;
 		})
 	};
-	
-	$scope.cambiarEstatus = function (id) {
-		var alumno = $scope.$meteorObject(Alumnos, id, false);
-    alumno.estatus = !alumno.estatus;
-		alumno.save();
-	};	
-	
-}]);
+}

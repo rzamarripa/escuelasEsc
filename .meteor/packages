@@ -24,17 +24,14 @@ angular:angular-animate
 angular:angular-cookies
 angularui:angular-ui-router
 s2corp:angular-ui-grid
-mdg:camera
 dvelopment:angular-datepicker
 accounts-password
 vishalm:angular-toastr
-angularui:ui-select
 
 mizzao:jquery-ui
-aldeed:collection2
-aldeed:autoform
-ecmascript
-blaze-html-templates
 alanning:roles
 momentjs:moment
 angularui:angular-ui-bootstrap
+okland:camera-ui
+natestrauser:select2
+angularui:ui-select
