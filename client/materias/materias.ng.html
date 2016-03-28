@@ -7,46 +7,41 @@
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form  id="uno" class="form-horizontal" role="form" ng-submit="submit()" data-collection2-schema="Materias">
+			<form  id="uno" class="form-horizontal" role="form" >
 		  	<div class="well">
 		  		<div class="row">
 		  			<div class="col-sm-6">
-		  				{{validForm}}
+
 		  			</div>
 		  		</div>
 		  		<div class="row">
-		  			<div class="col-sm-6">
-						
-							<ui-select ng-model="materia.deptoAcademico_id"
-						             theme="bootstrap"
-						             ng-disabled="disabled"
-						             reset-search-input="false"
-						             collection2-validate>
-						    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
-						    <ui-select-choices repeat="deptoAcademico._id as deptoAcademico in deptosAcademicos | filter: $select.search">
-						      <div ng-bind-html="deptoAcademico.descripcionCorta | highlight: $select.search"></div>
-						    </ui-select-choices>
-						  </ui-select>
+		  			<div class="col-sm-6">			  
+						  <label for="ocupacion">Ocupación</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="materia.deptoAcademico_id">
+							  <option ng-repeat="deptoAcademico in deptosAcademicos" value="{{deptoAcademico._id}}">
+							  	{{deptoAcademico.descripcion}}
+							  </option>
+							</select>
 						</div>
 					</div>	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	
-				    	<input type="text" class="form-control"  ng-model="materia.clave" collection2-validate>
+				    	<input type="text" class="form-control"  ng-model="materia.clave">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		
-				    	<input type="text" class="form-control"  ng-model="materia.etiqueta"  collection2-validate>
+				    	<input type="text" class="form-control"  ng-model="materia.etiqueta" >
 			    	</div>
 			    	<div class="col-sm-4">
 
-				    	<input type="text" class="form-control"  ng-model="materia.descripcionCorta"  collection2-validate>
+				    	<input type="text" class="form-control"  ng-model="materia.descripcionCorta" >
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 
-					    <textarea class="form-control" ng-model="materia.descripcion" collection2-validate></textarea>
+					    <textarea class="form-control" ng-model="materia.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>

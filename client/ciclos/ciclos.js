@@ -3,54 +3,54 @@ angular
   .controller('CiclosCtrl', CiclosCtrl);
  
 function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
-	let rc = $reactive(this).attach($scope);
-  rc.action = true;    
-	rc.subscribe('ciclos');
+	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('ciclos');
   
-  rc.helpers({
+  this.helpers({
 	  ciclos : () => {
 		  return Ciclos.find();
 	  }
   });
   	  
-  rc.nuevo = true;	  
-  rc.nuevoCiclo = function()
+  this.nuevo = true;	  
+  this.nuevoCiclo = function()
   {
-    rc.action = true;
-    rc.nuevo = !rc.nuevo;
-    rc.ciclo = {};		
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.ciclo = {};		
   };
 	
-  rc.guardar = function(ciclo)
+  this.guardar = function(ciclo)
 	{
-		rc.ciclo.estatus = true;
-		console.log(rc.ciclo);
-		Ciclos.insert(rc.ciclo);
+		this.ciclo.estatus = true;
+		console.log(this.ciclo);
+		Ciclos.insert(this.ciclo);
 		toastr.success('Ciclo guardado.');
-		rc.ciclo = {};
+		this.ciclo = {};
 		$('.collapse').collapse('show');
-		rc.nuevo = true;
-		state.go('root.ciclos');
+		this.nuevo = true;
+		$state.go('root.ciclos');
 	};
 	
-	rc.editar = function(id)
+	this.editar = function(id)
 	{
-    rc.ciclo = Ciclos.findOne({_id:id});
-    rc.action = false;
+    this.ciclo = Ciclos.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    rc.nuevo = false;
+    this.nuevo = false;
 	};
 	
-	rc.actualizar = function(ciclo)
+	this.actualizar = function(ciclo)
 	{
 		var idTemp = ciclo._id;
 		delete ciclo._id;		
 		Ciclos.update({_id:idTemp},{$set:ciclo});
 		$('.collapse').collapse('hide');
-		rc.nuevo = true;
+		this.nuevo = true;
 	};
 		
-	rc.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
 		var ciclo = Ciclos.findOne({_id:id});
 		if(ciclo.estatus == true)

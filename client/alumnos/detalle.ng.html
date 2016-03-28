@@ -12,7 +12,7 @@
 										<a href="javascript:void(0);" class="btn txt-color-white bg-color-pinkDark btn-sm"><i class="fa fa-envelope-o"></i> Enviar Mensaje</a>
 									</div>
 									<div class="air air-top-left padding-10">
-										<h4 class="txt-color-white font-md"><i class="fa fa-calendar"></i>&nbsp;&nbsp;{{fechaActual | date:'dd-MM-yyyy'}}<small> <a class="btn btn-primary" href="alumnos/{{alumno._id}}" ng-show="elMismo(alumno._id)">Modificar</a></small></h4>
+										<h4 class="txt-color-white font-md"><i class="fa fa-calendar"></i>&nbsp;&nbsp;{{al.fechaActual | date:'dd-MM-yyyy'}}<small> <a class="btn btn-primary" href="alumnos/{{al.alumno._id}}" ng-show="elMismo(alumno._id)">Modificar</a></small></h4>
 									</div>
 									<ol class="carousel-indicators">
 										<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -38,7 +38,7 @@
 							<div class="col-sm-12">
 								<div class="row">
 									<div class="col-sm-3 profile-pic">
-										<img src="{{alumno.fotografia}}" >
+										<img src="{{al.alumno.fotografia}}" >
 										<div class="padding-10">
 											<h4 class="font-md"><strong>1,543</strong>
 											<br>
@@ -50,23 +50,23 @@
 										</div>
 									</div>
 									<div class="col-sm-6">
-										<h1>{{alumno.nombre}} <span class="semi-bold">{{alumno.apPaterno}} {{alumno.apMaterno}}</span>
+										<h1>{{alumno.nombre}} <span class="semi-bold">{{al.alumno.apPaterno}} {{al.alumno.apMaterno}}</span>
 										<br>
 										<small> Alumno</small></h1>
 										<ul class="list-unstyled">
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{alumno.tel1}}</span>
+													<i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.tel1}}</span>
 												</p>
 											</li>
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{alumno.correo}}">{{alumno.correo}}</a>
+													<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{al.alumno.correo}}">{{al.alumno.correo}}</a>
 												</p>
 											</li>
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{alumno.fechaNac | date:"dd-MM-yyyy"}}</span>
+													<i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.fechaNac | date:"dd-MM-yyyy"}}</span>
 												</p>
 											</li>
 										</ul>
@@ -75,7 +75,7 @@
 											<i>Un poco acerca de mi...</i>
 										</p>
 										<p class="font-xs">
-											{{alumno.observacionesGenerales}}
+											{{al.alumno.observacionesGenerales}}
 										</p>
 										<br>
 										<ul class="nav nav-tabs ">
@@ -96,39 +96,39 @@
 														<li>
 															<address>
 															  <strong>Información de la Madre</strong><br>
-															  <strong>Nombre:</strong> {{alumno.madre}}<br>
-															  <strong>Ocupación:</strong> {{alumno.ocupacionMadre}}
+															  <strong>Nombre:</strong> {{al.alumno.madre}}<br>
+															  <strong>Ocupación:</strong> {{al.alumno.ocupacionMadre}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Dirección</strong><br>
-															  {{alumno.calleNum}}, {{alumno.colonia}}<br>
-															  {{alumno.ciudad}}, {{alumno.estado}} {{alumno.codigoPostal}}<br>
+															  {{al.alumno.calleNum}}, {{al.alumno.colonia}}<br>
+															  {{al.alumno.ciudad}}, {{al.alumno.estado}} {{al.alumno.codigoPostal}}<br>
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Lugar de Nacimiento</strong><br>
-															  {{alumno.lugarNac}}
+															  {{al.alumno.lugarNac}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Escolaridad</strong><br>
-															  {{alumno.escolaridad}}
+															  {{al.alumno.escolaridad}}
 															</address>
 														</li>		
 														<li>
 															<address>
 															  <strong>Nivel Social</strong><br>
-															  {{alumno.nivelSocial}}
+															  {{al.alumno.nivelSocial}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Correo para Calificaciones</strong><br>
-															  {{alumno.correoCalificaciones}}
+															  {{al.alumno.correoCalificaciones}}
 															</address>
 														</li>											
 													</ul>	
@@ -138,32 +138,32 @@
 														<li>
 															<address>
 															  <strong>Información del Padre</strong><br>
-															  <strong>Nombre:</strong> {{alumno.padreTutor}}<br>
-															  <strong>Ocupación:</strong> {{alumno.ocupacionPadreTutor}}
+															  <strong>Nombre:</strong> {{al.alumno.padreTutor}}<br>
+															  <strong>Ocupación:</strong> {{al.alumno.ocupacionPadreTutor}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Teléfono Secundario</strong><br>
-																{{alumno.tel2}}															  
+																{{al.alumno.tel2}}															  
 															</address>
 														</li>													
 														<li>
 															<address>
 															  <strong>Ocupación</strong><br>
-															  {{getOcupacion(alumno.ocupacion_id)}}
+															  {{al.getOcupacion(al.alumno.ocupacion_id)}}
 															</address>
 														</li>													
 														<li>
 															<address>
 															  <strong>Cómo te enteraste de nosotros</strong><br>
-															  {{alumno.medio}}
+															  {{al.alumno.medio}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Talla</strong><br>
-																{{alumno.talla}}															  
+																{{al.alumno.talla}}															  
 															</address>
 														</li>														
 													</ul>	

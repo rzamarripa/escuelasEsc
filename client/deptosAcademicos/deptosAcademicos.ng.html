@@ -1,9 +1,9 @@
 <h2>Departamentos Académicos</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevodeptoAcademico" ng-click="nuevoDeptoAcademico()">
-		{{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{da.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevodeptoAcademico" ng-click="da.nuevoDeptoAcademico()">
+		{{da.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
@@ -11,24 +11,24 @@
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="deptoAcademico.clave" required>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="da.deptoAcademico.clave" required>
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Descripción Corta</label>
-				    	<input type="text" class="form-control" placeholder="Corta" ng-model="deptoAcademico.descripcionCorta" required>
+				    	<input type="text" class="form-control" placeholder="Corta" ng-model="da.deptoAcademico.descripcionCorta" required>
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="deptoAcademico.descripcion"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="da.deptoAcademico.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(deptoAcademico)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(deptoAcademico)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="da.guardar(da.deptoAcademico)" value="Guardar" class="btn btn-primary" ng-show="da.action">
+						<input type="submit" ng-click="da.actualizar(da.deptoAcademico)" value="Actualizar" class="btn btn-primary" ng-show="!da.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -58,7 +58,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="deptoAcademico in deptosAcademicos">
+		    <tr ng-repeat="deptoAcademico in da.deptosAcademicos">
 			    <td>{{deptoAcademico.clave}}</td>
 			    <td>{{deptoAcademico.descripcionCorta}}</td>
 			    <td>{{deptoAcademico.descripcion}} </td>
@@ -79,9 +79,9 @@
 							    <span class="caret"></span>
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
-							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(deptoAcademico._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(deptoAcademico._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  <ul class="dropdown-menu text-left dropdown-menu-right">
+							    <li><a href="#" ng-click="da.editar(deptoAcademico._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="da.cambiarEstatus(deptoAcademico._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -14,17 +14,12 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	rc.subscribe('alumno', () => {
     return [{
 	    id : $stateParams.id
-    }] ;
+    }];
   });
 	
 	rc.helpers({
 		alumno : () => {
-			var alumnos = Alumnos.find();
-			var uno = {};
-			alumnos.forEach(function(al){
-				uno = al;
-			});
-			return uno;
+			return Alumnos.findOne();
 		},
 	  ocupaciones : () => {
 		  return Ocupaciones.find();
@@ -33,10 +28,11 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   
 	rc.actualizar = function(alumno)
 	{
-		rc.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
-		Alumnos.update({_id:$stateParams.id}, {$set : {alumno}});
+		alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
+		delete alumno._id;		
+		Alumnos.update({_id:$stateParams.id}, {$set : alumno});
 		toastr.success('Alumno guardado.');
-		$state.go("root.alumnoDetalle",{"id":alumno._id});
+		$state.go("root.alumnoDetalle",{"id":$stateParams.id});
 	};
 	
 	rc.tomarFoto = function () {
@@ -46,7 +42,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	};
 	
 	rc.getOcupacion = function(id){
-		var ocupacion = $meteor.object(Ocupaciones, id, false);
+		var ocupacion = Ocupaciones.findOne(rc.alumno.ocupacion_id);
 		return ocupacion.descripcion;
 	};
 }

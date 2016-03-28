@@ -21,7 +21,7 @@
 	<div class="col-sm-12 col-md-12 col-lg-3" style="padding-right: 0px;">
 		<div class="jarviswidget jarviswidget-color-blueDark">
 			<header>
-				<span class="widget-icon"> <i class="fa fa-{{actionAgregar ? 'plus' : 'pencil'}}"></i> </span>
+				<span class="widget-icon"> <i class="fa fa-{{ho.actionAgregar ? 'plus' : 'pencil'}}"></i> </span>
 				<h2> Agrega Clases </h2>
 			</header>
 		<div>
@@ -29,53 +29,39 @@
 			<form id="add-event-form">
 				<fieldset>
 					<div class="form-group">
-						<label for="materiaNuevaMateria">Materia</label>
-						<ui-select ng-model="clase.materia_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
-					    <ui-select-choices repeat="mat._id as mat in materias | filter: $select.search">
-					      <div ng-bind-html="mat.descripcionCorta | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
+						<label for="materia">Materia</label>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.materia_id">
+						  <option ng-repeat="materia in ho.materias" value="{{ho.materia._id}}">
+						  	{{materia.etiqueta}}
+						  </option>
+						</select>
 					</div>
 
 					<div class="form-group">
 						<label >Maestro</label>
-						<ui-select ng-model="clase.maestro_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false"
-					             on-select="muestraMateriasMaestro(clase.maestro_id)">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}} {{$select.selected.apPaterno}}</ui-select-match>
-					    <ui-select-choices repeat="maestro._id as maestro in maestros | filter: $select.search">
-					      <div ng-bind-html="maestro.nombre + ' ' + maestro.apPaterno | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.maestro_id">
+						  <option ng-repeat="maestro in ho.maestros" value="{{ho.maestro._id}}">
+						  	{{maestro.nombre}} {{maestro.apPaterno}} {{maestro.apMaterno}}
+						  </option>
+						</select>
 					</div>
 					<div class="form-group">
 						<label>Aulas</label>
-						<ui-select ng-model="clase.aula_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false"
-					             on-select="muestraAulasMaestro(clase.aula_id)">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}}</ui-select-match>
-					    <ui-select-choices repeat="aula._id as aula in aulas | filter: $select.search">
-					      <div ng-bind-html="aula.nombre | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.aula_id">
+						  <option ng-repeat="aula in ho.aulas" value="{{aula._id}}">
+						  	{{aula.descripcion}}
+						  </option>
+						</select>
 					</div>
 
 					<div class="form-group">
 						<label for="fechaNac">Inicio</label>
-						<input date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="clase.start"/>
+						<input date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="ho.clase.start"/>
 					</div>
 					
 					<div class="form-group">
 						<label for="fechaNac">Fin</label>
-						<input date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="clase.end"/>
+						<input date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="ho.clase.end"/>
 					</div>
 					
 					<div class="form-group">

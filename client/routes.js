@@ -101,7 +101,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.alumnoDetalle', {
       url: '/alumnos/:id',
       templateUrl: 'client/alumnos/detalle.ng.html',
-      controller: 'AlumnosDetalleCtrl',
+      controller: 'AlumnosDetalleCtrl as al',
     })
     .state('root.ciclos', {
       url: '/ciclos',
@@ -111,7 +111,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.deptosAcademicos', {
       url: '/deptosAcademicos',
       templateUrl: 'client/deptosAcademicos/deptosAcademicos.ng.html',
-      controller: 'DeptosAcademicosCtrl',
+      controller: 'DeptosAcademicosCtrl as da',
     })
     .state('root.materias', {
       url: '/materias',
@@ -251,7 +251,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.nuevoHorario', {
       url: '/nuevoHorario/:id',
       templateUrl: 'client/horarios/form.ng.html',
-      controller: 'HorarioDetalleCtrl',
+      controller: 'HorarioDetalleCtrl as ho',
     })    
     .state('root.editarHorario', {
       url: '/editarHorario/:id',

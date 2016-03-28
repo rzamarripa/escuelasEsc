@@ -1,74 +1,64 @@
-angular.module("casserole").controller("DeptosAcademicosCtrl", ['$scope', '$meteor', '$state','$stateParams','toastr', function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.deptosAcademicos = $meteor.collection(DeptosAcademicos).subscribe("deptosAcademicos");
-  $scope.action = true;
-  $scope.nuevo = true  
+angular
+  .module('casserole')
+  .controller('DeptosAcademicosCtrl', DeptosAcademicosCtrl);
+ 
+function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
+	let rc = $reactive(this).attach($scope);
+
+  rc.action = true;
+  rc.nuevo = true  
+  
+  rc.subscribe("deptosAcademicos");
+  
+  rc.helpers({
+	  deptosAcademicos : () => {
+		  return DeptosAcademicos.find();
+	  }
+  });
 	
-  $scope.nuevoDeptoAcademico = function()
+  rc.nuevoDeptoAcademico = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.deptoAcademico = {};
+    rc.action = true;
+    rc.nuevo = !rc.nuevo;
+    rc.deptoAcademico = {};
   };
   
-  $scope.guardar = function(deptoAcademico)
+  rc.guardar = function(deptoAcademico)
 	{
-		$scope.deptoAcademico.estatus = true;
-		$scope.deptosAcademicos.save(deptoAcademico);
+		rc.deptoAcademico.estatus = true;
+		DeptosAcademicos.insert(deptoAcademico);
 		toastr.success('Departamento guardado.');
-		$scope.deptoAcademicos = "";
-	    $('.collapse').collapse('show');
-        $scope.nuevo = true;
+		rc.deptoAcademicos = {};
+	  $('.collapse').collapse('show');
+    rc.nuevo = true;
 	};
 	
-	$scope.editar = function(id)
+	rc.editar = function(id)
 	{
-    $scope.deptoAcademico = $meteor.object(DeptosAcademicos, id, false);
-    $scope.action = false;
+    rc.deptoAcademico = DeptosAcademicos.findOne({_id:id});
+    rc.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    rc.nuevo = false;
 	};
 	
-	$scope.actualizar = function(deptoAcademico)
-	{
-		$scope.deptoAcademico.save();
+	rc.actualizar = function(deptoAcademico)
+	{		
+		var idTemp = deptoAcademico._id;
+		delete deptoAcademico._id;		
+		DeptosAcademicos.update({_id:idTemp},{$set:deptoAcademico});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		rc.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	rc.cambiarEstatus = function(id)
 	{
-		var deptoAcademico = $meteor.object(DeptosAcademicos, id, false);
+		var deptoAcademico = DeptosAcademicos.findOne({_id:id});
 		if(deptoAcademico.estatus == true)
 			deptoAcademico.estatus = false;
 		else
 			deptoAcademico.estatus = true;
 		
-		deptoAcademico.save();
+		DeptosAcademicos.update({_id:id}, {$set : {estatus : deptoAcademico.estatus}});
 	};
-}]);
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

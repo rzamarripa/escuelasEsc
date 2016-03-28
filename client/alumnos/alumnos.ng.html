@@ -42,7 +42,7 @@
 			</thead>
 			<tbody>		
 		    <tr ng-repeat="alumno in al.alumnos">
-			    <td><img width="100px" ng-src="{{alumno.fotografia}}" ng-class="{'img-thumbnail': !!alumno.fotografia}"/> </td>
+			    <td><img width="100px" ng-src="{{alumno.fotografia}}" ng-class="{'img-thumbnail': !!alumno.fotografia}"/></td>
 			    <td><a href="/alumnos/{{alumno._id}}" > {{alumno.matricula}}</a></td>
 			    <td><a href="/alumnos/{{alumno._id}}" > {{alumno.nombre}} {{alumno.apPaterno}} {{alumno.apMaterno}}</a></td>			    
 			    <td>{{alumno.tel1}} </td>

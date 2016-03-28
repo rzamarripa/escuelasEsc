@@ -88,8 +88,10 @@
 		    	</div>
 					<div class="col-sm-4">
 						<label for="ocupacion">Ocupación</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-repeat="ocupacion in al.ocupaciones">
-						  <option value="{{ocupacion._id">{{ocupacion.descripcion}}</option>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="al.alumno.ocupacion_id">
+						  <option ng-repeat="ocupacion in al.ocupaciones" value="{{ocupacion._id}}">
+						  	{{ocupacion.descripcion}}
+						  </option>
 						</select>
 					</div>	
 					<div class="col-sm-4">

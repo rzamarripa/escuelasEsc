@@ -1,10 +1,16 @@
-angular.module("casserole").controller("HorarioDetalleCtrl", 
-	['$scope', '$meteor', '$state','$stateParams', 'toastr', '$compile',
-	function($scope, $meteor, $state, $stateParams, toastr, $compile)
-{
-	$scope.clase = {};
-  $scope.actionAgregar = true;
-  $scope.colorSeleccionado = null;
+angular
+  .module('casserole')
+  .controller('HorarioDetalleCtrl', HorarioDetalleCtrl);
+ 
+function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr) {
+	$reactive(this).attach($scope);
+	
+	this.autorun(() => {
+		
+	})
+	this.clase = {};
+  this.actionAgregar = true;
+  this.colorSeleccionado = null;
   
   var clasesTotales = [];
   var aulasTotales = [];
@@ -14,60 +20,75 @@ angular.module("casserole").controller("HorarioDetalleCtrl",
   var m = date.getMonth();
   var y = date.getFullYear();
   
-  $scope.maestros = $meteor.collection(function() {return Maestros.find();}).subscribe("maestros");
-  $scope.materias = $meteor.collection(function() {return Materias.find();}).subscribe("materias");
-  $scope.horarios = $meteor.collection(function() {return Horarios.find();}).subscribe("horarios");
-	$scope.aulas 		= $meteor.collection(function() {return Aulas.find();}).subscribe("aulas");
+  this.subscribe("maestros");
+  this.subscribe("materias");
+  this.subscribe("horarios");
+  this.subscribe("aulas");
+  	
+	this.helpers({
+		maestros : () => {
+			return Maestros.find();
+		},
+		materias : () => {
+			return Materias.find();
+		},
+		aulas : () => {
+			return Aulas.find();
+		},
+		horarios : () => {
+			return Horarios.find();
+		},
+	});
 		
 	if($stateParams.id != ""){
-		$scope.horario 	= $meteor.object(Horarios, $stateParams.id, false);
-		$scope.action 	= false;
+		this.horario 	= Horarios.findOne($stateParams.id);
+		this.action 	= false;
 	}else{
-		$scope.horario 	= {};
-	  $scope.horario.clases = [];
-	  $scope.horario.estatus = true;
-	  $scope.action 	= true;	  
+		this.horario 	= {};
+	  this.horario.clases = [];
+	  this.horario.estatus = true;
+	  this.action 	= true;	  
 	}
 	
-  $scope.agregarClase = function(clase){
+  this.agregathislase = function(clase){
 	  eliminarTemporalesOcupados();
-	  var materia 	= $meteor.object(Materias, clase.materia_id, false);
-		var maestro 	= $meteor.object(Maestros, clase.maestro_id, false);
-		var aula 			= $meteor.object(Aulas, clase.aula_id, false);
+	  var materia 	= Materias.findOne(clase.materia_id);
+		var maestro 	= Maestros.findOne(clase.maestro_id);
+		var aula 			= Aulas.findOne(clase.aula_id);
 
 	  clase.materia = materia.descripcionCorta;
 	  clase.title 	= maestro.nombre + " " + maestro.apPaterno + "\n"+ materia.descripcionCorta + "\n" + aula.nombre;
 	  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
 	  clase.aula 		= aula.nombre;
-	  clase.className = ["event", $scope.clase.className];
+	  clase.className = ["event", this.clase.className];
 	  clase.estatus = true;
 	  clase.start 	= moment(clase.start).format("YYYY-MM-DD HH:mm");
 		clase.end 		= moment(clase.end).format("YYYY-MM-DD HH:mm");
 	  
-	  $scope.horario.clases.push(clase);
-	  $scope.horario.semana = moment(clase.start).week();
-	  $scope.clase 	= {};
+	  this.horario.clases.push(clase);
+	  this.horario.semana = moment(clase.start).week();
+	  this.clase 	= {};
   }
   
-  $scope.cancelarClase = function(){
+  this.cancelathislase = function(){
 	  eliminarTemporalesOcupados();
-	  for(i = 0; i < $scope.horario.clases.length; i++){
-		  if($scope.horario.clases[i]._id == $scope.clase._id){
-				$scope.horario.clases[i].className = $scope.colorSeleccionado;
+	  for(i = 0; i < this.horario.clases.length; i++){
+		  if(this.horario.clases[i]._id == this.clase._id){
+				this.horario.clases[i].className = this.colorSeleccionado;
 			}
 		}
 	  
-	  $scope.actionAgregar = true; 
-	  $scope.clase 	= {};
+	  this.actionAgregar = true; 
+	  this.clase 	= {};
   }
 
-  $scope.modificarClase = function(clase){
+  this.modificaClase = function(clase){
 	  
-	  _.each($scope.horario.clases, function(claseActual){
+	  _.each(this.horario.clases, function(claseActual){
 		  if(claseActual._id == clase._id){
-			  var materia = $meteor.object(Materias, $scope.clase.materia_id, false);
-				var maestro = $meteor.object(Maestros, $scope.clase.maestro_id, false);
-				var aula 		= $meteor.object(Aulas, $scope.clase.aula_id, false);
+			  var materia = $meteor.object(Materias, this.clase.materia_id, false);
+				var maestro = $meteor.object(Maestros, this.clase.maestro_id, false);
+				var aula 		= $meteor.object(Aulas, this.clase.aula_id, false);
 			  clase.materia = materia.descripcionCorta;
 			  clase.title = maestro.nombre + " " + maestro.apPaterno + "\n" + materia.descripcionCorta + "\n" + aula.nombre;
 			  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
@@ -91,19 +112,19 @@ angular.module("casserole").controller("HorarioDetalleCtrl",
 			  claseActual.estatus = true;
 		  }
 	  });
-	  $scope.clase = {};
-	  $scope.actionAgregar = true;
+	  this.clase = {};
+	  this.actionAgregar = true;
 	  eliminarTemporalesOcupados();
   }
   
-  $scope.modificarHorario = function(horario){
-	  $scope.horario.semana = horario.semana;
-		$scope.horario.save();
+  this.modificarHorario = function(horario){
+	  this.horario.semana = horario.semana;
+		this.horario.save();
 		toastr.success("Se modificó el horario");
   }
    
-  $scope.muestraMateriasMaestro = function(maestro_id){
-	  var horariosTotales = angular.copy($scope.horarios);
+  this.muestraMateriasMaestro = function(maestro_id){
+	  var horariosTotales = angular.copy(this.horarios);
 	  while(clasesTotales.length>0)clasesTotales.pop();
 	  _.each(horariosTotales, function(horario){
 		  if(horario._id != $stateParams.id){
@@ -121,8 +142,8 @@ angular.module("casserole").controller("HorarioDetalleCtrl",
 	  console.log(clasesTotales);
   }
   
-  $scope.muestraAulasMaestro = function(aula_id){
-	  var horariosTotales = angular.copy($scope.horarios);		
+  this.muestraAulasMaestro = function(aula_id){
+	  var horariosTotales = angular.copy(this.horarios);		
 	  while(aulasTotales.length>0)aulasTotales.pop();
 	  _.each(horariosTotales, function(horario){
 		  if(horario._id != $stateParams.id){
@@ -141,69 +162,69 @@ angular.module("casserole").controller("HorarioDetalleCtrl",
   }
   
   /* alert on eventClick */
-  $scope.alertOnEventClick = function(date, jsEvent, view){
+  this.alertOnEventClick = function(date, jsEvent, view){
 	  eliminarTemporalesOcupados();
-	  for(i = 0; i < $scope.horario.clases.length; i++){
-		  if($scope.horario.clases[i]._id == date._id){
-			  $scope.horario.clases[i].className = ["event", "bg-color-orange"];
-			}else if($scope.horario.clases[i]._id == $scope.clase._id){
-				$scope.horario.clases[i].className = $scope.clase.className;
+	  for(i = 0; i < this.horario.clases.length; i++){
+		  if(this.horario.clases[i]._id == date._id){
+			  this.horario.clases[i].className = ["event", "bg-color-orange"];
+			}else if(this.horario.clases[i]._id == this.clase._id){
+				this.horario.clases[i].className = this.clase.className;
 			}
 		}
 
-    $scope.clase = angular.copy(date);
-    $scope.colorSeleccionado = date.className;
-    $scope.clase.start 	= moment(date.start).format("YYYY-MM-DD HH:mm");
-    $scope.clase.end 		= moment(date.end).format("YYYY-MM-DD HH:mm");
-    $scope.actionAgregar = false;
+    this.clase = angular.copy(date);
+    this.colorSeleccionado = date.className;
+    this.clase.start 	= moment(date.start).format("YYYY-MM-DD HH:mm");
+    this.clase.end 		= moment(date.end).format("YYYY-MM-DD HH:mm");
+    this.actionAgregar = false;
   };
   
   /* alert on Drop */
-	$scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
 		console.log(delta);
 		/*
-		moment($scope.clase.start).add(delta._data.milliseconds, 'milliseconds');
-		moment($scope.clase.start).add(delta._data.seconds, 'seconds');
-		moment($scope.clase.start).add(delta._data.minutes, 'minutes');
-		moment($scope.clase.start).add(delta._data.hours+1, 'hours');
-		moment($scope.clase.start).add(delta._data.days, 'days');
-		moment($scope.clase.start).add(delta._data.months, 'months');
-		moment($scope.clase.start).add(delta._data.years, 'years');
+		moment(this.clase.start).add(delta._data.milliseconds, 'milliseconds');
+		moment(this.clase.start).add(delta._data.seconds, 'seconds');
+		moment(this.clase.start).add(delta._data.minutes, 'minutes');
+		moment(this.clase.start).add(delta._data.hours+1, 'hours');
+		moment(this.clase.start).add(delta._data.days, 'days');
+		moment(this.clase.start).add(delta._data.months, 'months');
+		moment(this.clase.start).add(delta._data.years, 'years');
 		
-		moment($scope.clase.end).add(delta._data.milliseconds, 'milliseconds');
-		moment($scope.clase.end).add(delta._data.seconds, 'seconds');
-		moment($scope.clase.end).add(delta._data.minutes, 'minutes');
-		moment($scope.clase.end).add(delta._data.hours+1, 'hours');
-		moment($scope.clase.end).add(delta._data.days, 'days');
-		moment($scope.clase.end).add(delta._data.months, 'months');
-		moment($scope.clase.end).add(delta._data.years, 'years');
+		moment(this.clase.end).add(delta._data.milliseconds, 'milliseconds');
+		moment(this.clase.end).add(delta._data.seconds, 'seconds');
+		moment(this.clase.end).add(delta._data.minutes, 'minutes');
+		moment(this.clase.end).add(delta._data.hours+1, 'hours');
+		moment(this.clase.end).add(delta._data.days, 'days');
+		moment(this.clase.end).add(delta._data.months, 'months');
+		moment(this.clase.end).add(delta._data.years, 'years');
 		*/
 		
-		$scope.clase.start 	= moment($scope.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
-		$scope.clase.end 		= moment($scope.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
-		$scope.actionAgregar = false;
+		this.clase.start 	= moment(this.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
+		this.clase.end 		= moment(this.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
+		this.actionAgregar = false;
   };
   
   /* alert on Resize */
-  $scope.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
-     $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+  this.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+     this.alertMessage = ('Event Resized to make dayDelta ' + delta);
   };
   
   /* add custom event*/
-  $scope.guardarHorario = function() {
+  this.guardarHorario = function() {
 	  eliminarTemporalesOcupados();
-    $scope.horarios.push($scope.horario);
+    this.horarios.push(this.horario);
     toastr.success("Se guardó el horario");
   };
   
   /* remove event */
-  $scope.eliminarClase = function() {
+  this.eliminathislase = function() {
 	  eliminarTemporalesOcupados();
-	  for(i = 0; i <= $scope.horario.clases.length -1; i++){
-		  if($scope.horario.clases[i]._id == $scope.clase._id){
-			  $scope.horario.clases.splice(i, 1);
-			  $scope.actionAgregar = true;
-			  $scope.clase = {};
+	  for(i = 0; i <= this.horario.clases.length -1; i++){
+		  if(this.horario.clases[i]._id == this.clase._id){
+			  this.horario.clases.splice(i, 1);
+			  this.actionAgregar = true;
+			  this.clase = {};
 		  }
 	  }
   };
@@ -214,13 +235,13 @@ angular.module("casserole").controller("HorarioDetalleCtrl",
   }
     
   /* Render Tooltip */
-  $scope.eventRender = function( event, element, view ) { 
+  this.eventRender = function( event, element, view ) { 
     element.attr({'tooltip': event.title, 'tooltip-append-to-body': true});
-    $compile(element)($scope);
+    $compile(element)(this);
   };
   
   /* config object */
-  $scope.uiConfig = {
+  this.uiConfig = {
     calendar:{
       height: 500,
       editable: true,
@@ -243,15 +264,15 @@ angular.module("casserole").controller("HorarioDetalleCtrl",
         week: 'dddd',
         day: 'dddd'
       },
-      dayNames : ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      dayNames : ["Domingo", "Lunes", "Martes", "Miéthisoles", "Jueves", "Viernes", "Sábado"],
       dayNamesShort : ["Dom", "Lun", "Ma", "Mi", "Jue", "Vie", "Sab"],
-      eventClick: $scope.alertOnEventClick,
-      eventDrop: $scope.alertOnDrop,
-      eventResize: $scope.alertOnResize,
-      eventRender: $scope.eventRender
+      eventClick: this.alertOnEventClick,
+      eventDrop: this.alertOnDrop,
+      eventResize: this.alertOnResize,
+      eventRender: this.eventRender
     }
   };
 
-  /* event sources array*/
-  $scope.eventSources = [$scope.horario.clases, clasesTotales, aulasTotales];
-}]);
+  /* event southises array*/
+  this.eventSources = [this.horario.clases, clasesTotales, aulasTotales];
+};

@@ -5,6 +5,13 @@ angular.module("casserole").controller("MateriasCtrl", ['$scope', '$meteor', '$s
     $scope.action = true; 
     $scope.nuevo = true; 
     
+  $(document).ready(function() {
+	  $(".select2").select2();
+	});
+	
+	$scope.subscribe("deptosAcademicos");
+
+    
 
   $scope.nuevaMateria = function()
   {

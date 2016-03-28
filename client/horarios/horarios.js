@@ -1,5 +1,18 @@
-angular.module("casserole").controller("HorariosCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-	$scope.horarios = $meteor.collection(function(){return Horarios.find();}).subscribe("horarios");
+angular
+  .module('casserole')
+  .controller('HorariosCtrl', HorariosCtrl);
+ 
+function HorariosCtrl($scope, $meteor, $reactive, $state, toastr) {
+	let rc = $reactive(this).attach($scope);
 	
-}]);
+	rc.subscribe("horarios");
+
+	rc.helpers({
+		horarios : () => {
+			return Horarios.find();
+		}
+		
+		
+	});
+	
+};

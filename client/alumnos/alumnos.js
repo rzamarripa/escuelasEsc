@@ -11,7 +11,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   rc.action = true;
   rc.alumno = {};
   rc.buscar = {};
-  rc.buscar.nombre = 'rob';
+  rc.buscar.nombre = '';
 
 	rc.subscribe('alumnos', () => {
     return [{
