@@ -176,12 +176,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.turnos', {
       url: '/turnos',
       templateUrl: 'client/turnos/turnos.ng.html',
-      controller: 'TurnosCtrl',
+      controller: 'TurnosCtrl as tn',
     })
     .state('root.grupos', {
       url: '/grupos',
       templateUrl: 'client/grupos/grupos.ng.html',
-      controller: 'GruposCtrl',
+      controller: 'GruposCtrl as gp',
     })
     .state('root.grupoDetalle', {
       url: '/grupos/:id',

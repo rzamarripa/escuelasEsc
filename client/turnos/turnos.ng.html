@@ -1,9 +1,9 @@
 <h2>Turnos</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoturno" ng-click="nuevoTurno()">
-		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{tn.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoturno" ng-click="tn.nuevoTurno()">
+		  {{tn.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
@@ -11,14 +11,14 @@
 			    <div class="row">
 			    <div class="col-sm-4">
 				    <label>Turno</label>
-			    	<input type="text" class="form-control" placeholder="Turno" ng-model="turno.nombre" required>
+			    	<input type="text" class="form-control" placeholder="Turno" ng-model="tn.turno.nombre" required>
 			    </div>
 				</div>
 			</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(turno)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(turno)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="tn.guardar(turno)" value="Guardar" class="btn btn-primary" ng-show="tn.action">
+						<input type="submit" ng-click="tn.actualizar(turno)" value="Actualizar" class="btn btn-primary" ng-show="!tn.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -46,7 +46,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="turno in turnos">
+		    <tr ng-repeat="turno in tn.turnos">
 			    <td>{{turno.nombre}}</td>
 			    <td>
 				    <div class="text-center">

@@ -1,14 +1,17 @@
-angular.module("casserole").controller("GruposDetalleCtrl", function($scope, $meteor, $state, $stateParams)
-{
+angular.module("casserole")
+.controller("GruposDetalleCtrl", GruposDetalleCtrl);
+ function GruposDetalleCtrl($scope, $meteor,$reactive , $state, $stateParams){
+ 	$reactive(this).attach($scope);
+  this.action = true;
 	
-	$scope.inscripciones = $meteor.collection(function(){return Inscripciones.find({grupo_id: $stateParams.id})},false).subscribe("inscripciones");
-	$scope.alumnos = $meteor.collection(function() {return Alumnos.find();}).subscribe("alumnos");
+	this.inscripciones = $meteor.collection(function(){return Inscripciones.find({grupo_id: $stateParams.id})},false).subscribe("inscripciones");
+	this.alumnos = $meteor.collection(function() {return Alumnos.find();}).subscribe("alumnos");
 
-	$scope.grupo = $meteor.object(Grupos, $stateParams.id, false).subscribe("grupos");
+	this.grupo = $meteor.object(Grupos, $stateParams.id, false).subscribe("grupos");
 	
-	$scope.getAlumno = function(alumno_id){
-		alumno = _.find($scope.alumnos,function(x){return x._id==alumno_id;});
+	this.getAlumno = function(alumno_id){
+		alumno = _.find(this.alumnos,function(x){return x._id==alumno_id;});
 		return [alumno.matricula, alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno];
 	}
 	
-});
+};

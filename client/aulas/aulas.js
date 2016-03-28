@@ -1,58 +1,73 @@
-angular.module("casserole").controller("AulasCtrl" , ['$scope', '$meteor', '$state','$stateParams', 'toastr',  function($scope, $meteor, $state, $stateParams, toastr) 
-{
-  $scope.aulas = $meteor.collection(Aulas).subscribe("aulas");
-  $scope.secciones = $meteor.collection(Secciones).subscribe("secciones");
+angular.module("casserole")
+.controller("AulasCtrl" , AulasCtrl);  
+
+function AulasCtrl ($scope, $meteor, $reactive , $state, $stateParams, toastr) {
+	let rc = $reactive(this).attach($scope);
+    rc.action = true;    
+	rc.subscribe('aulas');
+
+  rc.helpers({
+	  aulas : () => {
+		  return Aulas.find();
+	  }
+  }); 
+
   
-  $scope.action = true;  
-  $scope.nuevo = true;
+  rc.action = true;  
+  rc.nuevo = true;
   
-  $scope.nuevoAula = function()
+   rc.nuevoAula = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.aula = {}; 
+    rc.action = true;
+    rc.nuevo = !rc.nuevo;
+    rc.aula = {}; 
  
   };
   
- $scope.guardar = function(aula)
+   rc.guardar = function(aula)
 	{
-	    $scope.aula.estatus = true;
-		$scope.aulas.save(aula);
+	    rc.aula.estatus = true;
+		rc.aulas.save(aula);
+		Aulas.insert(rc.ciclo);
 		toastr.success('Aula guardada.');
-        $scope.aula = ""; 
-		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		rc.aula = {};
+		$('.collapse').collapse('show');
+		rc.nuevo = true;
+		state.go('root.aulas');
 	};
 	
-	$scope.editar = function(id)
+	 rc.editar = function(id)
 	{
-    $scope.aula = $meteor.object(Aulas, id, false);
-    $scope.action = false;
+    rc.aula = Aulas.finOne(Aulas, id, false);
+    rc.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    rc.nuevo = false;
 	};
 	
-	$scope.actualizar = function(aula)
+	rc.actualizar = function(aula)
 	{
-		$scope.aula.save();
+		var idTemp = aula_id;
+		delete aula._id;
+		Aulas.update({_id:idTemp},{$set:aula});
+		rc.aula.save();
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		rc.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	rc.cambiarEstatus = function(id)
 	{
-		var aula = $meteor.object(Aulas, id, false);
+		var aula = Aulas.findOne({_id:id});
 		if(aula.estatus == true)
 			aula.estatus = false;
 		else
 		aula.estatus = true;
 		
-		aula.save();
+		Aulas.update({_id:id}, {$set : {estatus : aula.estatus}});
 	};
 	   //  $scope.remove = function(empresa)
        // {
        //     $scope.empresa.estatus = false;
        //     $scope.empresas.save(empresa);
        // };
-}]);
+};
 	
