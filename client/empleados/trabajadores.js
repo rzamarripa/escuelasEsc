@@ -1,26 +1,37 @@
-angular.module("casserole").controller("TrabajadoresCtrl", ['$scope', '$meteor', '$state', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.trabajadores = $meteor.collection(Trabajadores).subscribe("trabajadores");
-  $scope.deptosAcademicos = $meteor.collection(function(){return DeptosAcademicos.find();}).subscribe("deptosAcademicos");
-
-  $scope.action = true; 
-  $scope.nuevo = true;  
-	
-  $scope.nuevoTrabajador = function()
+angular
+.module("casserole")
+.controller("TrabajadoresCtrl", TrabajadoresCtrl);
+function TrabajadoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
+$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('trabajadores');
+	//this.subscribe('deptosAcademicos');
+ 
+  this.helpers({
+	  trabajadores : () => {
+		  return Trabajadores.find();
+	  },
+	 //  deptosAcademicos : () => {
+		//  return DeptosAcademicos.find();
+	  //},
+  });
+  
+  this.nuevo = true;  
+  this.nuevoTrabajador = function()
   {
-		$scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.trabajador = {}; 
+	this.action = true;
+    this.nuevo = !this.nuevo;
+    this.trabajador = {}; 
   };
  
-	$scope.guardar = function(trabajador)
+	this.guardar = function(trabajador)
 	{
 		Accounts.createUser({
-			username: $scope.trabajador.nombreUsuario,
-			password: $scope.trabajador.contrasena,
+			username: this.trabajador.nombreUsuario,
+			password: this.trabajador.contrasena,
 			profile: {
-				 nombre: $scope.trabajador.nombre,
-				 apellidos: $scope.trabajador.apPaterno + " " + $scope.trabajador.apMaterno,
+				 nombre: this.trabajador.nombre,
+				 apellidos: this.trabajador.apPaterno + " " + this.trabajador.apMaterno,
 				 tipoUsuario: "Trabajador"
 			},function(err) {
 				if (err)
@@ -29,54 +40,57 @@ angular.module("casserole").controller("TrabajadoresCtrl", ['$scope', '$meteor',
 				    console.log('success!');
 				}
 		});
-		$scope.trabajador.estatus = true;
-		$scope.trabajadores.save(trabajador);
-		toastr.success('Empleado guardado.');
-		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.trabajador.estatus = true;
+		console.log(this.trabajador);
+		Trabajadores.insert(this.trabajador);
+		toastr.success('Trabajador guardado.');
+		this.trabajador = {};
+		$('.collapse').collapse('show');
+		this.nuevo = true;
+		$state.go('root.trabajadores');
 		
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.trabajador = $meteor.object(Trabajadores, id, false);
-    $scope.action = false;
+    this.trabajador = Trabajadores.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(trabajador)
+	this.actualizar = function(trabajador)
 	{
-		$scope.trabajador.save();
+		var idTemp = trabajador._id;
+		delete trabajador._id;		
+		Trabajadores.update({_id:idTemp},{$set:trabajador});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var trabajador = $meteor.object(Trabajadores, id, false);
+		var trabajador = Trabajadores.findOne({_id:id});
 		if(trabajador.estatus == true)
 			trabajador.estatus = false;
 		else
 			trabajador.estatus = true;
 		
-		trabajador.save();
+		Trabajadores.update({_id:id}, {$set : {estatus : trabajador.estatus}});
 	};
-	 $scope.tomarFoto = function(){
+
+	 this.tomarFoto = function(){
 		$meteor.getPicture().then(function(data){
-			$scope.trabajador.fotografia = data;
-		})
+			this.trabajador.fotografia = data;
+		});
 	};
 
 /*
-  $scope.tieneFoto = function(trabajador){
+  this.tieneFoto = function(trabajador){
 		if (typeof trabajador.fotografia !== "undefined")
 			return true;
 		else
 			return false;
 	}	
 */
-}]);
-
-
-
+};

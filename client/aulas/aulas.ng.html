@@ -1,9 +1,9 @@
 <h2>Aulas</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{cl.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExamfple" aria-expanded="false" aria-controls="collapseExample" id="nuevoaula" ng-click="cl.nuevoAula()">
-		 {{cl.nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{au.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoaula" ng-click="au.nuevoAula()">
+		 {{au.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
@@ -11,11 +11,11 @@
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="cl.aula.clave" required>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="au.aula.clave" required>
 			    	</div>
 			    	<div class="col-sm-4">					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cl.aula.nombre" required>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="au.aula.nombre" required>
 			    	</div>
 			    	<!--
 			    	<div class="col-sm-4">
@@ -32,9 +32,9 @@
 					  </ui-select>
 					</div> -->
 
-          <div class="col-sm-4">
+         <!-- <div class="col-sm-4">
 						<label >Sección</label>
-						<ui-select ng-model="cl.aula.seccion_id"
+						<ui-select ng-model="au.aula.seccion_id"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
 					             reset-search-input="false">
@@ -43,19 +43,22 @@
 					      <div ng-bind-html="seccion.descripcionCorta | highlight: $select.search"></div>
 					    </ui-select-choices>
 					  </ui-select>
-					</div>
-			    </div>
+					
+					  <select class="for-control select2" placeholder="Seleccione" ng-model="au.seccion.descripcionCorta_id"> <option ng-repeat="seccion in au.secciones" value="{{secciones_id}}">{{seccion.decripcionCorta}}</option>
+					 </select>
+					</div>-->
+			    </div> 
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="cl.aula.descripcion"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="au.aula.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(cl.aula)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(cl.aula)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="au.guardar(aula)" value="Guardar" class="btn btn-primary" ng-show="au.action">
+						<input type="submit" ng-click="au.actualizar(aula)" value="Actualizar" class="btn btn-primary" ng-show="!au.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -84,7 +87,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="aula in cl.aulas">
+		    <tr ng-repeat="aula in au.aulas">
 			    <td>{{aula.nombre}}</td>
 			    <td>{{aula.descripcion}} </td>
 			    <td>
@@ -105,8 +108,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(cl.aula._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cl.cambiarEstatus(aula._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="au.editar(aula._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="au.cambiarEstatus(aula._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

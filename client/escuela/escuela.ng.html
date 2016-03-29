@@ -1,9 +1,9 @@
 <h2>Escuela de procedencia</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+		<a class="btn btn-{{escu.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
 			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoescuela" ng-click="nuevoEscuela()">
-		   {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		   {{escu.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
@@ -12,15 +12,15 @@
 			    	<div class="col-sm-12">					    
                     <div class="col-sm-4">
 						    <label>Nombre</label>
-					    	<input type="text" class="form-control" placeholder="Nombre" ng-model="escuela.nombre" required>
+					    	<input type="text" class="form-control" placeholder="Nombre" ng-model="escu.escuela.nombre" required>
 					    </div>
 					     <div class="col-sm-4">
 						    <label> Nombre corto</label>
-					    	<input type="text" class="form-control" placeholder="Nombre corto" ng-model="escuela.nombreCorto" required>
+					    	<input type="text" class="form-control" placeholder="Nombre corto" ng-model="escu.escuela.nombreCorto" required>
 					    </div>
 					     <div class="col-sm-4">
 						    <label>Domicilio</label>
-					    	<input type="text" class="form-control" placeholder="domicilio" ng-model="escuela.domicilio" required>
+					    	<input type="text" class="form-control" placeholder="domicilio" ng-model="escu.escuela.domicilio" required>
 					    </div>
 					  </div>
 					 </div>
@@ -30,35 +30,35 @@
 			    	      <div class="col-sm-12">	
 					     <div class="col-sm-4">
 						    <label>Colonia</label>
-					    	<input type="text" class="form-control" placeholder="Colonia" ng-model="escuela.colonia" required>
+					    	<input type="text" class="form-control" placeholder="Colonia" ng-model="escu.escuela.colonia" required>
 					    </div>
 					     <div class="col-sm-4">
 						    <label>Codigo Postal</label>
-					    	<input type="text" class="form-control" placeholder="Codigo Postal" ng-model="escuela.cp" required>
+					    	<input type="text" class="form-control" placeholder="Codigo Postal" ng-model="escu.escuela.cp" required>
 					    </div>
 					     <div class="col-sm-4">
 						    <label>Ciudad</label>
-					    	<input type="text" class="form-control" placeholder="Ciudad" ng-model="escuela.ciudad" required>
+					    	<input type="text" class="form-control" placeholder="Ciudad" ng-model="escu.escuela.ciudad" required>
 					    </div>
 					     <div class="col-sm-4">
 						    <label>Telefonos </label>
-					    	<input type="text" class="form-control" placeholder="Telefonos " ng-model="escuela.telefonos" required>
+					    	<input type="text" class="form-control" placeholder="Telefonos " ng-model="escu.escuela.telefonos" required>
 					    </div>
 					    <div class="col-sm-4">
 						    <label>Director </label>
-					    	<input type="text" class="form-control" placeholder="Director " ng-model="escuela.director" required>
+					    	<input type="text" class="form-control" placeholder="Director " ng-model="escu.escuela.director" required>
 					    </div>
 					    <div class="col-sm-4">
 						    <label>Contacto </label>
-					    	<input type="text" class="form-control" placeholder="Contacto " ng-model="escuela.contacto" required>
+					    	<input type="text" class="form-control" placeholder="Contacto " ng-model="escu.escuela.contacto" required>
 					    </div>			    	
 			    	  </div>
 			        </div> 
 			      </div>  	
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(escuela)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(escuela)" value="Actualizar" class="btn btn-primary" ng-show="!action">	
+						<input type="submit" ng-click="escu.guardar(escuela)" value="Guardar" class="btn btn-primary" ng-show="escu.action">
+						<input type="submit" ng-click="escu.actualizar(escuela)" value="Actualizar" class="btn btn-primary" ng-show="!escu.action">	
 
 					</div>
 				</div>
@@ -92,7 +92,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="escuela in escuelas">
+		    <tr ng-repeat="escuela in escu.escuelas">
 			    <td>{{escuela.nombre}}</td>
 			    <td>{{escuela.domicilio}}</td>
 			    <td>{{escuela.ciudad}}</td>
@@ -114,8 +114,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(escuela._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							  <li><a href="#" ng-click="cambiarEstatus(escuela._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="escu.editar(escuela._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							  <li><a href="#" ng-click="escu.cambiarEstatus(escuela._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

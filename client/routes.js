@@ -156,22 +156,22 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.planEstudio', {
       url: '/planEstudios',
       templateUrl: 'client/planEstudios/planEstudios.index.ng.html',
-      controller: 'PlanEstudiosIndexCtrl',
+      controller: 'PlanEstudiosIndexCtrl as plan',
     })
     .state('root.nuevoPlanEstudio', {
       url: '/nuevoPlanEstudios',
       templateUrl: 'client/planEstudios/planEstudios.form.ng.html',
-      controller: 'PlanEstudiosIndexCtrl',
+      controller: 'PlanEstudiosIndexCtrl as nPlan',
     })
     .state('root.editarPlanEstudio', {
       url: '/editarPlanEstudios/:id',
       templateUrl: 'client/planEstudios/planEstudios.form.ng.html',
-      controller: 'PlanEstudiosIndexCtrl',
+      controller: 'PlanEstudiosIndexCtrl as editP',
     })
     .state('root.planEstudioDetalle', {
       url: '/planEstudios/:id',
       templateUrl: 'client/planEstudios/planEstudios.detalle.ng.html',
-      controller: 'PlanEstudiosDetalleCtrl',
+      controller: 'PlanEstudiosDetalleCtrl as Pdetalle',
     })
     .state('root.turnos', {
       url: '/turnos',
@@ -209,44 +209,44 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'NuevoGrupoCtrl',
     })
     .state('root.generaciones', {
-      url: '/generaciones',
+      url: '/',
       templateUrl: 'client/generaciones/generaciones.ng.html',
-      controller: 'GeneracionesCtrl',
+      controller: 'GeneracionesCtrl as gen',
     })
     .state('root.instituciones', {
       url: '/instituciones',
       templateUrl: 'client/instituciones/instituciones.ng.html',
-      controller: 'InstitucionesCtrl',
+      controller: 'InstitucionesCt rl',
     })
     .state('root.campus', {
       url: '/campus',
       templateUrl: 'client/campus/campus.ng.html',
-      controller: 'CampusCtrl',
+      controller: 'CampusCtrl as cp',
     })
     .state('root.aulas', {
       url: '/aulas',
       templateUrl: 'client/aulas/aulas.ng.html',
-      controller: 'AulasCtrl',
+      controller: 'AulasCtrl as au',
     })
     .state('root.maestros', {
       url: '/maestros',
       templateUrl: 'client/maestros/maestros.ng.html',
-      controller: 'MaestrosCtrl',
+      controller: 'MaestrosCtrl as maes',
     })
     .state('root.documentos', {
       url: '/documentos',
       templateUrl: 'client/documentos/documentos.ng.html',
-      controller: 'DocumentosCtrl',
+      controller: 'DocumentosCtrl as doc',
     })
     .state('root.escuela', {
       url: '/escuela',
       templateUrl: 'client/escuela/escuela.ng.html',
-      controller: 'EscuelaCtrl',
+      controller: 'EscuelaCtrl as escu',
     })
     .state('root.trabajadores', {
       url: '/trabajadores',
       templateUrl: 'client/empleados/trabajadores.ng.html',
-      controller: 'TrabajadoresCtrl',
+      controller: 'TrabajadoresCtrl as emp',
     })
     .state('root.nuevoHorario', {
       url: '/nuevoHorario/:id',

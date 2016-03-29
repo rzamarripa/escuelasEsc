@@ -82,7 +82,11 @@
 						</select>
 					</div>
 			    <div class="col-sm-4">
-						<label for="materiaNuevaMateria">Materia</label>
+
+			    <label for="materia">Materia</label>
+			    <select class="form-control select2" placeholder="Seleccione" ng-model="plan.nuevaMateria.materia"><option ng-repeat="mat in plan.materias ">{{materias.descripcion}}</option>
+			    </select>
+						<!--<label for="materiaNuevaMateria">Materia</label>
 						<ui-select ng-model="nuevaMateria.materia"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
@@ -91,7 +95,7 @@
 					    <ui-select-choices repeat="mat in materias | filter: $select.search">
 					      <div ng-bind-html="mat.descripcionCorta | highlight: $select.search"></div>
 					    </ui-select-choices>
-					  </ui-select>
+					  </ui-select>-->
 					</div>	
 					<div class="col-sm-4">
 						
@@ -125,8 +129,8 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="guardar(plan)" value="Guardar" class="btn btn-primary" ng-show="action">
-					<input type="submit" ng-click="actualizar(plan)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					<input type="submit" ng-click="plan.guardar(plan)" value="Guardar" class="btn btn-primary" ng-show="action">
+					<input type="submit" ng-click="plan.actualizar(plan)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
 				</div>
 			</div>	  
 		</form>

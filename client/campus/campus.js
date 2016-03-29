@@ -1,49 +1,62 @@
-angular.module("casserole").controller("CampusCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.campuss = $meteor.collection(Campus).subscribe("campus");
-  $scope.action = true;  
-   
-   $scope.nuevo = true;
-  $scope.nuevoCampus = function()
+angular.module("casserole")
+.controller("CampusCtrl", CampusCtrl);  
+ function CampusCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+ 	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('campus');
+
+	this.helpers({
+	  campus : () => {
+		  return Campus.find();
+	  }
+  });
+  	  
+  this.nuevo = true;	  
+  this.nuevoCampus = function()
   {
-     $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.campus = {};
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.campus = {};		
   };
   
-  $scope.guardar = function(campus)
+  this.guardar = function(campus)
 	{
-		$scope.campus.estatus = true;
-		$scope.campuss.save(campus);
-		toastr.success('Campus guardado.');
-		$scope.campus = "";
+		this.campus.estatus = true;
+		console.log(this.campus);
+		Campus.insert(this.campus);
+		toastr.success('campus guardado.');
+		this.campus = {}; 
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.campus')
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.campus = $meteor.object(Campus, id, false);
-    $scope.action = false;
-    $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.campus = Campus.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(campus)
+	this.actualizar = function(campus)
 	{
-		$scope.campus.save();
+		var idTemp = campus._id;
+		delete campus._id;		
+		Campus.update({_id:idTemp},{$set:campus});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
-		
-	$scope.cambiarEstatus = function(id)
+
+	this.cambiarEstatus = function(id)
 	{
-		var campus = $meteor.object(Campus, id, false);
+		var campus = Campus.findOne({_id:id});
 		if(campus.estatus == true)
 			campus.estatus = false;
 		else
 			campus.estatus = true;
 		
-		campus.save();
-	};
-}]);
+		Campus.update({_id: id},{$set :  {estatus : campus.estatus}});
+    };
+		
+};

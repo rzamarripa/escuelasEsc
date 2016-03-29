@@ -1,73 +1,62 @@
 angular.module("casserole")
-.controller("AulasCtrl" , AulasCtrl);  
+.controller("AulasCtrl", AulasCtrl);  
+ function AulasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+ 	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('aulas');
 
-function AulasCtrl ($scope, $meteor, $reactive , $state, $stateParams, toastr) {
-	let rc = $reactive(this).attach($scope);
-    rc.action = true;    
-	rc.subscribe('aulas');
-
-  rc.helpers({
+	this.helpers({
 	  aulas : () => {
 		  return Aulas.find();
 	  }
-  }); 
-
-  
-  rc.action = true;  
-  rc.nuevo = true;
-  
-   rc.nuevoAula = function()
+  });
+  	  
+  this.nuevo = true;	  
+  this.nuevoAula = function()
   {
-    rc.action = true;
-    rc.nuevo = !rc.nuevo;
-    rc.aula = {}; 
- 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.aula = {};		
   };
   
-   rc.guardar = function(aula)
+  this.guardar = function(aula)
 	{
-	    rc.aula.estatus = true;
-		rc.aulas.save(aula);
-		Aulas.insert(rc.ciclo);
-		toastr.success('Aula guardada.');
-		rc.aula = {};
-		$('.collapse').collapse('show');
-		rc.nuevo = true;
-		state.go('root.aulas');
-	};
-	
-	 rc.editar = function(id)
-	{
-    rc.aula = Aulas.finOne(Aulas, id, false);
-    rc.action = false;
-    $('.collapse').collapse('show');
-    rc.nuevo = false;
-	};
-	
-	rc.actualizar = function(aula)
-	{
-		var idTemp = aula_id;
-		delete aula._id;
-		Aulas.update({_id:idTemp},{$set:aula});
-		rc.aula.save();
+		this.aula.estatus = true;
+		console.log(this.aula);
+		Aulas.insert(this.aula);
+		toastr.success('aula guardada.');
+		this.aula = {}; 
 		$('.collapse').collapse('hide');
-		rc.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.aulas')
 	};
-		
-	rc.cambiarEstatus = function(id)
+	
+	this.editar = function(id)
+	{
+    this.aula = Aulas.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
+	};
+	
+	this.actualizar = function(aula)
+	{
+		var idTemp = aula._id;
+		delete aula._id;		
+		Aulas.update({_id:idTemp},{$set:aula});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+	};
+
+	this.cambiarEstatus = function(id)
 	{
 		var aula = Aulas.findOne({_id:id});
 		if(aula.estatus == true)
 			aula.estatus = false;
 		else
-		aula.estatus = true;
+			aula.estatus = true;
 		
-		Aulas.update({_id:id}, {$set : {estatus : aula.estatus}});
-	};
-	   //  $scope.remove = function(empresa)
-       // {
-       //     $scope.empresa.estatus = false;
-       //     $scope.empresas.save(empresa);
-       // };
+		Aulas.update({_id: id},{$set :  {estatus : aula.estatus}});
+    };
+		
 };
-	

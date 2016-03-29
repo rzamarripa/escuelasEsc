@@ -1,53 +1,62 @@
-angular.module("casserole").controller("DocumentosCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.documentos = $meteor.collection(Documentos).subscribe("documentos");
-  $scope.action = true;  
-  $scope.nuevo = true;
+angular.module("casserole")
+.controller("DocumentosCtrl", DocumentosCtrl);  
+ function DocumentosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+ 	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('documentos');
 
-  $scope.nuevoDocumento = function()
+	this.helpers({
+	  documentos : () => {
+		  return Documentos.find();
+	  }
+  });
+  	  
+  this.nuevo = true;	  
+  this.nuevoDocumento = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.documento = {}; 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.documento = {};		
   };
   
-
- $scope.guardar = function(documento)
+  this.guardar = function(documento)
 	{
-	
-	    $scope.documento.estatus = true;
-		$scope.documentos.save(documento);
+		this.documento.estatus = true;
+		console.log(this.documento);
+		Documentos.insert(this.documento);
 		toastr.success('Documento guardado.');
-        $scope.documento = {}; 
+		this.documento = {}; 
 		$('.collapse').collapse('hide');
-        $scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.documentos')
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.documento = $meteor.object(Documentos, id, false);
-    $scope.action = false;
-    $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.documento = Documentos.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(documento)
+	this.actualizar = function(documento)
 	{
-		$scope.documento.save();
+		var idTemp = documento._id;
+		delete documento._id;		
+		Documentos.update({_id:idTemp},{$set:documento});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
-		
-	$scope.cambiarEstatus = function(id)
+
+	this.cambiarEstatus = function(id)
 	{
-		var documento = $meteor.object(Documentos, id, false);
+		var documento = Documentos.findOne({_id:id});
 		if(documento.estatus == true)
 			documento.estatus = false;
 		else
-		documento.estatus = true;
+			documento.estatus = true;
 		
-		documento.save();
-	};
-
-}]);
-	
+		Documentos.update({_id: id},{$set :  {estatus : documento.estatus}});
+    };
+		
+};

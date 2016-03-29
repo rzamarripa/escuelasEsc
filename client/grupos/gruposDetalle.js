@@ -1,13 +1,28 @@
-angular.module("casserole")
+angular
+.module("casserole")
 .controller("GruposDetalleCtrl", GruposDetalleCtrl);
  function GruposDetalleCtrl($scope, $meteor,$reactive , $state, $stateParams){
  	$reactive(this).attach($scope);
   this.action = true;
-	
-	this.inscripciones = $meteor.collection(function(){return Inscripciones.find({grupo_id: $stateParams.id})},false).subscribe("inscripciones");
-	this.alumnos = $meteor.collection(function() {return Alumnos.find();}).subscribe("alumnos");
 
-	this.grupo = $meteor.object(Grupos, $stateParams.id, false).subscribe("grupos");
+  this.subscribe('inscripciones');
+  this.subscribe('alumnos');
+  this.subscribe('grupos');
+	
+	this.helpers({
+	  inscripciones : () => {
+		  return Inscripciones.find({grupo_id: $stateParams.id});
+	  },
+	   alumnos : () => {
+		  return Alumnos.find();
+	  },
+	   grupos : () => {
+		  return Grupos.find(Grupos, $stateParams.id);
+	  },
+  });
+	//this.inscripciones = $meteor.collection(function(){return Inscripciones.find({grupo_id: $stateParams.id})},false).subscribe("inscripciones");
+
+
 	
 	this.getAlumno = function(alumno_id){
 		alumno = _.find(this.alumnos,function(x){return x._id==alumno_id;});
