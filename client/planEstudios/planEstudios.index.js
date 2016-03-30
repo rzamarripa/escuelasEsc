@@ -18,13 +18,14 @@ this.helpers({
 	  materias : () => {
 		  return Materias.find();
 	  },
-	 
+	  plan :() =>{
+	  	return PlanesEstudios.findOne($stateParams.id);
+	  }
   });
 	
 
 	this.action = $stateParams.id? false:true; 
 	this.getSeccionById = function(id){ return Secciones.getSeccionById(id)};
-	this.plan= $stateParams.id? $meteor.object(PlanesEstudios, $stateParams.id, false):{};
 	
 	function crearGrados(gradosActuales){
 		if(gradosActuales <1 ){
@@ -91,12 +92,17 @@ this.helpers({
 	this.actualizar = function()
 	{
 		var idTemp = this.plan._id;
-		delete this.plan._id;		
+		console.log(idTemp);
+		delete this.plan._id;	
+		console.log(this.plan);	
 		PlanesEstudios.update({_id:idTemp},{$set:this.plan});
+		console.log(idTemp);
 		$('.collapse').collapse('hide');
+		console.log(idTemp);
 		this.nuevo = true;
-		
+		console.log(idTemp);
 	};
+
 
 	this.cambiarEstatus = function(id)
 	{
