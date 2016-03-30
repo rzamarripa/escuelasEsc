@@ -25,15 +25,18 @@
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 						<label for="clave">Clave</label>
-					    <input type="text" class="form-control" placeholder="Clave" ng-model="plan.clave" required>
+					    <input type="text" class="form-control" placeholder="Clave" ng-model="pl.plan.clave" required>
 			    	</div>
 			    	<div class="col-sm-4">
 					    <label for="descripcion">Descripción</label>
-					    <input type="text" class="form-control" placeholder="Descripción" ng-model="plan.descripcion" required>
+					    <input type="text" class="form-control" placeholder="Descripción" ng-model="pl.plan.descripcion" required>
 			    	</div>
 			    	<div class="col-sm-4">
 						<label for="seccion_id">Sección</label>
-						<ui-select ng-model="plan.seccion_id"
+						<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id">
+							<option ng-repeat="seccion in pl.plan.secciones" value="{{seccion._id}}">{{seccion.descripcion}}</option>
+						</select>
+						<!--<ui-select ng-model="plan.seccion_id"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
 					             reset-search-input="false">
@@ -41,35 +44,35 @@
 					    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
 					      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
 					    </ui-select-choices>
-					  </ui-select>
+					  </ui-select>-->
 					</div>	
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
 					    <label for="formulo">Formuló</label>
-					    <input type="text" class="form-control" ng-model="plan.formulo">
+					    <input type="text" class="form-control" ng-model="pl.plan.formulo">
 			    	</div>
 			    	<div class="col-sm-4">
 						<label for="tipo">Tipo</label><br/>
-				    	<select ng-model="plan.tipo" class="form-control">
+				    	<select ng-model="pl.plan.tipo" class="form-control">
 						  <option value="Baja">Interno</option>
 						  <option value="Media">Externo</option>
 						</select>
 					</div>
 					<div class="col-sm-4">
 						<label for="acuerdo">Acuerdo</label>
-					    <input type="text" class="form-control" ng-model="plan.acuerdo">
+					    <input type="text" class="form-control" ng-model="pl.plan.acuerdo">
 					</div>
 			    	
 			    </div>				  
 			    <div class="row">
 			    	<div class="col-sm-4">
 					    <label for="fecha">Fecha</label>
-					    <input type="date" class="form-control" ng-model="plan.fecha">
+					    <input type="date" class="form-control" ng-model="pl.plan.fecha">
 			    	</div>
 			    	<div class="col-sm-4">
 					    <label for="grado">Grados</label>
-					    <input type="number" class="form-control" ng-model="plan.grado">
+					    <input type="number" class="form-control" ng-model="pl.plan.grado">
 			    	</div>
 			    </div>
 			</div>
@@ -82,9 +85,8 @@
 						</select>
 					</div>
 			    <div class="col-sm-4">
-
-			    <label for="materia">Materia</label>
-			    <select class="form-control select2" placeholder="Seleccione" ng-model="plan.nuevaMateria.materia"><option ng-repeat="mat in plan.materias ">{{materias.descripcion}}</option>
+			    <label>Materia</label>
+			    <select class="form-control select2" placeholder="Seleccione" ng-model="pl.nuevaMateria.materia"><option ng-repeat="mat in pl.materias ">{{materias.descripcion}}</option>
 			    </select>
 						<!--<label for="materiaNuevaMateria">Materia</label>
 						<ui-select ng-model="nuevaMateria.materia"
@@ -99,7 +101,7 @@
 					</div>	
 					<div class="col-sm-4">
 						
-						<input type="button" ng-click="agregarMateria(nuevaMateria)" value="Agregar" class="btn btn-primary" >
+						<input type="button" ng-click="pl.agregarMateria(nuevaMateria)" value="Agregar" class="btn btn-primary" >
 						
 					</div>
 			    </div>	  
@@ -112,7 +114,7 @@
 						
 							<tr ng-repeat="_grado in getGrados()" >
 								<th width="5%"><div class="text-center">{{_grado+1}}</div></th>
-								<td ng-repeat="_materia in plan.grados[_grado]">
+								<td ng-repeat="_materia in grados[_grado]">
 									<div class="row">
 										<div class="col-sm-8">
 											<strong>{{_materia.materia.clave}}</strong>
@@ -129,8 +131,8 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="plan.guardar(plan)" value="Guardar" class="btn btn-primary" ng-show="action">
-					<input type="submit" ng-click="plan.actualizar(plan)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					<input type="submit" ng-click="pl.guardar(plan)" value="Guardar" class="btn btn-primary" ng-show="pl.action">
+					<input type="submit" ng-click="pl.actualizar(plan)" value="Actualizar" class="btn btn-primary" ng-show="!pl.action">				
 				</div>
 			</div>	  
 		</form>

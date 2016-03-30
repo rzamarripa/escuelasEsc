@@ -1,85 +1,128 @@
-angular.module("casserole").controller("PlanEstudiosIndexCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
+angular
+.module("casserole")
+.controller("PlanEstudiosIndexCtrl", PlanEstudiosIndexCtrl);
+function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+	$reactive(this).attach($scope);
+  this.action = true;
+  this.subscribe('planesEstudios');
+  this.subscribe('secciones');
+  this.subscribe('materias');
 	//
-	$scope.planesEstudios = $meteor.collection(function() {return PlanesEstudios.find();}).subscribe("planesEstudios");
-	$scope.secciones = $meteor.collection(function(){return Secciones.find();}).subscribe("secciones");
-	$scope.materias = $meteor.collection(function(){return Materias.find();}).subscribe("materias");
+this.helpers({
+	  planesEstudios : () => {
+		  return PlanesEstudios.find();
+	  },
+	  secciones : () => {
+		  return Secciones.find();
+	  },
+	  materias : () => {
+		  return Materias.find();
+	  },
+	 
+  });
 	
 
-	$scope.action = $stateParams.id? false:true; 
-	$scope.getSeccionById = function(id){ return Secciones.getSeccionById(id)};
-	$scope.plan= $stateParams.id? $meteor.object(PlanesEstudios, $stateParams.id, false):{};
+	this.action = $stateParams.id? false:true; 
+	this.getSeccionById = function(id){ return Secciones.getSeccionById(id)};
+	this.plan= $stateParams.id? $meteor.object(PlanesEstudios, $stateParams.id, false):{};
 	
 	function crearGrados(gradosActuales){
 		if(gradosActuales <1 ){
-			$scope.plan.grados=[];
+			this.plan.grados=[];
 			return;
 		}
-		if(!$scope.plan.grados){
-			$scope.plan.grados=[];
+		if(!this.plan.grados){
+			this.plan.grados=[];
 			for (var i = 0; i < gradosActuales; i++) {
 				grados[i]=[];
 			};
 		}
-		while(gradosActuales<$scope.plan.grados.length)$scope.plan.grados.pop();
-		while(gradosActuales>$scope.plan.grados.length)$scope.plan.grados.push([]);
+		while(gradosActuales<this.plan.grados.length)this.plan.grados.pop();
+		while(gradosActuales>this.plan.grados.length)this.plan.grados.push([]);
 
 
 	}
-	$scope.getGrados = function() {
-		var gradosActuales=$scope.plan? ($scope.plan.grado? $scope.plan.grado:0 ):0;
+	this.getGrados = function() {
+		var gradosActuales=this.plan? (this.plan.grado? this.plan.grado:0 ):0;
 		
 		crearGrados(gradosActuales)
 
 		return _.range(gradosActuales);   
 	};
 
-	$scope.agregarMateria = function(nuevaMateria){
-		var gradosActuales=$scope.plan? ($scope.plan.grado? $scope.plan.grado:0 ):0;
+	this.agregarMateria = function(nuevaMateria){
+		var gradosActuales=this.plan? (this.plan.grado? this.plan.grado:0 ):0;
 		crearGrados(gradosActuales)
 		
-		$scope.plan.grados[nuevaMateria.grado].push(nuevaMateria);
-		$scope.nuevaMateria="";
+		this.plan.grados[nuevaMateria.grado].push(nuevaMateria);
+		this.nuevaMateria="";
 		
 	};
 
-	$scope.quitarMateria = function(_materia){
-		var i=$scope.plan.grados[_materia.grado].indexOf(_materia);
-		$scope.plan.grados[_materia.grado].splice( i, 1 );
+	this.quitarMateria = function(_materia){
+		var i=this.plan.grados[_materia.grado].indexOf(_materia);
+		this.plan.grados[_materia.grado].splice( i, 1 );
 	}
 
-	$scope.guardar = function()
+	this.guardar = function(plan)
 	{
-		$scope.plan.estatus = true;
-		$scope.planesEstudios.save($scope.plan).then(function(docto){	
-		toast.success('Plan de estudio guardado');	
+
+		this.plan.estatus = true;
+		console.log(this.plan);
+		PlanesEstudios.insert(this.plan);	
+		toastr.success('Plan de estudio guardado');	
+		this.plan = {}; 
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
 			$state.go("root.planEstudio");
-		});
+
+	
 		
 	};
-	$scope.actualizar = function()
-	{
 
-		$scope.plan.estatus = true;
-		$scope.plan.save().then(function(docto){			
-			$state.go("root.planEstudio");
-		});
+	this.editar = function(id)
+	{
+    this.plan = PlanesEstudios.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
 	};
-	/*$scope.action = true;  
+
+	this.actualizar = function()
+	{
+		var idTemp = this.plan._id;
+		delete this.plan._id;		
+		PlanesEstudios.update({_id:idTemp},{$set:this.plan});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		
+	};
+
+	this.cambiarEstatus = function(id)
+	{
+		var plan = PlanesEstudios.findOne({_id:id});
+		if(plan.estatus == true)
+			plan.estatus = false;
+		else
+			plan.estatus = true;
+		
+		PlanesEstudios.update({_id: id},{$set :  {estatus : plan.estatus}});
+    };
+	/*this.action = true;  
 
   
-  	$scope.guardar = function(asd)
+  	this.guardar = function(asd)
 	{
-		$scope.plan.estatus = true;
-		$scope.planesEstudios.save($scope.plan).then(function(docto){			
+		this.plan.estatus = true;
+		this.planesEstudios.save(this.plan).then(function(docto){			
 			$state.go("root.planEstudioDetalle",{"id":docto[0]._id});
 		});
 	};
 	
-	$scope.nuevoAlumno = function()
+	this.nuevoAlumno = function()
 	{
-		$scope.action = true;
-	    $scope.alumno = "";
+		this.action = true;
+	    this.alumno = "";
 	    
 	};*/
-}]);
+};

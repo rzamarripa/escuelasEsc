@@ -9,6 +9,7 @@ angular.module("casserole")
 	  turnos : () => {
 		  return Turnos.find();
 	  }
+	 
   });
   	  
   this.nuevo = true;	  

@@ -156,22 +156,22 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.planEstudio', {
       url: '/planEstudios',
       templateUrl: 'client/planEstudios/planEstudios.index.ng.html',
-      controller: 'PlanEstudiosIndexCtrl as plan',
+      controller: 'PlanEstudiosIndexCtrl as pl',
     })
     .state('root.nuevoPlanEstudio', {
       url: '/nuevoPlanEstudios',
       templateUrl: 'client/planEstudios/planEstudios.form.ng.html',
-      controller: 'PlanEstudiosIndexCtrl as nPlan',
+      controller: 'PlanEstudiosIndexCtrl as pl',
     })
     .state('root.editarPlanEstudio', {
       url: '/editarPlanEstudios/:id',
       templateUrl: 'client/planEstudios/planEstudios.form.ng.html',
-      controller: 'PlanEstudiosIndexCtrl as editP',
+      controller: 'PlanEstudiosIndexCtrl as pl',
     })
     .state('root.planEstudioDetalle', {
       url: '/planEstudios/:id',
       templateUrl: 'client/planEstudios/planEstudios.detalle.ng.html',
-      controller: 'PlanEstudiosDetalleCtrl as Pdetalle',
+      controller: 'PlanEstudiosDetalleCtrl as pl',
     })
     .state('root.turnos', {
       url: '/turnos',
@@ -186,7 +186,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.grupoDetalle', {
       url: '/grupos/:id',
       templateUrl: 'client/grupos/gruposDetalle.ng.html',
-      controller: 'GruposDetalleCtrl',
+      controller: 'GruposDetalleCtrl as gp',
     })
     .state('root.inscripciones', {
       url: '/inscripciones',
@@ -201,12 +201,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
 		.state('root.nuevoGrupo', {
       url: '/nuevoGrupo',
       templateUrl: 'client/grupos/form.ng.html',
-      controller: 'NuevoGrupoCtrl',
+      controller: 'NuevoGrupoCtrl as gp',
     })
     .state('root.editarGrupo', {
       url: '/editarGrupo/:id',
       templateUrl: 'client/grupos/form.ng.html',
-      controller: 'NuevoGrupoCtrl',
+      controller: 'NuevoGrupoCtrl as gp',
     })
     .state('root.generaciones', {
       url: '/',
