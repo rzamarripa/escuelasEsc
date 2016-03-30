@@ -1,3 +1,3 @@
 Meteor.publish("materias", function(){
-	return Materias.find();
+	return  Materias.find();
 });

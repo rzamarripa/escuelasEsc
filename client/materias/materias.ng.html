@@ -1,9 +1,10 @@
 <h2>Materias</h2>
+{{ma.materias | json}}
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaMateria" ng-click="nuevaMateria()">
-		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{ma.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaMateria" ng-click="ma.nuevaMateria()">
+		  {{ma.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		
 		<div class="collapse" id="collapseExample">
@@ -16,9 +17,9 @@
 		  		</div>
 		  		<div class="row">
 		  			<div class="col-sm-6">			  
-						  <label for="ocupacion">Ocupación</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="materia.deptoAcademico_id">
-							  <option ng-repeat="deptoAcademico in deptosAcademicos" value="{{deptoAcademico._id}}">
+						  <label for="ocupacion">Deptos. Académicos</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="ma.materia.deptoAcademico_id">
+							  <option ng-repeat="deptoAcademico in ma.deptosAcademicos" value="{{deptoAcademico._id}}">
 							  	{{deptoAcademico.descripcion}}
 							  </option>
 							</select>
@@ -26,29 +27,29 @@
 					</div>	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
-				    	
-				    	<input type="text" class="form-control"  ng-model="materia.clave">
+				    	<label>Clave</label>
+				    	<input type="text" class="form-control"  ng-model="ma.materia.clave">
 			    	</div>
 			    	<div class="col-sm-4">
-			    		
-				    	<input type="text" class="form-control"  ng-model="materia.etiqueta" >
+			    		<label>Etiqueta</label>
+				    	<input type="text" class="form-control"  ng-model="ma.materia.etiqueta" >
 			    	</div>
 			    	<div class="col-sm-4">
-
-				    	<input type="text" class="form-control"  ng-model="materia.descripcionCorta" >
+						<label>Descripción Corta</label>
+				    	<input type="text" class="form-control"  ng-model="ma.materia.descripcionCorta" >
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
-
-					    <textarea class="form-control" ng-model="materia.descripcion"></textarea>
+							<label>Descripción</label>
+					    <textarea class="form-control" ng-model="ma.materia.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(materia)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" value="Guardar" ng-click="ma.guardar(ma.materia)" class="btn btn-primary" ng-show="ma.action">
+						<input type="submit" ng-click="ma.actualizar(ma.materia)" value="Actualizar" class="btn btn-primary" ng-show="!ma.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -77,13 +78,11 @@
 							Acciones
 						</div>
 					</th>
-	
-
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="materia in materias">
-		    	<td>{{getDeptoAcademico(materia.deptoAcademico_id)}}</td>
+		    <tr ng-repeat="materia in ma.materias">
+		    	<td>{{materia.deptoAcademico.descripcion}}</td>
 			    <td>{{materia.clave}}</td>
 			    <td>{{materia.etiqueta}}</td>
 			    <td>{{materia.descripcionCorta}}</td>
@@ -106,7 +105,7 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(materia._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="ma.editar(materia._id)"><i class="fa fa-pencil"></i> Editar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

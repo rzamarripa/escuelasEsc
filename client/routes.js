@@ -116,7 +116,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.materias', {
       url: '/materias',
       templateUrl: 'client/materias/materias.ng.html',
-      controller: 'MateriasCtrl',
+      controller: 'MateriasCtrl as ma',
     })
     .state('root.ocupaciones', {
       url: '/ocupaciones',

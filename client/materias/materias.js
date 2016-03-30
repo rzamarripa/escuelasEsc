@@ -1,76 +1,79 @@
-angular.module("casserole").controller("MateriasCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-	$scope.materias = $meteor.collection(Materias).subscribe("materias");
-	$scope.deptosAcademicos = $meteor.collection(function(){return DeptosAcademicos.find();}).subscribe("deptosAcademicos");
-    $scope.action = true; 
-    $scope.nuevo = true; 
+angular
+  .module('casserole')
+  .controller('MateriasCtrl', MateriasCtrl);
+ 
+function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+
+	this.subscribe("materias");
+	this.subscribe("deptosAcademicos");
+	
+	this.helpers({
+		deptosAcademicos : () => {
+			return DeptosAcademicos.find();
+		},
+		materias : () => {
+			var materiasEncontradas = Materias.find().fetch();
+			_.each(materiasEncontradas, function(materia){
+				materia.deptoAcademico = DeptosAcademicos.findOne(materias.deptoAcademico_id);
+			});
+		  return materiasEncontradas;
+		}
+	});
+
+  this.action = true; 
+  this.nuevo = true; 
     
   $(document).ready(function() {
 	  $(".select2").select2();
-	});
-	
-	$scope.subscribe("deptosAcademicos");
+	});   
 
-    
-
-  $scope.nuevaMateria = function()
+  this.nuevaMateria = function()
   {
-   	$scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.materia = {};
+   	this.action = true;
+    this.nuevo = !this.nuevo;
+    this.materia = {};
     
   };
-  $scope.submit = function(){
-  		console.log("entro al submit");
-  		$scope.submitted=true;
-  		console.log($scope.validForm);
-  		if($scope.validForm)
-  			$scope.guardar($scope.materia)
-
-  		
-  	
-  }
   
-  $scope.guardar = function(materia)
+  this.guardar = function(materia)
 	{
-		$scope.materia.estatus = true;
-		$scope.materias.save(materia);
+		this.materia.estatus = true;
+		Materias.insert(materia);
 		toastr.success('Materia guardada.');
-		$scope.materia = {};
+		this.materia = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
-
+		this.nuevo = true;
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.materia = $meteor.object(Materias, id, false);
-    $scope.action = false;
+    this.materia = Materias.findOne(id);
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(materia)
+	this.actualizar = function(materia)
 	{
-		$scope.materia.save();
+		var idTemp = materia._id;
+		delete materia._id;		
+		Materias.update({_id:idTemp},{$set:materia});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var materia = $meteor.object(Materias, id, false);
+		var materia = Materias.findOne(id);
 		if(materia.estatus == true)
 			materia.estatus = false;
 		else
 			materia.estatus = true;
 		
-		materia.save();
+		Materias.update({_id:id},{$set:{estatus: materia.estatus}});
 	};
 	
-	$scope.getDeptoAcademico = function(depto_id){
-		var depto = $meteor.object(DeptosAcademicos, depto_id, false);
-		return depto.descripcion;		
-	};
 	
-}]);
+	
+};
