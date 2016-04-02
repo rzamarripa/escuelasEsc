@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" href="./nuevoPlanEstudios" ng-click="nuevoPlan()">
+		<a class="btn btn-primary" href="./nuevoPlanEstudios" ng-click="pl.nuevoPlan()">
 		  Nuevo
 		</a>
 	</div>
@@ -41,10 +41,10 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="_plan in planesEstudios">
+		    <tr ng-repeat="_plan in pl.planesEstudios">
 			    <td> {{_plan.clave}}</td>
 			    <td> {{_plan.descripcion}}</td>
-			    <td> {{getSeccionById(_plan.seccion_id).descripcionCorta}}</td>
+			    <td> {{pl.getSeccionById(_plan.seccion_id).descripcionCorta}}</td>
 			    
 			    <td> {{_plan.tipo}}</td>
 			    <td> {{_plan.grado}}</td>
@@ -69,6 +69,8 @@
 							    <li><a href="./planEstudios/{{_plan._id}}"><i class="fa fa-eye"></i> Ver</a></li>
 							 
 							    <li><a href="./editarPlanEstudios/{{_plan._id}}"><i class="fa fa-pencil"></i> Editar</a></li>
+							   <li><a href="#" ng-click="pl.cambiarEstatus(_plan._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+
 							  </ul>
 							</div>
 				    </div>				    

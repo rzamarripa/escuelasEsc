@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" href="./nuevoGrupo" ng-click="nuevoGrupo()">
+		<a class="btn btn-primary" href="./nuevoGrupo" ng-click="gp.nuevoGrupo()">
 		  Nuevo
 		</a>
 	</div>
@@ -42,13 +42,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="grupo in grupos">
-			    <td>{{getCiclo(grupo.ciclo_id)}}</td>
+				<tr ng-repeat="grupo in gp.grupos">
+			    <td>{{gp.getCiclo(grupo.ciclo_id)}}</td>
 			    <td>{{grupo.identificador}} </td>
 			    <td>{{grupo.tipo}}</td>
 			    <td>{{grupo.inscritos}}/{{grupo.cupo}}</td>
-			    <td>{{getTurno(grupo.turno_id)}}</td>
-			    <td>{{getSeccion(grupo.seccion_id)[0]}}</td>
+			    <td>{{gp.getTurno(grupo.turno_id)}}</td>
+			    <td>{{gp.getSeccion(grupo.seccion_id)[0]}}</td>
 			    <td>{{grupo.grado}}</td>
 			    <td>
 				    <div class="text-center">
@@ -69,7 +69,7 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="./editarGrupo/{{grupo._id}}"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(grupo._id)"><i class="fa fa-trash"></i> {{getEstatus(grupo.estatus)}}</a></li>
+							    <li><a href="#" ng-click="gp.cambiarEstatus(grupo._id)"><i class="fa fa-trash"></i> {{getEstatus(grupo.estatus)}}</a></li>
 							  </ul>
 							</div>
 				    </div>				    

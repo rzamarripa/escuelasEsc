@@ -19,38 +19,34 @@
 <br/>
 <div class="row">
 	<div class="col-sm-12">
-		<form class="form-horizontal" role="form" data-collection2-schema="Grupos">
+		<form class="form-horizontal" role="form" >
 	  	<div class="well">	    
 		    <div class="row">
 					<div class="col-sm-4">
 						<label >Ciclo Escolar</label>
-						<ui-select ng-model="grupo.ciclo_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false"
-					             collection2-validate>
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.anioEscolar}} {{$select.selected.complementoEscolar}}</ui-select-match>
-					    <ui-select-choices repeat="ciclo._id as ciclo in ciclos | filter: $select.search">
-					      <div ng-bind-html="ciclo.anioEscolar + ' ' + ciclo.complementoEscolar | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id">
+							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.anioEscolar}}</option>
+						</select>
 					</div>
 		    	<div class="col-sm-4">				    
 				    <label for="grupo">Grupo</label>
-				    <input type="text" class="form-control" placeholder="Grupo" ng-model="grupo.nombre" collection2-validate>						
+				    <input type="text" class="form-control" placeholder="Grupo" ng-model="gp.grupo.nombre" >						
 		    	</div>
 		    	<div class="col-sm-4">
 						<label >Maestro</label>
-						<ui-select ng-model="grupo.maestro_id"
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.maestro_id">
+							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}}</option>
+						</select>
+						<!--<ui-select ng-model="gp.grupo.maestro_id"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
 					             reset-search-input="false"
-					             collection2-validate>
+					             >
 					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}} {{$select.selected.apPaterno}}</ui-select-match>
-					    <ui-select-choices repeat="maestro._id as maestro in maestros | filter: $select.search">
+					    <ui-select-choices repeat="gp.maestro._id as maestro in maestros | filter: $select.search">
 					      <div ng-bind-html="maestro.nombre + ' ' + maestro.apPaterno | highlight: $select.search"></div>
 					    </ui-select-choices>
-					  </ui-select>
+					  </ui-select>-->
 					</div>
 		    </div>
 	  	</div>
@@ -59,7 +55,7 @@
 				<div class="row">						
 					<div class="col-sm-4">
 				    <label for="tipo">Tipo</label>
-				    <select ng-model="grupo.tipo" data-placeholder="Seleccione" class="form-control" collection2-validate>
+				    <select ng-model="gp.grupo.tipo" data-placeholder="Seleccione" class="form-control" >
 						    <option value=""></option>
 						    <option value="Cerrado">Cerrado</option>
 						    <option value="Abierto">Abierto</option>
@@ -67,60 +63,73 @@
 		    	</div>
 		    	<div class="col-sm-4">
 				    <label for="cupo">Cupo</label>
-				    <input type="number" class="form-control" id="cupo" placeholder="Cupo" ng-model="grupo.cupo" collection2-validate>
+				    <input type="number" class="form-control" id="cupo" placeholder="Cupo" ng-model="gp.grupo.cupo" >
 		    	</div>
 					<div class="col-sm-4">
 						<label >Turno</label>
-						<ui-select ng-model="grupo.turno_id"
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.turno_id">
+							<option ng-repeat="turno in gp.turnos" value="{{turno._id}}">{{turno.nombre}}</option>
+						</select>
+						<!--<ui-select ng-model="gp.grupo.turno_id"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
 					             reset-search-input="false"
-					             collection2-validate>
+					             >
 					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}}</ui-select-match>
-					    <ui-select-choices repeat="turno._id as turno in turnos | filter: $select.search">
+					    <ui-select-choices repeat="gp.turno._id as turno in turnos | filter: $select.search">
 					      <div ng-bind-html="turno.nombre | highlight: $select.search"></div>
 					    </ui-select-choices>
-					  </ui-select>
+					  </ui-select>-->
 					</div>	
+
+				
+
 				</div>
 				<div class="row">						
 					<div class="col-sm-4">
 						<label >Sección</label>
-						<ui-select ng-model="grupo.seccion_id"
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.seccion_id">
+							<option ng-repeat="seccion in gp.secciones" value="{{seccion._id}}">{{seccion.decripcionCorta}}</option>
+						</select>
+						<!--<ui-select ng-model="gp.grupo.seccion_id"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
 					             reset-search-input="false"
 					             on-select="getGrados(grupo.seccion_id)"
-					             collection2-validate>
+					             >
 					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
-					    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
+					    <ui-select-choices repeat="gp.seccion._id as seccion in secciones | filter: $select.search">
 					      <div ng-bind-html="seccion.descripcionCorta | highlight: $select.search"></div>
 					    </ui-select-choices>
-					  </ui-select>
+					  </ui-select>-->
 					</div>
 					<div class="col-sm-4">
 						<label >Grado</label>
-						<ui-select ng-model="grupo.grado"
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.grado_id">
+							<option ng-repeat="grado in gp.grados" value="{{grado._id}}">{{grado}}</option>
+						</select>
+						<!--<ui-select ng-model="gp.grupo.grado"
 					             theme="bootstrap"
 					             ng-disabled="disabled"
 					             reset-search-input="false"
-					             collection2-validate>
+					             >
 					    <ui-select-match placeholder="Seleccione">{{grado}}</ui-select-match>
 					    <ui-select-choices repeat="grado as grado in grados | filter: $select.search">
 					      {{grado}}
 					    </ui-select-choices>
-					  </ui-select>
+					  </ui-select>-->
+
 					</div>	
 					<div class="col-sm-4">
 						<label for="identificador">Identificador</label>
-						<input type="text" class="form-control" id="identificador" placeholder="Identificador" ng-model="grupo.identificador" collection2-validate>
+						<input type="text" class="form-control" id="identificador" placeholder="Identificador" ng-model="gp.grupo.identificador" >
 					</div>
 				</div>
 	  	</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="guardar(grupo)" value="Guardar" class="btn btn-primary" ng-show="action">
-					<input type="submit" ng-click="actualizar(grupo)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+					<input type="submit" ng-click="gp.guardar(grupo)" value="Guardar" class="btn btn-primary" ng-show="gp.action">
+					<input type="submit" ng-click="gp.actualizar(grupo)" value="Actualizar" class="btn btn-primary" ng-show="!gp.action">				
 				</div>
 			</div>	  
 	  </form>

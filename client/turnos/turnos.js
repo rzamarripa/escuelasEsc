@@ -1,76 +1,63 @@
-angular.module("casserole").controller("TurnosCtrl",   ['$scope', '$meteor', '$state','$stateParams', 'toastr', function($scope, $meteor, $state, $stateParams, toastr)
-{	
-	
-  $scope.turnos = $meteor.collection(Turnos).subscribe("turnos");
-  $scope.action = true;
-  $scope.nuevo = true;  
+angular.module("casserole")
+.controller("TurnosCtrl", TurnosCtrl);  
+ function TurnosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+ 	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('turnos');
+
+	this.helpers({
+	  turnos : () => {
+		  return Turnos.find();
+	  }
+	 
+  });
   	  
-  $scope.nuevoTurno = function()
+  this.nuevo = true;	  
+  this.nuevoTurno = function()
   {
-     $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.turno = {}; 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.turno = {};		
   };
   
-  $scope.guardar = function(turno)
+  this.guardar = function(turno)
 	{
-		$scope.turno.estatus = true;
-		$scope.turnos.save(turno);
+		this.turno.estatus = true;
+		console.log(this.turno);
+		Turnos.insert(this.turno);
 		toastr.success('Turno guardado.');
-        $scope.turno = ""; 
+		this.turno = {}; 
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.turnos')
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.turno = $meteor.object(Turnos, id, false);
-    $scope.action = false;
-    $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.turno = Turnos.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(turno)
+	this.actualizar = function(turno)
 	{
-		$scope.turno.save();
+		var idTemp = turno._id;
+		delete turno._id;		
+		Turnos.update({_id:idTemp},{$set:turno});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
 
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var turno = $meteor.object(Turnos, id, false);
+		var turno = Turnos.findOne({_id:id});
 		if(turno.estatus == true)
 			turno.estatus = false;
 		else
 			turno.estatus = true;
 		
-		turno.save();
+		Turnos.update({_id: id},{$set :  {estatus : turno.estatus}});
     };
 		
-}]);
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};

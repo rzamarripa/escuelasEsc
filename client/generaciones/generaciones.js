@@ -1,50 +1,65 @@
-angular.module("casserole").controller("GeneracionesCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.generaciones = $meteor.collection(Generaciones).subscribe("generaciones");
-  $scope.action = true;  
-  $scope.nuevo = true	  
-  $scope.nuevoGeneracion = function()
+angular
+.module("casserole")
+.controller("GeneracionesCtrl", GeneracionesCtrl);
+function GeneracionesCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
+	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('generaciones');
+
+	this.helpers({
+	  generaciones : () => {
+		  return Generaciones.find();
+	  }
+  });
+
+ 
+  this.nuevo = true	  
+  this.nuevoGeneracion = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.generacion = {}; 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.generacion = {}; 
   };
   
- $scope.guardar = function(generacion)
+ this.guardar = function(generacion)
 	{
-	    $scope.generacion.estatus = true;
-		$scope.generaciones.save(generacion);
+	    this.generacion.estatus = true;
+		console.log(this.generacion);
+		Generaciones.insert(this.generacion);		
 		toastr.success('generacion guardada.');
-        $scope.generacion = ""; 
-		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+       this.generacion = {};
+		$('.collapse').collapse('show');
+		this.nuevo = true;
+		$state.go('root.generaciones');
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.generacion = $meteor.object(Generaciones, id, false);
-    $scope.action = false;
+    this.generacion = Generaciones.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(generacion)
+	this.actualizar = function(generacion)
 	{
-		$scope.generacion.save();
-        $('.collapse').collapse('hide');
-        $scope.nuevo = true;
+		var idTemp = generacion._id;
+		delete generacion._id;		
+		Generaciones.update({_id:idTemp},{$set:generacion});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
 	};
 		
-    $scope.cambiarEstatus = function(id)
+    this.cambiarEstatus = function(id)
 	{
-		var generacion = $meteor.object(Generaciones, id, false);
+		var generacion = Generaciones.findOne({_id:id});
 		if(generacion.estatus == true)
 			generacion.estatus = false;
 		else
 			generacion.estatus = true;
 		
-		generacion.save();
+		Generaciones.update({_id:id}, {$set : {estatus : generacion.estatus}});
 	};
-}]);
+};
 	
 	

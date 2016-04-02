@@ -1,66 +1,79 @@
-angular.module("casserole").controller("MaestrosCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.maestros = $meteor.collection(Maestros).subscribe("maestros");
-  $scope.action = true;
-  $scope.nuevo = true;
+angular
+.module("casserole")
+.controller("MaestrosCtrl", MaestrosCtrl);
+function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
+	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('maestros');
+
+	this.helpers({
+	  maestros : () => {
+		  return Maestros.find();
+	  }
+  });
+
+ 
+
+  this.nuevo = true;
   	  
-  $scope.nuevoMaestro = function()
+  this.nuevoMaestro = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.maestro = {}; 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.maestro = {}; 
   };
 
-	$scope.guardar = function(maestro)
+	this.guardar = function(maestro)
 	{
-		$scope.maestro.estatus = true;
-		$scope.maestros.save(maestro);
+		this.maestro.estatus = true;
+		console.log(this.maestro);
+		Maestros.insert(this.maestro);
 		Meteor.call('createUsuario', maestro, 'maestro');
 		toastr.success("Maestro Creado \n Usuario Creado");
-
-    $scope.maestro = {}; 
-		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.maestro = {};
+		$('.collapse').collapse('show');
+		this.nuevo = true;
+		$state.go('root.maestros');
 	};
-	
-	$scope.editar = function(id)
+
+
+
+
+	this.editar = function(id)
 	{
-    $scope.maestro = $meteor.object(Maestros, id, false);
-    $scope.action = false;
+     this.maestro = Maestros.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(maestro)
+	this.actualizar = function(maestro)
 	{
-		$scope.maestro.save();
+		var idTemp = maestro._id;
+		delete maestro._id;		
+		Maestros.update({_id:idTemp},{$set:maestro});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var maestro = $meteor.object(Maestros, id, false);
-		if(maestro.estatus == true){
+		var maestro = Mestros.findOne({_id:id});
+		if(maestro.estatus == true)
 			maestro.estatus = false;
-			toastr.error("Se Desactivó el maestro");
-		}			
-		else{
-			toastr.success("Se Activó el maestro");
+		else
 			maestro.estatus = true;
-		}
-
 		
-		maestro.save();
+		Maestros.update({_id:id}, {$set : {estatus : maestro.estatus}});
 	};
 
-	$scope.tomarFoto = function(){
+	this.tomarFoto = function(){
 		$meteor.getPicture().then(function(data){
-			$scope.maestro.fotografia = data;
+			this.maestro.fotografia = data;
 		});
 	};
 	
-}]);
+};
 
 
 

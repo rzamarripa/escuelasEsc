@@ -3,26 +3,28 @@ angular
   .controller('AlumnosCtrl', AlumnosCtrl);
  
 function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
-	let rc = $reactive(this).attach($scope);
+	$reactive(this).attach($scope);
 	$(document).ready(function() {
 	  $(".select2").select2();
 	});
 
-  rc.action = true;
-  rc.alumno = {};
-  rc.buscar = {};
-  rc.buscar.nombre = '';
+  this.action = true;
+  this.alumno = {};
+  this.alumno.fotografia = "";
+  var foto;
+  this.buscar = {};
+  this.buscar.nombre = '';
 
-	rc.subscribe('alumnos', () => {
+	this.subscribe('alumnos', () => {
     return [{
 	    options : { limit: 10 },
 	    where : { nombre : this.getReactively('buscar.nombre') }
     }] ;
   });
   
-  rc.subscribe('ocupaciones');
+  this.subscribe('ocupaciones');
   
-	rc.helpers({
+	this.helpers({
 		alumnos : () => {
 			return Alumnos.find();
 		},
@@ -31,36 +33,41 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  }
   });
   
-  rc.guardar = function (alumno) {
-	  console.log(alumno);
-		rc.alumno.estatus = true;
-		rc.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
-		Alumnos.insert(rc.alumno, function(err, doc){
-			Meteor.call('createUsuario', rc.alumno, 'alumno');
+  this.autorun(() => {
+	  alumno.fotografia : () => {
+		  return foto;
+	  }
+  })
+  
+  this.guardar = function (alumno) {
+		this.alumno.estatus = true;
+		this.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
+		Alumnos.insert(this.alumno, function(err, doc){
+			Meteor.call('createUsuario', this.alumno, 'alumno');
 			toastr.success('Alumno guardado.');
 			$state.go('root.alumnoDetalle',{'id':doc});			
-			rc.nuevo = true;
+			this.nuevo = true;
 		});
 	};
 	
-  rc.nuevoAlumno = function () {
-    rc.action = true;
-    rc.alumno = {};    
+  this.nuevoAlumno = function () {
+    this.action = true;
+    this.alumno = {};    
   };
   	
-	rc.cambiarEstatus = function (id) {
+	this.cambiarEstatus = function (id) {
 		var alumno = Alumnos.findOne({_id:id});
-    rc.alumno.estatus = !alumno.estatus;
-		rc.alumno.save();
+    this.alumno.estatus = !alumno.estatus;
+		this.alumno.save();
 	};
 	
-	rc.refreshOcupaciones = function(query){
+	this.refreshOcupaciones = function(query){
 		console.log(query);
 	}
 	
-	rc.tomarFoto = function () {
+	this.tomarFoto = function () {
 		$meteor.getPicture().then(function(data){
-			rc.alumno.fotografia = data;
+			foto = data;
 		})
 	};
 }

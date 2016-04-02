@@ -17,9 +17,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="_inscripcion in inscripciones">
-			<td>{{getAlumno(_inscripcion.alumno_id)[0]}}</td>
-			<td><a href="./alumnos/{{_inscripcion.alumno_id}}">{{getAlumno(_inscripcion.alumno_id)[1]}}</a></td>
+		<tr ng-repeat="gp._inscripcion in inscripciones">
+			<td>{{gp.getAlumno(_inscripcion.alumno_id)[0]}}</td>
+			<td><a href="./alumnos/{{_inscripcion.alumno_id}}">{{gp.getAlumno(_inscripcion.alumno_id)[1]}}</a></td>
 		</tr>
 	</tbody>
 </table>

@@ -1,50 +1,62 @@
-angular.module("casserole").controller("EscuelaCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.escuelas = $meteor.collection(Escuela).subscribe("escuela");
-  $scope.action = true;  
-  $scope.nuevo = true;
-  $scope.nuevoEscuela = function()
+angular.module("casserole")
+.controller("EscuelasCtrl", EscuelasCtrl);  
+ function EscuelasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+ 	$reactive(this).attach($scope);
+  this.action = true;
+	this.subscribe('escuelas');
+
+	this.helpers({
+	  escuelas : () => {
+		  return Escuelas.find();
+	  }
+  });
+  	  
+  this.nuevo = true;	  
+  this.nuevoEscuelas = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.escuela = {}; 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.escuela = {};		
   };
   
- $scope.guardar = function(escuela)
+  this.guardar = function(escuela)
 	{
-	    $scope.escuela.estatus = true;
-		$scope.escuelas.save(escuela);
-		toastr.success('Emresa guardada.');
-        $scope.escuela = ""; 
+		this.escuela.estatus = true;
+		console.log(this.escuela);
+		Escuelas.insert(this.escuela);
+		toastr.success('Escuela guardada.');
+		this.escuela = {}; 
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.escuelas')
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.escuela = $meteor.object(Escuelas, id, false);
-    $scope.action = false;
-    $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.escuela = Escuelas.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
 	};
 	
-	$scope.actualizar = function(escuela)
+	this.actualizar = function(escuela)
 	{
-		$scope.escuela.save();
-        $('.collapse').collapse('hide');
-        $scope.nuevo = true;
+		var idTemp = escuela._id;
+		delete escuela._id;		
+		Escuelas.update({_id:idTemp},{$set:escuela});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
 	};
-		
-    $scope.cambiarEstatus = function(id)
+
+	this.cambiarEstatus = function(id)
 	{
-		var escuela = $meteor.object(Escuelas, id, false);
+		var escuela = Escuelas.findOne({_id:id});
 		if(escuela.estatus == true)
 			escuela.estatus = false;
 		else
 			escuela.estatus = true;
 		
-		escuela.save();
-	};
-}]);
-	
-	
+		Escuelas.update({_id: id},{$set :  {estatus : escuela.estatus}});
+    };
+		
+};

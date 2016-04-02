@@ -1,38 +1,65 @@
-angular.module("casserole").controller("NuevoGrupoCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-	//$scope.grupo = $meteor.object(Grupos, $stateParams.id).subscribe("grupos");
-	$scope.grupos = $meteor.collection(function() {return Grupos.find();}).subscribe("grupos");
-	$scope.secciones = $meteor.collection(function(){return Secciones.find();}).subscribe("secciones");
-	$scope.ciclos = $meteor.collection(function(){return Ciclos.find();}).subscribe("ciclos");
-	$scope.turnos = $meteor.collection(function(){return Turnos.find();}).subscribe("turnos");
-	$scope.maestros = $meteor.collection(function(){return Maestros.find();}).subscribe("maestros");
-  $scope.action = true; 
-  $scope.grupo = {};
+angular
+.module("casserole")
+.controller("NuevoGrupoCtrl", NuevoGrupoCtrl); 
+function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+	$reactive(this).attach($scope);
+	this.subscribe('grupos');
+	this.subscribe('secciones');
+	this.subscribe('ciclos');
+	this.subscribe('turnos');
+	this.subscribe('maestros');
 
-	$scope.guardar = function(grupo)
+	this.helpers({
+	  grupos : () => {
+		  return Grupos.find();
+	  },
+	  secciones : () => {
+		  return Secciones.find();
+	  },
+	  ciclos : () => {
+		  return Ciclos.find();
+	  },
+	  turnos : () => {
+		  return Turnos.find();
+	  },
+	  maestros : () => {
+		  return Maestros.find();
+	  },
+
+  });
+
+	//this.grupo = $meteor.object(Grupos, $stateParams.id).subscribe("grupos");
+
+  this.action = true; 
+  this.grupo = {};
+
+	this.guardar = function(grupo)
 	{
-		grupo.estatus = true;
-		grupo.inscritos = 0;
-		$scope.grupos.save(grupo)
-		toastr.success('Grupo guardado.');
-		$state.go("root.grupos");
+		this.grupo.estatus = true;
+		console.log(this.grupo);
+		Grupos.insert(this.grupo);
+		toastr.success('Turno guardado.');
+		this.grupo = {}; 
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		$state.go('root.grupos')
 	};
 	
-	$scope.editarGrupo = function(id)
+	this.editarGrupo = function(id)
 	{
-    $scope.grupo = $meteor.object(Grupos, id, false);
-    $scope.grupo = false;
-    $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.grupo = Grupos.findOne({_id:id});
+    this.action = false;
+    $('.collapse').coll
+    this.nuevo = false;
 	};
 	
-	$scope.getGrados = function(seccion_id){
+	this.getGrados = function(seccion_id){
 		var seccionSeleccionada = $meteor.object(Secciones, seccion_id, false);
-		$scope.grados = [];
+		this.grados = [];
 		for(var i = 1; i <= seccionSeleccionada.grados; i++ ){
-			$scope.grados.push(i);
+			this.grados.push(i);
 		}
-		console.log($scope.grados);
+		console.log(this.grados);
 	}
 
-}]);
+};

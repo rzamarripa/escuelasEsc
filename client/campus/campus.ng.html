@@ -1,9 +1,9 @@
 <h2>Campus</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevocampus" ng-click="nuevoCampus()">
-		 {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{cp.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevocampus" ng-click="cp.nuevoCampus()">
+		 {{cp.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
@@ -11,20 +11,20 @@
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="campus.nombre" required>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required>
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="campus.descripcion"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(campus)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(campus)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="cp.guardar(campus)" value="Guardar" class="btn btn-primary" ng-show="cp.action">
+						<input type="submit" ng-click="cp.actualizar(campus)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -53,7 +53,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="campus in campuss">
+		    <tr ng-repeat="campus in cp.campus">
 			    <td>{{campus.nombre}}</td>
 			    <td>{{campus.descripcion}} </td>
 			    <td>
@@ -74,8 +74,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(campus._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(campus._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="cp.editar(campus._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cp.cambiarEstatus(campus._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    
