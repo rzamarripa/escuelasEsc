@@ -198,6 +198,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
       templateUrl: 'client/pagos/buscarAlumno.ng.html',
       controller: 'PagosCtrl as pa',
     })
+    .state('root.pagosImprimir', {
+      url: '/pagosImprimir/:id',
+      templateUrl: 'client/pagos/pagosImprimir.ng.html',
+      controller: 'PagosImprimirCtrl as pi',
+      params: { 'pago': ':pago' },
+    })
     .state('root.archivos', {
       url: '/archivos/:id',
       templateUrl: 'client/archivos/archivos.ng.html',

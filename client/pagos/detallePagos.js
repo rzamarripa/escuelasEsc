@@ -95,8 +95,8 @@ function DetallePagosCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 	  return temp;
   }
   
-  this.imprimirPago = function(pago){
-	  console.log(pago);
+  this.imprimir = function(pago){
+	  $state.go("root.pagosImprimir",{"id":pago.alumno_id,"pago": pago});
   }
   
 };

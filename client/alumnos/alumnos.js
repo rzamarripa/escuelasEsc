@@ -3,15 +3,13 @@ angular
   .controller('AlumnosCtrl', AlumnosCtrl);
  
 function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
-	$reactive(this).attach($scope);
+	let rc = $reactive(this).attach($scope);
 	$(document).ready(function() {
 	  $(".select2").select2();
 	});
 
   this.action = true;
   this.alumno = {};
-  this.alumno.fotografia = "";
-  var foto;
   this.buscar = {};
   this.buscar.nombre = '';
 
@@ -33,12 +31,6 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  }
   });
   
-  this.autorun(() => {
-	  alumno.fotografia : () => {
-		  return foto;
-	  }
-  })
-  
   this.guardar = function (alumno) {
 		this.alumno.estatus = true;
 		this.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
@@ -49,11 +41,6 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			this.nuevo = true;
 		});
 	};
-	
-  this.nuevoAlumno = function () {
-    this.action = true;
-    this.alumno = {};    
-  };
   	
 	this.cambiarEstatus = function (id) {
 		var alumno = Alumnos.findOne({_id:id});
@@ -61,13 +48,11 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.alumno.save();
 	};
 	
-	this.refreshOcupaciones = function(query){
-		console.log(query);
-	}
-	
 	this.tomarFoto = function () {
-		$meteor.getPicture().then(function(data){
-			foto = data;
+		$meteor.getPicture().then(function(data){			
+			rc.alumno.fotografia = data;
 		})
 	};
+	
+	
 }
