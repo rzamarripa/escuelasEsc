@@ -1,80 +1,67 @@
-angular.module("casserole").controller("NacionalidadesCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.nacionalidades = $meteor.collection(Nacionalidades).subscribe("nacionalidades");
-  $scope.action = true;  
-  $scope.nuevo = true;
+angular
+  .module('casserole')
+  .controller('NacionalidadesCtrl', NacionalidadesCtrl);
+ 
+function NacionalidadesCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+
+  this.subscribe("nacionalidades");
+  this.action = true;  
+  this.helpers({
+	  nacionalidades : () => {
+		  return Nacionalidades.find();
+	  }
+  });
+	this.nuevo = true;
 	
-  $scope.nuevoNacionalidad = function()
+  this.nuevoNacionalidad = function()
   {
-   $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.nacionalidad = {}; 
+   this.action = true;
+    this.nuevo = !this.nuevo;
+    this.nacionalidad = {}; 
   };
   
-   $scope.guardar = function(nacionalidad)
+   this.guardar = function(nacionalidad)
 	{
-		$scope.nacionalidad.estatus = true;
-		$scope.nacionalidades.save(nacionalidad);
+		this.nacionalidad.estatus = true;
+		console.log(this.nacionalidad);
+		Nacionalidades.insert(this.nacionalidad);
 		toastr.success('Nacionalidad guardado.');
+		this.nacionalidad = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;	
+		this.nuevo = true;
+		$state.go('root.nacionalidades');
+		
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.nacionalidad = $meteor.object(Nacionalidades, id, false);
-    $scope.action = false;
+		this.nacionalidad = Nacionalidades.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
+		
 	};
 	
-	$scope.actualizar = function(nacionalidad)
+	this.actualizar = function(nacionalidad)
 	{
-		$scope.nacionalidad.save();
+		var idTemp = nacionalidad._id;
+		delete nacionalidad._id;		
+		Nacionalidades.update({_id:idTemp},{$set:nacionalidad});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var nacionalidad = $meteor.object(Nacionalidades, id, false);
+		var nacionalidad = Nacionalidades.findOne({_id:id});
 		if(nacionalidad.estatus == true)
 			nacionalidad.estatus = false;
 		else
 			nacionalidad.estatus = true;
 		
-		nacionalidad.save();
+		Nacionalidades.update({_id:id}, {$set : {estatus : nacionalidad.estatus}});
+		
 	};
-}]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

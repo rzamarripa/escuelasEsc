@@ -1,9 +1,9 @@
 <h2>Ocupaciones</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse"
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaocupacion" ng-click="nuevaOcupacion()">
-				 {{nuevo == true ? 'Nuevo' : 'Cancelar'}}		
+		<a class="btn btn-{{oc.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse"
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaocupacion" ng-click="oc.nuevaOcupacion()">
+				 {{oc.nuevo == true ? 'Nuevo' : 'Cancelar'}}		
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form">
@@ -12,19 +12,19 @@
 						<div class="col-sm-12">
 							<div class="col-sm-2">
 								<label> Clave </label>
-								<input type="text" class="form-control" placeholder="Clave" ng-model="ocupacion.clave" >
+								<input type="text" class="form-control" placeholder="Clave" ng-model="oc.ocupacion.clave" >
 					    </div>
 					    <div class="col-sm-8">
 						    <label>Descripción</label>
-					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="ocupacion.descripcion" >
+					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="oc.ocupacion.descripcion" >
 					    </div>
 			    	</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(ocupacion)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(ocupacion)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="oc.guardar(ocupacion)" value="Guardar" class="btn btn-primary" ng-show="oc.action">
+						<input type="submit" ng-click="oc.actualizar(ocupacion)" value="Actualizar" class="btn btn-primary" ng-show="!oc.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -53,7 +53,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="ocupacion in ocupaciones">
+		    <tr ng-repeat="ocupacion in oc.ocupaciones">
 			    <td>{{ocupacion.clave}} </td>
 			    <td>{{ocupacion.descripcion}} </td>
 			    <td>
@@ -74,8 +74,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(ocupacion._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(ocupacion._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="oc.editar(ocupacion._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="oc.cambiarEstatus(ocupacion._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

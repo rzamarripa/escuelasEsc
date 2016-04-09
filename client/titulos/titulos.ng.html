@@ -1,30 +1,30 @@
 <h2>Títulos</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevotitulo" ng-click="nuevoTitulo()">
-		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{tit.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevotitulo" ng-click="tit.nuevoTitulo()">
+		  {{tit.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="titulo.clave" required>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="tit.titulo.clave" required>
 		    	</div>	
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="titulo.descripcion"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="tit.titulo.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(titulo)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(titulo)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="tit.guardar(titulo)" value="Guardar" class="btn btn-primary" ng-show="tit.action">
+						<input type="submit" ng-click="tit.actualizar(titulo)" value="Actualizar" class="btn btn-primary" ng-show="!tit.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -53,7 +53,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="titulo in titulos">
+		    <tr ng-repeat="titulo in tit.titulos">
 			    <td>{{titulo.clave}}</td>
 			    <td>{{titulo.descripcion}} </td>
 			    <td>
@@ -75,8 +75,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(titulo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(titulo._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
+							    <li><a href="#" ng-click="tit.editar(titulo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="tit.cambiarEstatus(titulo._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

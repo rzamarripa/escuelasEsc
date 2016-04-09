@@ -1,9 +1,9 @@
 <h2>Tipos de Ingresos</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse"
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevotipoingreso" ng-click="nuevoTipoIngresos()">
-				{{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{tiping.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse"
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevotipoingreso" ng-click="tiping.nuevoTipoIngresos()">
+				{{tiping.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form">
@@ -12,19 +12,19 @@
 						<div class="col-sm-12">
 							<div class="col-sm-4">
 								<label> Clave </label>
-								<input type="text" class="form-control" placeholder="Clave" ng-model="tipoingreso.clave" >
+								<input type="text" class="form-control" placeholder="Clave" ng-model="tiping.tipoingreso.clave" >
 					    </div>
 					    <div class="col-sm-8">
 						    <label>Descripción</label>
-					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="tipoingreso.descripcion" >
+					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="tiping.tipoingreso.descripcion" >
 					    </div>
 			    	</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(tipoingreso)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(tipoingreso)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="tiping.guardar(tipoingreso)" value="Guardar" class="btn btn-primary" ng-show="tiping.action">
+						<input type="submit" ng-click="tiping.actualizar(tipoingreso)" value="Actualizar" class="btn btn-primary" ng-show="!tiping.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -54,7 +54,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="tipoingreso in tiposingresos">
+		    <tr ng-repeat="tipoingreso in tiping.tiposingresos">
 			    <td>{{tipoingreso.clave}} </td>
 			    <td>{{tipoingreso.descripcion}} </td>
 			    <td>
@@ -75,8 +75,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(tipoingreso._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(tipoingreso._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="tiping.editar(tipoingreso._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="tiping.cambiarEstatus(tipoingreso._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

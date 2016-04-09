@@ -4,30 +4,32 @@ angular
  
 function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
-
+	this.action = true; 
+	
 	this.subscribe("materias");
 	this.subscribe("deptosAcademicos");
-	
-	this.helpers({
+	this.subscribe("ocupaciones");
+    
+   
+    
+  this.helpers({
+	  materias : () => {
+		  return Materias.find();
+	  },
 		deptosAcademicos : () => {
-			return DeptosAcademicos.find();
-		},
-		materias : () => {
-			var materiasEncontradas = Materias.find().fetch();
-			_.each(materiasEncontradas, function(materia){
-				materia.deptoAcademico = DeptosAcademicos.findOne(materias.deptoAcademico_id);
-			});
-		  return materiasEncontradas;
-		}
-	});
-
-  this.action = true; 
-  this.nuevo = true; 
+		  return DeptosAcademicos.find();
+	  },
+		ocupaciones : () => {
+		  return Ocupaciones.find();
+	  },
+	  
+  });
     
   $(document).ready(function() {
 	  $(".select2").select2();
-	});   
-
+	});
+	
+  this.nuevo = true;
   this.nuevaMateria = function()
   {
    	this.action = true;
@@ -35,20 +37,35 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.materia = {};
     
   };
+/*
+  this.submit = function(){
+  		console.log("entro al submit");
+  		this.submitted=true;
+  		console.log(this.validForm);
+  		if(this.validForm)
+  			this.guardar(this.materia)
+
+  }
+*/
+  
+
   
   this.guardar = function(materia)
 	{
 		this.materia.estatus = true;
-		Materias.insert(materia);
+		console.log(this.materia);
+		Materias.insert(this.materia);
 		toastr.success('Materia guardada.');
 		this.materia = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		$state.go('root.materias');
+		
 	};
 	
 	this.editar = function(id)
 	{
-    this.materia = Materias.findOne(id);
+    this.materia = Materias.findOne({_id:id});
     this.action = false;
     $('.collapse').collapse('show');
     this.nuevo = false;
@@ -61,19 +78,24 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 		Materias.update({_id:idTemp},{$set:materia});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		
 	};
 		
 	this.cambiarEstatus = function(id)
 	{
-		var materia = Materias.findOne(id);
+		var materia = Materias.findOne({_id:id});
 		if(materia.estatus == true)
 			materia.estatus = false;
 		else
 			materia.estatus = true;
 		
-		Materias.update({_id:id},{$set:{estatus: materia.estatus}});
+		Materias.update({_id:id}, {$set : {estatus : materia.estatus}});
+
 	};
 	
+	this.getDeptoAcademico = function(depto_id){
+		var depto = Departamentos.findOne(DeptosAcademicos, depto_id, false);
+		return depto.descripcion;
+	};
 	
-	
-};
+}

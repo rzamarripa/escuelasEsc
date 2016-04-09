@@ -1,54 +1,72 @@
-angular.module("casserole").controller("EmpresasCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.empresas = $meteor.collection(Empresas).subscribe("empresas");
-  $scope.action = true;  
-  $scope.nuevo = true;
-  $scope.nuevoEmpresa = function()
+angular
+  .module('casserole')
+  .controller('EmpresasCtrl', EmpresasCtrl);
+ 
+function EmpresasCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+
+  this.subscribe('empresas');
+  this.action = true;  
+  this.nuevo = true;
+  
+  this.helpers({
+	  empresas : () => {
+		  return Empresas.find();
+	  }
+  });
+
+ 
+  this.nuevoEmpresa = function()
   {
-   $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.empresa = {}; 
+	  this.action = true;
+    this.nuevo = !this.nuevo;
+    this.empresa = {}; 
   };
   
- $scope.guardar = function(empresa)
+ this.guardar = function(empresa)
 	{
-	  $scope.empresa.estatus = true;
-		$scope.empresas.save(empresa);
-		toastr.success('Empresa guardada.');
-        $scope.empresa = ""; 
+	  this.empresa.estatus = true;
+		console.log(this.empresa);
+		Empresas.insert(this.empresa);
+		toastr.success('Empresa guardado.');
+		this.empresa = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.empresas');
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.empresa = $meteor.object(Empresas, id, false);
-    $scope.action = false;
+		this.empresa = Empresas.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
+		
 	};
 	
-	$scope.actualizar = function(empresa)
+	this.actualizar = function(empresa)
 	{
-		$scope.empresa.save();
+		var idTemp = empresa._id;
+		delete empresa._id;		
+		Ciclos.update({_id:idTemp},{$set:empresa});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
 		
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var empresa = $meteor.object(Empresas, id, false);
+		var empresa = Empresas.findOne({_id:id});
 		if(empresa.estatus == true)
 			empresa.estatus = false;
 		else
-		empresa.estatus = true;
+			empresa.estatus = true;
 		
-		empresa.save();
+		Empresas.update({_id:id}, {$set : {estatus : empresa.estatus}});
+		
 	};
-	   //  $scope.remove = function(empresa)
+	   //  this.remove = function(empresa)
        // {
-       //     $scope.empresa.estatus = false;
-       //     $scope.empresas.save(empresa);
+       //     this.empresa.estatus = false;
+       //     this.empresas.save(empresa);
        // };
-}]);
-	
+}

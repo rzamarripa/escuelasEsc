@@ -1,50 +1,65 @@
-angular.module("casserole").controller("OcupacionesCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-	
-	$scope.ocupaciones = $meteor.collection(Ocupaciones).subscribe("ocupaciones");
-	$scope.action = true;
-	$scope.nuevo = true;
-	$scope.nuevaOcupacion = function()
+angular
+  .module('casserole')
+  .controller('OcupacionesCtrl', OcupacionesCtrl);
+ 
+function OcupacionesCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+
+	this.subscribe("ocupaciones");
+	this.action = true;
+	this.helpers({
+			ocupaciones : () => {
+				return Ocupaciones.find();
+			}
+	})
+	this.nuevo = true;
+	this.nuevaOcupacion = function()
 	{
-	  $scope.action = true;
-      $scope.nuevo = !$scope.nuevo;
-      $scope.ocupacion = {}; 
+		  this.action = true;
+      this.nuevo = !this.nuevo;
+      this.ocupacion = {}; 
 	};
 	
-	$scope.guardar = function(ocupacion)
+	this.guardar = function(ocupacion)
 	{
-		$scope.ocupacion.estatus = true;
-		$scope.ocupaciones.save(ocupacion);
-		toastr.success('Ocupacion guardado.');
-		$scope.ocupacion = "";
+		this.ocupacion.estatus = true;
+		console.log(this.ocupacion);
+		Ocupaciones.insert(this.ocupacion);
+		toastr.success('cupacion guardado.');
+		this.ocupacion = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.ocupacion');
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-		$scope.ocupacion = $meteor.object(Ocupaciones, id, false);
-		$scope.action = false;
-		$('.collapse').collapse('show');
-		$scope.nuevo = false;
+		this.ocupacion = Ocupaciones.findOne({_id:id});
+    this.action = false;
+    $('.collapse').collapse('show');
+    this.nuevo = false;
+
 	};
 	
-	$scope.actualizar = function(ocupacion)
+	this.actualizar = function(ocupacion)
 	{
-		$scope.ocupacion.save();
+		var idTemp = ocupacion._id;
+		delete ocupacion._id;		
+		Ocupaciones.update({_id:idTemp},{$set:ocupacion});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
 	};
 	
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var ocupacion = $meteor.object(Ocupaciones, id, false);
+		var ocupacion = Ocupaciones.findOne({_id:id});
 		if(ocupacion.estatus == true)
 			ocupacion.estatus = false;
 		else
 			ocupacion.estatus = true;
-			
-		ocupacion.save();
+		
+		Ocupaciones.update({_id:id}, {$set : {estatus : ocupacion.estatus}});
+
 	};
 	
-}]);
+}

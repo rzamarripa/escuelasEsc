@@ -1,43 +1,69 @@
-angular.module("casserole").controller("TitulosCtrl", ['$scope', '$meteor', '$state','$stateParams' , 'toastr', function($scope, $meteor, $state, $stateParams, toastr)
-{	
-  $scope.titulos = $meteor.collection(Titulos).subscribe("titulos");
-  $scope.action = true;  
-	$scope.nuevo = true;
+angular
+  .module('casserole')
+  .controller('TitulosCtrl', TitulosCtrl);
+ 
+function TitulosCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
 
-  $scope.nuevoTitulo = function()
+  this.subscribe("titulos");
+  this.action = true;  
+	this.nuevo = true;
+	
+  this.helpers({
+	  titulos : () => {
+		  return Titulos.find();
+	  }
+  });
+
+  this.nuevoTitulo = function()
   {
-    $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.titulo = {}; 
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.titulo = {}; 
 	};
   
-  $scope.guardar = function(titulo)
+  this.guardar = function(titulo)
 	{
-		$scope.titulo.estatus = true;
-		$scope.titulos.save(titulo);
-		toastr.success("Título guardado");
-    $scope.titulo = {}; 
+		this.titulo.estatus = true;
+		console.log(this.titulo);
+		Titulos.insert(this.titulo);
+		toastr.success('Titulo guardado.');
+		this.titulo = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.titulos');
+		
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.titulo = $meteor.object(Titulos, id, false);
-    $scope.action = false;
+		this.titulo = Titulos.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
+		
 	};
 	
-	$scope.actualizar = function(titulo)
+	this.actualizar = function(titulo)
 	{
-		$scope.titulo.save();
+		var idTemp = titulo._id;
+		delete titulo._id;		
+		Titulos.update({_id:idTemp},{$set:titulo});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		
 	};
 
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
+		var ciclo = Ciclos.findOne({_id:id});
+		if(ciclo.estatus == true)
+			ciclo.estatus = false;
+		else
+			ciclo.estatus = true;
+		
+		Ciclos.update({_id:id}, {$set : {estatus : ciclo.estatus}});
+		
 		var titulo = $meteor.object(Titulos, id, false);
 		if(titulo.estatus == true)
 			titulo.estatus = false;
@@ -47,28 +73,4 @@ angular.module("casserole").controller("TitulosCtrl", ['$scope', '$meteor', '$st
 		titulo.save();
     };
 		
-}]);
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

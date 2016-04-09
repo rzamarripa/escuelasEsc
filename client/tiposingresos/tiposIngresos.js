@@ -1,46 +1,66 @@
-angular.module("casserole").controller("TiposIngresosCtrl", ['$scope', '$meteor','$stateParams' , '$state', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-	{
-	$scope.tiposingresos = $meteor.collection(TiposIngresos).subscribe("tiposingresos");
-	$scope.action = true;	
-	$scope.nuevo = true;
+angular
+  .module('casserole')
+  .controller('TiposIngresosCtrl', TiposIngresosCtrl);
+ 
+function TiposIngresosCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+	this.subscribe('tiposingresos')
+	this.action = true;	
 	
-	$scope.nuevoTipoIngresos = function()
+	
+  this.helpers({
+	  tiposingresos : () => {
+		  return TiposIngresos.find();
+	  }
+  });
+this.nuevo = true;
+	
+	this.nuevoTipoIngresos = function()
 	{
-	  $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.tipoingreso = {}; 
+		this.action = true;
+    this.nuevo = !this.nuevo;
+    this.tipoingreso = {}; 
 	};
 	
-	$scope.guardar = function(tipoingreso)
+	this.guardar = function(tipoingreso)
 	{
-		$scope.tipoingreso.estatus = true;
-		$scope.tiposingresos.save(tipoingreso);
-		toastr.success('Ingreso guardado.');
-		$scope.tipoingreso = "";
-	};
-	
-	$scope.editar = function(id)
-	{
-		$scope.tipoingreso = $meteor.object(TiposIngresos, id, false);
-		$scope.action = false;
-		$('.collapse').collapse('show');
-	};
-	
-	$scope.actualizar = function(tipoingreso)
-	{
-		$scope.tipoingreso.save();
+		this.tipoingreso.estatus = true;
+		console.log(this.tipoingreso);
+		TiposIngresos.insert(this.tipoingreso);
+		toastr.success('TipoIngreso guardado.');
+		this.tipoingreso = {};
 		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		$state.go('root.tiposingresos');
 	};
 	
-	$scope.cambiarEstatus = function(id)
+	this.editar = function(id)
 	{
-		var tipoingreso = $meteor.object(TiposIngresos, id, false);
+		this.tipoingreso = TiposIngresos.findOne({_id:id});
+    this.action = false;
+    $('.collapse').collapse('show');
+    this.nuevo = false;
+    
+	};
+	
+	this.actualizar = function(tipoingreso)
+	{
+		var idTemp = tipoingreso._id;
+		delete tipoingreso._id;		
+		TiposIngresos.update({_id:idTemp},{$set:tipoingreso});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;	};
+	
+	this.cambiarEstatus = function(id)
+	{
+		var tipoingreso = TiposIngresos.findOne({_id:id});
 		if(tipoingreso.estatus == true)
 			tipoingreso.estatus = false;
 		else
 			tipoingreso.estatus = true;
-			
-		tipoingreso.save();
+		
+		TiposIngresos.update({_id:id}, {$set : {estatus : tipoingreso.estatus}});
+
 	};
 	
-}]);
+}

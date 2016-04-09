@@ -116,42 +116,42 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.materias', {
       url: '/materias',
       templateUrl: 'client/materias/materias.ng.html',
-      controller: 'MateriasCtrl as ma',
+      controller: 'MateriasCtrl as mat',
     })
     .state('root.ocupaciones', {
       url: '/ocupaciones',
       templateUrl: 'client/ocupaciones/ocupaciones.ng.html',
-      controller: 'OcupacionesCtrl',
+      controller: 'OcupacionesCtrl as oc',
     })
     .state('root.tiposIngresos', {
       url: '/tiposIngresos',
       templateUrl: 'client/tiposingresos/tiposIngresos.ng.html',
-      controller: 'TiposIngresosCtrl',
+      controller: 'TiposIngresosCtrl as tiping',
     })
     .state('root.empresas', {
       url: '/empresas',
       templateUrl: 'client/empresas/empresas.ng.html',
-      controller: 'EmpresasCtrl',
+      controller: 'EmpresasCtrl as emp',
     })
     .state('root.estadoCivil', {
       url: '/estadoCivil',
       templateUrl: 'client/estadoCivil/estadoCivil.ng.html',
-      controller: 'CivilesCtrl',
+      controller: 'CivilesCtrl as civ',
     })
     .state('root.titulos', {
       url: '/titulos',
       templateUrl: 'client/titulos/titulos.ng.html',
-      controller: 'TitulosCtrl',
+      controller: 'TitulosCtrl as tit',
     })
     .state('root.secciones', {
       url: '/secciones',
       templateUrl: 'client/secciones/secciones.ng.html',
-      controller: 'SeccionesCtrl',
+      controller: 'SeccionesCtrl as sec',
     })
     .state('root.nacionalidad', {
       url: '/nacionalidad',
       templateUrl: 'client/nacionalidad/nacionalidad.ng.html',
-      controller: 'NacionalidadesCtrl',
+      controller: 'NacionalidadesCtrl as nac',
     })
     .state('root.planEstudio', {
       url: '/planEstudios',
@@ -348,5 +348,4 @@ angular.module('casserole').config(['$injector', function ($injector) {
        }]
     	}
     }); 
-}]);
- 
+}]);     

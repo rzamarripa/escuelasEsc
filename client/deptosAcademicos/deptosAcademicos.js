@@ -3,54 +3,52 @@ angular
   .controller('DeptosAcademicosCtrl', DeptosAcademicosCtrl);
  
 function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
-	let rc = $reactive(this).attach($scope);
-
-  rc.action = true;
-  rc.nuevo = true  
+	$reactive(this).attach($scope);
+  this.action = true;
+  this.nuevo = true  
   
-  rc.subscribe("deptosAcademicos");
-  
-  rc.helpers({
+  this.subscribe("deptosAcademicos");
+  this.helpers({
 	  deptosAcademicos : () => {
 		  return DeptosAcademicos.find();
 	  }
   });
 	
-  rc.nuevoDeptoAcademico = function()
+  this.nuevoDeptoAcademico = function()
   {
-    rc.action = true;
-    rc.nuevo = !rc.nuevo;
-    rc.deptoAcademico = {};
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.deptoAcademico = {};
   };
   
-  rc.guardar = function(deptoAcademico)
+  this.guardar = function(deptoAcademico)
 	{
-		rc.deptoAcademico.estatus = true;
+		this.deptoAcademico.estatus = true;
 		DeptosAcademicos.insert(deptoAcademico);
 		toastr.success('Departamento guardado.');
-		rc.deptoAcademicos = {};
+		this.deptoAcademicos = {};
 	  $('.collapse').collapse('show');
-    rc.nuevo = true;
+    this.nuevo = true;
 	};
 	
-	rc.editar = function(id)
+	this.editar = function(id)
 	{
-    rc.deptoAcademico = DeptosAcademicos.findOne({_id:id});
-    rc.action = false;
+    this.deptoAcademico = DeptosAcademicos.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    rc.nuevo = false;
+    this.nuevo = false;
 	};
 	
-	rc.actualizar = function(deptoAcademico)
+	this.actualizar = function(deptoAcademico)
 	{		
 		var idTemp = deptoAcademico._id;
 		delete deptoAcademico._id;		
 		DeptosAcademicos.update({_id:idTemp},{$set:deptoAcademico});
 		$('.collapse').collapse('hide');
-		rc.nuevo = true;
+		this.nuevo = true;
 	};
 		
-	rc.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
 		var deptoAcademico = DeptosAcademicos.findOne({_id:id});
 		if(deptoAcademico.estatus == true)

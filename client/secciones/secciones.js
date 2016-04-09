@@ -1,65 +1,94 @@
-angular.module("casserole").controller("SeccionesCtrl", ['$scope', '$meteor', '$state', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.secciones = $meteor.collection(Secciones).subscribe("secciones");
-  $scope.deptosAcademicos = $meteor.collection(function(){return DeptosAcademicos.find();}).subscribe("deptosAcademicos");
-  $scope.turnos = $meteor.collection(function(){return Turnos.find();}).subscribe("turnos");
-  $scope.campuss = $meteor.collection(function(){return Campus.find();}).subscribe("campus");
-  $scope.action = true;  
-  $scope.nuevo = true;  
+angular
+  .module('casserole')
+  .controller('SeccionesCtrl', SeccionesCtrl);
+ 
+function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+
+  this.subscribe("secciones");
+  this.subscribe("deptosAcademicos");
+  this.subscribe("turnos");
+  this.subscribe("campus");
+  this.action = true;  
+  this.nuevo = true;
+  
+  this.helpers({
+	  secciones : () => {
+		  return Secciones.find();
+	  },
+	   deptosAcademicos : () => {
+		  return DeptosAcademicos.find();
+	  },
+	   turnos : () => {
+		  return Turnos.find();
+	  },
+	   campus : () => {
+		  return Campus.find();
+	  }
+  });
 
  
- $scope.getDeptoAcademico = function(id)
+ this.getDeptoAcademico = function(id)
   { 
   	var depto = $meteor.object(DeptosAcademicos, id, false);
   	return depto.descripcionCorta; 
   }; 
   
-	$scope.getCampus = function(id)
+	this.getCampus = function(id)
   { 
   	var campus = $meteor.object(Campus, id, false);
   	return campus.nombre; 
   }; 
 	
-  $scope.nuevoSeccion = function()
+  this.nuevoSeccion = function()
   {
-     $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.seccion = {}; 
+     this.action = true;
+    this.nuevo = !this.nuevo;
+    this.seccion = {}; 
   };
   
-  $scope.guardar = function(seccion)
+  this.guardar = function(seccion)
 	{
-		$scope.seccion.estatus = true;
-		$scope.secciones.save(seccion);
-		toastr.success('Seccion guardada.');
+		this.seccion.estatus = true;
+		console.log(this.seccion);
+		Secciones.insert(this.seccion);
+		toastr.success('Seccion guardado.');
+		this.seccion = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;		
+		this.nuevo = true;
+		$state.go('root.secciones');
+		
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.seccion = $meteor.object(Secciones, id, false);
-    $scope.action = false;
+		this.seccion = Secciones.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
+		
 	};
 	
-	$scope.actualizar = function(seccion)
+	this.actualizar = function(seccion)
 	{
-		$scope.seccion.save();
+		var idTemp = seccion._id;
+		delete seccion._id;		
+		Secciones.update({_id:idTemp},{$set:seccion});
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		
 	};
 
-	$scope.cambiarEstatus = function(id)
+	this.cambiarEstatus = function(id)
 	{
-		var seccion = $meteor.object(Secciones, id, false);
+		var seccion = Secciones.findOne({_id:id});
 		if(seccion.estatus == true)
 			seccion.estatus = false;
 		else
 			seccion.estatus = true;
 		
-		seccion.save();
+		Secciones.update({_id:id}, {$set : {estatus : seccion.estatus}});
+		
     };
 		
-}]);
+}

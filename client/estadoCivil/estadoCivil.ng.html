@@ -1,18 +1,18 @@
 <h2>Estado Civil</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{nuevo == true ? 'primary' : 'danger'}}"	 role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevocivil" ng-click="nuevoCivil()">
-		   {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{civ.nuevo == true ? 'primary' : 'danger'}}"	 role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevocivil" ng-click="civ.nuevoCivil()">
+		   {{civ.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
                     <div class="col-sm-12">
 						    <label>Estado civil</label>
-					    	<input type="text" class="form-control" placeholder="Estado civil" ng-model="civil.estado" required>
+					    	<input type="text" class="form-control" placeholder="Estado civil" ng-model="civ.civil.estado" required>
 					    </div>
 			    	
 			    	</div>
@@ -20,8 +20,8 @@
 			</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(civil)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(civil)" value="Actualizar" class="btn btn-primary" ng-show="!action">	
+						<input type="submit" ng-click="civ.guardar(civil)" value="Guardar" class="btn btn-primary" ng-show="civ.action">
+						<input type="submit" ng-click="civ.actualizar(civil)" value="Actualizar" class="btn btn-primary" ng-show="!civ.action">	
 
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="civil in civiles">
+		    <tr ng-repeat="civil in civ.civiles">
 			    <td>{{civil.estado}}</td>
 			    <td>
 				    <div class="text-center">
@@ -74,8 +74,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(civil._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							  <li><a href="#" ng-click="cambiarEstatus(civil._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="civ.editar(civil._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							  <li><a href="#" ng-click="civ.cambiarEstatus(civil._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

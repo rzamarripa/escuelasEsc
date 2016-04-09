@@ -1,52 +1,69 @@
-angular.module("casserole").controller("CivilesCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',function($scope, $meteor, $state, $stateParams, toastr)
-{
-  $scope.civiles = $meteor.collection(Civiles).subscribe("civiles");
-  $scope.action = true;  
-  $scope.nuevo = true;
+angular
+  .module('casserole')
+  .controller('CivilesCtrl', CivilesCtrl);
+ 
+function CivilesCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
 
+  this.subscribe("civiles");
+  this.action = true;  
+  this.nuevo = true;
+  
+  this.helpers({
+	  civiles : () => {
+		  return Civiles.find();
+	  }
+  });
 
-  $scope.nuevoCivil = function()
+  this.nuevoCivil = function()
   {
-   $scope.action = true;
-    $scope.nuevo = !$scope.nuevo;
-    $scope.civil = {}; 
+   	this.action = true;
+    this.nuevo = !this.nuevo;
+    this.civil = {}; 
     
   };
   
- $scope.guardar = function(civil)
+ this.guardar = function(civil)
 	{
-	    $scope.civil.estatus = true;
-		$scope.civiles.save(civil);
+		this.civil.estatus = true;
+		console.log(this.civil);
+		Civiles.insert(this.civil);
 		toastr.success('Estado guardado.');
-        $scope.civil = ""; 
+		this.civil = {};
 		$('.collapse').collapse('hide');
-		$scope.nuevo = true;
+		this.nuevo = true;
+		$state.go('root.civiles');
+		
 	};
 	
-	$scope.editar = function(id)
+	this.editar = function(id)
 	{
-    $scope.civil = $meteor.object(Civiles, id, false);
-    $scope.action = false;
+		this.civil = Civiles.findOne({_id:id});
+    this.action = false;
     $('.collapse').collapse('show');
-    $scope.nuevo = false;
+    this.nuevo = false;
+		
 	};
 	
-	$scope.actualizar = function(civil)
+	this.actualizar = function(civil)
 	{
-		$scope.civil.save();
-        $('.collapse').collapse('hide');
-        $scope.nuevo = true;
+		var idTemp = civil._id;
+		delete civil._id;		
+		Civiles.update({_id:idTemp},{$set:civil});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		
 	};
 		
-    $scope.cambiarEstatus = function(id)
+    this.cambiarEstatus = function(id)
 	{
-		var civil = $meteor.object(Civiles, id, false);
+		var civil = Civiles.findOne({_id:id});
 		if(civil.estatus == true)
 			civil.estatus = false;
 		else
 			civil.estatus = true;
 		
-		civil.save();
+		Civiles.update({_id:id}, {$set : {estatus : civil.estatus}});
+		
 	};
-}]);
-	
+}
