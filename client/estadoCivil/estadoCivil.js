@@ -32,7 +32,7 @@ function CivilesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.civil = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.civiles');
+		$state.go('root.estadoCivil');
 		
 	};
 	

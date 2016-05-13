@@ -1,6 +1,6 @@
 angular.module("casserole")
-.controller("EscuelasCtrl", EscuelasCtrl);  
- function EscuelasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+.controller("EscuelaCtrl", EscuelaCtrl);  
+ function EscuelaCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('escuelas');
@@ -28,22 +28,22 @@ angular.module("casserole")
 		this.escuela = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.escuelas')
 	};
 	
 	this.editar = function(id)
 	{
     this.escuela = Escuelas.findOne({_id:id});
     this.action = false;
-    $('.collapse').coll
+    $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	
 	this.actualizar = function(escuela)
 	{
+		console.log(escuela);
 		var idTemp = escuela._id;
 		delete escuela._id;		
-		Escuelas.update({_id:idTemp},{$set:escuela});
+		Escuelas.update({_id:idTemp},{$set : escuela});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 	};

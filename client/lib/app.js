@@ -3,7 +3,6 @@ angular.module('casserole',
     'angular-meteor',    
     'ngAnimate',
     'ngCookies',
-    'ui.select',
     'ngSanitize',    
     'toastr',
     'ui.router',
@@ -11,7 +10,6 @@ angular.module('casserole',
     'smartadmin',
     'datePicker',
     'ui.calendar',
-    'ui.bootstrap',
-    'ngFileUpload'
+    'ui.bootstrap'
   ]
 );

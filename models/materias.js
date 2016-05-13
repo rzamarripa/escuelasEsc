@@ -1,4 +1,4 @@
-Materias = new Mongo.Collection("Materias");
+Materias = new Mongo.Collection("materias");
 
 Materias.allow({
   insert: function () { return true; },

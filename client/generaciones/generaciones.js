@@ -26,11 +26,10 @@ function GeneracionesCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 	    this.generacion.estatus = true;
 		console.log(this.generacion);
 		Generaciones.insert(this.generacion);		
-		toastr.success('generacion guardada.');
-       this.generacion = {};
-		$('.collapse').collapse('show');
+		toastr.success('Generación guardada.');
+    this.generacion = {};
+		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.generaciones');
 	};
 	
 	this.editar = function(id)

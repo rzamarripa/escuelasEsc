@@ -26,7 +26,7 @@ function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.deptoAcademico.estatus = true;
 		DeptosAcademicos.insert(deptoAcademico);
 		toastr.success('Departamento guardado.');
-		this.deptoAcademicos = {};
+		this.deptoAcademico = {};
 	  $('.collapse').collapse('show');
     this.nuevo = true;
 	};

@@ -268,13 +268,9 @@
 <script>
 	$('#bootstrap-wizard-1').bootstrapWizard({
     'tabClass': 'form-wizard',
-    'onNext': function (tab, navigation, index) {
-      
-        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
-          'complete');
-        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
-        .html('<i class="fa fa-check"></i>');
-
+    'onNext': function (tab, navigation, index) {      
+      $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass('complete');
+      $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step').html('<i class="fa fa-check"></i>');
     }
   });
 </script>

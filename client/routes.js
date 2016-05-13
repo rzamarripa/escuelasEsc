@@ -230,7 +230,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'NuevoGrupoCtrl as gp',
     })
     .state('root.generaciones', {
-      url: '/',
+      url: '/generaciones',
       templateUrl: 'client/generaciones/generaciones.ng.html',
       controller: 'GeneracionesCtrl as gen',
     })
@@ -277,12 +277,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.editarHorario', {
       url: '/editarHorario/:id',
       templateUrl: 'client/horarios/form.ng.html',
-      controller: 'HorarioDetalleCtrl',
+      controller: 'HorarioDetalleCtrl as ho',
     })
     .state('root.listarHorarios', {
       url: '/horarios',
       templateUrl: 'client/horarios/horarios.ng.html',
-      controller: 'HorariosCtrl',
+      controller: 'HorariosCtrl as ho',
     })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id',

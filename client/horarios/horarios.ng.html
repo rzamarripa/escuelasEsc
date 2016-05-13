@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" ui-sref="root.nuevoHorario" ng-click="nuevoHorario()">
+		<a class="btn btn-primary" ui-sref="root.nuevoHorario" ng-click="ho.nuevoHorario()">
 		  Nuevo
 		</a>
 	</div>
@@ -36,7 +36,7 @@
 				</tr>
 			</thead>
 			<tbody>		
-		    <tr ng-repeat="horario in horarios">
+		    <tr ng-repeat="horario in ho.horarios">
 			    <td>{{horario.nombre}}</td>
 			    <td>
 				    <div class="text-center">

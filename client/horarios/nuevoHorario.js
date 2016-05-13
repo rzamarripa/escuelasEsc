@@ -50,7 +50,8 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
 	  this.action 	= true;	  
 	}
 	
-  this.agregathislase = function(clase){
+  this.agregarClase = function(clase){
+	  console.log(clase);
 	  eliminarTemporalesOcupados();
 	  var materia 	= Materias.findOne(clase.materia_id);
 		var maestro 	= Maestros.findOne(clase.maestro_id);
@@ -70,7 +71,7 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
 	  this.clase 	= {};
   }
   
-  this.cancelathislase = function(){
+  this.cancelarClase = function(){
 	  eliminarTemporalesOcupados();
 	  for(i = 0; i < this.horario.clases.length; i++){
 		  if(this.horario.clases[i]._id == this.clase._id){
@@ -119,7 +120,9 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
   
   this.modificarHorario = function(horario){
 	  this.horario.semana = horario.semana;
-		this.horario.save();
+	  var idTemp = horario._id;
+	  delete horario._id;
+		Horarios.update({_id:idTemp},{$set:horario});
 		toastr.success("Se modificó el horario");
   }
    
@@ -182,23 +185,6 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
   /* alert on Drop */
 	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
 		console.log(delta);
-		/*
-		moment(this.clase.start).add(delta._data.milliseconds, 'milliseconds');
-		moment(this.clase.start).add(delta._data.seconds, 'seconds');
-		moment(this.clase.start).add(delta._data.minutes, 'minutes');
-		moment(this.clase.start).add(delta._data.hours+1, 'hours');
-		moment(this.clase.start).add(delta._data.days, 'days');
-		moment(this.clase.start).add(delta._data.months, 'months');
-		moment(this.clase.start).add(delta._data.years, 'years');
-		
-		moment(this.clase.end).add(delta._data.milliseconds, 'milliseconds');
-		moment(this.clase.end).add(delta._data.seconds, 'seconds');
-		moment(this.clase.end).add(delta._data.minutes, 'minutes');
-		moment(this.clase.end).add(delta._data.hours+1, 'hours');
-		moment(this.clase.end).add(delta._data.days, 'days');
-		moment(this.clase.end).add(delta._data.months, 'months');
-		moment(this.clase.end).add(delta._data.years, 'years');
-		*/
 		
 		this.clase.start 	= moment(this.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
 		this.clase.end 		= moment(this.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
@@ -213,12 +199,12 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
   /* add custom event*/
   this.guardarHorario = function() {
 	  eliminarTemporalesOcupados();
-    this.horarios.push(this.horario);
+    Horarios.insert(this.horario);
     toastr.success("Se guardó el horario");
   };
   
   /* remove event */
-  this.eliminathislase = function() {
+  this.eliminarClase = function() {
 	  eliminarTemporalesOcupados();
 	  for(i = 0; i <= this.horario.clases.length -1; i++){
 		  if(this.horario.clases[i]._id == this.clase._id){

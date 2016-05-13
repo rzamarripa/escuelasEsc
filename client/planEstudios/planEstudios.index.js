@@ -8,7 +8,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
   this.subscribe('secciones');
   this.subscribe('materias');
 	//
-this.helpers({
+	this.helpers({
 	  planesEstudios : () => {
 		  return PlanesEstudios.find();
 	  },
@@ -113,7 +113,7 @@ this.helpers({
 			plan.estatus = true;
 		
 		PlanesEstudios.update({_id: id},{$set :  {estatus : plan.estatus}});
-    };
+  };
 	/*this.action = true;  
 
   

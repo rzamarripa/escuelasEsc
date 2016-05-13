@@ -4,9 +4,6 @@ angular
  
 function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	let rc = $reactive(this).attach($scope);
-	$(document).ready(function() {
-	  $(".select2").select2();
-	});
 
   this.action = true;
   this.alumno = {};
@@ -35,7 +32,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.alumno.estatus = true;
 		this.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
 		Alumnos.insert(this.alumno, function(err, doc){
-			Meteor.call('createUsuario', this.alumno, 'alumno');
+			Meteor.call('createUsuario', rc.alumno, 'alumno');
 			toastr.success('Alumno guardado.');
 			$state.go('root.alumnoDetalle',{'id':doc});			
 			this.nuevo = true;
@@ -54,5 +51,18 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		})
 	};
 	
-	
+	this.tieneFoto = function(sexo, foto){
+	  if(foto === undefined){
+		  if(sexo === "masculino")
+			  return "img/badmenprofile.jpeg";
+			else if(sexo === "femenino"){
+				return "img/badgirlprofile.jpeg";
+			}else{
+				return "img/badprofile.jpeg";
+			}
+			  
+	  }else{
+		  return foto;
+	  }
+  }
 }

@@ -2,7 +2,7 @@ angular
 .module("casserole")
 .controller("MaestrosCtrl", MaestrosCtrl);
 function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
-	$reactive(this).attach($scope);
+	let rc = $reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('maestros');
 
@@ -28,7 +28,7 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 		this.maestro.estatus = true;
 		console.log(this.maestro);
 		Maestros.insert(this.maestro);
-		Meteor.call('createUsuario', maestro, 'maestro');
+		Meteor.call('createUsuario', rc.maestro, 'maestro');
 		toastr.success("Maestro Creado \n Usuario Creado");
 		this.maestro = {};
 		$('.collapse').collapse('show');

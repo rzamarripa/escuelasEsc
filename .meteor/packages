@@ -10,9 +10,6 @@ mongo                   # The database Meteor supports right now
 session                 # Client-side reactive dictionary for your app
 jquery                  # Helpful client-side library
 tracker                 # Meteor's client-side reactive programming library
-
-standard-minifiers      # JS/CSS minifiers run for production mode
-
 insecure                # Allow all DB writes from clients (for prototyping)
 fourseven:scss
 reywood:bootstrap3-sass
@@ -26,13 +23,13 @@ s2corp:angular-ui-grid
 dvelopment:angular-datepicker
 accounts-password
 vishalm:angular-toastr
-
 mizzao:jquery-ui
 alanning:roles
 momentjs:moment
 angularui:angular-ui-bootstrap
-natestrauser:select2
-angularui:ui-select
 reywood:publish-composite
-danialf:ng-file-upload
 mdg:camera
+zuuk:stale-session
+standard-minifier-css
+standard-minifier-js
+natestrauser:select2
