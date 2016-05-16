@@ -35,7 +35,7 @@
 		    	<div class="col-sm-4">
 						<label >Maestro</label>
 						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.maestro_id">
-							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}}</option>
+							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}} {{maestro.apPaterno}} {{maestro.apMaterno}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.maestro_id"
 					             theme="bootstrap"

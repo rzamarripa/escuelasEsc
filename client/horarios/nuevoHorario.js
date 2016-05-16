@@ -14,6 +14,8 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
   
   var clasesTotales = [];
   var aulasTotales = [];
+  this.horario 	= {};
+	this.horario.clases = [];
   
   var date = new Date();
   var d = date.getDate();
@@ -166,6 +168,7 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
   
   /* alert on eventClick */
   this.alertOnEventClick = function(date, jsEvent, view){
+	  console.log("entré");
 	  eliminarTemporalesOcupados();
 	  for(i = 0; i < this.horario.clases.length; i++){
 		  if(this.horario.clases[i]._id == date._id){

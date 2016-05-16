@@ -2,12 +2,15 @@ angular
 .module("casserole")
 .controller("PlanEstudiosIndexCtrl", PlanEstudiosIndexCtrl);
 function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
-	$reactive(this).attach($scope);
+	let rc =$reactive(this).attach($scope);
   this.action = true;
   this.subscribe('planesEstudios');
   this.subscribe('secciones');
   this.subscribe('materias');
-	//
+  
+  rc.plan = {};
+  rc.plan.grados = [];
+
 	this.helpers({
 	  planesEstudios : () => {
 		  return PlanesEstudios.find();
@@ -21,31 +24,35 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	  plan :() =>{
 	  	return PlanesEstudios.findOne($stateParams.id);
 	  }
-  });
-	
+  });	
 
-	this.action = $stateParams.id? false:true; 
-	this.getSeccionById = function(id){ return Secciones.getSeccionById(id)};
+	this.action = $stateParams.id ? false : true; 
+	
+	this.getSeccionById = function(id){ 
+		return Secciones.getSeccionById(id)
+	};
 	
 	function crearGrados(gradosActuales){
+		console.log(gradosActuales);
+		
 		if(gradosActuales <1 ){
-			this.plan.grados=[];
+			rc.plan.grados = [];
 			return;
 		}
-		if(!this.plan.grados){
-			this.plan.grados=[];
+		if(!rc.plan.grados){
+			rc.plan.grados = [];
 			for (var i = 0; i < gradosActuales; i++) {
-				grados[i]=[];
+				rc.plan.grados[i]=[];
 			};
 		}
-		while(gradosActuales<this.plan.grados.length)this.plan.grados.pop();
-		while(gradosActuales>this.plan.grados.length)this.plan.grados.push([]);
-
-
-	}
-	this.getGrados = function() {
-		var gradosActuales=this.plan? (this.plan.grado? this.plan.grado:0 ):0;
 		
+		console.log(rc.plan.grados);
+		while(gradosActuales<rc.plan.grados.length)rc.plan.grados.pop();
+		while(gradosActuales>rc.plan.grados.length)rc.plan.grados.push([]);
+	}
+	
+	this.getGrados = function() {
+		var gradosActuales=this.plan? (this.plan.grado? this.plan.grado:0 ):0;		
 		crearGrados(gradosActuales)
 
 		return _.range(gradosActuales);   
@@ -56,8 +63,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		crearGrados(gradosActuales)
 		
 		this.plan.grados[nuevaMateria.grado].push(nuevaMateria);
-		this.nuevaMateria="";
-		
+		this.nuevaMateria="";		
 	};
 
 	this.quitarMateria = function(_materia){
@@ -75,10 +81,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		this.plan = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-			$state.go("root.planEstudio");
-
-	
-		
+		$state.go("root.planEstudio");
 	};
 
 	this.editar = function(id)

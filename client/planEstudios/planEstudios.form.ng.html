@@ -80,9 +80,9 @@
 					<div class="col-sm-4">
 						<label for="gradoNuevaMateria">Grado</label><br/>
 				    	<select ng-model="nuevaMateria.grado" class="form-control">
-						 	<option ng-repeat="_grado in pl.getGrados()" value="{{_grado}}">{{_grado+1}}</option>
-						</select>
-					</div>
+							 	<option ng-repeat="_grado in pl.getGrados()" value="{{_grado}}">{{_grado+1}}</option>
+							</select>
+						</div>
 			    <div class="col-sm-4">
 			    <label>Materia</label>
 			    <select class="form-control select2" placeholder="Seleccione" ng-model="pl.nuevaMateria.materia">
