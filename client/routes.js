@@ -191,7 +191,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.inscripciones', {
       url: '/inscripciones',
       templateUrl: 'client/inscripciones/inscripciones.ng.html',
-      controller: 'InscripcionesCtrl',
+      controller: 'InscripcionesCtrl as ins',
     })
     .state('root.pagos', {
       url: '/pagos',
@@ -217,7 +217,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.inscripcionNueva', {
       url: '/nuevaInscripcion',
       templateUrl: 'client/inscripciones/form.ng.html',
-      controller: 'NuevaInscripcionCtrl',
+      controller: 'NuevaInscripcionCtrl as ins',
     })
 		.state('root.nuevoGrupo', {
       url: '/nuevoGrupo',

@@ -1,3 +1,4 @@
-Meteor.publish("ciclos", function(){
-	return Ciclos.find();
+Meteor.publish("ciclos", function(params){
+	return Ciclos.find(params);
 }); 
+

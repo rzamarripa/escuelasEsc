@@ -63,8 +63,21 @@
 										  	<div class="well">
 											    <div class="row">
 														<div class="col-sm-8">
+															
+
+															<div class="col-sm-4">
 															<label>Alumno</label>
-																<ui-select ng-model="inscripcion.alumno_id"
+												
+															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.alumno_id">
+															  <option  ng-repeat="alumno in ins.alumnos">
+															  	{{alumno.nombre}}
+															  </option>
+															</select>
+																</div>
+
+												
+
+																<!--<ui-select ng-model="inscripcion.alumno_id"
 														             theme="bootstrap"
 														             ng-disabled="disabled"
 														             reset-search-input="false"
@@ -77,7 +90,7 @@
 														    <ui-select-choices repeat="alumno._id as alumno in alumnos | filter: $select.search">
 														      <div ng-bind-html="alumno.nombre + ' ' + alumno.apPaterno + ' ' + alumno.apMaterno | highlight: $select.search"></div>
 														    </ui-select-choices>
-														  </ui-select>
+														  </ui-select>-->
 														</div>
 														<div class="col-sm-3">
 															<label for="fechaNac">Fecha de Inscripción</label>
@@ -141,18 +154,16 @@
 											    <div class="row">
 														<div class="col-sm-3">
 															<label >Ciclo Escolar</label>
-															<ui-select ng-model="inscripcion.ciclo_id"
-														             theme="bootstrap"
-														             ng-disabled="disabled"
-														             reset-search-input="false">
-														    <ui-select-match placeholder="Seleccione">{{$select.selected.anioEscolar}} {{$select.selected.complementoEscolar}}</ui-select-match>
-														    <ui-select-choices repeat="ciclo._id as ciclo in ciclos | filter: $select.search">
-														      <div ng-bind-html="ciclo.anioEscolar + ' ' + ciclo.complementoEscolar | highlight: $select.search"></div>
-														    </ui-select-choices>
-														  </ui-select>
+															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.ciclo_id">
+															  <option  ng-repeat="ciclo in ins.ciclos">
+															  	{{ciclo.descripcion}}
+															  </option>
+															</select>
+																
+										
 														</div>
 											    	<div class="col-sm-6">
-															<label >Secciones</label>
+															<!--<label >Secciones</label>
 															<ui-select ng-model="inscripcion.seccion_id"
 														             theme="bootstrap"
 														             ng-disabled="disabled"
@@ -161,11 +172,16 @@
 														    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
 														      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
 														    </ui-select-choices>
-														  </ui-select>
+														  </ui-select>-->
 														</div>
 														<div class="col-sm-3">
 															<label >Tipo de Ingreso</label>
-															<ui-select ng-model="inscripcion.tipoIngreso_id"
+															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.tiposIngreso_id">
+															  <option  ng-repeat="tiposIngreso in ins.tiposIngresos">
+															  	{{tiposIngreso.descripcion}}
+															  </option>
+															</select>
+															<!--<ui-select ng-model="inscripcion.tipoIngreso_id"
 														             theme="bootstrap"
 														             ng-disabled="disabled"
 														             reset-search-input="false">
@@ -173,7 +189,7 @@
 														    <ui-select-choices repeat="tipoIngreso._id as tipoIngreso in tiposIngresos | filter: $select.search">
 														      <div ng-bind-html="tipoIngreso.descripcion | highlight: $select.search"></div>
 														    </ui-select-choices>
-														  </ui-select>
+														  </ui-select>-->
 														</div>
 											    </div>
 										  	</div>	
@@ -189,7 +205,13 @@
 											    <div class="row">
 											  		<div class="col-sm-4">												  		
 															<label >Grupo</label>
-															<ui-select ng-model="inscripcion.grupo_id"
+
+															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id">
+															  <option  ng-repeat="grupo in ins.grupos">
+															  	{{grupo.descripcion}}
+															  </option>
+															</select>
+															<!--<ui-select ng-model="inscripcion.grupo_id"
 														             theme="bootstrap"
 														             ng-disabled="disabled"
 														             reset-search-input="false"
@@ -198,7 +220,7 @@
 														    <ui-select-choices repeat="grupo._id as grupo in grupos | filter: $select.search">
 														      <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
 														    </ui-select-choices>
-														  </ui-select>
+														  </ui-select>-->
 											  		</div>														  
 													  <div class="col-sm-1" style="text-align: left">
 														  <div style="display: inline-block; vertical-align: middle; float: none;">
@@ -209,7 +231,7 @@
 														</div>
 														<div class="col-sm-4">
 															<label >Plan de Estudios</label>
-															<ui-select ng-model="inscripcion.planEstudio_id"
+															<!--<ui-select ng-model="inscripcion.planEstudio_id"
 														             theme="bootstrap"
 														             ng-disabled="disabled"
 														             reset-search-input="false">
@@ -217,7 +239,7 @@
 														    <ui-select-choices repeat="planEstudio._id as planEstudio in planesEstudio | filter: $select.search">
 														      <div ng-bind-html="planEstudio.clave | highlight: $select.search"></div>
 														    </ui-select-choices>
-														  </ui-select>
+														  </ui-select>-->
 														</div>
 											  	</div>
 										  	</div>	
