@@ -192,7 +192,7 @@
 												<div class="row">
 													<section class="col col-sm-1 text-center padding-20" ng-repeat="semana in al.misSemanas" ng-click="al.seleccionarSemana(semana)" ng-class="al.obtenerEstatus(semana.pagada)">
 														<label class="input text-center">
-															<label type="text" class="text-center">{{semana.numero}} | {{semana.pagada}}</label>
+															<label type="text" class="text-center">{{semana.numero}} / {{semana.anio}} | {{semana.pagada}}</label>
 														</label>
 													</section>													
 												</div>																		
@@ -227,7 +227,7 @@
 										<div class="row">
 											<section class="col col-1" ng-repeat="semana in al.misSemanas" ng-click="al.seleccionarSemana(semana)" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
 												<label class="input">
-													<input ng-class="al.obtenerEstatus(semana.pagada)" type="text" placeholder="2/12" value="{{semana.numero}} | {{semana.importe | currency}}" disabled="">
+													<input ng-class="al.obtenerEstatus(semana.pagada)" type="text" value="{{semana.numero}} / {{semana.anio}}" disabled="">
 												</label>
 											</section>
 										</div>							
@@ -239,8 +239,11 @@
 										<span class="pull-right"> {{al.totalPagar | currency}} Pesos </span>
 									</div>														
 								</div>
-								<div class="pull-right">
-									<button type="button" class="btn btn-primary btn-lg" ng-click="al.pagar()">Pagar</button>
+								<div class="pull-right" style="margin:20px;">
+									<button type="button" class="btn btn-primary btn-lg" ng-click="al.pagar()" ng-disabled="al.hayParaPagar">Pagar</button>
+								</div>
+								<div class="pull-right" style="margin:20px;">
+									<button type="button" class="btn btn-primary btn-lg" ng-click="al.imprimir()" ng-disabled="al.hayParaImprimir">Imprimir</button>
 								</div>
 		          </div>
 		        </div>
