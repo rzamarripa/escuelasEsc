@@ -25,6 +25,11 @@
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
+  
+.txt-white {
+	color: white;
+}
+
 .animated {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
@@ -15394,6 +15399,9 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
 }
 .txt-color-redLight {
   color: #a65858 !important;
+}
+.txt-color-white {
+  color: #ffffff !important;
 }
 /*
 	 * BACKGROUNDS

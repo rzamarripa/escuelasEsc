@@ -8,6 +8,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	this.totalPagar = 0.00;
 	this.alumno = {};
 	this.fechaActual = new Date();
+	this.hayParaPagar = true;
 	
 	this.subscribe("ocupaciones");
 	
@@ -34,23 +35,25 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		  return Pagos.find().fetch();
 	  },
 	  misSemanas : () => {
-		  var hoy = new Date();
-		  var mesAtras = moment().subtract(1, "month");
-		  var primerSemana = moment(mesAtras).week();
-		  var anio = moment(mesAtras).year();
-		  console.log(anio);
+		  var inscripcion = moment("2013-01-03");
+		  var hoy = moment();
+		  var cantSemanas = hoy.diff(inscripcion, 'week');
 		  semanas = [];
-		  for(var i=primerSemana; i <= 52; i++){
-			  semanas.push({numero : i, pagada : 0, });
+		  for(var j=0; j<= cantSemanas; j++){
+			  var elAnio = inscripcion.year();			 
+			  semanas.push({semana: j, numero : moment(inscripcion).week(), pagada : 0, anio : elAnio })
+				inscripcion.add(1, 'weeks');
 		  }
-			_.each(this.getReactively('misPagos'), function(pago){
+		  
+		  _.each(this.getReactively('misPagos'), function(pago){
 				_.each(semanas, function(semana){
-					if(semana.numero == pago.semana){
+					if(semana.numero == pago.semana && semana.anio == pago.anio){
 						semana.pagada = 1;
 					}
 				});
 			});
-			return semanas;
+			
+		  return semanas
 	  }
   });
   
@@ -79,45 +82,71 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   }
   
   this.seleccionarSemana = function(semanaSeleccionada){
+	  console.log(semanaSeleccionada);
+	  var semSel = semanaSeleccionada.anio + semanaSeleccionada.numero;	
+	  rc.hayParaPagar = true;
 	  
 	  _.each(rc.misSemanas, function(semana){
-		  if(semana.numero <= semanaSeleccionada.numero && semana.pagada == 0){
+		  var semAct = semana.anio + semana.numero;
+		  if(semana.semana <= semanaSeleccionada.semana && semana.pagada == 0){
 			  rc.totalPagar += 350.00;
 			  semana.pagada = 2;
-		  }else if(semana.numero >= semanaSeleccionada.numero && semana.pagada == 2){
+		  }else if(semana.semana >= semanaSeleccionada.semana && semana.pagada == 2){
 			  rc.totalPagar -= 350.00;
 			  semana.pagada = 0;
+		  }else if(semanaSeleccionada.pagada == 1 && semana.semana == semanaSeleccionada.semana){
+			  semana.pagada = 3;
+		  }else if(semanaSeleccionada.pagada == 3 && semana.semana == semanaSeleccionada.semana){
+			  semana.pagada = 1;
 		  }
 	  });
+	  
+	  _.each(rc.misSemanas, function(semana){
+		  if(semana.pagada == 2){
+			  rc.hayParaPagar = false;
+			  return;
+		  }
+	  });
+  }
+  
+  this.imprimir = function(semanaSeleccionada){
+	  var semanasImprimir = [];
+	  _.each(rc.misSemanas, function(semana){
+			if(semana.pagada == 3){
+				semanasImprimir.push(semana);
+			}
+		});
+		console.log(semanasImprimir);
   }
   
   this.obtenerEstatus = function(pagada){
 	  if(pagada === 1){
-		  return "bg-color-green";
+		  return "bg-color-blue txt-color-white";
 	  }else if(pagada === 0){
 		  return "";
 	  }else if(pagada === 2){
-		  return "bg-color-orange";
+		  return "bg-color-orange txt-color-white";
+	  }else if(pagada === 3){
+		  return "bg-color-green txt-color-white";
 	  }
   }
   
   this.pagar = function(){
-	  console.log("hola");
-	  _.each(rc.misSemanas, function(semana){
-		  
-		  if(semana.pagada === 2){
-			  console.log(semana);
-
-			  Pagos.insert({
-				  fechaPago : new Date(),
-				  alumno_id : $stateParams.id,
-				  semana : semana.numero,
-				  estatus : 1,
-				  usuario_id : Meteor.userId(),
-				  importe : 350
-			  });
-		  }
-	  });
-	  rc.totalPagar = 0.00;
+		if (confirm("Está seguro de realizar el cobro por $" + parseFloat(rc.totalPagar))) {
+		  _.each(rc.misSemanas, function(semana){		  
+			  if(semana.pagada === 2){	
+				  Pagos.insert({
+					  fechaPago : new Date(),
+					  alumno_id : $stateParams.id,
+					  semana : semana.numero,
+					  anio : semana.anio,
+					  estatus : 1,
+					  usuario_id : Meteor.userId(),
+					  importe : 350
+				  });
+			  }
+		  });
+		  rc.totalPagar = 0.00;
+	  }
   }
 }
