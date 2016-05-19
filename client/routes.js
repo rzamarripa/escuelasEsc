@@ -189,7 +189,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'GruposDetalleCtrl as gp',
     })
     .state('root.inscripciones', {
-      url: '/inscripciones',
+      url: '/inscripciones/:id',
       templateUrl: 'client/inscripciones/inscripciones.ng.html',
       controller: 'InscripcionesCtrl as ins',
     })

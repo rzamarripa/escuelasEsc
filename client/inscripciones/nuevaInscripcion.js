@@ -13,7 +13,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	 });
      this.subscribe("grupos");
      this.subscribe("planesEstudios");
-     this.subscribe("inscripciones");
+     this.subscribe('inscripciones',()=>{
+		return [{estatus:true}]
+	 });
 
 
 
@@ -48,7 +50,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.cupo = false;
 	
 	this.guardar = function(inscripcion)
-	{
+	{   
 		this.inscripcion.estatus = true;
 		Inscripciones.insert(angular.copy(inscripcion));
 		var grupo = $meteor.object(Grupos, inscripcion.grupo_id,false).subscribe("grupos");
@@ -58,6 +60,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		toastr.success('inscripcion guardada.');
 		console.log(grupo);
 		$state.go("root.inscripciones");
+		console.log(inscripcion);
 	};
 	
 	/*this.getAlumnoSeleccionado = function(alumno)
@@ -73,7 +76,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		if(alumno)
 		return alumno.nombre;
 	};	
-	this.getCiclo= function(ciclo)
+	this.getCiclo= function(ciclo_id)
 	{
 		var ciclo = Ciclos.findOne(ciclo_id);
 		if(ciclo)

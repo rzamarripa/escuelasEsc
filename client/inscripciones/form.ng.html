@@ -69,7 +69,7 @@
 															<label>Alumno</label>
 												
 															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.alumno_id">
-															  <option  ng-repeat="alumno in ins.alumnos">
+															  <option  value="{{alumno._id}}" ng-repeat="alumno in ins.alumnos">
 															  	{{alumno.nombre}}
 															  </option>
 															</select>
@@ -155,7 +155,7 @@
 														<div class="col-sm-3">
 															<label >Ciclo Escolar</label>
 															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.ciclo_id">
-															  <option  ng-repeat="ciclo in ins.ciclos">
+															  <option  value="{{ciclo._id}}" ng-repeat="ciclo in ins.ciclos">
 															  	{{ciclo.descripcion}}
 															  </option>
 															</select>
@@ -163,6 +163,11 @@
 										
 														</div>
 											    	<div class="col-sm-6">
+											    	<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id">
+															  <option value="{{seccion._id}}" ng-repeat="seccion in ins.secciones">
+															  	{{seccion.descripcion}}
+															  </option>
+															</select>
 															<!--<label >Secciones</label>
 															<ui-select ng-model="inscripcion.seccion_id"
 														             theme="bootstrap"
@@ -207,8 +212,8 @@
 															<label >Grupo</label>
 
 															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id">
-															  <option  ng-repeat="grupo in ins.grupos">
-															  	{{grupo.descripcion}}
+															  <option value="{{grupo._id}}" ng-repeat="grupo in ins.grupos">
+															  	{{grupo.identificador}}
 															  </option>
 															</select>
 															<!--<ui-select ng-model="inscripcion.grupo_id"
@@ -230,7 +235,12 @@
 														  </div>															  
 														</div>
 														<div class="col-sm-4">
-															<label >Plan de Estudios</label>
+															<label>Plan de Estudios</label>
+															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.plan_id">
+															  <option value="plan._id" ng-repeat="planesEstudio in ins.planesEstudios">
+															  	{{planesEstudio.clave}}
+															  </option>
+															</select>
 															<!--<ui-select ng-model="inscripcion.planEstudio_id"
 														             theme="bootstrap"
 														             ng-disabled="disabled"
@@ -252,7 +262,7 @@
 										<br>
 										<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Alumno Inscrito</strong></h1>
 										<h4 class="text-center">Click Inscribir para Finalizar</h4>
-										<button ng-click="guardar(inscripcion)" class="btn btn-lg btn-primary">Inscribir</button>
+										<button ng-click="ins.guardar(ins.inscripcion)" class="btn btn-lg btn-primary">Inscribir</button>
 										<br>
 										<br>
 									</div>
