@@ -49,6 +49,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 				_.each(semanas, function(semana){
 					if(semana.numero == pago.semana && semana.anio == pago.anio){
 						semana.pagada = 1;
+						semana.importe = pago.importe;
 					}
 				});
 			});
@@ -117,6 +118,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			}
 		});
 		console.log(semanasImprimir);
+		$state.go("anon.pagosImprimir",{semanas : semanasImprimir, id : $stateParams.id},{newTab : true});
+		
   }
   
   this.obtenerEstatus = function(pagada){

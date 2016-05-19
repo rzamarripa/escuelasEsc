@@ -113,7 +113,7 @@ function DetallePagosCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
   }
   
   this.imprimir = function(pago){
-	  $state.go("root.pagosImprimir",{"id":pago.alumno_id,"pago": pago});
+	  $state.go("anon.pagosImprimir",{"id":pago.alumno_id,"pago": pago});
   }
   
 };

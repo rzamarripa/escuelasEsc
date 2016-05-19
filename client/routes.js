@@ -47,6 +47,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'LoginCtrl',
       controllerAs: 'lc'
     })
+    .state('anon.pagosImprimir', {
+      url: '/pagosImprimir/:id',
+      templateUrl: 'client/pagos/pagosImprimir.ng.html',
+      controller: 'PagosImprimirCtrl as pi',
+      params: { 'semanas': ':semanas' },
+    })
     .state('anon.logout', {
       url: '/logout',
       resolve: {
@@ -197,12 +203,6 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/pagos',
       templateUrl: 'client/pagos/buscarAlumno.ng.html',
       controller: 'PagosCtrl as pa',
-    })
-    .state('root.pagosImprimir', {
-      url: '/pagosImprimir/:id',
-      templateUrl: 'client/pagos/pagosImprimir.ng.html',
-      controller: 'PagosImprimirCtrl as pi',
-      params: { 'pago': ':pago' },
     })
     .state('root.archivos', {
       url: '/archivos/:id',
