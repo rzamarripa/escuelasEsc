@@ -8,3 +8,7 @@ Meteor.publish("alumnos",function(options){
 Meteor.publish("alumno",function(options){
   return Alumnos.find(options.id);
 });
+
+Meteor.publish("alumnoss",function(params){
+  return Alumnos.find(params);
+});
