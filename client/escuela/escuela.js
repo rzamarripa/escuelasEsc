@@ -3,19 +3,20 @@ angular.module("casserole")
  function EscuelaCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	$reactive(this).attach($scope);
   this.action = true;
+  this.nuevo = true;	  
+  
 	this.subscribe('escuelas');
 
 	this.helpers({
 	  escuelas : () => {
 		  return Escuelas.find();
 	  }
-  });
-  	  
-  this.nuevo = true;	  
+  }); 
+  
   this.nuevoEscuelas = function()
   {
     this.action = true;
-    this.nuevo = !this.nuevo;
+    this.nuevo = false;
     this.escuela = {};		
   };
   

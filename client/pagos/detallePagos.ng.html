@@ -9,51 +9,7 @@
 		</h1>
 	</div>
 </div>
-<br>
-<div class="row">
-	<div class="col-sm-12">
-		<article class="sortable-grid ui-sortable">
-			
-			<div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
-				
-				<header role="heading"><div class="jarviswidget-ctrls" role="menu">   <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse"><i class="fa fa-minus "></i></a> <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete"><i class="fa fa-times"></i></a></div>
-					<span class="widget-icon"> <i class="fa fa-dollar"></i> </span>
-					<h2>Realizar un nuevo cobro </h2>		
-				<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
-				<div role="content">
-					<div class="jarviswidget-editbox"></div>
-					<div class="widget-body no-padding">		
-						<form class="smart-form">
-							<header>
-								Listado de semana
-							</header>		
-							<fieldset>		
-								<div class="row">
-									<section class="col col-1" ng-repeat="semana in pa.misSemanas">
-										<label class="input" ng-class="$semana.pagada ? 'txt-color-green' : 'txt-color-orange'">
-											{{semana.numero}}
-										</label>
-									</section>
-								</div>
-								<pre>
-									{{pa.misSemanas}}
-								</pre>
-							</fieldset> 
-							
-							<footer>
-								<button class="btn btn-primary" ng-click="pa.agregar()" ng-show="pa.action">Agregar</button>
-								<button class="btn btn-danger pull-left" ng-click="pa.pago = {}; pa.action=true;" ng-show="!pa.action">Cancelar</button>
-								<button class="btn btn-primary pull-right" ng-click="pa.actualizar(pa.pago)" ng-show="!pa.action">Actualizar</button>
-							</footer>		
-						</form>		
-					</div>		
-				</div>
-			</div>			
-		</article>
-	</div>
-</div>
-<hr>
-<div class="row">
+<div class="row" style="padding: 50px;">
 	<div class="col-sm-12">
 		<article class="sortable-grid ui-sortable">
 			<div class="jarviswidget jarviswidget-color-blueDark jarviswidget-sortable" id="wid-id-3" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-deletebutton="false" role="widget">
