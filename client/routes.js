@@ -114,6 +114,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       templateUrl: 'client/ciclos/ciclos.ng.html',
       controller: 'CiclosCtrl as cl',
     })
+     .state('root.subCiclos', {
+      url: '/subCiclos',
+      templateUrl: 'client/subCiclos/subCiclos.ng.html',
+      controller: 'SubCiclosCtrl as sub',
+    })
     .state('root.deptosAcademicos', {
       url: '/deptosAcademicos',
       templateUrl: 'client/deptosAcademicos/deptosAcademicos.ng.html',
