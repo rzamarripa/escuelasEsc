@@ -136,17 +136,29 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   
   this.pagar = function(){
 		if (confirm("Está seguro de realizar el cobro por $" + parseFloat(rc.totalPagar))) {
-		  _.each(rc.misSemanas, function(semana){		  
+			var semanasPagadas = [];
+		  _.each(rc.misSemanas, function(semana){
 			  if(semana.pagada === 2){	
+				  
 				  Pagos.insert({
-					  fechaPago : new Date(),
-					  alumno_id : $stateParams.id,
-					  semana : semana.numero,
-					  anio : semana.anio,
-					  estatus : 1,
-					  usuario_id : Meteor.userId(),
+					  fechaPago 	: new Date(),
+					  alumno_id 	: $stateParams.id,
+					  semana 			: semana.numero,
+					  anio 				: semana.anio,
+					  estatus 		: 1,
+					  usuario_id 	: Meteor.userId(),
+					  importe 		: 350
+				  });
+				  
+				  semanasPagadas.push({
+					  anio 		: semana.anio,
+					  numero 	: semana.numero,
+					  importe : semana.importe,
+					  pagada 	: 3,
 					  importe : 350
 				  });
+				  
+				  $state.go("anon.pagosImprimir",{semanas : semanasPagadas, id : $stateParams.id});
 			  }
 		  });
 		  rc.totalPagar = 0.00;

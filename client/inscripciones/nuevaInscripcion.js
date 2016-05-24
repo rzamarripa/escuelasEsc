@@ -1,21 +1,21 @@
 angular.module("casserole")
 .controller('NuevaInscripcionCtrl', NuevaInscripcionCtrl); 
 function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
-    $reactive(this).attach($scope);
+	$reactive(this).attach($scope);
 
-     this.subscribe('ciclos',()=>{
+	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
-	 });
-     this.subscribe("secciones");
-     this.subscribe("tiposingresos");
-     this.subscribe('alumnoss',()=>{
+	});
+	this.subscribe("secciones");
+	this.subscribe("tiposingresos");
+	this.subscribe('alumnoss',()=>{
 		return [{estatus:true}]
-	 });
-     this.subscribe("grupos");
-     this.subscribe("planesEstudios");
-     this.subscribe('inscripciones',()=>{
+	});
+	this.subscribe("grupos");
+	this.subscribe("planesEstudios");
+	this.subscribe('inscripciones',()=>{
 		return [{estatus:true}]
-	 });
+	});
 
 
 

@@ -2,13 +2,14 @@ angular
 .module("casserole")
 .controller("PlanEstudiosIndexCtrl", PlanEstudiosIndexCtrl);
 function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
-	let rc =$reactive(this).attach($scope);
+	let rc = $reactive(this).attach($scope);
   this.action = true;
   this.subscribe('planesEstudios');
   this.subscribe('secciones');
   this.subscribe('materias');
-  
+
   rc.plan = {};
+  
   rc.plan.grados = [];
 
 	this.helpers({
@@ -20,10 +21,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	  },
 	  materias : () => {
 		  return Materias.find();
-	  },
-	  plan :() =>{
-	  	return PlanesEstudios.findOne($stateParams.id);
-	  }
+	  },	  
   });	
 
 	this.action = $stateParams.id ? false : true; 
@@ -33,8 +31,6 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	};
 	
 	function crearGrados(gradosActuales){
-		console.log(gradosActuales);
-		
 		if(gradosActuales <1 ){
 			rc.plan.grados = [];
 			return;
@@ -46,47 +42,47 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 			};
 		}
 		
-		console.log(rc.plan.grados);
 		while(gradosActuales<rc.plan.grados.length)rc.plan.grados.pop();
 		while(gradosActuales>rc.plan.grados.length)rc.plan.grados.push([]);
 	}
 	
 	this.getGrados = function() {
-		var gradosActuales=this.plan? (this.plan.grado? this.plan.grado:0 ):0;		
+		var gradosActuales=rc.plan? (rc.plan.grado? rc.plan.grado:0 ):0;		
 		crearGrados(gradosActuales)
-
+		console.log(_.range(gradosActuales));
 		return _.range(gradosActuales);   
 	};
 
 	this.agregarMateria = function(nuevaMateria){
-		var gradosActuales=this.plan? (this.plan.grado? this.plan.grado:0 ):0;
-		crearGrados(gradosActuales)
+		var gradosActuales=rc.plan? (rc.plan.grado? rc.plan.grado:0 ):0;
+		crearGrados(gradosActuales);
+		console.log(nuevaMateria);
 		
-		this.plan.grados[nuevaMateria.grado].push(nuevaMateria);
-		this.nuevaMateria="";		
+		rc.plan.grados[nuevaMateria.grado].push(nuevaMateria);
+		rc.nuevaMateria="";
 	};
 
 	this.quitarMateria = function(_materia){
-		var i=this.plan.grados[_materia.grado].indexOf(_materia);
-		this.plan.grados[_materia.grado].splice( i, 1 );
+		var i=rc.plan.grados[_materia.grado].indexOf(_materia);
+		rc.plan.grados[_materia.grado].splice( i, 1 );
 	}
 
 	this.guardar = function(plan)
 	{
-
-		this.plan.estatus = true;
-		console.log(this.plan);
-		PlanesEstudios.insert(this.plan);	
+		console.log(plan);
+		plan.estatus = true;
+		delete plan.$$hashKey;
+		PlanesEstudios.insert(plan);	
 		toastr.success('Plan de estudio guardado');	
-		this.plan = {}; 
+		rc.plan = {}; 
 		$('.collapse').collapse('hide');
-		this.nuevo = true;
+		rc.nuevo = true;
 		$state.go("root.planEstudio");
 	};
 
 	this.editar = function(id)
 	{
-    this.plan = PlanesEstudios.findOne({_id:id});
+    rc.plan = PlanesEstudios.findOne({_id:id});
     this.action = false;
     $('.collapse').coll
     this.nuevo = false;
@@ -94,16 +90,11 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 
 	this.actualizar = function()
 	{
-		var idTemp = this.plan._id;
-		console.log(idTemp);
+		var idTemp = rc.plan._id;
 		delete this.plan._id;	
-		console.log(this.plan);	
-		PlanesEstudios.update({_id:idTemp},{$set:this.plan});
-		console.log(idTemp);
+		PlanesEstudios.update({_id:idTemp},{$set:rc.plan});
 		$('.collapse').collapse('hide');
-		console.log(idTemp);
 		this.nuevo = true;
-		console.log(idTemp);
 	};
 
 

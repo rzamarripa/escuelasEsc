@@ -63,34 +63,12 @@
 										  	<div class="well">
 											    <div class="row">
 														<div class="col-sm-8">
-															
-
-															<div class="col-sm-4">
-															<label>Alumno</label>
-												
-															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.alumno_id">
+															<label>Alumno</label>												
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.alumno_id">
 															  <option  value="{{alumno._id}}" ng-repeat="alumno in ins.alumnos">
-															  	{{alumno.nombre}}
+															  	{{alumno.nombre}} {{alumno.apPaterno}} {{alumno.apMaterno}}
 															  </option>
 															</select>
-																</div>
-
-												
-
-																<!--<ui-select ng-model="inscripcion.alumno_id"
-														             theme="bootstrap"
-														             ng-disabled="disabled"
-														             reset-search-input="false"
-														             on-select="getAlumnoSeleccionado(inscripcion.alumno_id)">
-														    <ui-select-match placeholder="Seleccione">
-														    	{{$select.selected.nombre}} 
-														    	{{$select.selected.apPaterno}} 
-														    	{{$select.selected.apMaterno}}
-														    </ui-select-match>
-														    <ui-select-choices repeat="alumno._id as alumno in alumnos | filter: $select.search">
-														      <div ng-bind-html="alumno.nombre + ' ' + alumno.apPaterno + ' ' + alumno.apMaterno | highlight: $select.search"></div>
-														    </ui-select-choices>
-														  </ui-select>-->
 														</div>
 														<div class="col-sm-3">
 															<label for="fechaNac">Fecha de Inscripción</label>
@@ -154,7 +132,7 @@
 											    <div class="row">
 														<div class="col-sm-3">
 															<label >Ciclo Escolar</label>
-															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.ciclo_id">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.ciclo_id">
 															  <option  value="{{ciclo._id}}" ng-repeat="ciclo in ins.ciclos">
 															  	{{ciclo.descripcion}}
 															  </option>
@@ -163,7 +141,8 @@
 										
 														</div>
 											    	<div class="col-sm-6">
-											    	<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id">
+												    	<label >Sección</label>
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id">
 															  <option value="{{seccion._id}}" ng-repeat="seccion in ins.secciones">
 															  	{{seccion.descripcion}}
 															  </option>
@@ -181,7 +160,7 @@
 														</div>
 														<div class="col-sm-3">
 															<label >Tipo de Ingreso</label>
-															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.tiposIngreso_id">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.tiposIngreso_id">
 															  <option  ng-repeat="tiposIngreso in ins.tiposIngresos">
 															  	{{tiposIngreso.descripcion}}
 															  </option>
@@ -211,7 +190,7 @@
 											  		<div class="col-sm-4">												  		
 															<label >Grupo</label>
 
-															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id">
 															  <option value="{{grupo._id}}" ng-repeat="grupo in ins.grupos">
 															  	{{grupo.identificador}}
 															  </option>
@@ -236,7 +215,7 @@
 														</div>
 														<div class="col-sm-4">
 															<label>Plan de Estudios</label>
-															<select class="form-control select2" placeholder="Seleccione" ng-model="ins.inscripcion.plan_id">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.plan_id">
 															  <option value="plan._id" ng-repeat="planesEstudio in ins.planesEstudios">
 															  	{{planesEstudio.clave}}
 															  </option>
