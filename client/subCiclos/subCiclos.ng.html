@@ -5,10 +5,13 @@
 			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevosubCiclo" ng-click="sub.nuevoSubCiclo()">
 		  {{sub.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
-			
-		
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12 well">
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" > 
+
 				<div class="well">	    
 			    <div class="row">
 			    <div class="col-sm-4">
@@ -49,11 +52,11 @@
 			
 			    
 			    <br/>
-				<br/>
+
 				<div class="row">
 					<div class="col-sm-12">
 						<input type="submit" value="Guardar" ng-click="sub.guardar(sub.subCiclo)" class="btn btn-primary" ng-show="sub.action">
-						<input type="submit" ng-click="sub.actualizar(sub.subCiclo)" value="Actualizar" class="btn btn-primary" ng-show="!sub.action">				
+						<input type="submit" ng-click="sub.actualizar(sub.subCiclo)" value="Actualizar" class="btn btn-primary" ng-show="!sub.action">			
 					</div>
 				</div>	  
 		  </form>
@@ -61,11 +64,6 @@
 	</div>
 </div>
 <br/>
-
-
-
-
-
 
 <!-- List -->
 <div class="row">
