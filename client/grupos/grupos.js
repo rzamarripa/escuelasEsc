@@ -1,12 +1,14 @@
 angular.module("casserole")
 .controller("GruposCtrl", GruposCtrl);
  function GruposCtrl($scope, $meteor, $reactive , $state, $stateParams, toastr){
- 	$reactive(this).attach($scope);
+ 	let rc = $reactive(this).attach($scope);
   this.action = true;
 
 	this.subscribe('grupos');
 	this.subscribe('secciones');
-	this.subscribe('ciclos');
+	this.subscribe('ciclos', () => {
+		return [{estatus: true}]
+	});
 	this.subscribe('turnos'); 
 
 	$(document).ready(function() {
@@ -62,7 +64,7 @@ angular.module("casserole")
 
 	this.getCiclo = function(ciclo_id)
 	{
-		ciclo = _.find(this.ciclos,function(x){return x._id==ciclo_id;});
+		ciclo = _.find(rc.ciclos,function(x){return x._id==ciclo_id;});
 		return ciclo.anioEscolar + " " + ciclo.complementoEscolar;
 	};	
 	

@@ -1,3 +1,4 @@
 Meteor.publish("grupos",function(options){
-  	return Grupos.find({estatus:true},options);
+	console.log(options);
+ 	return Grupos.find(options);
 });
