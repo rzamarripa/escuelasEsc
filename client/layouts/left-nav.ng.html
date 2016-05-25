@@ -28,13 +28,13 @@ A LA BARRA LATERAL
 
 <nav>
 	<ul data-smart-menu>
-    <li data-menu-collapse>
+    <li data-menu-collapse data-ui-sref-active="active">
 	    <a href="#">
 	      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
 	      <span class="menu-item-parent">Maestros</span>
 	    </a>
 	    <ul>
-	      <li>
+	      <li data-ui-sref-active="active">
 		      <a ui-sref="root.maestroGrupos" tilte="Grupos">
 		        <i class="fa fa-lg fa-fw fa-home"></i>
 		        <span class="menu-item-parent">Grupos</span>
@@ -42,13 +42,13 @@ A LA BARRA LATERAL
 		    </li>
 	    </ul>
     </li>
-    <li data-menu-collapse>
+    <li data-menu-collapse data-ui-sref-active="active">
 	    <a href="#">
 	      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
 	      <span class="menu-item-parent">Alumnos</span>
 	    </a>
 	    <ul>
-	      <li>
+	      <li data-ui-sref-active="active">
 		      <a ui-sref="root.alumnoCalificaciones" tilte="Calificaciones">
 		        <i class="fa fa-lg fa-fw fa-home"></i>
 		        <span class="menu-item-parent">Calificaciones</span>
@@ -57,24 +57,18 @@ A LA BARRA LATERAL
 	    </ul>
     </li>
 	  <li data-ui-sref-active="active">
-      <a ui-sref="root.inscripciones" >
+      <a ui-sref="root.inscripciones">
         <i class="fa fa-lg fa-fw fa-user-plus"></i>
         <span class="menu-item-parent">Inscripciones</span>
       </a>
     </li>
     <li data-ui-sref-active="active">
-      <a ui-sref="root.pagos">
-        <i class="fa fa-lg fa-fw fa-dollar"></i>
-        <span class="menu-item-parent">Pagos</span>
-      </a>
-    </li>
-    <li data-ui-sref-active="active">
-      <a ui-sref="root.listarHorarios" >
+      <a ui-sref="root.listarHorarios">
         <i class="fa fa-lg fa-fw fa-user-plus"></i>
         <span class="menu-item-parent">Horarios</span>
       </a>
     </li>
-	  <li data-menu-collapse>
+	  <li data-menu-collapse data-ui-sref-active="active">
 	    <a href="#">
 	      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
 	      <span class="menu-item-parent">Catálogos</span>
@@ -92,16 +86,22 @@ A LA BARRA LATERAL
 		        <span class="menu-item-parent">Alumnos</span>
 		      </a>
 		    </li>
+				<li data-ui-sref-active="active">
+					<a ui-sref="root.aulas">
+					  <i class="fa fa-lg fa-fw fa-users"></i>
+					  <span class="menu-item-parent">Aulas</span>
+					</a>
+				</li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.campus">
+		        <i class="fa fa-lg fa-fw fa-users"></i>
+		        <span class="menu-item-parent">Campus</span>
+		      </a>
+		    </li>
 		    <li data-ui-sref-active="active">
 		      <a ui-sref="root.ciclos">
 		        <i class="fa fa-lg fa-fw fa-circle-o-notch"></i>
 		        <span class="menu-item-parent">Ciclos</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.subCiclos">
-		        <i class="fa fa-lg fa-fw fa-circle-o-notch"></i>
-		        <span class="menu-item-parent">SubCiclos</span>
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
@@ -111,69 +111,33 @@ A LA BARRA LATERAL
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.ocupaciones">
-		        <i class="fa fa-lg fa-fw fa-tag"></i>
-		        <span class="menu-item-parent">Ocupaciones</span>
+		      <a ui-sref="root.documentos">
+		        <i class="fa fa-lg fa-fw fa fa-th"></i>
+		        <span class="menu-item-parent">Documentos</span>
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.tiposIngresos" >
-		        <i class="fa fa-lg fa-fw fa-tag"></i>
-		        <span class="menu-item-parent">Tipos de Ingresos</span>
-		      </a>
-		    </li>
+					<a ui-sref="root.trabajadores">
+					  <i class="fa fa-lg fa-fw fa-users"></i>
+					  <span class="menu-item-parent">Empleados</span>
+					</a>
+				</li>
 		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.empresas" >
+		      <a ui-sref="root.empresas">
 		        <i class="fa fa-lg fa-fw fa-industry"></i>
 		        <span class="menu-item-parent">Empresas</span>
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.estadoCivil" >
+		      <a ui-sref="root.escuela">
+		        <i class="fa fa-lg fa-fw fa-user-plus"></i>
+		        <span class="menu-item-parent">Escuela de proce.</span>
+		      </a>
+		    </li>		
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.estadoCivil">
 		        <i class="fa fa-lg fa-fw fa-black-tie "></i>
 		        <span class="menu-item-parent">Estado civil</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.titulos" >
-		        <i class="glyphicon glyphicon-text-width"></i>
-		        <span class="menu-item-parent">Títulos</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.secciones" >
-		        <i class="glyphicon glyphicon-th-list"></i>
-		        <span class="menu-item-parent">Secciones</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.nacionalidad" >
-		        <i class="fa fa-lg fa-fw fa-flag-o"></i>
-		        <span class="menu-item-parent">Nacionalidad</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.materias" >
-		        <i class="fa fa-lg fa-fw fa-map-o"></i>
-		        <span class="menu-item-parent">Materias</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.turnos" >
-		        <i class="fa fa-lg fa-fw fa-sun-o"></i>
-		        <span class="menu-item-parent">Turnos</span>
-		      </a>
-		    </li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.grupos" >
-		        <i class="fa fa-lg fa-fw fa-users"></i>
-		        <span class="menu-item-parent">Grupos</span>
-		      </a>
-		    </li>		    
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.planEstudio" >
-		        <i class="fa fa-lg fa fa-object-group"></i>
-		        <span class="menu-item-parent">Planes de Estudio</span>
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
@@ -182,42 +146,72 @@ A LA BARRA LATERAL
 		        <span class="menu-item-parent">Generaciones</span>
 		      </a>
 		    </li>
-		    <li>
-		      <a ui-sref="root.campus">
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.grupos">
 		        <i class="fa fa-lg fa-fw fa-users"></i>
-		        <span class="menu-item-parent">Campus</span>
+		        <span class="menu-item-parent">Grupos</span>
 		      </a>
-		    </li>
-				<li>
-					<a ui-sref="root.aulas">
-					  <i class="fa fa-lg fa-fw fa-users"></i>
-					  <span class="menu-item-parent">Aulas</span>
-					</a>
-				</li>
+		    </li>	
 				<li data-ui-sref-active="active" ng-show="isLoggedIn">
-		      <a ui-sref="root.maestros" >
+		      <a ui-sref="root.maestros">
 		        <i class="fa fa-lg fa-fw fa fa-th"></i>
 		        <span class="menu-item-parent">Maestros</span>
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
-				<a ui-sref="root.trabajadores">
-					  <i class="fa fa-lg fa-fw fa-users"></i>
-					  <span class="menu-item-parent">Empleados</span>
-					</a>
-				</li>
-		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.documentos" >
-		        <i class="fa fa-lg fa-fw fa fa-th"></i>
-		        <span class="menu-item-parent">Documentos</span>
+		      <a ui-sref="root.materias">
+		        <i class="fa fa-lg fa-fw fa-map-o"></i>
+		        <span class="menu-item-parent">Materias</span>
 		      </a>
 		    </li>
 		    <li data-ui-sref-active="active">
-		      <a ui-sref="root.escuela" >
-		        <i class="fa fa-lg fa-fw fa-user-plus"></i>
-		        <span class="menu-item-parent">Escuela de proce.</span>
+		      <a ui-sref="root.nacionalidad">
+		        <i class="fa fa-lg fa-fw fa-flag-o"></i>
+		        <span class="menu-item-parent">Nacionalidad</span>
 		      </a>
-		    </li>		    
+		    </li>   
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.ocupaciones">
+		        <i class="fa fa-lg fa-fw fa-tag"></i>
+		        <span class="menu-item-parent">Ocupaciones</span>
+		      </a>
+		    </li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.planEstudio">
+		        <i class="fa fa-lg fa fa-object-group"></i>
+		        <span class="menu-item-parent">Planes de Estudio</span>
+		      </a>
+		    </li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.secciones">
+		        <i class="glyphicon glyphicon-th-list"></i>
+		        <span class="menu-item-parent">Secciones</span>
+		      </a>
+		    </li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.subCiclos">
+		        <i class="fa fa-lg fa-fw fa-circle-o-notch"></i>
+		        <span class="menu-item-parent">SubCiclos</span>
+		      </a>
+		    </li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.tiposIngresos">
+		        <i class="fa fa-lg fa-fw fa-tag"></i>
+		        <span class="menu-item-parent">Tipos de Ingresos</span>
+		      </a>
+		    </li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.titulos">
+		        <i class="glyphicon glyphicon-text-width"></i>
+		        <span class="menu-item-parent">Títulos</span>
+		      </a>
+		    </li>
+		    <li data-ui-sref-active="active">
+		      <a ui-sref="root.turnos">
+		        <i class="fa fa-lg fa-fw fa-sun-o"></i>
+		        <span class="menu-item-parent">Turnos</span>
+		      </a>
+		    </li>	     
 	    </ul>
 	  </li>
   </ul>

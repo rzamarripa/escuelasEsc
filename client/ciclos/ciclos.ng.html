@@ -7,47 +7,42 @@
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" >
+			<form class="form-horizontal" role="form">
 		  	<div class="well">	    
-			  	<div id="errores"></div>
-			    <div ass="row">
-			    	<div class="col-sm-4">					    
-					    <div class="col-sm-6">
-						    <label>Año Escolar</label>
-					    	<input type="text" class="form-control" ng-model="cl.ciclo.anioEscolar" >
-					    </div>
-					    <div class="col-sm-6">
-						    <label>Comp. Escolar</label>
-					    	<input type="text" class="form-control" ng-model="cl.ciclo.complementoEscolar" >
-					    </div>
-			    	</div>
+			    <div class="row">				    
+				    <div class="col-sm-2">
+					    <label>Año Escolar</label>
+				    	<input type="text" class="form-control" ng-model="cl.ciclo.anioEscolar">
+				    </div>
+				    <div class="col-sm-2">
+					    <label>Comp. Escolar</label>
+				    	<input type="text" class="form-control" ng-model="cl.ciclo.complementoEscolar">
+				    </div>
 			    	<div class="col-sm-4">
 				    	<label>Descripción</label>
-					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion" >
+					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion">
 			    	</div>
-			    	<div class="col-sm-4">				    	
-					    <div class="col-sm-6">
-						    <label>Año Admin</label>
-					    	<input type="text" class="form-control" ng-model="cl.ciclo.anioAdministrativo" >
-					    </div>
-					    <div class="col-sm-6">
-						    <label>Comp. Admin</label>
-					    	<input type="text" class="form-control" ng-model="ciclo.complementoAdministrativo" >
-					    </div>
-			    	</div>
+				    <div class="col-sm-2">
+					    <label>Año Admin</label>
+				    	<input type="text" class="form-control" ng-model="cl.ciclo.anioAdministrativo">
+				    </div>
+				    <div class="col-sm-2">
+					    <label>Comp. Admin</label>
+				    	<input type="text" class="form-control" ng-model="ciclo.complementoAdministrativo">
+				    </div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
 				    	<label>Fecha Inicio</label>
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaInicio" />
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaInicio"/>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Fecha Fin</label>
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaFin" />
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaFin"/>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Fecha Base</label>
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaBase" />
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaBase"/>
 			    	</div>
 			    </div>				  
 				</div>

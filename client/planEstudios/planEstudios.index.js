@@ -49,7 +49,6 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	this.getGrados = function() {
 		var gradosActuales=rc.plan? (rc.plan.grado? rc.plan.grado:0 ):0;		
 		crearGrados(gradosActuales)
-		console.log(_.range(gradosActuales));
 		return _.range(gradosActuales);   
 	};
 
