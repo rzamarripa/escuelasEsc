@@ -9,8 +9,9 @@
 		
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" > 
-
-			<div class="col-sm-4">
+				<div class="well">	    
+			    <div class="row">
+			    <div class="col-sm-4">
 			<label >Ciclo Escolar</label>
 			 <select class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id">
 			  <option  value="{{ciclo._id}}" ng-repeat="ciclo in sub.ciclos">
@@ -23,6 +24,13 @@
 					    <input type="text" class="form-control" ng-model="sub.subCiclo.nombre" >
 			    	</div>
 			    	<div class="col-sm-4">
+			    	<label>Tipo de Subciclo</label>
+			    	<select class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.tipo">
+			  <option>Administrativo </option>
+			   <option>Académico</option>
+				</select>
+				</div>
+			    	<div class="col-sm-4">
 				    	<label>Fecha Inicio</label>
 					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="sub.subCiclo.fechaInicio" />
 			    	</div>
@@ -30,6 +38,15 @@
 				    	<label>Fecha Fin</label>
 					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="sub.subCiclo.fechaFin" />
 			    	</div>
+			    	<div class="col-sm-12">
+					    <label>Descripción</label>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="sub.subCiclo.descripcion"></textarea>
+			    	</div>
+			     	   			    
+			    </div>
+			</div> 
+
+			
 			    
 			    <br/>
 				<br/>
@@ -44,6 +61,12 @@
 	</div>
 </div>
 <br/>
+
+
+
+
+
+
 <!-- List -->
 <div class="row">
 	<div class="col-sm-12">
@@ -51,9 +74,11 @@
 			<thead>
 				<tr>
 					<th width="10%"><div class="text-center">Nombre</div></th>
-					<th width="20%"><div class="text-center">Descripción</div></th>
+					<th width="10%"><div class="text-center">Sub Ciclo</div></th>
 					<th width="15%"><div class="text-center">Fecha Inicio</div></th>					
-					<th width="15%"><div class="text-center">Fecha Fin</div></th>									
+					<th width="15%"><div class="text-center">Fecha Fin</div></th>
+					<th width="10%"><div class="text-center">Tipo de Subciclo</div></th>	
+					<th width="20%"><div class="text-center">Descripción</div></th>									
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -72,6 +97,8 @@
 			    <td>{{sub.getCiclo(subCiclo.ciclo_id)}}</td>
 			    <td>{{subCiclo.fechaInicio | date:"dd-MM-yyyy"}}</td>
 			    <td>{{subCiclo.fechaFin | date:"dd-MM-yyyy"}}</td>
+			     <td>{{subCiclo.tipo}}</td>
+			      <td>{{subCiclo.descripcion}}</td>
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="subCiclo.estatus" class="label label-success">
