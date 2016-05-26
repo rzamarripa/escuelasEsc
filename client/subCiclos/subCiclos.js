@@ -57,6 +57,7 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		delete subCiclo._id;		
 		SubCiclos.update({_id:idTemp},{$set:subCiclo});
 		$('.collapse').collapse('hide');
+		console.log(this.subCiclo);
 		this.nuevo = true;
 	};
 

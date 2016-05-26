@@ -6,47 +6,17 @@
 		 {{au.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="au.aula.clave" required>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="au.aula.clave">
 			    	</div>
 			    	<div class="col-sm-4">					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="au.aula.nombre" required>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="au.aula.nombre">
 			    	</div>
-			    	<!--
-			    	<div class="col-sm-4">
-			    		<div class="col-sm-4">
-						<label >Departamento academico</label>
-						<ui-select ng-model="seccion.deptoAcademico"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
-					    <ui-select-choices repeat="deptoAcademico._id as deptoAcademico in deptosAcademicos | filter: $select.search">
-					      <div ng-bind-html="deptoAcademico.descripcionCorta | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
-					</div> -->
-
-         <!-- <div class="col-sm-4">
-						<label >Sección</label>
-						<ui-select ng-model="au.aula.seccion_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
-					    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
-					      <div ng-bind-html="seccion.descripcionCorta | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
-					
-					  <select class="for-control select2" placeholder="Seleccione" ng-model="au.seccion.descripcionCorta_id"> <option ng-repeat="seccion in au.secciones" value="{{secciones_id}}">{{seccion.decripcionCorta}}</option>
-					 </select>
-					</div>-->
 			    </div> 
 			    <div class="row">
 			    	<div class="col-sm-12">
@@ -57,8 +27,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="au.guardar(aula)" value="Guardar" class="btn btn-primary" ng-show="au.action">
-						<input type="submit" ng-click="au.actualizar(aula)" value="Actualizar" class="btn btn-primary" ng-show="!au.action">				
+						<input type="submit" ng-click="au.guardar(au.aula)" value="Guardar" class="btn btn-primary" ng-show="au.action">
+						<input type="submit" ng-click="au.actualizar(au.aula)" value="Actualizar" class="btn btn-primary" ng-show="!au.action">				
 					</div>
 				</div>	  
 		  </form>
