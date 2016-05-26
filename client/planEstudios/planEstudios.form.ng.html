@@ -86,8 +86,9 @@
 			    <div class="col-sm-4">
 				    <label>Materia</label>
 
-				    <select class="form-control" placeholder="Seleccione" ng-model="pl.nuevaMateria.materia"
-						ng-options="option.descripcion for option in pl.materias track by option.id">							
+				    <select class="form-control" placeholder="Seleccione" 
+						ng-options="option.descripcion for option in pl.materias track by option._id"
+						ng-model="pl.nuevaMateria.materia">							
 						</select>				     					
 					</div>	
 					<div class="col-sm-4">
