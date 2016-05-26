@@ -23,4 +23,21 @@ function PagosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  return Ocupaciones.find();
 	  }
   });
+  
+  this.tieneFoto = function(sexo, foto){
+	  if(foto === undefined){
+		  if(sexo === "masculino")
+			  return "img/badmenprofile.jpeg";
+			else if(sexo === "femenino"){
+				return "img/badgirlprofile.jpeg";
+			}else{
+				return "img/badprofile.jpeg";
+			}
+			  
+	  }else{
+		  return foto;
+	  }
+  }
+  
+  
 };

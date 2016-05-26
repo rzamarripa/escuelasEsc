@@ -50,7 +50,7 @@
 										</div>
 									</div>
 									<div class="col-sm-6">
-										<h1>{{alumno.nombre}} <span class="semi-bold">{{al.alumno.apPaterno}} {{al.alumno.apMaterno}}</span>
+										<h1>{{al.alumno.nombre}} <span class="semi-bold">{{al.alumno.apPaterno}} {{al.alumno.apMaterno}}</span>
 										<br>
 										<small> Alumno</small></h1>
 										<ul class="list-unstyled">
@@ -78,18 +78,36 @@
 											{{al.alumno.observacionesGenerales}}
 										</p>
 										<br>
+									</div>																		
+									<div class="col-sm-3">
+										<h1><small>Amigos</small></h1>
+										<ul class="list-inline friends-list">
+											<li><img src="img/avatars/1.png" alt="friend-1">
+											</li>
+											<li><img src="img/avatars/2.png" alt="friend-2">
+											</li>
+											<li><img src="img/avatars/3.png" alt="friend-3">
+											</li>
+											<li><img src="img/avatars/4.png" alt="friend-4">
+											</li>
+											<li><img src="img/avatars/5.png" alt="friend-5">
+											</li>
+											<li><img src="img/avatars/male.png" alt="friend-6">
+											</li>
+											<li>
+												<a href="javascript:void(0);">413 more</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
 										<ul class="nav nav-tabs ">
 											<li>
 												<a href="#masinfo" data-toggle="tab">Más Información</a>
 											</li>
-											<li>
-												<a href="#calificaciones" data-toggle="tab">Calificaciones</a>
-											</li>
-											<li>
-												<a href="#pagos" data-toggle="tab">Pagos</a>
-											</li>
 										</ul>
-										<div class="tab-content padding-top-10">
+										<div class="tab-content padding-10">
 											<div class="tab-pane" id="masinfo">
 												<div class="col-sm-6">
 													<ul class="list-unstyled">															
@@ -169,80 +187,83 @@
 													</ul>	
 												</div>
 																								
-											</div>
-											<div class="tab-pane" id="calificaciones">
-												<h3>Calificaciones</h3>
-											</div>
-											<div class="tab-pane" id="pagos">
-												<article class="sortable-grid ui-sortable">
-													<div class="jarviswidget jarviswidget-color-blueDark jarviswidget-sortable" id="wid-id-3" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-togglebutton="false" data-widget-fullscreenbutton="false" data-widget-deletebutton="false" role="widget">
-														
-														<header role="heading"><div class="jarviswidget-ctrls" role="menu">   <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse"><i class="fa fa-minus "></i></a> <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Delete"><i class="fa fa-times"></i></a></div>
-															<span class="widget-icon"> <i class="fa fa-dollar"></i> </span>
-															<h2>Lista de pagos realizados al momento</h2>		
-														<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
-														<div role="content">
-															<table class="table table-bordered table-striped table-hover">
-																<tr>
-																	<th>No.</th>
-																	<th>Fecha</th>
-																	<th>Semana</th>
-																	<th>Descripción</th>
-																	<th>Importe</th>
-																	<th>Acciones</th>
-																</tr>
-																<tr ng-repeat="pago in al.misPagos">
-																	<td>{{$index+1}}</td>
-																	<td>{{pago.fecha | date: short}}</td>
-																	<td>{{pago.semana}}</td>
-																	<td>{{pago.descripcion}}</td>
-																	<td class="text-right">{{pago.importe | currency}}</td>
-																	<td class="text-center">
-																		<button class="btn btn-danger" ng-click="pa.eliminar($index, pago)"><i class="fa fa-trash white"></i></button>
-																		<button class="btn btn-warning" ng-click="pa.editar(pago)"><i class="fa fa-pencil white"></i></button>
-																		<button class="btn btn-primary" ng-click="pa.imprimir(pago)"><i class="fa fa-print white"></i></button>
-																	</td>
-																</tr>
-																<tr>
-																	<td colspan="4" class="text-right">Total</td>
-																	<td class="text-right">{{pa.totalPagado() | currency}}</td>
-																	<td></td>
-																</tr>
-															</table>
-														</div>
-													</div>
-												</article>
 											</div>											
-										</div>											
-										<br>
-										<br>
-									</div>										
-									<div class="col-sm-3">
-										<h1><small>Amigos</small></h1>
-										<ul class="list-inline friends-list">
-											<li><img src="img/avatars/1.png" alt="friend-1">
-											</li>
-											<li><img src="img/avatars/2.png" alt="friend-2">
-											</li>
-											<li><img src="img/avatars/3.png" alt="friend-3">
-											</li>
-											<li><img src="img/avatars/4.png" alt="friend-4">
-											</li>
-											<li><img src="img/avatars/5.png" alt="friend-5">
-											</li>
-											<li><img src="img/avatars/male.png" alt="friend-6">
-											</li>
-											<li>
-												<a href="javascript:void(0);">413 more</a>
-											</li>
-										</ul>
+											<div class="tab-pane" id="pagos">												
+												<div class="row">
+													<section class="col col-sm-1 text-center padding-20" ng-repeat="semana in al.misSemanas" ng-click="al.seleccionarSemana(semana)" ng-class="al.obtenerEstatus(semana.pagada)">
+														<label class="input text-center">
+															<label type="text" class="text-center">{{semana.numero}} / {{semana.anio}} | {{semana.pagada}}</label>
+														</label>
+													</section>													
+												</div>																		
+											</div>											
+										</div>
 									</div>
 								</div>
-							</div>
+							</div>													
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col col-sm-12">
+		<section id="widget-pagos" data-widget-grid="data-widget-grid">
+		  <div class="row">
+		    <div class="col-sm-12">
+		      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+		        <header>
+		          <h2>Pagos</h2>
+		        </header>
+		        <div>
+		          <div class="widget-body">
+		            <form class="smart-form">
+									<header>
+										Semanas
+									</header>		
+									<fieldset>
+										<div class="row">
+											<section class="col col-1" ng-repeat="semana in al.misSemanas" ng-click="al.seleccionarSemana(semana)" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input ng-class="al.obtenerEstatus(semana.pagada)" type="text" value="{{semana.numero}} / {{semana.anio}}" disabled="">
+												</label>
+											</section>
+										</div>							
+									</fieldset>
+								</form>
+								<div class="well well-sm  bg-color-darken txt-color-white no-border">
+									<div class="fa-lg">
+										Total a Pagar :
+										<span class="pull-right"> {{al.totalPagar | currency}} Pesos </span>
+									</div>														
+								</div>
+								<div class="pull-right" style="margin:20px;">
+									<button type="button" class="btn btn-primary btn-lg" ng-click="al.pagar()" ng-disabled="al.hayParaPagar">Pagar</button>
+								</div>
+								<div class="pull-right" style="margin:20px;">
+									<button type="button" class="btn btn-primary btn-lg" ng-click="al.imprimir()" ng-disabled="al.hayParaImprimir">Imprimir</button>
+								</div>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row">
+		    <div class="col-sm-12">
+		      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+		        <header>
+		          <h2>Calificaciones</h2>
+		        </header>
+		        <div>
+		          <div class="widget-body">
+		            
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>	
 	</div>
 </div>

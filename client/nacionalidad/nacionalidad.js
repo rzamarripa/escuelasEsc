@@ -30,7 +30,6 @@ function NacionalidadesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.nacionalidad = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.nacionalidades');
 		
 	};
 	

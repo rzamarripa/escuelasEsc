@@ -24,8 +24,8 @@
 		    <div class="row">
 					<div class="col-sm-4">
 						<label >Ciclo Escolar</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id">
-							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.anioEscolar}}</option>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id">
+							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
 						</select>
 					</div>
 		    	<div class="col-sm-4">				    
@@ -35,7 +35,7 @@
 		    	<div class="col-sm-4">
 						<label >Maestro</label>
 						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.maestro_id">
-							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}}</option>
+							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}} {{maestro.apPaterno}} {{maestro.apMaterno}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.maestro_id"
 					             theme="bootstrap"
@@ -89,7 +89,7 @@
 					<div class="col-sm-4">
 						<label >Sección</label>
 						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.seccion_id">
-							<option ng-repeat="seccion in gp.secciones" value="{{seccion._id}}">{{seccion.decripcionCorta}}</option>
+							<option ng-repeat="seccion in gp.secciones" value="{{seccion._id}}">{{seccion.descripcionCorta}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.seccion_id"
 					             theme="bootstrap"

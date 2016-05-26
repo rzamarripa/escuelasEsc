@@ -47,6 +47,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'LoginCtrl',
       controllerAs: 'lc'
     })
+    .state('anon.pagosImprimir', {
+      url: '/pagosImprimir/:id',
+      templateUrl: 'client/pagos/pagosImprimir.ng.html',
+      controller: 'PagosImprimirCtrl as pi',
+      params: { 'semanas': ':semanas' },
+    })
     .state('anon.logout', {
       url: '/logout',
       resolve: {
@@ -107,6 +113,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/ciclos',
       templateUrl: 'client/ciclos/ciclos.ng.html',
       controller: 'CiclosCtrl as cl',
+    })
+     .state('root.subCiclos', {
+      url: '/subCiclos',
+      templateUrl: 'client/subCiclos/subCiclos.ng.html',
+      controller: 'SubCiclosCtrl as sub',
+    })
+     .state('root.periodos', {
+      url: '/periodos',
+      templateUrl: 'client/periodos/periodos.ng.html',
+      controller: 'PeriodosCtrl as per',
     })
     .state('root.deptosAcademicos', {
       url: '/deptosAcademicos',
@@ -189,20 +205,14 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'GruposDetalleCtrl as gp',
     })
     .state('root.inscripciones', {
-      url: '/inscripciones',
+      url: '/inscripciones/:id',
       templateUrl: 'client/inscripciones/inscripciones.ng.html',
-      controller: 'InscripcionesCtrl',
+      controller: 'InscripcionesCtrl as ins',
     })
     .state('root.pagos', {
       url: '/pagos',
       templateUrl: 'client/pagos/buscarAlumno.ng.html',
       controller: 'PagosCtrl as pa',
-    })
-    .state('root.pagosImprimir', {
-      url: '/pagosImprimir/:id',
-      templateUrl: 'client/pagos/pagosImprimir.ng.html',
-      controller: 'PagosImprimirCtrl as pi',
-      params: { 'pago': ':pago' },
     })
     .state('root.archivos', {
       url: '/archivos/:id',
@@ -217,7 +227,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.inscripcionNueva', {
       url: '/nuevaInscripcion',
       templateUrl: 'client/inscripciones/form.ng.html',
-      controller: 'NuevaInscripcionCtrl',
+      controller: 'NuevaInscripcionCtrl as ins',
     })
 		.state('root.nuevoGrupo', {
       url: '/nuevoGrupo',
@@ -230,7 +240,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'NuevoGrupoCtrl as gp',
     })
     .state('root.generaciones', {
-      url: '/',
+      url: '/generaciones',
       templateUrl: 'client/generaciones/generaciones.ng.html',
       controller: 'GeneracionesCtrl as gen',
     })
@@ -277,12 +287,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.editarHorario', {
       url: '/editarHorario/:id',
       templateUrl: 'client/horarios/form.ng.html',
-      controller: 'HorarioDetalleCtrl',
+      controller: 'HorarioDetalleCtrl as ho',
     })
     .state('root.listarHorarios', {
       url: '/horarios',
       templateUrl: 'client/horarios/horarios.ng.html',
-      controller: 'HorariosCtrl',
+      controller: 'HorariosCtrl as ho',
     })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id',

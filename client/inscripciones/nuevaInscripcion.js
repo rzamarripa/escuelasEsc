@@ -1,21 +1,59 @@
-angular.module("casserole").controller("NuevaInscripcionCtrl", ['$scope', '$meteor', '$state','$stateParams', 'toastr',
-function($scope, $meteor, $state, $stateParams, toastr)
-{
-	$scope.ciclos = $meteor.collection(function() {return Ciclos.find();}).subscribe("ciclos");
-	$scope.secciones = $meteor.collection(function() {return Secciones.find();}).subscribe("secciones");
-	$scope.tiposIngresos = $meteor.collection(function() {return TiposIngresos.find();}).subscribe("tiposingresos");
-	$scope.alumnos = $meteor.collection(function() {return Alumnos.find();}).subscribe("alumnos");
-	$scope.grupos = $meteor.collection(function() {return Grupos.find();}).subscribe("grupos");
-	$scope.planesEstudio = $meteor.collection(function() {return PlanesEstudios.find();}).subscribe("planesEstudios");
-	$scope.inscripciones = $meteor.collection(function() {return Inscripciones.find();}).subscribe("inscripciones");
-	$scope.inscripcion = {};
-	$scope.inscripcion.fechaInscripcion = new Date();
-	$scope.alumnoSeleccionado = {};
-	$scope.cupo = false;
+angular.module("casserole")
+.controller('NuevaInscripcionCtrl', NuevaInscripcionCtrl); 
+function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
+	$reactive(this).attach($scope);
+
+	this.subscribe('ciclos',()=>{
+		return [{estatus:true}]
+	});
+	this.subscribe("secciones");
+	this.subscribe("tiposingresos");
+	this.subscribe('alumnoss',()=>{
+		return [{estatus:true}]
+	});
+	this.subscribe("grupos",()=>{
+		return [{estatus:true}]
+	});
+	this.subscribe("planesEstudios");
+	this.subscribe('inscripciones',()=>{
+		return [{estatus:true}]
+	});
+
+
+
+	this.helpers({
+		ciclos : () => {
+			return Ciclos.find();
+		},
+	  secciones : () => {
+		  return Secciones.find();
+	  },
+	  tiposIngresos : () => {
+		  return TiposIngresos.find();
+	  },
+	  alumnos : () => {
+		  return Alumnos.find();
+	  },
+	  grupos : () => {
+		  return Grupos.find();
+	  },
+	  planesEstudios : () => {
+		  return PlanesEstudios.find();
+	  },
+	  inscripciones : () => {
+		  return Inscripciones.find();
+	  },
+  });
+
+
+	this.inscripcion = {};
+	this.inscripcion.fechaInscripcion = new Date();
+	this.alumnoSeleccionado = {};
+	this.cupo = false;
 	
-	$scope.guardar = function(inscripcion)
-	{
-		$scope.inscripcion.estatus = true;
+	this.guardar = function(inscripcion)
+	{   
+		this.inscripcion.estatus = true;
 		Inscripciones.insert(angular.copy(inscripcion));
 		var grupo = $meteor.object(Grupos, inscripcion.grupo_id,false).subscribe("grupos");
 		console.log(grupo);
@@ -24,21 +62,39 @@ function($scope, $meteor, $state, $stateParams, toastr)
 		toastr.success('inscripcion guardada.');
 		console.log(grupo);
 		$state.go("root.inscripciones");
+		console.log(inscripcion);
 	};
 	
-	$scope.getAlumnoSeleccionado = function(alumno){		
-		$scope.alumnoSeleccionado = $meteor.object(Alumnos, alumno, false);
-		$scope.alumnoSeleccionado.activo = true;
-	}
+	/*this.getAlumnoSeleccionado = function(alumno)
+	{		
+		this.alumnoSeleccionado = $meteor.object(Alumnos, alumno, false);
+		this.alumnoSeleccionado.activo = true;
+	}*/
+
+    this.getAlumnoSeleccionado= function(alumno)
+	{
+		var alumno = Alumnos.findOne(alumno_id);
+		this.alumnoSeleccionado.activo;
+		if(alumno)
+		return alumno.nombre;
+	};	
+	this.getCiclo= function(ciclo_id)
+	{
+		var ciclo = Ciclos.findOne(ciclo_id);
+		if(ciclo)
+		return ciclo.descripcion;
+	};	
+
+
 	
-	$scope.hayCupo = function(grupo_id){
+	this.hayCupo = function(grupo_id){
 		var grupo = Grupos.findOne({_id:grupo_id});
 		var total = Inscripciones.find({grupo_id : grupo_id}).count();
 		if(total < grupo.cupo){
-			$scope.cupo = "check";
+			this.cupo = "check";
 		}else{
-			$scope.cupo = "remove";
+			this.cupo = "remove";
 		}
 	}
 	
-}]);
+};

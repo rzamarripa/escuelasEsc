@@ -7,47 +7,20 @@
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" >
+			<form class="form-horizontal" role="form">
 		  	<div class="well">	    
-			  	<div id="errores"></div>
-			    <div ass="row">
-			    	<div class="col-sm-4">					    
-					    <div class="col-sm-6">
-						    <label>Año Escolar</label>
-					    	<input type="text" class="form-control" ng-model="cl.ciclo.anioEscolar" >
-					    </div>
-					    <div class="col-sm-6">
-						    <label>Comp. Escolar</label>
-					    	<input type="text" class="form-control" ng-model="cl.ciclo.complementoEscolar" >
-					    </div>
-			    	</div>
-			    	<div class="col-sm-4">
-				    	<label>Descripción</label>
-					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion" >
-			    	</div>
-			    	<div class="col-sm-4">				    	
-					    <div class="col-sm-6">
-						    <label>Año Admin</label>
-					    	<input type="text" class="form-control" ng-model="cl.ciclo.anioAdministrativo" >
-					    </div>
-					    <div class="col-sm-6">
-						    <label>Comp. Admin</label>
-					    	<input type="text" class="form-control" ng-model="ciclo.complementoAdministrativo" >
-					    </div>
-			    	</div>
-			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
+				    	<label>Nombre</label>
+					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion">
+			    	</div>
+			    	<div class="col-sm-4">
 				    	<label>Fecha Inicio</label>
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaInicio" />
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaInicio"/>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Fecha Fin</label>
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaFin" />
-			    	</div>
-			    	<div class="col-sm-4">
-				    	<label>Fecha Base</label>
-					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaBase" />
+					    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="cl.ciclo.fechaFin"/>
 			    	</div>
 			    </div>				  
 				</div>
@@ -62,18 +35,14 @@
 	</div>
 </div>
 <br/>
-<!-- List -->
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th width="10%"><div class="text-center">Ciclo Escolar</div></th>
 					<th width="20%"><div class="text-center">Descripción</div></th>
-					<th width="10%"><div class="text-center">Ciclo Admin</div></th>
 					<th width="15%"><div class="text-center">Fecha Inicio</div></th>					
-					<th width="15%"><div class="text-center">Fecha Fin</div></th>					
-					<th width="15%"><div class="text-center">Fecha Base</div></th>					
+					<th width="15%"><div class="text-center">Fecha Fin</div></th>										
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -88,12 +57,9 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="ciclo in cl.ciclos">
-			    <td>{{ciclo.anioEscolar}} {{ciclo.complementoEscolar}}</td>
 			    <td>{{ciclo.descripcion}} </td>
-			    <td>{{ciclo.anioAdministrativo}} {{ciclo.complementoAdministrativo}} </td>
 			    <td>{{ciclo.fechaInicio | date:"dd-MM-yyyy"}}</td>
 			    <td>{{ciclo.fechaFin | date:"dd-MM-yyyy"}}</td>
-			    <td>{{ciclo.fechaBase | date:"dd-MM-yyyy"}}</td>
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="ciclo.estatus" class="label label-success">

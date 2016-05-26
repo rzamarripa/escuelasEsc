@@ -58,9 +58,7 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 		toastr.success('Materia guardada.');
 		this.materia = {};
 		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		$state.go('root.materias');
-		
+		this.nuevo = true;		
 	};
 	
 	this.editar = function(id)

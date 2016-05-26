@@ -5,7 +5,9 @@ angular
 function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
-	this.subscribe('ciclos');
+	this.subscribe('ciclos',()=>{
+		return [{estatus:true}]
+	 });
   
   this.helpers({
 	  ciclos : () => {

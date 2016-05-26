@@ -24,7 +24,7 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
-						<label for="clave">Clave</label>
+							<label for="clave">Clave</label>
 					    <input type="text" class="form-control" placeholder="Clave" ng-model="pl.plan.clave" required>
 			    	</div>
 			    	<div class="col-sm-4">
@@ -32,25 +32,20 @@
 					    <input type="text" class="form-control" placeholder="Descripción" ng-model="pl.plan.descripcion" required>
 			    	</div>
 			    	<div class="col-sm-4">
-						<label for="seccion_id">Sección</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id">
-							<option ng-repeat="seccion in pl.plan.secciones" value="{{seccion._id}}">{{seccion.descripcion}}</option>
-						</select>
-						<!--<ui-select ng-model="plan.seccion_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
-					    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
-					      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
-					    </ui-select-choices>
-<<<<<<< HEAD
-					  </ui-select>
-					</div>
-=======
-					  </ui-select>-->
-					</div>	
->>>>>>> c2b4a083eb5fa15ee13e876274c33cf0d9b022ba
+							<label for="seccion_id">Sección</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id">
+								<option ng-repeat="seccion in pl.secciones" value="{{seccion._id}}">{{seccion.descripcion}}</option>
+							</select>
+							<!--<ui-select ng-model="plan.seccion_id"
+						             theme="bootstrap"
+						             ng-disabled="disabled"
+						             reset-search-input="false">
+						    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
+						    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
+						      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
+						    </ui-select-choices>
+						  </ui-select>-->
+						</div>	
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
@@ -58,17 +53,16 @@
 					    <input type="text" class="form-control" ng-model="pl.plan.formulo">
 			    	</div>
 			    	<div class="col-sm-4">
-						<label for="tipo">Tipo</label><br/>
-				    	<select ng-model="pl.plan.tipo" class="form-control">
-						  <option value="Baja">Interno</option>
-						  <option value="Media">Externo</option>
-						</select>
-					</div>
-					<div class="col-sm-4">
-						<label for="acuerdo">Acuerdo</label>
-					    <input type="text" class="form-control" ng-model="pl.plan.acuerdo">
-					</div>
-			    	
+							<label for="tipo">Tipo</label><br/>
+					    	<select ng-model="pl.plan.tipo" class="form-control">
+							  <option value="Baja">Interno</option>
+							  <option value="Media">Externo</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<label for="acuerdo">Acuerdo</label>
+						  <input type="text" class="form-control" ng-model="pl.plan.acuerdo">
+						</div>			    	
 			    </div>				  
 			    <div class="row">
 			    	<div class="col-sm-4">
@@ -85,59 +79,49 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<label for="gradoNuevaMateria">Grado</label><br/>
-				    	<select ng-model="nuevaMateria.grado" class="form-control">
-						 	<option ng-repeat="_grado in getGrados()" value={{_grado}}>{{_grado+1}}</option>
+			    	<select ng-model="pl.nuevaMateria.grado" class="form-control">
+						 	<option ng-repeat="_grado in pl.getGrados()" value="{{_grado}}">{{_grado+1}}</option>
 						</select>
 					</div>
 			    <div class="col-sm-4">
-			    <label>Materia</label>
-			    <select class="form-control select2" placeholder="Seleccione" ng-model="pl.nuevaMateria.materia"><option ng-repeat="mat in pl.materias ">{{materias.descripcion}}</option>
-			    </select>
-						<!--<label for="materiaNuevaMateria">Materia</label>
-						<ui-select ng-model="nuevaMateria.materia"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcionCorta}}</ui-select-match>
-					    <ui-select-choices repeat="mat in materias | filter: $select.search">
-					      <div ng-bind-html="mat.descripcionCorta | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>-->
+				    <label>Materia</label>
+
+				    <select class="form-control" placeholder="Seleccione" 
+						ng-options="option.descripcion for option in pl.materias track by option._id"
+						ng-model="pl.nuevaMateria.materia">							
+						</select>				     					
 					</div>	
 					<div class="col-sm-4">
-						
-						<input type="button" ng-click="pl.agregarMateria(nuevaMateria)" value="Agregar" class="btn btn-primary" >
-						
+						<input type="button" ng-click="pl.agregarMateria(pl.nuevaMateria)" value="Agregar" class="btn btn-primary">
 					</div>
-			    </div>	  
+			  </div>	  
 			</div>
 
 
 			<div class="row">
 				<div class="col-sm-12">
-					<table class="table table-bordered table-responsive">
-						
-							<tr ng-repeat="_grado in getGrados()" >
-								<th width="5%"><div class="text-center">{{_grado+1}}</div></th>
-								<td ng-repeat="_materia in grados[_grado]">
-									<div class="row">
-										<div class="col-sm-8">
-											<strong>{{_materia.materia.clave}}</strong>
-										</div>
-										<div class="col-sm-2">
-											<input type="button" class="btn btn-danger btn-xs" ng-click="quitarMateria(_materia)"  value="x">
-										</div>
+					<table class="table table-bordered table-responsive">						
+						<tr ng-repeat="_grado in pl.getGrados()" >
+							<th width="5%"><div class="text-center">{{_grado+1}}</div></th>
+							<td ng-repeat="_materia in pl.plan.grados[_grado]">
+								<div class="row">
+									<div class="col-sm-8">
+										<strong>{{_materia.materia.clave}}</strong>
 									</div>
-									<h6><small>{{_materia.materia.descripcion}}</small></h6>										
-								</td>
-							</tr>
+									<div class="col-sm-2">
+										<input type="button" class="btn btn-danger btn-xs" ng-click="pl.quitarMateria(_materia)"  value="x">
+									</div>
+								</div>
+								<h6><small>{{_materia.materia.descripcion}}</small></h6>										
+							</td>
+						</tr>
 					</table>
-			  	</div>
+			  </div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="pl.guardar(plan)"  class="btn btn-primary" ng-show="pl.action">
-					<input type="submit" ng-click="pl.actualizar(plan)"  class="btn btn-primary" ng-show="!pl.action">				
+					<input type="submit" ng-click="pl.guardar(pl.plan)"  class="btn btn-primary" ng-show="pl.action">
+					<input type="submit" ng-click="pl.actualizar(pl.plan)"  class="btn btn-primary" ng-show="!pl.action">				
 				</div>
 			</div>	  
 		</form>

@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{escu.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoescuela" ng-click="nuevoEscuela()">
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoescuela" ng-click="escu.nuevoEscuela()">
 		   {{escu.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
@@ -20,7 +20,7 @@
 					    </div>
 					     <div class="col-sm-4">
 						    <label>Domicilio</label>
-					    	<input type="text" class="form-control" placeholder="domicilio" ng-model="escu.escuela.domicilio" required>
+					    	<input type="text" class="form-control" placeholder="Domicilio" ng-model="escu.escuela.domicilio" required>
 					    </div>
 					  </div>
 					 </div>
@@ -33,7 +33,7 @@
 					    	<input type="text" class="form-control" placeholder="Colonia" ng-model="escu.escuela.colonia" required>
 					    </div>
 					     <div class="col-sm-4">
-						    <label>Codigo Postal</label>
+						    <label>Código Postal</label>
 					    	<input type="text" class="form-control" placeholder="Codigo Postal" ng-model="escu.escuela.cp" required>
 					    </div>
 					     <div class="col-sm-4">
@@ -41,8 +41,8 @@
 					    	<input type="text" class="form-control" placeholder="Ciudad" ng-model="escu.escuela.ciudad" required>
 					    </div>
 					     <div class="col-sm-4">
-						    <label>Telefonos </label>
-					    	<input type="text" class="form-control" placeholder="Telefonos " ng-model="escu.escuela.telefonos" required>
+						    <label>Teléfonos </label>
+					    	<input type="text" class="form-control" placeholder="Teléfonos " ng-model="escu.escuela.telefonos" required>
 					    </div>
 					    <div class="col-sm-4">
 						    <label>Director </label>
@@ -57,8 +57,8 @@
 			      </div>  	
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="escu.guardar(escuela)" value="Guardar" class="btn btn-primary" ng-show="escu.action">
-						<input type="submit" ng-click="escu.actualizar(escuela)" value="Actualizar" class="btn btn-primary" ng-show="!escu.action">	
+						<input type="submit" ng-click="escu.guardar(escu.escuela)" value="Guardar" class="btn btn-primary" ng-show="escu.action">
+						<input type="submit" ng-click="escu.actualizar(escu.escuela)" value="Actualizar" class="btn btn-primary" ng-show="!escu.action">	
 
 					</div>
 				</div>

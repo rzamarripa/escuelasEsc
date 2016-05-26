@@ -3,15 +3,16 @@ angular.module("casserole")
  function CampusCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	$reactive(this).attach($scope);
   this.action = true;
+  this.nuevo = true;
+
 	this.subscribe('campus');
 
 	this.helpers({
-	  campus : () => {
+	  campuses : () => {
 		  return Campus.find();
 	  }
   });
-  	  
-  this.nuevo = true;	  
+
   this.nuevoCampus = function()
   {
     this.action = true;
@@ -35,7 +36,7 @@ angular.module("casserole")
 	{
     this.campus = Campus.findOne({_id:id});
     this.action = false;
-    $('.collapse').coll
+    $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	
@@ -57,6 +58,6 @@ angular.module("casserole")
 			campus.estatus = true;
 		
 		Campus.update({_id: id},{$set :  {estatus : campus.estatus}});
-    };
+  };
 		
 };

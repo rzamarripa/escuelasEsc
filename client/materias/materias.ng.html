@@ -7,15 +7,7 @@
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form">
-		  	<div class="well">
-		  		<div class="row">
-			    	<div class="col-sm-12">
-							<label>Departamento academico</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="mat.materia.deptoAcademico_id">
-								<option ng-repeat="deptoAcademico in mat.deptosAcademicos" value="{{deptoAcademico._id}}">{{deptoAcademico.descripcionCorta}}</option>
-							</select>
-						</div>
-		  		</div>
+		  	<div class="well">		  		
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 						  <label>Clave</label>
@@ -39,8 +31,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" class="btn btn-primary" ng-show="mat.action">
-						<input type="submit" ng-click="mat.actualizar(materia)" value="Actualizar" class="btn btn-primary" ng-show="!mat.action">				
+						<input type="submit" ng-click="mat.guardar(mat.materia)" value="Guardar" class="btn btn-primary" ng-show="mat.action">
+						<input type="submit" ng-click="mat.actualizar(mat.materia)" value="Actualizar" class="btn btn-primary" ng-show="!mat.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -54,7 +46,6 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th width="10%"><div class="text-center">Dep. Académico</div></th>
 					<th width="10%"><div class="text-center">Clave</div></th>
 					<th width="20%"><div class="text-center">Etiqueta</div></th>
 					<th width="10%"><div class="text-center">Descripción Corta</div></th>
@@ -73,7 +64,6 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="materia in mat.materias">
-		    	<td>{{mat.getDeptoAcademico(materia.deptoAcademico_id)}}</td>
 			    <td>{{materia.clave}}</td>
 			    <td>{{materia.etiqueta}}</td>
 			    <td>{{materia.descripcionCorta}}</td>

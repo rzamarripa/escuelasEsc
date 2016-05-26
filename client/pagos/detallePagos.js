@@ -3,7 +3,7 @@ angular
   .controller('DetallePagosCtrl', DetallePagosCtrl);
  
 function DetallePagosCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
-	$reactive(this).attach($scope);
+	rc = $reactive(this).attach($scope);
 	$(document).ready(function() {
 	  $(".select2").select2();
 	});
@@ -40,6 +40,23 @@ function DetallePagosCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
 		},
 	  misPagos : () => {
 		  return Pagos.find().fetch();
+	  },
+	  misSemanas : () => {
+		  var hoy = new Date();
+		  var mesAtras = moment().subtract(1, "month");
+		  var primerSemana = moment(mesAtras).week();
+		  semanas = [];
+		  for(var i=primerSemana; i <= 52; i++){
+			  semanas.push({numero : i, pagada : 0});
+		  }
+			_.each(this.getReactively('misPagos'), function(pago){
+				_.each(semanas, function(semana){
+					if(semana.numero == pago.semana){
+						semana.pagada = 1;
+					}
+				});
+			});
+			return semanas;
 	  }
   });
   
@@ -96,7 +113,7 @@ function DetallePagosCtrl($scope, $meteor, $reactive, $state, toastr, $statePara
   }
   
   this.imprimir = function(pago){
-	  $state.go("root.pagosImprimir",{"id":pago.alumno_id,"pago": pago});
+	  $state.go("anon.pagosImprimir",{"id":pago.alumno_id,"pago": pago});
   }
   
 };

@@ -22,12 +22,12 @@
     <div class="row pt-md">
       <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 profile well-mini" ng-repeat="alumno in pa.alumnos">
         <div class="img-box">
-          <img ng-src="{{alumno.fotografia}}" class="img-responsive img-thumbnail">
+          <img ng-src="{{pa.tieneFoto(alumno.sexo, alumno.fotografia)}}" class="img-responsive img-thumbnail">
           <ul class="text-center">
             <a href="/alumnos/{{alumno._id}}"><li><i class="fa fa-eye"></i></li></a>
             <a href="/pagos/{{alumno._id}}"><li><i class="fa fa-dollar"></i></li></a>
             <a href="/asistencias/{{alumno._id}}"><li><i class="fa fa-list"></i></li></a>
-            <a href="/archivos/{{alumno._id}}"><li><i class="fa fa-file"></i></li></a>
+            <a href="/editarAlumno/{{alumno._id}}"><li><i class="fa fa-pencil"></i></li></a>
           </ul>
         </div>
         <h1>{{alumno.nombreCompleto}}</h1>

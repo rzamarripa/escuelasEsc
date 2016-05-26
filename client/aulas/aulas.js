@@ -35,7 +35,7 @@ angular.module("casserole")
 	{
     this.aula = Aulas.findOne({_id:id});
     this.action = false;
-    $('.collapse').coll
+    $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	

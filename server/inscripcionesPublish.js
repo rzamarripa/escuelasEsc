@@ -1,3 +1,3 @@
 Meteor.publish("inscripciones", function(){
-	return Inscripciones.find({});
+	return Inscripciones.find();
 });
