@@ -4,7 +4,11 @@ angular.module("casserole")
  	let rc = $reactive(this).attach($scope);
   this.action = true;
 
-	this.subscribe('grupos');
+	this.subscribe('grupos', () => {
+		return [{
+			estatus : true,
+		}]
+	});
 	this.subscribe('secciones');
 	this.subscribe('ciclos', () => {
 		return [{estatus: true}]
@@ -65,7 +69,8 @@ angular.module("casserole")
 	this.getCiclo = function(ciclo_id)
 	{
 		ciclo = _.find(rc.ciclos,function(x){return x._id==ciclo_id;});
-		return ciclo.anioEscolar + " " + ciclo.complementoEscolar;
+		if(ciclo)
+			return ciclo.descripcion;
 	};	
 	
 	this.getTurno = function(turno_id)

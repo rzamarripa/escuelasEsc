@@ -11,7 +11,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('alumnoss',()=>{
 		return [{estatus:true}]
 	});
-	this.subscribe("grupos");
+	this.subscribe("grupos",()=>{
+		return [{estatus:true}]
+	});
 	this.subscribe("planesEstudios");
 	this.subscribe('inscripciones',()=>{
 		return [{estatus:true}]

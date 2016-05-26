@@ -24,8 +24,8 @@
 		    <div class="row">
 					<div class="col-sm-4">
 						<label >Ciclo Escolar</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id">
-							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.anioEscolar}}</option>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id">
+							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
 						</select>
 					</div>
 		    	<div class="col-sm-4">				    
