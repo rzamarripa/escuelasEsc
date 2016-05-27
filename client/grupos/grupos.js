@@ -3,7 +3,7 @@ angular.module("casserole")
  function GruposCtrl($scope, $meteor, $reactive , $state, $stateParams, toastr){
  	let rc = $reactive(this).attach($scope);
   this.action = true;
-
+	this.grupos_ids = [];
 	this.subscribe('grupos', () => {
 		return [{
 			estatus : true,
@@ -11,6 +11,12 @@ angular.module("casserole")
 	});
 	
 	this.subscribe('secciones');
+	
+	this.subscribe('inscripciones', () => {
+		return [{
+			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},
+		}]
+	});
 	
 	this.subscribe('ciclos', () => {
 		return [{estatus: true}]
@@ -20,9 +26,15 @@ angular.module("casserole")
 
 	this.helpers({		
 	  grupos : () => {
-		  return Grupos.find();
-	  }
-  }); 
+		  _grupos = Grupos.find().fetch();
+		  if(_grupos != undefined){
+			  _.each(_grupos, function(grupo){
+				  rc.grupos_ids.push(grupo._id);
+			  });
+		  }
+		  return _grupos;
+	  },
+  });
 
   this.nuevoGrupo = function()
   {
@@ -43,20 +55,20 @@ angular.module("casserole")
 
 	this.getSeccion = function(seccion_id)
 	{
-		var seccion = Secciones.find({_id:seccion_id});
+		var seccion = Secciones.findOne(seccion_id);
 		return [seccion.descripcion, seccion.grados];
 	};
 
 	this.getCiclo = function(ciclo_id)
 	{
-		ciclo = Ciclos.find({_id : ciclo_id});
+		ciclo = Ciclos.findOne();
 		if(ciclo)
 			return ciclo.descripcion;
 	};	
 	
 	this.getTurno = function(turno_id)
 	{
-		var turno = Turnos.find(turno_id);
+		var turno = Turnos.findOne(turno_id);
 		return turno.nombre;
 	};	
 	
@@ -67,16 +79,8 @@ angular.module("casserole")
 			return "Desactivar";
 	}
 	
-	this.getInscritos = function(id){
-		var hola = this.subscribe('inscripciones', () => {
-			return [{
-				grupo_id : id
-			}]
-		});
-		
-		var inscritos = Inscripciones.find().count();
-		
-		console.log(hola);
+	this.getInscritos = function(id){		
+		var inscritos = Inscripciones.find({grupo_id : id}).count();
 		return inscritos;
 	}
 };

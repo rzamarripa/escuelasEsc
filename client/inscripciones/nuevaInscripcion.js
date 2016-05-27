@@ -86,7 +86,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	};	
 	
 	this.hayCupo = function(grupo_id){
-		var grupo = Grupos.findOne({_id:grupo_id});
+		var grupo = Grupos.findOne(grupo_id);
+		console.log(grupo);
 		var total = Inscripciones.find({grupo_id : grupo_id}).count();
 		if(total < grupo.cupo){
 			this.cupo = "check";

@@ -283,6 +283,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/nuevoHorario/:id',
       templateUrl: 'client/horarios/form.ng.html',
       controller: 'HorarioDetalleCtrl as ho',
+    })     
+    .state('root.rvoe', {
+      url: '/rvoe',
+      templateUrl: 'client/rvoe/rvoe.ng.html',
+      controller: 'RvoeCtrl as rv',
     })    
     .state('root.editarHorario', {
       url: '/editarHorario/:id',

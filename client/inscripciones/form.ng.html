@@ -189,10 +189,10 @@
 											<div class="col-sm-12">
 												<div class="well">
 											    <div class="row">
-											  		<div class="col-sm-4">												  		
+											  		<div class="col-sm-3">												  		
 															<label >Grupo</label>
 
-															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id" ng-change="ins.hayCupo(inscripcion.grupo_id)">
 															  <option value="{{grupo._id}}" ng-repeat="grupo in ins.grupos">
 															  	{{grupo.identificador}}
 															  </option>
@@ -215,11 +215,11 @@
 															  </h1>
 														  </div>															  
 														</div>
-														<div class="col-sm-4">
+														<div class="col-sm-8">
 															<label>Plan de Estudios</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.plan_id">
 															  <option value="plan._id" ng-repeat="planesEstudio in ins.planesEstudios">
-															  	{{planesEstudio.clave}}
+															  	{{planesEstudio.descripcion}}
 															  </option>
 															</select>
 															<!--<ui-select ng-model="inscripcion.planEstudio_id"
