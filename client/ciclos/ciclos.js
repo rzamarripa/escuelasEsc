@@ -30,7 +30,7 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		Ciclos.insert(this.ciclo);
 		toastr.success('Ciclo guardado.');
 		this.ciclo = {};
-		$('.collapse').collapse('show');
+		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		$state.go('root.ciclos');
 	};
