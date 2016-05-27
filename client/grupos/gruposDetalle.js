@@ -2,7 +2,10 @@ angular
 .module("casserole")
 .controller("GruposDetalleCtrl", GruposDetalleCtrl);
  function GruposDetalleCtrl($scope, $meteor, $reactive , $state, $stateParams){
+	 
  	$reactive(this).attach($scope);
+
+ 	this.grupo = {};
   this.action = true;
 
   this.subscribe('inscripciones', () => {
@@ -14,24 +17,30 @@ angular
   this.subscribe('alumnoss', () => {
 	  return [{estatus:true}]
   });
-  this.subscribe('grupos', () => {
-	  return [{estatus:true}]
-  });
   
-  this.grupo = {};
-  console.log(this);
+  this.subscribe('grupos', () => {
+	  return [{_id: $stateParams.id}]
+  });
 	
 	this.helpers({
 	  inscripciones : () => {
-		  return Inscripciones.find({grupo_id: $stateParams.id});
+		  return Inscripciones.find();
 	  },
 	   alumnos : () => {
 		  return Alumnos.find();
 	  },
 	   grupo : () => {
-		  return Grupos.findOne($stateParams.id);
+		  return Grupos.findOne();
 	  },
   });
+  
+  this.actualizar = function(grupo)
+	{
+		delete grupo._id;		
+		Grupos.update({_id:$stateParams.id}, {$set : grupo});
+		toastr.success('Grupo modificado.');
+		$state.go("root.grupos");
+	};
   	
 	this.getAlumno = function(alumno_id){
 		alumno = _.find(this.alumnos,function(x){return x._id==alumno_id;});

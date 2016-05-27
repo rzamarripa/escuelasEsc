@@ -41,15 +41,6 @@ angular.module("casserole")
     this.grupo = {};
   }; 
 
-	this.actualizar = function(grupo)
-	{
-		var idTemp = grupo._id;
-		delete grupo._id;		
-		Grupos.update({_id:idTemp},{$set:grupo});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-	};
-
 	this.cambiarEstatus = function(id)
 	{
 		var grupo = Grupos.findOne({_id:id});

@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" href="./nuevoGrupo" ng-click="gp.nuevoGrupo()">
+		<a class="btn btn-primary" href="./grupo" ng-click="gp.nuevoGrupo()">
 		  Nuevo
 		</a>
 	</div>
@@ -68,7 +68,7 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="./editarGrupo/{{grupo._id}}"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="./grupo/{{grupo._id}}"><i class="fa fa-pencil"></i> Editar</a></li>
 							    <li><a href="#" ng-click="gp.cambiarEstatus(grupo._id)"><i class="fa fa-trash"></i> {{gp.getEstatus(grupo.estatus)}}</a></li>
 							  </ul>
 							</div>

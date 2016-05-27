@@ -2,7 +2,7 @@ angular
 .module("casserole")
 .controller("NuevoGrupoCtrl", NuevoGrupoCtrl); 
 function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
-	$reactive(this).attach($scope);
+	let rc = $reactive(this).attach($scope);
 	this.subscribe('grupos', () => {
 		return [{
 			_id : $stateParams.id,
@@ -19,7 +19,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('maestros');
 
 	this.helpers({
-	  grupos : () => {
+	  grupo : () => {
 		  return Grupos.findOne();
 	  },
 	  secciones : () => {
@@ -36,29 +36,41 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  },
 
   });
+  
+  if($stateParams.id)
+  	this.action = false;
+  else
+  	this.action = true;
 
-	//this.grupo = $meteor.object(Grupos, $stateParams.id).subscribe("grupos");
-
-  this.action = true; 
   this.grupo = {};
+  
+  console.log(rc.grupo);
 
 	this.guardar = function(grupo)
 	{
 		this.grupo.estatus = true;
 		Grupos.insert(this.grupo);
-		toastr.success('Turno guardado.');
+		toastr.success('Grupo guardado.');
 		this.grupo = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.grupos')
+		$state.go('root.grupos');
 	};
 	
 	this.editarGrupo = function(id)
 	{
-    this.grupo = Grupos.findOne({_id:$stateParams.id});
+    rc.grupo = Grupos.findOne({_id:$stateParams.id});
     this.action = false;
     $('.collapse').collapse("show");
     this.nuevo = false;
+	};
+	
+	this.actualizar = function(grupo)
+	{
+		var idTemp = grupo._id;
+		delete grupo._id;		
+		Grupos.update({_id:idTemp},{$set:grupo});
+		$state.go('root.grupos');
 	};
 	
 	this.getGrados = function(seccion_id){
