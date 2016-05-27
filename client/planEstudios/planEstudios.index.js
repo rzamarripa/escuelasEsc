@@ -26,6 +26,17 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
   });
   rc.subscribe('secciones');
   rc.subscribe('materias');
+  rc.subscribe('ciclos', ()=>{
+	  return [{
+		  estatus:true
+	  }]
+  });
+  rc.subscribe('rvoe', ()=>{
+	  return [{
+		  estatus:true
+	  }]
+  });
+  rc.subscribe('generaciones');
 
   
   
@@ -40,7 +51,16 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	  },
 	  materias : () => {
 		  return Materias.find();
-	  },	  
+	  },
+	  ciclos : () => {
+		  return Ciclos.find();
+	  },
+	  generaciones : () => {
+		  return Generaciones.find();
+	  },
+	  rvoes : () => {
+		  return Rvoe.find();
+	  },
   });	
 
 	
