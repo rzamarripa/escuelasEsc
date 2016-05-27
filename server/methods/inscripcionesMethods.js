@@ -14,7 +14,7 @@ Meteor.methods({
       inscripcion.alumno = findInCollection(alumnos, inscripcion.alumno_id);
       inscripcion.grupo = findInCollection(grupos, inscripcion.grupo_id);
       inscripcion.seccion = findInCollection(secciones, inscripcion.seccion_id);
-      inscripcion.ciclos = findInCollection(ciclos, inscripcion.ciclo_id);
+      inscripcion.ciclo = findInCollection(ciclos, inscripcion.ciclo_id);
       inscripcion.planEstudio = findInCollection(planesEstudios, inscripcion.planEstudio_id);
     });
     

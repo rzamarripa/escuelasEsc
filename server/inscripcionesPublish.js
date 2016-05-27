@@ -1,3 +1,3 @@
-Meteor.publish("inscripciones", function(){
-	return Inscripciones.find();
+Meteor.publish("inscripciones", function(options){
+	return Inscripciones.find(options);
 });

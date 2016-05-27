@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" href="./inscripciones">
+		<a class="btn btn-primary" ui-sref="root.inscripciones">
 		  Listar Inscripciones
 		</a>
 	</div>
@@ -64,11 +64,13 @@
 											    <div class="row">
 														<div class="col-sm-8">
 															<label>Alumno</label>												
-															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.alumno_id">
+															<select class="form-control" placeholder="Seleccione" 
+																ng-model="ins.inscripcion.alumno_id" ng-change="ins.getAlumnoSeleccionado(ins.inscripcion.alumno_id)">
 															  <option  value="{{alumno._id}}" ng-repeat="alumno in ins.alumnos">
 															  	{{alumno.nombre}} {{alumno.apPaterno}} {{alumno.apMaterno}}
 															  </option>
 															</select>
+															
 														</div>
 														<div class="col-sm-3">
 															<label for="fechaNac">Fecha de Inscripción</label>
@@ -79,41 +81,41 @@
 											    <br/>
 											    <br/>
 											    <br/>
-											    <div class="row" ng-show="alumnoSeleccionado.activo">
+											    <div class="row" ng-show="ins.alumnoSeleccionado.activo">
 											    	<div class="col-sm-2 profile-pic">
-															<img src="{{alumnoSeleccionado.fotografia}}" >															
+															<img src="{{ins.alumnoSeleccionado.fotografia}}" >															
 														</div>
 														<div class="col-sm-6">
 															<h1>
-																{{alumnoSeleccionado.nombre}} 
-																<span class="semi-bold">{{alumnoSeleccionado.apPaterno}} {{alumnoSeleccionado.apMaterno}}</span>
+																{{ins.alumnoSeleccionado.nombre}} 
+																<span class="semi-bold">{{ins.alumnoSeleccionado.apPaterno}} {{ins.alumnoSeleccionado.apMaterno}}</span>
 																<br>
 															</h1>
 															<ul class="list-unstyled">
-																<li ng-show="alumnoSeleccionado.tel1">
+																<li ng-show="ins.alumnoSeleccionado.tel1">
 																	<p class="text-muted">
-																		<i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{alumnoSeleccionado.tel1}}</span>
+																		<i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{ins.alumnoSeleccionado.tel1}}</span>
 																	</p>
 																</li>
-																<li ng-show="alumnoSeleccionado.correo">
+																<li ng-show="ins.alumnoSeleccionado.correo">
 																	<p class="text-muted">
-																		<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{alumno.correo}}">{{alumnoSeleccionado.correo}}</a>
+																		<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{alumno.correo}}">{{ins.alumnoSeleccionado.correo}}</a>
 																	</p>
 																</li>
-																<li ng-show="alumnoSeleccionado.fechaNac">
+																<li ng-show="ins.alumnoSeleccionado.fechaNac">
 																	<p class="text-muted">
 																		<i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;
-																		<span class="txt-color-darken">{{alumnoSeleccionado.fechaNac | date:"dd-MM-yyyy"}}</span>
+																		<span class="txt-color-darken">{{ins.alumnoSeleccionado.fechaNac | date:"dd-MM-yyyy"}}</span>
 																	</p>
 																</li>
 															</ul>
 															<br>
-															<div ng-show="alumnoSeleccionado.observacionesGenerales">
+															<div ng-show="ins.alumnoSeleccionado.observacionesGenerales">
 																<p class="font-sm">
 																	<i>Un poco acerca de mi...</i>
 																</p>
 																<p class="font-xs">
-																	{{alumnoSeleccionado.observacionesGenerales}}
+																	{{ins.alumnoSeleccionado.observacionesGenerales}}
 																</p>
 															</div>															
 														</div>

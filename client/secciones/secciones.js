@@ -71,6 +71,7 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	this.actualizar = function(seccion)
 	{
+		console.log(seccion);
 		var idTemp = seccion._id;
 		delete seccion._id;		
 		Secciones.update({_id:idTemp},{$set:seccion});
