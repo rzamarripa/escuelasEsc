@@ -357,10 +357,5 @@ angular.module('casserole').config(['$injector', function ($injector) {
          });
        }]
     	}
-    })
-    .state('root.rvoe', {
-      url: '/rvoe',
-      templateUrl: 'client/rvoe/rvoe.ng.html',
-      controller: 'RvoeCtrl as rv',
     }); 
 }]);     

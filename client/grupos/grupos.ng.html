@@ -46,7 +46,7 @@
 			    <td>{{gp.getCiclo(grupo.ciclo_id)}}</td>
 			    <td>{{grupo.identificador}} </td>
 			    <td>{{grupo.tipo}}</td>
-			    <td>{{grupo.inscritos}}/{{grupo.cupo}}</td>
+			    <td>{{gp.getInscritos(grupo._id)}}/{{grupo.cupo}}</td>
 			    <td>{{gp.getTurno(grupo.turno_id)}}</td>
 			    <td>{{gp.getSeccion(grupo.seccion_id)[0]}}</td>
 			    <td>{{grupo.grado}}</td>

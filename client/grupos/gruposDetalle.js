@@ -18,19 +18,17 @@ angular
 	  return [{estatus:true}]
   });
   
-  this.subscribe('grupos', () => {
-	  return [{_id: $stateParams.id}]
-  });
+  this.subscribe('grupos');
 	
 	this.helpers({
 	  inscripciones : () => {
-		  return Inscripciones.find();
+			return Inscripciones.find();
 	  },
-	   alumnos : () => {
-		  return Alumnos.find();
+	  alumnos : () => {
+			return Alumnos.find();
 	  },
-	   grupo : () => {
-		  return Grupos.findOne();
+	  grupo : () => {
+			return Grupos.findOne();
 	  },
   });
   

@@ -9,29 +9,19 @@ angular.module("casserole")
 			estatus : true,
 		}]
 	});
+	
 	this.subscribe('secciones');
+	
 	this.subscribe('ciclos', () => {
 		return [{estatus: true}]
 	});
+	
 	this.subscribe('turnos'); 
 
-	$(document).ready(function() {
-	  $(".select2").select2();
-	});
-
-	this.helpers({
+	this.helpers({		
 	  grupos : () => {
 		  return Grupos.find();
-	  },
-	   secciones : () => {
-		  return Secciones.find();
-	  },
-	   ciclos : () => {
-		  return Ciclos.find();
-	  },
-	   turnos : () => {
-		  return Turnos.find();
-	  },
+	  }
   }); 
 
   this.nuevoGrupo = function()
@@ -50,23 +40,23 @@ angular.module("casserole")
 			grupo.estatus = true;		
 		Grupos.update({_id:id},  {$set : {estatus: grupo.estatus}});
 	};
-	
+
 	this.getSeccion = function(seccion_id)
 	{
-		var seccion = $meteor.object(Secciones, seccion_id, false);
+		var seccion = Secciones.find({_id:seccion_id});
 		return [seccion.descripcion, seccion.grados];
 	};
 
 	this.getCiclo = function(ciclo_id)
 	{
-		ciclo = _.find(rc.ciclos,function(x){return x._id==ciclo_id;});
+		ciclo = Ciclos.find({_id : ciclo_id});
 		if(ciclo)
 			return ciclo.descripcion;
 	};	
 	
 	this.getTurno = function(turno_id)
 	{
-		var turno = $meteor.object(Turnos, turno_id, false);
+		var turno = Turnos.find(turno_id);
 		return turno.nombre;
 	};	
 	
@@ -75,5 +65,18 @@ angular.module("casserole")
 			return "Activar";
 		else
 			return "Desactivar";
+	}
+	
+	this.getInscritos = function(id){
+		var hola = this.subscribe('inscripciones', () => {
+			return [{
+				grupo_id : id
+			}]
+		});
+		
+		var inscritos = Inscripciones.find().count();
+		
+		console.log(hola);
+		return inscritos;
 	}
 };

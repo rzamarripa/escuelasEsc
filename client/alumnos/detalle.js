@@ -42,7 +42,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		  semanas = [];
 		  for(var j=0; j<= cantSemanas; j++){
 			  var elAnio = inscripcion.year();
-			  semanas.push({semana: j, numero : moment(inscripcion).week(), pagada : 0, anio : elAnio })
+			  semanas.push({semana: j, numero : moment(inscripcion).week(), pagada : 0, anio : elAnio });
 				inscripcion.add(1, 'weeks');
 		  }
 		  

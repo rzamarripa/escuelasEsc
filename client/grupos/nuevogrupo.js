@@ -3,6 +3,9 @@ angular
 .controller("NuevoGrupoCtrl", NuevoGrupoCtrl); 
 function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 	let rc = $reactive(this).attach($scope);
+	
+	this.grupo = {};
+	
 	this.subscribe('grupos', () => {
 		return [{
 			_id : $stateParams.id,
@@ -41,10 +44,6 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
   	this.action = false;
   else
   	this.action = true;
-
-  this.grupo = {};
-  
-  console.log(rc.grupo);
 
 	this.guardar = function(grupo)
 	{
