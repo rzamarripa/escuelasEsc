@@ -10,29 +10,27 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-12">	
-			    	<div class="col-sm-4">
-						<label for="inicial">Fecha Inicial</label>
-						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gen.generacion.inicial"/>
-					</div>
-					<div class="col-sm-4">
-						<label for="final">Fecha final</label>
-						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gen.generacion.final"/>
-					</div>			 			  
 					    <div class="col-sm-4">
 						    <label>Nombre</label>
 					    	<input type="text" class="form-control" placeholder="Nombre" ng-model="gen.generacion.nombre" required>
 					    </div>
+				    	<div class="col-sm-4">
+								<label for="inicial">Fecha Inicial</label>
+								<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gen.generacion.inicial"/>
+							</div>
+							<div class="col-sm-4">
+								<label for="final">Fecha final</label>
+								<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gen.generacion.final"/>
+							</div>			 			  
 			    	</div>
 			    </div>  
-			    </div> 
+		    </div> 
 				<div class="row">
 					<div class="col-sm-12">
 						<input type="submit" ng-click="gen.guardar(generacion)" value="Guardar" class="btn btn-primary" ng-show="gen.action">
 						<input type="submit" ng-click="gen.actualizar(generacion)" value="Actualizar" class="btn btn-primary" ng-show="!gen.action">	
-
 					</div>
 				</div>
-				  
 		  </form>
 		</div>
 	</div>
@@ -52,13 +50,11 @@
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
-                <thead>
-                	<tr>
+			<thead>
+      	<tr>
 					<th width="10%"><div class="text-center">Nombre</div></th>
 					<th width="10%"><div class="text-center">Fecha Inicial</div></th>
 					<th width="10%"><div class="text-center">Fecha Final</div></th>
-										
-					
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -76,7 +72,6 @@
 			    <td>{{generacion.nombre}}</td>
 			    <td>{{generacion.inicial | date:"dd-MM-yyyy"}}</td>
 			    <td>{{generacion.final | date:"dd-MM-yyyy"}}</td>
-
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="generacion.estatus" class="label label-success">
