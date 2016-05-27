@@ -71,8 +71,26 @@
 			    	</div>
 			    	<div class="col-sm-4">
 					    <label for="grado">Grados</label>
-					    <input type="number" class="form-control" ng-model="pl.plan.grado">
+					    <input type="number" class="form-control" min="0" ng-model="pl.plan.grado">
 			    	</div>
+						<div class="col-sm-4">
+							<label for="seccion_id">Generación</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.generacion_id">
+								<option ng-repeat="generacion in pl.generaciones" value="{{generacion._id}}">{{generacion.nombre}}</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<label for="seccion_id">Ciclo Escolar</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.ciclo_id">
+								<option ng-repeat="ciclo in pl.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<label for="seccion_id">Rvoe</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.rvoe_id">
+								<option ng-repeat="rvoe in pl.rvoes" value="{{rvoe._id}}">{{rvoe.nombre}}</option>
+							</select>
+						</div>
 			    </div>
 			</div>
 			<div class="well">
@@ -85,7 +103,6 @@
 					</div>
 			    <div class="col-sm-4">
 				    <label>Materia</label>
-
 				    <select class="form-control" placeholder="Seleccione" 
 						ng-options="option.descripcion for option in pl.materias track by option._id"
 						ng-model="pl.nuevaMateria.materia">							
@@ -96,7 +113,6 @@
 					</div>
 			  </div>	  
 			</div>
-
 
 			<div class="row">
 				<div class="col-sm-12">

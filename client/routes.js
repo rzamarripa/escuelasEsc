@@ -229,13 +229,13 @@ angular.module('casserole').config(['$injector', function ($injector) {
       templateUrl: 'client/inscripciones/form.ng.html',
       controller: 'NuevaInscripcionCtrl as ins',
     })
-		.state('root.nuevoGrupo', {
-      url: '/nuevoGrupo',
+		.state('root.grupo', {
+      url: '/grupo',
       templateUrl: 'client/grupos/form.ng.html',
       controller: 'NuevoGrupoCtrl as gp',
     })
     .state('root.editarGrupo', {
-      url: '/editarGrupo/:id',
+      url: '/grupo/:id',
       templateUrl: 'client/grupos/form.ng.html',
       controller: 'NuevoGrupoCtrl as gp',
     })
@@ -283,6 +283,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/nuevoHorario/:id',
       templateUrl: 'client/horarios/form.ng.html',
       controller: 'HorarioDetalleCtrl as ho',
+    })     
+    .state('root.rvoe', {
+      url: '/rvoe',
+      templateUrl: 'client/rvoe/rvoe.ng.html',
+      controller: 'RvoeCtrl as rv',
     })    
     .state('root.editarHorario', {
       url: '/editarHorario/:id',

@@ -11,7 +11,7 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-primary" href="./nuevoGrupo" ng-click="gp.nuevoGrupo()">
+		<a class="btn btn-primary" href="./grupo" ng-click="gp.nuevoGrupo()">
 		  Nuevo
 		</a>
 	</div>
@@ -25,9 +25,9 @@
 					<th width="10%"><div class="text-center">Ciclo</div></th>
 					<th width="10%"><div class="text-center">Grupo</div></th>
 					<th width="10%"><div class="text-center">Tipo</div></th>
-					<th width="10%"><div class="text-center">Cupo</div></th>
+					<th width="30%"><div class="text-center">Cupo</div></th>
 					<th width="10%"><div class="text-center">Turno</div></th>
-					<th width="35%"><div class="text-center">Sección</div></th>
+					<th width="15%"><div class="text-center">Sección</div></th>
 					<th width="5%"><div class="text-center">Grado</div></th>
 					<th width="10%">
 						<div class="text-center">
@@ -43,11 +43,17 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="grupo in gp.grupos">
-			    <td>{{gp.getCiclo(grupo.ciclo_id)}}</td>
-			    <td>{{grupo.identificador}} </td>
-			    <td>{{grupo.tipo}}</td>
-			    <td>{{grupo.inscritos}}/{{grupo.cupo}}</td>
-			    <td>{{gp.getTurno(grupo.turno_id)}}</td>
+			    <td class="text-center">{{gp.getCiclo(grupo.ciclo_id)}}</td>
+			    <td class="text-center">{{grupo.identificador}} </td>
+			    <td class="text-center">{{grupo.tipo}}</td>
+			    <td class="text-center">
+				    <div class="progress right">
+							<div class="progress-bar bg-color-blue" aria-valuetransitiongoal="75" aria-valuenow="75" style="width: {{gp.getInscritos(grupo._id)/grupo.cupo*100}}%;">
+								{{gp.getInscritos(grupo._id)/grupo.cupo*100}}%
+							</div>
+						</div>
+					</td>
+			    <td class="text-center">{{gp.getTurno(grupo.turno_id)}}</td>
 			    <td>{{gp.getSeccion(grupo.seccion_id)[0]}}</td>
 			    <td>{{grupo.grado}}</td>
 			    <td>
@@ -68,7 +74,7 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="./editarGrupo/{{grupo._id}}"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="./grupo/{{grupo._id}}"><i class="fa fa-pencil"></i> Editar</a></li>
 							    <li><a href="#" ng-click="gp.cambiarEstatus(grupo._id)"><i class="fa fa-trash"></i> {{gp.getEstatus(grupo.estatus)}}</a></li>
 							  </ul>
 							</div>

@@ -11,7 +11,7 @@
 			    <div class="row">
 				    <div class="col-sm-3">
 							<label >Subciclo Escolar</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" ng-change="per.planPagos(per.periodo)">
+							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" ng-change="per.planPagos(per.periodo)">
 							  <option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">
 								{{subCiclo.nombre}} | {{subCiclo.tipo}}
 								</option>

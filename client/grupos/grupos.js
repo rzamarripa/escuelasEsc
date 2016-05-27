@@ -3,36 +3,38 @@ angular.module("casserole")
  function GruposCtrl($scope, $meteor, $reactive , $state, $stateParams, toastr){
  	let rc = $reactive(this).attach($scope);
   this.action = true;
-
+	this.grupos_ids = [];
 	this.subscribe('grupos', () => {
 		return [{
 			estatus : true,
 		}]
 	});
+	
 	this.subscribe('secciones');
+	
+	this.subscribe('inscripciones', () => {
+		return [{
+			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},
+		}]
+	});
+	
 	this.subscribe('ciclos', () => {
 		return [{estatus: true}]
 	});
+	
 	this.subscribe('turnos'); 
 
-	$(document).ready(function() {
-	  $(".select2").select2();
-	});
-
-	this.helpers({
+	this.helpers({		
 	  grupos : () => {
-		  return Grupos.find();
+		  _grupos = Grupos.find().fetch();
+		  if(_grupos != undefined){
+			  _.each(_grupos, function(grupo){
+				  rc.grupos_ids.push(grupo._id);
+			  });
+		  }
+		  return _grupos;
 	  },
-	   secciones : () => {
-		  return Secciones.find();
-	  },
-	   ciclos : () => {
-		  return Ciclos.find();
-	  },
-	   turnos : () => {
-		  return Turnos.find();
-	  },
-  }); 
+  });
 
   this.nuevoGrupo = function()
   {
@@ -40,15 +42,6 @@ angular.module("casserole")
     this.nuevo = !this.nuevo;
     this.grupo = {};
   }; 
-
-	this.actualizar = function(grupo)
-	{
-		var idTemp = grupo._id;
-		delete grupo._id;		
-		Grupos.update({_id:idTemp},{$set:grupo});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-	};
 
 	this.cambiarEstatus = function(id)
 	{
@@ -59,23 +52,23 @@ angular.module("casserole")
 			grupo.estatus = true;		
 		Grupos.update({_id:id},  {$set : {estatus: grupo.estatus}});
 	};
-	
+
 	this.getSeccion = function(seccion_id)
 	{
-		var seccion = $meteor.object(Secciones, seccion_id, false);
+		var seccion = Secciones.findOne(seccion_id);
 		return [seccion.descripcion, seccion.grados];
 	};
 
 	this.getCiclo = function(ciclo_id)
 	{
-		ciclo = _.find(rc.ciclos,function(x){return x._id==ciclo_id;});
+		ciclo = Ciclos.findOne();
 		if(ciclo)
 			return ciclo.descripcion;
 	};	
 	
 	this.getTurno = function(turno_id)
 	{
-		var turno = $meteor.object(Turnos, turno_id, false);
+		var turno = Turnos.findOne(turno_id);
 		return turno.nombre;
 	};	
 	
@@ -84,5 +77,10 @@ angular.module("casserole")
 			return "Activar";
 		else
 			return "Desactivar";
+	}
+	
+	this.getInscritos = function(id){		
+		var inscritos = Inscripciones.find({grupo_id : id}).count();
+		return inscritos;
 	}
 };

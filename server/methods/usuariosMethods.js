@@ -1,6 +1,7 @@
 Meteor.methods({
   createUsuario: function (usuario, rol) {
 	  console.log(usuario);
+	  console.log(rol);
 		var usuario_id = Accounts.createUser({
 			username: usuario.nombreUsuario,
 			password: usuario.contrasena,			

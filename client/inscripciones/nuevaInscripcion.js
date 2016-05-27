@@ -65,30 +65,29 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		console.log(inscripcion);
 	};
 	
-	/*this.getAlumnoSeleccionado = function(alumno)
-	{		
-		this.alumnoSeleccionado = $meteor.object(Alumnos, alumno, false);
-		this.alumnoSeleccionado.activo = true;
-	}*/
+	
 
-    this.getAlumnoSeleccionado= function(alumno)
+  this.getAlumnoSeleccionado= function(id)
 	{
-		var alumno = Alumnos.findOne(alumno_id);
-		this.alumnoSeleccionado.activo;
-		if(alumno)
-		return alumno.nombre;
+		console.log(id);
+		var alumno = Alumnos.findOne(id);
+		console.log(alumno);
+		if(alumno){
+			this.alumnoSeleccionado = alumno;
+			this.alumnoSeleccionado.activo = true;
+		}
 	};	
+	
 	this.getCiclo= function(ciclo_id)
 	{
 		var ciclo = Ciclos.findOne(ciclo_id);
 		if(ciclo)
 		return ciclo.descripcion;
 	};	
-
-
 	
 	this.hayCupo = function(grupo_id){
-		var grupo = Grupos.findOne({_id:grupo_id});
+		var grupo = Grupos.findOne(grupo_id);
+		console.log(grupo);
 		var total = Inscripciones.find({grupo_id : grupo_id}).count();
 		if(total < grupo.cupo){
 			this.cupo = "check";

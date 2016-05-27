@@ -4,7 +4,7 @@
 			<i class="fa fa-list fa-fw "></i> 
 				Grupo
 			<span>&gt; 
-				{{grupo.identificador}}
+
 			</span>
 		</h1>
 	</div>
@@ -17,7 +17,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="gp._inscripcion in inscripciones">
+		<tr ng-repeat="_inscripcion in gp.inscripciones">
 			<td>{{gp.getAlumno(_inscripcion.alumno_id)[0]}}</td>
 			<td><a href="./alumnos/{{_inscripcion.alumno_id}}">{{gp.getAlumno(_inscripcion.alumno_id)[1]}}</a></td>
 		</tr>

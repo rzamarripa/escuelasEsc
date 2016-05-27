@@ -1,19 +1,24 @@
 angular.module("casserole")
 .controller("InscripcionesCtrl",InscripcionesCtrl)
 function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
-    $reactive(this).attach($scope);
+  let rc = $reactive(this).attach($scope);
 
-     this.subscribe('ciclos',()=>{
+/*
+	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
-	 });
-     this.subscribe("secciones");
-     this.subscribe("tiposingresos");
-     this.subscribe('alumnoss',()=>{
+	});
+	this.subscribe("secciones");
+	this.subscribe("tiposingresos");
+	this.subscribe('alumnoss',()=>{
 		return [{estatus:true}]
-	 });
-     this.subscribe("grupos");
-     this.subscribe("planesEstudios");
-     this.subscribe('inscripciones');
+	});
+	this.subscribe("grupos", () => {
+		return [{
+		 estatus:true,
+		}]
+	});
+	this.subscribe("planesEstudios");
+	this.subscribe('inscripciones');
 
 
 
@@ -40,6 +45,12 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  return Inscripciones.find();
 	  },
   });
+*/
+	this.inscripciones = [];
+	$meteor.call("getInscripciones").then(function (data) {
+		console.log(data);
+  	rc.inscripciones = data;
+  });
 
 	this.getCiclo= function(ciclo_id)
 	{
@@ -47,8 +58,6 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		if(ciclo != undefined)
 		return ciclo.descripcion;
 	};	
-
-	
 
 	this.getAlumno= function(alumno_id)
 	{
@@ -68,8 +77,10 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.getGrupo= function(grupo_id)
 	{
 		var grupo = Grupos.findOne(grupo_id);
-		if(grupo != undefined)
-		return grupo.identificador;
+		console.log(grupo_id);
+		console.log(grupo);
+		if(grupo)
+			return grupo.identificador;
 	};	
 
 	this.getPlan= function(plan_id)
@@ -79,12 +90,5 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		return plan.clave;
 	};	
 	
-
-
-
-
-  this.inscripciones = [];
-  $meteor.call("getInscripciones").then(function (data) {
-    this.inscripciones = data;
-  });
+  
 };
