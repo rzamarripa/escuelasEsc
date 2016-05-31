@@ -232,7 +232,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
 		.state('root.grupo', {
       url: '/grupo',
       templateUrl: 'client/grupos/form.ng.html',
-      controller: 'NuevoGrupoCtrl as gp',
+      controller: 'GruposCtrl as gp',
     })
     .state('root.editarGrupo', {
       url: '/grupo/:id',
@@ -288,6 +288,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/rvoe',
       templateUrl: 'client/rvoe/rvoe.ng.html',
       controller: 'RvoeCtrl as rv',
+    })     
+    .state('root.conceptosPago', {
+      url: '/conceptosPago',
+      templateUrl: 'client/conceptosPago/conceptosPago.ng.html',
+      controller: 'ConceptosPagoCtrl as cp',
     })    
     .state('root.editarHorario', {
       url: '/editarHorario/:id',
