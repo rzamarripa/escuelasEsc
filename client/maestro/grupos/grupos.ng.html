@@ -1,4 +1,4 @@
-<div class="row" ng-repeat="grupo in grupos">	
+<div class="row" ng-repeat="grupo in masgrupo.grupos">	
   <div class="col-sm-12 col-md-12">
     <div class="panel panel-default coupon">
       <div class="panel-heading" id="head">
@@ -12,7 +12,7 @@
 			      <li><a href="/asistenciaGrupo/{{grupo._id}}">Tomar asistencia</a></li>
 			      <li><a href="/verAsistencias/{{grupo._id}}">Ver asistencia</a></li>
 			      <li><a href="/calificacionesGrupo/{{grupo_id}}">Capturar calificaciones</a></li>
-			      <li><a href="/calificacionesGrupo/{{grupo_id}}">Tareas</a></li>
+			      <li><a href="/tareas/{{grupo._id}}/{{grupo.maestro_id}}">Tareas</a></li>
 			      <li><a href="/calificacionesGrupo/{{grupo_id}}">Exámenes</a></li>
 			    </ul>
 			    <div class="offer">

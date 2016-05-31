@@ -51,6 +51,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		$state.go('root.grupos')
+		console.log(grupo);
 	};
 	
 	this.editarGrupo = function(id)
