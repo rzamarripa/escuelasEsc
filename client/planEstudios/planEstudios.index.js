@@ -26,6 +26,17 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
   });
   rc.subscribe('secciones');
   rc.subscribe('materias');
+  rc.subscribe('ciclos', ()=>{
+	  return [{
+		  estatus:true
+	  }]
+  });
+  rc.subscribe('rvoe', ()=>{
+	  return [{
+		  estatus:true
+	  }]
+  });
+  rc.subscribe('generaciones');
 
   
   
@@ -40,7 +51,16 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	  },
 	  materias : () => {
 		  return Materias.find();
-	  },	  
+	  },
+	  ciclos : () => {
+		  return Ciclos.find();
+	  },
+	  generaciones : () => {
+		  return Generaciones.find();
+	  },
+	  rvoes : () => {
+		  return Rvoe.find();
+	  },
   });	
 
 	
@@ -119,6 +139,12 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	{
 		var idTemp = rc.plan._id;
 		delete rc.plan._id;	
+		delete rc.plan.$$hashKey;
+		for (var i = 0; i < rc.plan.grados.length; i++) {
+			for (var j = 0; j < rc.plan.grados[i].length; j++) {
+				delete rc.plan.grados[i][j].$$hashKey;
+			};
+		};
 		PlanesEstudios.update({_id:idTemp},{$set:rc.plan});
 		$('.collapse').collapse('hide');
 		rc.nuevo = true;

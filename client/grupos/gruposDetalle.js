@@ -1,32 +1,49 @@
 angular
 .module("casserole")
 .controller("GruposDetalleCtrl", GruposDetalleCtrl);
- function GruposDetalleCtrl($scope, $meteor,$reactive , $state, $stateParams){
+ function GruposDetalleCtrl($scope, $meteor, $reactive , $state, $stateParams){
+	 
  	$reactive(this).attach($scope);
+
+ 	this.grupo = {};
   this.action = true;
 
-  this.subscribe('inscripciones');
-  this.subscribe('alumnos');
+  this.subscribe('inscripciones', () => {
+	  return [{
+		  grupo_id : $stateParams.id
+	  }];
+  });
+  
+  this.subscribe('alumnoss', () => {
+	  return [{estatus:true}]
+  });
+  
   this.subscribe('grupos');
 	
 	this.helpers({
 	  inscripciones : () => {
-		  return Inscripciones.find({grupo_id: $stateParams.id});
+			return Inscripciones.find();
 	  },
-	   alumnos : () => {
-		  return Alumnos.find();
+	  alumnos : () => {
+			return Alumnos.find();
 	  },
-	   grupos : () => {
-		  return Grupos.find(Grupos, $stateParams.id);
+	  grupo : () => {
+			return Grupos.findOne();
 	  },
   });
-	//this.inscripciones = $meteor.collection(function(){return Inscripciones.find({grupo_id: $stateParams.id})},false).subscribe("inscripciones");
-
-
-	
+  
+  this.actualizar = function(grupo)
+	{
+		delete grupo._id;		
+		Grupos.update({_id:$stateParams.id}, {$set : grupo});
+		toastr.success('Grupo modificado.');
+		$state.go("root.grupos");
+	};
+  	
 	this.getAlumno = function(alumno_id){
 		alumno = _.find(this.alumnos,function(x){return x._id==alumno_id;});
-		return [alumno.matricula, alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno];
+		if(alumno)
+			return [alumno.matricula, alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno];
 	}
 	
 };

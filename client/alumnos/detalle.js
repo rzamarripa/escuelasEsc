@@ -3,8 +3,9 @@ angular
   .controller('AlumnosDetalleCtrl', AlumnosDetalleCtrl);
  
 function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
-
+	
 	rc = $reactive(this).attach($scope);
+	
 	this.totalPagar = 0.00;
 	this.alumno = {};
 	this.fechaActual = new Date();
@@ -41,7 +42,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		  semanas = [];
 		  for(var j=0; j<= cantSemanas; j++){
 			  var elAnio = inscripcion.year();
-			  semanas.push({semana: j, numero : moment(inscripcion).week(), pagada : 0, anio : elAnio })
+			  semanas.push({semana: j, numero : moment(inscripcion).week(), pagada : 0, anio : elAnio });
 				inscripcion.add(1, 'weeks');
 		  }
 		  
@@ -54,7 +55,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 				});
 			});
 			
-		  return semanas
+		  return semanas;
 	  }
   });
   
@@ -73,7 +74,6 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		});
 	};
 	
-		
 	this.totalPagado = function(){
 	  var temp = 0.00;
 	  _.each(this.misPagos, function(pago){	
