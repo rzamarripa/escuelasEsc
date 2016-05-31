@@ -10,6 +10,15 @@ angular.module("casserole")
 		}]
 	});
 	
+	console.log($stateParams.id);
+	
+	this.subscribe('grupo', () => {
+		
+		return [{
+			_id : $stateParams.id,
+		}]
+	});
+	
 	this.subscribe('secciones');
 	
 	this.subscribe('inscripciones', () => {
@@ -25,6 +34,9 @@ angular.module("casserole")
 	this.subscribe('turnos'); 
 
 	this.helpers({		
+		grupo : () => {
+			return Grupos.findOne();
+		},
 	  grupos : () => {
 		  _grupos = Grupos.find().fetch();
 		  if(_grupos != undefined){

@@ -49,7 +49,10 @@
 											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Ubicar al Alumno</span></a>
 										</li>
 										<li data-target="#step4">
-											<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Finalizar Inscripción</span></a>
+											<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Cobro</span></a>
+										</li>
+										<li data-target="#step5">
+											<a href="#tab5" data-toggle="tab"> <span class="step">5</span> <span class="title">Finalizar Inscripción</span></a>
 										</li>
 									</ul>
 									<div class="clearfix"></div>
@@ -144,7 +147,7 @@
 														</div>
 											    	<div class="col-sm-6">
 												    	<label >Sección</label>
-															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id" ng-change="ins.getGrupos(ins.inscripcion.seccion_id)">
 															  <option value="{{seccion._id}}" ng-repeat="seccion in ins.secciones">
 															  	{{seccion.descripcion}}
 															  </option>
@@ -192,26 +195,16 @@
 											  		<div class="col-sm-3">												  		
 															<label >Grupo</label>
 
-															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id" ng-change="ins.hayCupo(inscripcion.grupo_id)">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.grupo_id" ng-change="ins.hayCupo(ins.inscripcion.grupo_id)">
 															  <option value="{{grupo._id}}" ng-repeat="grupo in ins.grupos">
 															  	{{grupo.identificador}}
 															  </option>
 															</select>
-															<!--<ui-select ng-model="inscripcion.grupo_id"
-														             theme="bootstrap"
-														             ng-disabled="disabled"
-														             reset-search-input="false"
-														             on-select="hayCupo(inscripcion.grupo_id)">
-														    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}}</ui-select-match>
-														    <ui-select-choices repeat="grupo._id as grupo in grupos | filter: $select.search">
-														      <div ng-bind-html="grupo.nombre | highlight: $select.search"></div>
-														    </ui-select-choices>
-														  </ui-select>-->
 											  		</div>														  
 													  <div class="col-sm-1" style="text-align: left">
 														  <div style="display: inline-block; vertical-align: middle; float: none;">
-														  	<h1 class="text-center text-{{cupo == 'check' ? 'success' : 'danger'}}">
-															  	<strong><i class="fa fa-{{cupo}} fa-lg"></i></strong>
+														  	<h1 class="text-center text-{{ins.cupo == 'check' ? 'success' : 'danger'}}">
+															  	<strong><i class="fa fa-{{ins.cupo}} fa-lg"></i></strong>
 															  </h1>
 														  </div>															  
 														</div>
@@ -222,15 +215,6 @@
 															  	{{planesEstudio.descripcion}}
 															  </option>
 															</select>
-															<!--<ui-select ng-model="inscripcion.planEstudio_id"
-														             theme="bootstrap"
-														             ng-disabled="disabled"
-														             reset-search-input="false">
-														    <ui-select-match placeholder="Seleccione">{{$select.selected.clave}}</ui-select-match>
-														    <ui-select-choices repeat="planEstudio._id as planEstudio in planesEstudio | filter: $select.search">
-														      <div ng-bind-html="planEstudio.clave | highlight: $select.search"></div>
-														    </ui-select-choices>
-														  </ui-select>-->
 														</div>
 											  	</div>
 										  	</div>	
@@ -239,7 +223,39 @@
 									</div>
 									<div class="tab-pane" id="tab4">
 										<br>
-										<h3><strong>Paso 4</strong> - Guardar Inscripción</h3>
+										<h3><strong>Paso 4</strong> - Cobros Iniciales</h3>
+										<br>
+										<div class="row">
+											<div class="col-sm-4">
+												<form>
+													<p ng-repeat="concepto in ins.conceptosPago | orderBy:'orden'">
+														<label>
+														  <input
+														    type="checkbox"
+														    name="ins.conceptosSeleccionados[]"
+														    value="{{concepto._id}}"
+														    ng-checked="conceptosSeleccionados.indexOf(concepto) > -1"
+														    ng-click="ins.seleccionarConcepto(concepto)"
+														    ng-model="concepto.checked"
+														  > {{concepto.nombre}}
+													</label>
+													</p>
+												</form>
+												<h4 class="text-center">Total a pagar: {{ins.inscripcion.totalPagar | currency}}</h4>
+											</div>
+											<div class="col-sm-4">
+												<label>Cuánto paga</label>
+												<input type="text" class="form-control" ng-model="ins.inscripcion.importePagado" ng-change="ins.cuantoPaga(ins.inscripcion.importePagado)"/><br/>
+												<label>Queda Abono</label>
+												<input type="text" class="form-control" ng-model="ins.inscripcion.abono"/>
+												<br/>
+												<input type="text" class="form-control" ng-model="ins.inscripcion.cambio"/>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab5">
+										<br>
+										<h3><strong>Paso 5</strong> - Guardar Inscripción</h3>
 										<br>
 										<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Alumno Inscrito</strong></h1>
 										<h4 class="text-center">Click Inscribir para Finalizar</h4>

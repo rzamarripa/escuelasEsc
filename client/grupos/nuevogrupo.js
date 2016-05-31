@@ -5,6 +5,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	let rc = $reactive(this).attach($scope);
 	
 	this.grupo = {};
+	this.grados = [];
 	
 	this.subscribe('grupos', () => {
 		return [{
@@ -22,7 +23,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('maestros');
 
 	this.helpers({
-	  grupo : () => {
+	  grupos : () => {
 		  return Grupos.findOne();
 	  },
 	  secciones : () => {
@@ -41,7 +42,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
   });
   
   if($stateParams.id)
-  	this.action = false;
+  	this.action = false; 
   else
   	this.action = true;
 
@@ -73,11 +74,13 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	};
 	
 	this.getGrados = function(seccion_id){
-		var seccionSeleccionada = $meteor.object(Secciones, seccion_id, false);
-		this.grados = [];
+		console.log(seccion_id);
+		rc.grados = [];
+		var seccionSeleccionada = Secciones.findOne(seccion_id);
 		for(var i = 1; i <= seccionSeleccionada.grados; i++ ){
-			this.grados.push(i);
+			rc.grados.push(i);
 		}
+		console.log(rc.grados);
 	}
 
 };
