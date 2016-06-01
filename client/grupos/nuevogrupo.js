@@ -49,6 +49,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.guardar = function(grupo)
 	{
 		this.grupo.estatus = true;
+		grupo.inscritos = 0;
 		Grupos.insert(this.grupo);
 		toastr.success('Grupo guardado.');
 		this.grupo = {}; 

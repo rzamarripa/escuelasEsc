@@ -61,15 +61,18 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.guardar = function(inscripcion)
 	{   
 		this.inscripcion.estatus = true;
-		Inscripciones.insert(angular.copy(inscripcion));
-		var grupo = Grupos.find(inscripcion.grupo_id);
-		console.log(grupo);
-		grupo.inscritos += 1;
-		Grupos.update({_id: grupo._id},{$set:{grupo}});
-		toastr.success('inscripcion guardada.');
-		console.log(grupo);
-		$state.go("root.inscripciones");
 		console.log(inscripcion);
+		_.each(inscripcion.conceptosSeleccionados, function(concepto){
+			delete concepto.$$hashKey;
+		})
+		Inscripciones.insert(inscripcion);
+		var grupo = Grupos.findOne(inscripcion.grupo_id);
+		console.log(grupo);
+		grupo.inscritos = parseInt(grupo.inscritos) + 1;
+		//delete grupo._id;
+		Grupos.update({_id: inscripcion.grupo_id},{$set:{grupo}});
+		toastr.success('inscripcion guardada.');
+		$state.go("root.inscripciones");
 	};
 	
 	//Conceptos de cobro
@@ -93,26 +96,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   };
 
 	this.cuantoPaga = function(importe){
-		
-		/*
-		var conceptosOrdenados = _.sortBy(this.conceptosPago, function(o) { return o.orden; })
-		var suma = 0.00;
-		var abono = 0.00;		
-		var conceptosSelec = [];
-		this.inscripcion.conceptosSeleccionados = conceptosSelec;
-		_.each(conceptosOrdenados, function(concepto){
-			suma += parseFloat(concepto.importe);
-			if(parseFloat(importe) >= suma){
-				conceptosSelec.push(concepto);
-				abono = parseFloat(importe) - parseFloat(concepto.importe);
-				rc.inscripcion.abono = parseFloat(abono);
-				console.log(abono);
-				concepto.checked = true;
-			}else{
-				concepto.checked = false;
-			}
-		});
-		*/
+		console.log(importe);
+		console.log(this.inscripcion.totalPagar);
+		this.inscripcion.cambio = parseFloat(importe) - parseFloat(this.inscripcion.totalPagar);
 	}
 	
   this.getAlumnoSeleccionado= function(id)
@@ -144,8 +130,14 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		}
 	}
 	
-	this.getGrupos = function(seccion_id){
-		this.grupos = Grupos.find({seccion_id : seccion_id, estatus:true}).fetch();
-	}
-	
+	this.getGrupos = function(seccion_id, alumno_id){
+		console.log(seccion_id, alumno_id);
+		var inscrito = Inscripciones.findOne({seccion_id : seccion_id, alumno_id : alumno_id});
+		if(!inscrito){
+			toastr.success('Todo bien');
+			rc.grupos = Grupos.find({seccion_id : seccion_id, estatus : true}).fetch();
+		}else{
+			toastr.error('Este grupo ya está inscrito en esta Sección');
+		}
+	}	
 };
