@@ -63,7 +63,7 @@
 		    	</div>
 		    	<div class="col-sm-4">
 				    <label for="cupo">Cupo</label>
-				    <input type="number" class="form-control" id="cupo" min="0" placeholder="Cupo" ng-model="gp.grupo.cupo" >
+				    <input type="number" class="form-control" id="cupo" placeholder="Cupo" ng-model="gp.grupo.cupo" >
 		    	</div>
 					<div class="col-sm-4">
 						<label >Turno</label>
@@ -88,7 +88,7 @@
 				<div class="row">						
 					<div class="col-sm-4">
 						<label >Sección</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.seccion_id" ng-change="gp.getGrados(gp.grupo.seccion_id)">
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.seccion_id">
 							<option ng-repeat="seccion in gp.secciones" value="{{seccion._id}}">{{seccion.descripcionCorta}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.seccion_id"
@@ -105,8 +105,8 @@
 					</div>
 					<div class="col-sm-4">
 						<label >Grado</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.grado">
-							<option ng-repeat="grado in gp.grados" value="{{grado}}">{{grado}}</option>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.grado_id">
+							<option ng-repeat="grado in gp.grados" value="{{grado._id}}">{{grado}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.grado"
 					             theme="bootstrap"
