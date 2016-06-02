@@ -49,6 +49,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.guardar = function(grupo)
 	{
 		this.grupo.estatus = true;
+		grupo.inscritos = 0;
 		Grupos.insert(this.grupo);
 		toastr.success('Grupo guardado.');
 		this.grupo = {}; 
@@ -67,10 +68,11 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	
 	this.actualizar = function(grupo)
 	{
-		var idTemp = grupo._id;
+	    var idTemp = grupo._id;
 		delete grupo._id;		
-		Grupos.update({_id:idTemp},{$set:grupo});
-		$state.go('root.grupos');
+		Grupos.update({_id:$stateParams.id}, {$set : grupo});
+		toastr.success('Grupo guardado.');
+		$state.go("root.grupos",{"id":$stateParams.id});
 	};
 	
 	this.getGrados = function(seccion_id){

@@ -2,7 +2,13 @@ angular.module("casserole")
 .controller("GruposCtrl", GruposCtrl);
  function GruposCtrl($scope, $meteor, $reactive , $state, $stateParams, toastr){
  	let rc = $reactive(this).attach($scope);
-  this.action = true;
+ 
+  if ($stateParams.id != undefined) {
+  	this.action = false;
+
+  }else{
+  	this.action = true;
+  }
 	this.grupos_ids = [];
 	this.subscribe('grupos', () => {
 		return [{
@@ -10,14 +16,16 @@ angular.module("casserole")
 		}]
 	});
 	
-	console.log($stateParams.id);
+	
 	
 	this.subscribe('grupo', () => {
 		
 		return [{
-			_id : $stateParams.id,
+			_id : $stateParams.id, estatus : true
 		}]
 	});
+
+	console.log($stateParams.id);
 	
 	this.subscribe('secciones');
 	
@@ -30,12 +38,16 @@ angular.module("casserole")
 	this.subscribe('ciclos', () => {
 		return [{estatus: true}]
 	});
+
+	this.subscribe('maestros', () => {
+		return [{estatus: true}]
+	});
 	
 	this.subscribe('turnos'); 
 
 	this.helpers({		
 		grupo : () => {
-			return Grupos.findOne();
+			return Grupos.findOne($stateParams.id);
 		},
 	  grupos : () => {
 		  _grupos = Grupos.find().fetch();
@@ -46,6 +58,18 @@ angular.module("casserole")
 		  }
 		  return _grupos;
 	  },
+	  secciones : () => {
+		  return Secciones.find();
+	  },
+	  ciclos : () => {
+		  return Ciclos.find();
+	  },
+	  turnos : () => {
+		  return Turnos.find();
+	  },
+	  maestros : () => {
+		  return Maestros.find();
+	  },
   });
 
   this.nuevoGrupo = function()
@@ -54,6 +78,28 @@ angular.module("casserole")
     this.nuevo = !this.nuevo;
     this.grupo = {};
   }; 
+
+  this.guardar = function(grupo)
+	{
+		this.grupo.estatus = true;
+		grupo.inscritos = 0;
+		Grupos.insert(this.grupo);
+		toastr.success('Grupo guardado.');
+		this.grupo = {}; 
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		$state.go('root.grupos');
+	};
+
+	
+    this.actualizar = function(grupo)
+    {
+	    var idTemp = grupo._id;
+		delete grupo._id;		
+		Grupos.update({_id:$stateParams.id}, {$set : grupo});
+		toastr.success('Grupo guardado.');
+		$state.go("root.grupos",{"id":$stateParams.id});
+	};
 
 	this.cambiarEstatus = function(id)
 	{
@@ -68,6 +114,7 @@ angular.module("casserole")
 	this.getSeccion = function(seccion_id)
 	{
 		var seccion = Secciones.findOne(seccion_id);
+		if(seccion)
 		return [seccion.descripcion, seccion.grados];
 	};
 
@@ -81,6 +128,7 @@ angular.module("casserole")
 	this.getTurno = function(turno_id)
 	{
 		var turno = Turnos.findOne(turno_id);
+		if (turno) 
 		return turno.nombre;
 	};	
 	

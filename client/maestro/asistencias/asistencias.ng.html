@@ -6,7 +6,7 @@
 				<span class="pull-right" style="margin-right: 30px;"><i class="fa fa-calendar"></i> {{asistencia.fechaAsistencia | date:'dd-MM-yyyy'}}</span>
 			</h5>
 			<ul id="sortable1" class="todo ui-sortable">
-				<li ng-repeat="alumno in asistencia.alumnos">
+				<li ng-repeat="alumno in masas.asistencia.alumnos">
 					<span class="handle"> 
 						<label class="checkbox">
 							<input type="checkbox" ng-model="alumno.checked" value="checked">
@@ -19,7 +19,7 @@
 					</p>
 				</li>		
 			</ul>
-			<input ng-click="guardar(asistencia)" value="Guardar" class="btn btn-primary">
+			<input ng-click="masas.guardar(masas.asistencia)" value="Guardar" class="btn btn-primary">
 		</div>
   </div>
 </div>

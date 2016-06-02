@@ -200,7 +200,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'GruposCtrl as gp',
     })
     .state('root.grupoDetalle', {
-      url: '/grupos/:id',
+      url: '/gruposDetalle/:id',
       templateUrl: 'client/grupos/gruposDetalle.ng.html',
       controller: 'GruposDetalleCtrl as gp',
     })
@@ -230,12 +230,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'NuevaInscripcionCtrl as ins',
     })
 		.state('root.grupo', {
-      url: '/grupo',
+      url: '/grupo/:id',
       templateUrl: 'client/grupos/form.ng.html',
       controller: 'GruposCtrl as gp',
     })
     .state('root.editarGrupo', {
-      url: '/grupo/:id',
+      url: '/grupo',
       templateUrl: 'client/grupos/form.ng.html',
       controller: 'NuevoGrupoCtrl as gp',
     })
@@ -263,6 +263,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/maestros',
       templateUrl: 'client/maestros/maestros.ng.html',
       controller: 'MaestrosCtrl as maes',
+    })
+    .state('root.tareas', {
+      url: '/tareas/:id/:maestros_id',
+      templateUrl: 'client/maestro/tareas/tareas.ng.html',
+      controller: 'TareasCtrl as tarea',
     })
     .state('root.documentos', {
       url: '/documentos',
@@ -307,7 +312,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id',
       templateUrl: 'client/maestro/asistencias/asistencias.ng.html',
-      controller: 'MaestroAsistenciasCtrl',
+      controller: 'MaestroAsistenciasCtrl as masas',
       resolve: {
 				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
 					return $meteor.requireValidUser(function(user) {
@@ -323,7 +328,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.verAsistencias', {
       url: '/verAsistencias/:id',
       templateUrl: 'client/maestro/asistencias/verAsistencias.ng.html',
-      controller: 'MaestroVerAsistenciasCtrl',
+      controller: 'MaestroVerAsistenciasCtrl as mast',
       resolve: {
 				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
 					return $meteor.requireValidUser(function(user) {
@@ -339,7 +344,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.maestroGrupos', {
       url: '/gruposMaestro/:id',
       templateUrl: 'client/maestro/grupos/grupos.ng.html',
-      controller: 'MaestroGruposCtrl',
+      controller: 'MaestroGruposCtrl as masgrupo',
       resolve: {
 				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
 					return $meteor.requireValidUser(function(user) {

@@ -1,12 +1,16 @@
-angular.module("casserole").controller("MaestroAsistenciasCtrl", ['$scope', '$meteor', '$state', '$stateParams', 'toastr', 
-function($scope, $meteor, $state, $stateParams, toastr) {
+angular.module("casserole").controller
+("MaestroAsistenciasCtrl",MaestroAsistenciasCtrl);
+function MaestroAsistenciasCtrl($scope, $reactive, $meteor, $state, $stateParams, toastr) {
+	let rc =$reactive(this).attach($scope);
 	
-	$scope.asistencia = {};
-  $meteor.call("getAlumnosGrupo", {grupo_id:$stateParams.id}).then(function (data) {	  
-    $scope.asistencia.alumnos = data;
+	this.asistencia = {};
+  $meteor.call("getAlumnosGrupo", {grupo_id:$stateParams.id}).then(function (data) {	
+  	console.log(data)
+    rc.asistencia.alumnos = data;
   });
   
-  $scope.guardar = function(asistencia){
+  this.guardar = function(asistencia){
+  	console.log(asistencia)
 	  _.each(asistencia.alumnos, function(alumno){
 		  delete alumno['$$hashKey'];
 	  })
@@ -30,4 +34,4 @@ function($scope, $meteor, $state, $stateParams, toastr) {
 	
 	
   
-}]);
+};

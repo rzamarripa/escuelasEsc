@@ -1,8 +1,15 @@
-angular.module("casserole").controller("MaestroGruposCtrl", ['$scope', '$meteor', '$state', '$stateParams', 'toastr', 
-function($scope, $meteor, $state, $stateParams, toastr) {
-	$scope.grupos = [];
-	$scope.hoy = new Date();
+angular
+.module("casserole")
+.controller("MaestroGruposCtrl", MaestroGruposCtrl);
+ function MaestroGruposCtrl($scope, $meteor, $reactive , $state, $stateParams){
+
+	 	
+	let rc = $reactive(this).attach($scope);
+	
+	this.grupos = [];
+	this.hoy = new Date();
 	$meteor.call("getGrupos").then(function (data) {
-    $scope.grupos = data;
+		console.log(data);
+    rc.grupos = data;
   });
-}]);
+};
