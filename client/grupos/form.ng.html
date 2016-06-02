@@ -20,33 +20,35 @@
 <div class="row">
 	<div class="col-sm-12">
 		<form class="form-horizontal" role="form" >
-	  	<div class="well">	    
+	  	<div class="well">	 
+		  	<div class="row">
+		  		<div class="col-sm-6">
+		  			<label for="grupo">Grupo</label>
+				    <input type="text" class="form-control" placeholder="Grupo" ng-model="gp.grupo.nombre" >
+		  		</div>
+		  		<div class="col-sm-6">
+		  			<label for="identificador">Identificador</label>
+						<input type="text" class="form-control" id="identificador" placeholder="Identificador" ng-model="gp.grupo.identificador" >
+		  		</div>
+		  	</div>   
 		    <div class="row">
 					<div class="col-sm-4">
-						<label >Ciclo Escolar</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id">
+						<label>Ciclo Escolar</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id" ng-change="gp.getSubCiclos(gp.grupo.ciclo_id)" >
 							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
 						</select>
 					</div>
 		    	<div class="col-sm-4">				    
-				    <label for="grupo">Grupo</label>
-				    <input type="text" class="form-control" placeholder="Grupo" ng-model="gp.grupo.nombre" >						
+						<label>SubCiclo Escolar</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCiclo_id" ng-change="gp.getPeriodos(gp.grupo.ciclo_id)">
+							<option ng-repeat="subCiclo in gp.subCiclos" value="{{subCiclo._id}}">{{subCiclo.descripcion}}</option>
+						</select>
 		    	</div>
 		    	<div class="col-sm-4">
-						<label >Maestro</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.maestro_id">
-							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}} {{maestro.apPaterno}} {{maestro.apMaterno}}</option>
+						<label>Periodo</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.periodo_id">
+							<option ng-repeat="periodo in gp.periodos" value="{{periodo._id}}">{{periodo.nombre}}</option>
 						</select>
-						<!--<ui-select ng-model="gp.grupo.maestro_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false"
-					             >
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}} {{$select.selected.apPaterno}}</ui-select-match>
-					    <ui-select-choices repeat="gp.maestro._id as maestro in maestros | filter: $select.search">
-					      <div ng-bind-html="maestro.nombre + ' ' + maestro.apPaterno | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>-->
 					</div>
 		    </div>
 	  	</div>
@@ -121,8 +123,20 @@
 
 					</div>	
 					<div class="col-sm-4">
-						<label for="identificador">Identificador</label>
-						<input type="text" class="form-control" id="identificador" placeholder="Identificador" ng-model="gp.grupo.identificador" >
+						<label >Maestro</label>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.maestro_id">
+							<option ng-repeat="maestro in gp.maestros" value="{{maestro._id}}">{{maestro.nombre}} {{maestro.apPaterno}} {{maestro.apMaterno}}</option>
+						</select>
+						<!--<ui-select ng-model="gp.grupo.maestro_id"
+					             theme="bootstrap"
+					             ng-disabled="disabled"
+					             reset-search-input="false"
+					             >
+					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}} {{$select.selected.apPaterno}}</ui-select-match>
+					    <ui-select-choices repeat="gp.maestro._id as maestro in maestros | filter: $select.search">
+					      <div ng-bind-html="maestro.nombre + ' ' + maestro.apPaterno | highlight: $select.search"></div>
+					    </ui-select-choices>
+					  </ui-select>-->
 					</div>
 				</div>
 	  	</div>

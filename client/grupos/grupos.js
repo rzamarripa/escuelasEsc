@@ -5,18 +5,21 @@ angular.module("casserole")
  
   if ($stateParams.id != undefined) {
   	this.action = false;
-
   }else{
   	this.action = true;
   }
+  
 	this.grupos_ids = [];
+	this.ciclos_ids = [];
+	this.subCiclos_ids = [];
+	this.periodos_ids = [];
+	this.subCiclos = [];
+	
 	this.subscribe('grupos', () => {
 		return [{
 			estatus : true,
 		}]
 	});
-	
-	
 	
 	this.subscribe('grupo', () => {
 		
@@ -24,14 +27,24 @@ angular.module("casserole")
 			_id : $stateParams.id, estatus : true
 		}]
 	});
-
-	console.log($stateParams.id);
 	
 	this.subscribe('secciones');
 	
 	this.subscribe('inscripciones', () => {
 		return [{
 			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},
+		}]
+	});
+	
+	this.subscribe('subCiclos', () => {
+		return [{
+			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},
+		}]
+	});
+	
+	this.subscribe('periodos', () => {
+		return [{
+			subCiclo_id : {$in : this.getCollectionReactively('subCiclos_ids')},
 		}]
 	});
 	
@@ -62,13 +75,37 @@ angular.module("casserole")
 		  return Secciones.find();
 	  },
 	  ciclos : () => {
-		  return Ciclos.find();
+		  _ciclos = Ciclos.find().fetch();
+		  if(_ciclos != undefined){
+			  _.each(_ciclos, function(ciclo){
+				  rc.ciclos_ids.push(ciclo._id);
+			  })
+		  }
+		  return _ciclos;
 	  },
 	  turnos : () => {
 		  return Turnos.find();
 	  },
 	  maestros : () => {
 		  return Maestros.find();
+	  },
+	  subCiclos : () => {
+		  _subCiclos = SubCiclos.find().fetch();
+		  if(_subCiclos != undefined){
+			  _.each(_subCiclos, function(subCiclo){
+				  rc.subCiclos_ids.push(subCiclo._id);
+			  })
+		  }
+		  return _subCiclos;
+	  },
+	  periodos : () => {
+		  _periodos = Periodos.find().fetch();
+		  if(_periodos != undefined){
+			  _.each(_periodos, function(periodo){
+				  rc.periodos.push(periodo._id);
+			  })
+		  }
+		  return _periodos;
 	  },
   });
 
@@ -92,9 +129,8 @@ angular.module("casserole")
 	};
 
 	
-    this.actualizar = function(grupo)
-    {
-	    var idTemp = grupo._id;
+  this.actualizar = function(grupo){
+    var idTemp = grupo._id;
 		delete grupo._id;		
 		Grupos.update({_id:$stateParams.id}, {$set : grupo});
 		toastr.success('Grupo guardado.');
@@ -143,4 +179,6 @@ angular.module("casserole")
 		var inscritos = Inscripciones.find({grupo_id : id}).count();
 		return inscritos;
 	}
+	
+	
 };
