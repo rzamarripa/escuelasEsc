@@ -4,5 +4,5 @@ Meteor.publish("grupos",function(options){
 });
 
 Meteor.publish("grupo",function(options){
-  return Grupos.find(options.id);
+  return Grupos.find(options);
 });
