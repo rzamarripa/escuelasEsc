@@ -200,7 +200,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'GruposCtrl as gp',
     })
     .state('root.grupoDetalle', {
-      url: '/grupos/:id',
+      url: '/gruposDetalle/:id',
       templateUrl: 'client/grupos/gruposDetalle.ng.html',
       controller: 'GruposDetalleCtrl as gp',
     })
@@ -230,12 +230,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'NuevaInscripcionCtrl as ins',
     })
 		.state('root.grupo', {
-      url: '/grupo',
+      url: '/grupo/:id',
       templateUrl: 'client/grupos/form.ng.html',
       controller: 'GruposCtrl as gp',
     })
     .state('root.editarGrupo', {
-      url: '/grupo/:id',
+      url: '/grupo',
       templateUrl: 'client/grupos/form.ng.html',
       controller: 'NuevoGrupoCtrl as gp',
     })
