@@ -239,32 +239,51 @@
 													</label>
 													</p>
 												</form>
-												<h4 class="text-center">Total a pagar: {{ins.inscripcion.totalPagar | currency}}</h4>
+												<h4 class="text-center text-success">Total a pagar: {{ins.inscripcion.totalPagar | currency}}</h4>
 											</div>
 											<div class="col-sm-4">
+												<div class="row">
+													<div class="col-sm-12">
+														<label>Cuánto paga</label>
+														<input type="text" class="form-control" ng-model="ins.inscripcion.importePagado" ng-change="ins.cuantoPaga(ins.inscripcion.importePagado)"/>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-12">
+														<label>Cambio</label>
+														<input type="text" class="form-control" ng-model="ins.inscripcion.cambio"/>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-4">
+														<label>Quieres abonarlo?</label>
+														<input type="checkbox" class="form-control" ng-change="ins.dejoAbono()" ng-model="ins.inscripcion.quiereAbonar"/>
+													</div>
+													<div class="col-sm-8">
+														<label>Abono</label>
+														<input type="text" class="form-control" ng-model="ins.inscripcion.abono"/>
+													</div>
+												</div>
 												
-											</div>
-											<div class="col-sm-4">
-												<label>Cuánto paga</label>
-												<input type="text" class="form-control" ng-model="ins.inscripcion.importePagado" ng-change="ins.cuantoPaga(ins.inscripcion.importePagado)"/><br/>
-												<label>Cambio</label>
-												<input type="text" class="form-control" ng-model="ins.inscripcion.cambio"/><br/>
-												<label>Queda Abono</label>
-												<input type="text" class="form-control" ng-model="ins.inscripcion.abono"/>											
 											</div>
 										</div>
 									</div>
 									<div class="tab-pane" id="tab5">
-										<br>
-										<h3><strong>Paso 5</strong> - Guardar Inscripción</h3>
-										<br>
-										<h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Alumno Inscrito</strong></h1>
-										<h4 class="text-center">Click Inscribir para Finalizar</h4>
-										<button ng-click="ins.guardar(ins.inscripcion)" class="btn btn-lg btn-primary">Inscribir</button>
-										<br>
-										<br>
-									</div>
-	
+										<div class="row">
+											<div class="col-sm-12">
+												<br>
+												<h3><strong>Paso 5</strong> - Guardar Inscripción</h3>
+												<br>
+												<div class="text-center">
+													<h4>Click en Inscribir para Finalizar</h4>
+													<br/>
+													<button ng-click="ins.guardar(ins.inscripcion)" class="btn btn-lg btn-primary">Inscribir</button>
+													<br>
+													<br>
+												</div>												
+											</div>
+										</div>										
+									</div>	
 									<div class="form-actions">
 										<div class="row">
 											<div class="col-sm-12">

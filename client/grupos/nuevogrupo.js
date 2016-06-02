@@ -6,6 +6,8 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	
 	this.grupo = {};
 	this.grados = [];
+	this.subCiclos = [];
+	this.periodos = [];
 	
 	this.subscribe('grupos', () => {
 		return [{
@@ -13,13 +15,29 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 			estatus : true,
 		}]
 	});
+	
 	this.subscribe('secciones');
+	
 	this.subscribe('ciclos', () => {
 		return [{
 			estatus : true,
 		}]
 	});
+	
+	this.subscribe('subCiclos', () => {
+		return [{
+			ciclo_id : this.getReactively("grupo.ciclo_id")
+		}]
+	});
+	
+	this.subscribe('periodos', () => {
+		return [{
+			subCiclos_id : this.getReactively("grupo.subCiclo_id")
+		}]
+	});
+	
 	this.subscribe('turnos');
+	
 	this.subscribe('maestros');
 
 	this.helpers({
@@ -37,8 +55,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  },
 	  maestros : () => {
 		  return Maestros.find();
-	  },
-
+	  }
   });
   
   if($stateParams.id)
@@ -68,7 +85,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	
 	this.actualizar = function(grupo)
 	{
-	    var idTemp = grupo._id;
+	  var idTemp = grupo._id;
 		delete grupo._id;		
 		Grupos.update({_id:$stateParams.id}, {$set : grupo});
 		toastr.success('Grupo guardado.');
@@ -82,7 +99,14 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		for(var i = 1; i <= seccionSeleccionada.grados; i++ ){
 			rc.grados.push(i);
 		}
-		console.log(rc.grados);
+	}
+	
+	this.getSubCiclos = function(ciclo_id){
+		rc.subCiclos = SubCiclos.find({ciclo_id:ciclo_id}).fetch();
+	}
+	
+	this.getPeriodos = function(subCiclo_id){
+		rc.periodos = Periodos.find({subCiclo_id:subCiclo_id}).fetch();
 	}
 
 };

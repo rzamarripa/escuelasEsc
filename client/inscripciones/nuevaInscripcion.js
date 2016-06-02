@@ -61,7 +61,6 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.guardar = function(inscripcion)
 	{   
 		this.inscripcion.estatus = true;
-		console.log(inscripcion);
 		_.each(inscripcion.conceptosSeleccionados, function(concepto){
 			delete concepto.$$hashKey;
 		})
@@ -69,7 +68,6 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
 		console.log(grupo);
 		grupo.inscritos = parseInt(grupo.inscritos) + 1;
-		//delete grupo._id;
 		Grupos.update({_id: inscripcion.grupo_id},{$set:{grupo}});
 		toastr.success('inscripcion guardada.');
 		$state.go("root.inscripciones");
@@ -77,9 +75,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	//Conceptos de cobro
   
-  this.seleccionarConcepto = function(concepto) {
-	  console.log(concepto);
-	  
+  this.seleccionarConcepto = function(concepto) {	  
 	  var idx = this.inscripcion.conceptosSeleccionados.indexOf(concepto);
   
     if (idx > -1) {
@@ -90,22 +86,15 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	    this.inscripcion.totalPagar += parseFloat(concepto.importe);
       this.inscripcion.conceptosSeleccionados.push(concepto);
     }
-	  
-    
-    console.log(this.inscripcion.conceptosSeleccionados);
   };
 
 	this.cuantoPaga = function(importe){
-		console.log(importe);
-		console.log(this.inscripcion.totalPagar);
 		this.inscripcion.cambio = parseFloat(importe) - parseFloat(this.inscripcion.totalPagar);
 	}
 	
   this.getAlumnoSeleccionado= function(id)
 	{
-		console.log(id);
 		var alumno = Alumnos.findOne(id);
-		console.log(alumno);
 		if(alumno){
 			this.alumnoSeleccionado = alumno;
 			this.alumnoSeleccionado.activo = true;
@@ -120,9 +109,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	};	
 	
 	this.hayCupo = function(grupo_id){
-		console.log(grupo_id);
 		var grupo = Grupos.findOne(grupo_id);
-		console.log(grupo);
 		if(grupo.inscritos < grupo.cupo){
 			this.cupo = "check";
 		}else{
@@ -131,7 +118,6 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	}
 	
 	this.getGrupos = function(seccion_id, alumno_id){
-		console.log(seccion_id, alumno_id);
 		var inscrito = Inscripciones.findOne({seccion_id : seccion_id, alumno_id : alumno_id});
 		if(!inscrito){
 			toastr.success('Todo bien');
@@ -140,4 +126,14 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			toastr.error('Este grupo ya está inscrito en esta Sección');
 		}
 	}	
+	
+	this.dejoAbono = function(){
+		if(this.inscripcion.quiereAbonar){
+			rc.inscripcion.abono = rc.inscripcion.cambio;
+			rc.inscripcion.cambio = 0.00;
+		}else{
+			rc.inscripcion.cambio = rc.inscripcion.abono;
+			rc.inscripcion.abono = 0.00;
+		}
+	}
 };
