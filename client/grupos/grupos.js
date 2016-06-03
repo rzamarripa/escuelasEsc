@@ -20,12 +20,10 @@ angular.module("casserole")
 			estatus : true,
 		}]
 	});
-	
+	console.log($stateParams.id);
 	this.subscribe('grupo', () => {
 		
-		return [{
-			_id : $stateParams.id, estatus : true
-		}]
+		return [{_id : $stateParams.id, estatus : true}];
 	});
 	
 	this.subscribe('secciones');
@@ -64,6 +62,7 @@ angular.module("casserole")
 		},
 	  grupos : () => {
 		  _grupos = Grupos.find().fetch();
+		  console.log(_grupos);
 		  if(_grupos != undefined){
 			  _.each(_grupos, function(grupo){
 				  rc.grupos_ids.push(grupo._id);
@@ -102,7 +101,7 @@ angular.module("casserole")
 		  _periodos = Periodos.find().fetch();
 		  if(_periodos != undefined){
 			  _.each(_periodos, function(periodo){
-				  rc.periodos.push(periodo._id);
+				  rc.periodos_ids.push(periodo._id);
 			  })
 		  }
 		  return _periodos;
