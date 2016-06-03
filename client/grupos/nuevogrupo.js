@@ -6,14 +6,16 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	
 	this.grupo = {};
 	this.grados = [];
-	this.subCiclos = [];
-	this.periodos = [];
-	
+	this.subCiclosAcademicos = [];
+	this.subCiclosAdministrativos = [];
+	this.periodosAcademicos = [];
+	this.periodosAdministrativos = [];
+
 	this.subscribe('grupos', () => {
 		return [{
 			_id : $stateParams.id,
 			estatus : true,
-		}]
+		}];
 	});
 	
 	this.subscribe('secciones');
@@ -21,26 +23,45 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('ciclos', () => {
 		return [{
 			estatus : true,
-		}]
+		}];
 	});
 	
 	this.subscribe('subCiclos', () => {
 		return [{
 			ciclo_id : this.getReactively("grupo.ciclo_id")
-		}]
+		}];
 	});
 	
 	this.subscribe('periodos', () => {
 		return [{
-			subCiclos_id : this.getReactively("grupo.subCiclo_id")
-		}]
+			subCiclo_id : this.getReactively("grupo.subCicloAcademico_id")
+		}];
 	});
+	
+	this.subscribe('periodos', () => {
+		return [{
+			subCiclo_id : this.getReactively("grupo.subCicloAdministrativo_id")
+		}];
+	});
+		
 	
 	this.subscribe('turnos');
 	
 	this.subscribe('maestros');
 
 	this.helpers({
+	  subCiclosAcademicos : () => {
+		  return SubCiclos.find({ciclo_id : this.getReactively("grupo.ciclo_id"), tipo : "Academico"});
+	  },
+	  subCiclosAdministrativos : () => {
+		  return SubCiclos.find({ciclo_id : this.getReactively("grupo.ciclo_id"), tipo : "Administrativo"});
+	  },
+	  periodosAcademicos : () => {
+		  return Periodos.find({subCiclo_id : this.getReactively("grupo.subCicloAcademico_id")});
+	  },
+	  periodosAdministrativos : () => {
+		  return Periodos.find({subCiclo_id : this.getReactively("grupo.subCicloAdministrativo_id")});
+	  },
 	  grupos : () => {
 		  return Grupos.findOne();
 	  },
@@ -55,7 +76,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  },
 	  maestros : () => {
 		  return Maestros.find();
-	  }
+	  },
   });
   
   if($stateParams.id)
@@ -99,14 +120,6 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		for(var i = 1; i <= seccionSeleccionada.grados; i++ ){
 			rc.grados.push(i);
 		}
-	}
-	
-	this.getSubCiclos = function(ciclo_id){
-		rc.subCiclos = SubCiclos.find({ciclo_id:ciclo_id}).fetch();
-	}
-	
-	this.getPeriodos = function(subCiclo_id){
-		rc.periodos = Periodos.find({subCiclo_id:subCiclo_id}).fetch();
 	}
 
 };

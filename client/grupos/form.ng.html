@@ -34,22 +34,36 @@
 		    <div class="row">
 					<div class="col-sm-4">
 						<label>Ciclo Escolar</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id" ng-change="gp.getSubCiclos(gp.grupo.ciclo_id)" >
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id" >
 							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
 						</select>
 					</div>
 		    	<div class="col-sm-4">				    
-						<label>SubCiclo Escolar</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCiclo_id" ng-change="gp.getPeriodos(gp.grupo.ciclo_id)">
-							<option ng-repeat="subCiclo in gp.subCiclos" value="{{subCiclo._id}}">{{subCiclo.descripcion}}</option>
+						<label>Sub-Ciclo Académico</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCicloAcademico_id">
+							<option ng-repeat="subCiclo in gp.subCiclosAcademicos" value="{{subCiclo._id}}">{{subCiclo.descripcion}}</option>
 						</select>
 		    	</div>
 		    	<div class="col-sm-4">
-						<label>Periodo</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.periodo_id">
-							<option ng-repeat="periodo in gp.periodos" value="{{periodo._id}}">{{periodo.nombre}}</option>
+						<label>Periodo Académico</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.periodoAcademico_id">
+							<option ng-repeat="periodo in gp.periodosAcademicos" value="{{periodo._id}}">{{periodo.nombre}}</option>
 						</select>
 					</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-sm-4 col-sm-offset-4">
+		    		<label>Sub-Ciclo Administrativo</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCicloAdministrativo_id">
+							<option ng-repeat="subCiclo in gp.subCiclosAdministrativos" value="{{subCiclo._id}}">{{subCiclo.descripcion}}</option>
+						</select>
+		    	</div>
+		    	<div class="col-sm-4">
+		    		<label>Periodo Administrativo</label>
+						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.periodoAdministrativo_id">
+							<option ng-repeat="periodo in gp.periodosAdministrativos" value="{{periodo._id}}">{{periodo.nombre}}</option>
+						</select>
+		    	</div>
 		    </div>
 	  	</div>
 	  	
