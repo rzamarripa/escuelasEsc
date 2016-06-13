@@ -7,68 +7,150 @@
 		</a>		
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
-		  	<div class="well">	    
-			    <div class="row">
-				    <div class="col-sm-3">
-							<label >Subciclo Escolar</label>
-							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" ng-change="per.planPagos(per.periodo)">
-							  <option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">
-								{{subCiclo.nombre}} | {{subCiclo.tipo}}
+		  		<div class="container-fluid well">	    
+			    	<div class="row">
+			    		<div class="col-sm-4">					    
+					    	<label>Nombre</label>
+					    	<input type="text" class="form-control" placeholder="Periodo" ng-model="per.periodo.nombre" >
+				    	</div>	
+				    	<div class="col-sm-4">
+							<label >Ciclo Escolar</label>
+							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.ciclo_id" >
+							 	<option  value="{{ciclo._id}}" ng-repeat="ciclo in per.ciclos">
+									{{ciclo.descripcion}} 
 								</option>
 							</select>
 						</div>
+				    	<div class="col-sm-4">
+							<label >Subciclo Escolar</label>
+							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" ng-change="per.planPagos(per.periodo)">
+							 	<option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">
+									{{subCiclo.nombre}} | {{subCiclo.tipo}}
+								</option>
+							</select>
+						</div>
+				    </div>
+				    <div class="row">
 						<div ng-show="per.tipoFormulario == 'academico'">
-				    	<div class="col-sm-3">					    
-					    	<label>Nombre</label>
-					    	<input type="text" class="form-control" placeholder="Periodo" ng-model="per.periodo.nombre" required>
-				    	</div>			    
-				    	<div class="col-sm-3">
-					    	<label>Fecha Inicio</label>
-						    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" />
-				    	</div>
-				    	<div class="col-sm-3">
-					    	<label>Fecha Fin</label>
-						    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" />
-				    	</div>  
+				    			    
+				    		<div class="col-sm-4">
+					    		<label>Fecha Inicio</label>
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" />
+				    		</div>
+				    		<div class="col-sm-4">
+					    		<label>Fecha Fin</label>
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" />
+				    		</div>  
 						</div> 	
 						<div ng-show="per.tipoFormulario == 'administrativo'">
-							<div class="col-sm-2">					    
-					    	<label>Nombre</label>
-					    	<input type="text" class="form-control" placeholder="Periodo" ng-model="per.periodo.nombre" required>
-				    	</div>
-							<div class="col-sm-2">
+							
+							
+							<div class="col-sm-4">
+					    		<label>Fecha Inicio</label>
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" />
+				    		</div>
+				    		<div class="col-sm-4">
+					    		<label>Fecha Fin</label>
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" />
+				    		</div>
+
+				    		<div class="col-sm-4">
 								<label >Plazo</label>
 								<select class="form-control select2" placeholder="Seleccione" ng-model="per.periodo.plazo">
-								  <option value="Semanal">Semanal</option>
-								  <option value="Mensual">Mensual</option>
-								  <option value="Bimestral">Bimestral</option>
-								  <option value="Trimestral">Trimestral</option>
-								  <option value="Tetramestral">Tetramestral</option>
-								  <option value="Semestral">Semestral</option>
-								  <option value="Anual">Anual</option>
+								  	<option value="Semanal">Semanal</option>
+								  	<option value="Mensual">Mensual</option>
+								  	<option value="Bimestral">Bimestral</option>
+								  	<option value="Trimestral">Trimestral</option>
+								  	<option value="Tetramestral">Tetramestral</option>
+								  	<option value="Semestral">Semestral</option>
+								  	<option value="Anual">Anual</option>
 								</select>
 							</div>
-							<div class="col-sm-2">
-					    	<label>Fecha Inicio</label>
-						    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" />
-				    	</div>
-				    	<div class="col-sm-2">
-					    	<label>Fecha Fin</label>
-						    <input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" />
-				    	</div>
-				    	<div class="col-sm-2">
-								<input type="submit" ng-click="per.generar(per.periodo)" value="Generar" class="btn btn-primary">
-							</div>
+
+				    		
 						</div>
-			    </div>
-			    <div class="row">
-		    		<section class="col col-sm-1 text-center padding-20" ng-repeat="semana in per.periodo.planPago">
+			    	</div>
+			    	<div class="row" ng-show="per.tipoFormulario == 'administrativo'">
+			    		<br>
+			    		<div class="col-sm-12">
+				    		<div class="panel panel-default">
+								<div class="panel-heading">Recargos</div>
+								<div class="panel-body">
+									<table class="table table-striped" ng-show="per.tipoFormulario == 'administrativo'" >
+										<thead>
+											<tr>
+												<td width="20%">
+													<label>Nombre del Recargo</label>
+												</td>
+												<td width="20%">
+													<label>Dias para realizar el recargo</label>
+												</td>
+												<td width="20%">
+													<label>Tipo de recargo</label>
+												</td>
+												<td width="20%">
+													<label>Recargo</label>
+												</td>
+												<td width="10%">
+													
+												</td>
+
+											</tr>
+											
+										</thead>
+										<tbody>
+											<tr ng-repeat="recargo in per.periodo.recargos">
+												<td >
+				    								<input type="text"  ng-model='recargo.nombre'/>
+												</td>
+												<td width="20%">
+													
+							    					<input type="number"  ng-model='recargo.dias'/>
+												</td>
+												<td width="20%">
+													
+								    				<select class="form-control select2" placeholder="Seleccione" ng-model="recargo.tipoRecargo">
+													  	<option value="Porcentual">Porcentual</option>
+													  	<option value="Fijo">Cuota Fija</option>
+													  	
+								    				</select>
+												</td>
+												<td width="20%">
+													
+													<input type="number" ng-model='recargo.recargo'/>
+												</td>
+												<td width="10%">
+													<input type="button" ng-click="per.eliminarRecargo(recargo)" value="-" class="btn btn-danger"/>
+												</td>
+											</tr>
+											
+										</tbody>
+										
+ 
+									</table>
+								
+
+									<input type="button" ng-click="per.nuevoRecargo()" value="+" class="btn btn-success"/>
+							
+							  	</div>
+							</div>
+				    		
+						</div>
+			    	</div>
+			    	
+			    	<div class="row" ng-show="per.tipoFormulario == 'administrativo'">
+			    		<div class="col-xs-3">
+							<input type="submit" ng-click="per.generar(per.periodo)" value="Generar" class="btn btn-primary">
+						</div>
+					</div>
+			    	<div class="row">
+		    			<section class="col col-sm-1 text-center padding-20" ng-repeat="semana in per.periodo.planPago">
 							<label class="input text-center">
 								<label type="text" class="text-center">{{semana.numero}} / {{semana.anio}} | {{semana.pagada}}</label>
 							</label>
 						</section>
-			    </div>	
-		  	</div>
+			    	</div>	
+		  		</div>
 		  			    
 				<div class="row">
 					<div class="col-sm-12">
@@ -76,7 +158,7 @@
 						<input type="submit" ng-click="per.actualizar(per.periodo)" value="Actualizar" class="btn btn-primary" ng-show="!per.action">				
 					</div>
 				</div>	  
-		  </form>
+		  	</form>
 		</div>
 	</div>
 </div>

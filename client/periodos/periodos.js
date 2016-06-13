@@ -10,12 +10,16 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.tipoFormulario = "";
   this.periodo = {};	
   this.periodo.planPago = [];
-	
+  this.periodo.recargos = [];
+
 	this.subscribe('periodos',()=>{
 		return [{estatus:true}]
 	 });
 
 	this.subscribe('subCiclos',()=>{
+		return [{estatus:true,ciclo_id:this.getReactively('periodo.ciclo_id')}]
+	 });
+	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
 	 });
 
@@ -26,6 +30,9 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  periodos : () => {
 		  return Periodos.find();
 	  },
+	  ciclos : () =>{
+	  	return Ciclos.find();
+	  }
   });  	  
   
   this.nuevoPeriodo = function()
@@ -33,13 +40,18 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.action = true;
     this.nuevo = !this.nuevo;
     this.periodo = {};		
+
   };
 	
   this.guardar = function(periodo)
 	{
 		periodo.estatus = true;
+		console.log(periodo);
 		_.each(periodo.planPago, function(pago){
 			delete pago.$$hashKey;
+		});
+		_.each(periodo.recargos, function(recargo){
+			delete recargo.$$hashKey;
 		});
 		Periodos.insert(periodo);
 		toastr.success('Periodo guardado.');
@@ -94,6 +106,23 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			rc.tipoFormulario = "academico";
 		}
 	}
+	this.nuevoRecargo = function(){
+		if(!this.periodo)
+			this.periodo={};
+		if(!this.periodo.recargos)
+			this.periodo.recargos=[];
+		this.periodo.recargos.push({});
+	}
+	this.eliminarRecargo = function(recargo){
+		if(!this.periodo)
+			this.periodo={};
+		if(!this.periodo.recargos)
+			this.periodo.recargos=[];
+		console.log();
+		var itemToDelete = this.periodo.recargos.indexOf(recargo);
+		if(itemToDelete>=0)
+			this.periodo.recargos.splice(itemToDelete,1);
+	}
 	
 	this.generar = function(periodo){
 		console.log(periodo);
@@ -102,15 +131,15 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var mesInicio = periodo.fechaInicio.getMonth();
 		mesInicio++;
 		var anioInicio = periodo.fechaInicio.getFullYear();
-		var fechaInicio = anioInicio + "-" + mesInicio + "-" + diaInicio;
-		var fechaInicial = moment(fechaInicio);
+		var fechaInicio = anioInicio + " " + mesInicio + " " + diaInicio;
+		var fechaInicial = moment(fechaInicio,"YYYY MM DD");
 		
 		var diaFinal = periodo.fechaFin.getDate();
 		var mesFinal = periodo.fechaFin.getMonth();
 		mesFinal++;
 		var anioFinal = periodo.fechaFin.getFullYear();
-		var fechaFin = anioFinal + "-" + mesFinal + "-" + diaFinal;
-		var fechaFinal = moment(fechaFin);
+		var fechaFin = anioFinal + " " + mesFinal + " " + diaFinal;
+		var fechaFinal = moment(fechaFin, "YYYY MM DD");
 		
 	  var plazo = "";
 	  if(periodo.plazo == "Semanal"){
@@ -122,6 +151,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  }
 	  
 	  var cant = fechaFinal.diff(fechaInicial, plazo);
+	  console.log(cant);
 	  plazos = [];
 	  rc.periodo.planPago = [];
 	  for(var j=1; j<= cant; j++){
