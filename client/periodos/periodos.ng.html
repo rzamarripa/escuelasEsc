@@ -23,7 +23,7 @@
 						</div>
 				    	<div class="col-sm-4">
 							<label >Subciclo Escolar</label>
-							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" ng-change="per.planPagos(per.periodo)">
+							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" >
 							 	<option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">
 									{{subCiclo.nombre}} | {{subCiclo.tipo}}
 								</option>
@@ -138,18 +138,7 @@
 						</div>
 			    	</div>
 			    	
-			    	<div class="row" ng-show="per.tipoFormulario == 'administrativo'">
-			    		<div class="col-xs-3">
-							<input type="submit" ng-click="per.generar(per.periodo)" value="Generar" class="btn btn-primary">
-						</div>
-					</div>
-			    	<div class="row">
-		    			<section class="col col-sm-1 text-center padding-20" ng-repeat="semana in per.periodo.planPago">
-							<label class="input text-center">
-								<label type="text" class="text-center">{{semana.numero}} / {{semana.anio}} | {{semana.pagada}}</label>
-							</label>
-						</section>
-			    	</div>	
+			    		
 		  		</div>
 		  			    
 				<div class="row">

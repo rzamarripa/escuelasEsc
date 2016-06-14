@@ -12,11 +12,16 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.periodosAdministrativos = [];
 
 	this.subscribe('grupos', () => {
-		return [{
-			_id : $stateParams.id,
-			estatus : true,
-		}];
-	});
+			return [{
+				_id : $stateParams.id,
+				estatus : true,
+			}];
+		}, {
+		onReady:function(){
+			rc.grupo = Grupos.findOne({_id:$stateParams.id});
+  			console.log(rc.grupo);
+  			console.log($stateParams.id);
+		}});
 	
 	this.subscribe('secciones');
 	
@@ -48,6 +53,17 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('turnos');
 	
 	this.subscribe('maestros');
+
+	this.autorun(() => {
+	  	var seccion_id  = this.getReactively("grupo.seccion_id");
+		console.log(seccion_id);
+		rc.grados = [];
+		var seccionSeleccionada = Secciones.findOne(seccion_id);
+		for(var i = 1; seccionSeleccionada && i <= seccionSeleccionada.grados; i++ ){
+			rc.grados.push(i);
+		}
+		
+  	});
 
 	this.helpers({
 	  subCiclosAcademicos : () => {
@@ -113,13 +129,5 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		$state.go("root.grupos",{"id":$stateParams.id});
 	};
 	
-	this.getGrados = function(seccion_id){
-		console.log(seccion_id);
-		rc.grados = [];
-		var seccionSeleccionada = Secciones.findOne(seccion_id);
-		for(var i = 1; i <= seccionSeleccionada.grados; i++ ){
-			rc.grados.push(i);
-		}
-	}
 
 };
