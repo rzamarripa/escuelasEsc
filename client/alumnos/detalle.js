@@ -6,6 +6,23 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	
 	rc = $reactive(this).attach($scope);
 	
+	var quitarhk=function(obj){
+		if(Array.isArray(obj)){
+			for (var i = 0; i < obj.length; i++) {
+				obj[i] =quitarhk(obj[i]);
+			}
+		}
+		else if(obj !== null && typeof obj === 'object')
+		{
+			delete obj.$$hashKey;
+			for (var name in obj) {
+	  			obj[name] = quitarhk(obj[name]);
+			}
+
+		}
+		return obj;
+	}
+
 	this.totalPagar = 0.00;
 	this.alumno = {};
 	this.fechaActual = new Date();
@@ -177,7 +194,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	 	}
 	 	else {
 	  		for (var i = 0; i < recargos.length; i++) {
-	  			console.log(dias,recargos[i].dias,cobro);
+	  			//console.log(dias,recargos[i].dias,cobro);
 	  			if(recargos[i].dias<dias)
 	  				return "bg-color-orange txt-color-white";
 	  		};
@@ -190,45 +207,84 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		if (confirm("Está seguro de realizar el cobro por $" + parseFloat(rc.totalPagar))) {
 			var semanasPagadas = [];
 			for (var i = 0; i < rc.inscripciones.length; i++) {
-				for (var i = 0; i < rc.inscripciones[i].planPagoInscripcion.planPago.length; i++) {
-					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=1;
-					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=rc.inscripciones[i].planPagoInscripcion.cuota;
-
+				console.log(rc.inscripciones[i].planPagoInscripcion.planPago);
+				for (var j = 0; j < rc.inscripciones[i].planPagoInscripcion.planPago.length; j++) {
+					if(rc.inscripciones[i].planPagoInscripcion.planPago[j].pagada==2){
+						rc.inscripciones[i].planPagoInscripcion.planPago[j].pagada=1;
+						rc.inscripciones[i].planPagoInscripcion.planPago[j].pago=rc.inscripciones[i].planPagoInscripcion.cuota;	
+						var pago = rc.inscripciones[i].planPagoInscripcion.planPago[j];
+						Pagos.insert({
+							fechaPago 	: new Date(),
+							alumno_id 	: $stateParams.id,
+							numero 		: pago.no,
+							semana 		: pago.numero,
+							anio 		: pago.anio,
+							estatus 	: 1,
+							usuario_id 	: Meteor.userId(),
+							importe 	: pago.pago
+						});
+						semanasPagadas.push({
+							anio 	: pago.anio,
+							numero 	: pago.numero,
+							importe : pago.importe,
+							pagada 	: 3,
+							importe : pago.pago
+						});
+					}
 				};
-			};
-			for (var i = 0; i < rc.inscripciones.length; i++) {
-				for (var i = 0; i < rc.inscripciones[i].planPagoInscripcion.planPago.length; i++) {
-					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=1;
-					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=rc.inscripciones[i].planPagoInscripcion.cuota;
-
+				
+				for (var j = 0; j < rc.inscripciones[i].planPagoColegiatura.planPago.length; j++) {
+					if(rc.inscripciones[i].planPagoColegiatura.planPago[j].pagada==2){
+						rc.inscripciones[i].planPagoColegiatura.planPago[j].pagada=1;
+						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago=rc.inscripciones[i].planPagoColegiatura.cuota;
+						
+						var fechaActual = new Date();
+  						var fechaCobro = new Date(rc.inscripciones[i].planPagoColegiatura.planPago[j]);
+  						var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+					
+						for (var k = rc.inscripciones[i].planPagoColegiatura.recargos.length - 1; k >= 0; k--) {
+							var recargo = rc.inscripciones[i].planPagoColegiatura.recargos[k];
+							if(recargo.dias<dias){
+			  					if(recargo.tipoRecargo=="Fijo"){
+			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago+=recargo.recargo;
+			  					}
+			  					else if (recargo.tipoRecargo=="Procentual") {
+			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago+=((recargo.recargo/100)*rc.inscripciones[i].planPagoColegiatura.cuota);
+			  					};
+			  				};
+						};
+						var pago = rc.inscripciones[i].planPagoColegiatura.planPago[j];
+						Pagos.insert({
+							fechaPago 	: new Date(),
+							alumno_id 	: $stateParams.id,
+							numero 		: pago.no,
+							semana 		: pago.numero,
+							anio 		: pago.anio,
+							estatus 	: 1,
+							usuario_id 	: Meteor.userId(),
+							importe 	: pago.pago
+						});
+						semanasPagadas.push({
+							anio 	: pago.anio,
+							numero 	: pago.numero,
+							importe : pago.importe,
+							pagada 	: 3,
+							importe : pago.pago
+						});
+					};
 				};
-			};
-		  
+				var _inscripcion = quitarhk(rc.inscripciones[i]);
+				console.log(rc.inscripciones[i]);
+				console.log(_inscripcion);
+				var inscripcion_id=_inscripcion._id;
+				delete _inscripcion._id;
+				Inscripciones.update({_id:inscripcion_id},{$set:_inscripcion});
 
-			  if(semana.pagada === 2){	
-				  
-				  Pagos.insert({
-					  fechaPago 	: new Date(),
-					  alumno_id 	: $stateParams.id,
-					  semana 			: semana.numero,
-					  anio 				: semana.anio,
-					  estatus 		: 1,
-					  usuario_id 	: Meteor.userId(),
-					  importe 		: 350
-				  });
-				  
-				  semanasPagadas.push({
-					  anio 		: semana.anio,
-					  numero 	: semana.numero,
-					  importe : semana.importe,
-					  pagada 	: 3,
-					  importe : 350
-				  });
-				  
-				  $state.go("anon.pagosImprimir",{semanas : semanasPagadas, id : $stateParams.id});
-			  }
-		  });
-		  rc.totalPagar = 0.00;
-	  }
-  }
+
+			};		  
+			$state.go("anon.pagosImprimir",{semanas : semanasPagadas, id : $stateParams.id});  
+		};
+		rc.totalPagar = 0.00;
+	}
+  
 }

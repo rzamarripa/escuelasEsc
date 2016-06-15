@@ -82,10 +82,16 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 					colegiatura=periodos[i];
 			};
 		}
+		if(!this.grupo.inscripcion)
+			this.grupo.inscripcion={};
+		if(!this.grupo.colegiatura)
+			this.grupo.colegiatura={};
+		console.log(inscripcion.planPago);
+		console.log(this.grupo);
 		if( inscripcion && inscripcion.planPago)
 			this.grupo.inscripcion.planPago=inscripcion.planPago;
 		if( inscripcion && inscripcion.recargos)
-			this.grupo.colegiatura.recargos=inscripcion.recargos;
+			this.grupo.inscripcion.recargos=inscripcion.recargos;
 		
 		if( colegiatura && colegiatura.planPago)
 			this.grupo.colegiatura.planPago=colegiatura.planPago;
