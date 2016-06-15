@@ -225,20 +225,7 @@
 										<br>
 										<div class="row">
 											<div class="col-sm-4">
-												<form>
-													<p ng-repeat="concepto in ins.conceptosPago | orderBy:'orden'">
-														<label>
-														  <input
-														    type="checkbox"
-														    name="ins.conceptosSeleccionados[]"
-														    value="{{concepto._id}}"
-														    ng-checked="conceptosSeleccionados.indexOf(concepto) > -1"
-														    ng-click="ins.seleccionarConcepto(concepto)"
-														    ng-model="concepto.checked"
-														  > {{concepto.nombre}}
-													</label>
-													</p>
-												</form>
+												
 												<h4 class="text-center text-success">Total a pagar: {{ins.inscripcion.totalPagar | currency}}</h4>
 											</div>
 											<div class="col-sm-4">

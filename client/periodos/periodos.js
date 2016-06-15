@@ -210,7 +210,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  		numero = moment(fechaInicial).week();
 		  	else if(plazo == 'month')
 		  		numero = moment(fechaInicial).month() + 1;
-		  	var objeto = {no: j, numero : numero, pagada : 0, anio : elAnio };
+		  	var objeto = {no: j, numero : numero, pagada : 0, anio : elAnio , fecha: fechaInicial.format()};
 		  	rc.periodo.planPago.push(angular.copy(objeto));
 		  	switch (periodo.plazo){
 		  		case "Semanal":

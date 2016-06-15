@@ -5,6 +5,8 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	let rc = $reactive(this).attach($scope);
 	
 	this.grupo = {};
+	this.grupo.inscripcion = {};
+	this.grupo.colegiatura = {};
 	this.grados = [];
 	this.subCiclosAcademicos = [];
 	this.subCiclosAdministrativos = [];
@@ -37,12 +39,12 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		}];
 	});
 	
-	this.subscribe('periodos', () => {
+/*	this.subscribe('periodos', () => {
 		return [{
 			subCiclo_id : this.getReactively("grupo.subCicloAcademico_id")
 		}];
 	});
-	
+	*/
 	this.subscribe('periodos', () => {
 		return [{
 			subCiclo_id : this.getReactively("grupo.subCicloAdministrativo_id")
@@ -63,6 +65,35 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 			rc.grados.push(i);
 		}
 		
+		var subCiclo_id = this.getReactively("grupo.subCicloAdministrativo_id");
+		console.log(subCiclo_id);
+		var subCiclo = SubCiclos.findOne(subCiclo_id);
+		console.log(subCiclo);
+		var inscripcion = {};
+		var colegiatura = {};
+		if(subCiclo){
+			
+			var periodos =Periodos.find({subCiclo_id:subCiclo._id}).fetch();
+			console.log(subCiclo.periodos);
+			for (var i = 0; i < periodos.length; i++) {
+				if(periodos[i].nombre=='INSCRIPCION')
+					inscripcion=periodos[i];
+				if(periodos[i].nombre=='COLEGIATURA')
+					colegiatura=periodos[i];
+			};
+		}
+		if( inscripcion && inscripcion.planPago)
+			this.grupo.inscripcion.planPago=inscripcion.planPago;
+		if( inscripcion && inscripcion.recargos)
+			this.grupo.colegiatura.recargos=inscripcion.recargos;
+		
+		if( colegiatura && colegiatura.planPago)
+			this.grupo.colegiatura.planPago=colegiatura.planPago;
+		if( colegiatura && colegiatura.recargos)
+			this.grupo.colegiatura.recargos=colegiatura.recargos;
+
+
+
   	});
 
 	this.helpers({

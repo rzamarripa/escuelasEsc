@@ -12,7 +12,12 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	this.hayParaPagar = true;
 	
 	this.subscribe("ocupaciones");
-	
+
+	this.subscribe('inscripciones', () => {
+	    return [{
+		    alumno_id : $stateParams.id
+	    }];
+	  });
 	this.subscribe('alumno', () => {
     return [{
 	    id : $stateParams.id
@@ -35,7 +40,11 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  misPagos : () => {
 		  return Pagos.find().fetch();
 	  },
-	  misSemanas : () => {
+	  inscripciones : () =>{
+	  	return Inscripciones.find();
+	  }
+
+	 /* misSemanas : () => {
 		  var inscripcion = moment("2013-01-03");
 		  var hoy = moment();
 		  var cantSemanas = hoy.diff(inscripcion, 'week');
@@ -56,7 +65,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			});
 			
 		  return semanas;
-	  }
+	  }*/
   });
   
 	this.actualizar = function(alumno)
@@ -82,12 +91,43 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  return temp;
   }
   
-  this.seleccionarSemana = function(semanaSeleccionada){
-	  console.log(semanaSeleccionada);
-	  var semSel = semanaSeleccionada.anio + semanaSeleccionada.numero;	
+  this.seleccionarSemana = function(cobro,plan){
+	  //console.log(cobro);
+	  //var semSel = cobro.anio + cobro.numero;	
 	  rc.hayParaPagar = true;
+	  rc.totalPagar=0;
+	  for (var i = 0; i < cobro.no; i++) {
+	  		if(plan.planPago[i].pagada!=1){
+	  			rc.hayParaPagar = false;
+	  			plan.planPago[i].pagada =2;
+	  			rc.totalPagar+=plan.cuota;
+	  			var fechaActual = new Date();
+  				var fechaCobro = new Date(plan.planPago[i].fecha);
+  				var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  				for (var j = 0; j < plan.recargos.length; j++) {
+
+  					//console.log('aqui entre',dias,plan.recargos[j].dias);
+	  				if(plan.recargos[j].dias<dias){
+	  					if(plan.recargos[j].tipoRecargo=="Fijo"){
+	  						rc.totalPagar+=plan.recargos[j].recargo;
+	  					}
+	  					else if (plan.recargos[j].tipoRecargo=="Procentual") {
+	  						rc.totalPagar+=((plan.recargos[j].recargo/100)*plan.cuota);
+	  					}
+	  				}
+
+	  			}
+
+	  		}
+
+	  };
+	  for (var i = cobro.no; i < plan.planPago.length; i++) {
+	  	if(plan.planPago[i].pagada!=1){
+	  		plan.planPago[i].pagada=0;
+	  	}
+	  }
 	  
-	  _.each(rc.misSemanas, function(semana){
+	  /*_.each(rc.misSemanas, function(semana){
 		  var semAct = semana.anio + semana.numero;
 		  if(semana.semana <= semanaSeleccionada.semana && semana.pagada == 0){
 			  rc.totalPagar += 350.00;
@@ -107,7 +147,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			  rc.hayParaPagar = false;
 			  return;
 		  }
-	  });
+	  });*/
   }
   
   this.imprimir = function(semanaSeleccionada){
@@ -117,27 +157,54 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 				semanasImprimir.push(semana);
 			}
 		});
-		console.log(semanasImprimir);
+		//console.log(semanasImprimir);
 		$state.go("anon.pagosImprimir",{semanas : semanasImprimir, id : $stateParams.id},{newTab : true});
 		
   }
+
   
-  this.obtenerEstatus = function(pagada){
-	  if(pagada === 1){
-		  return "bg-color-blue txt-color-white";
-	  }else if(pagada === 0){
+  	this.obtenerEstatus = function(cobro,recargos){
+  		var fechaActual = new Date();
+  		var fechaCobro = new Date(cobro.fecha);
+  		var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  		//console.log(recargos);
+  		if(!recargos) recargos =[];
+	  	if(cobro.pagada==1){
+		  	return "bg-color-green txt-color-white";
+	 	}
+	 	else  if(cobro.pagada==2){
+	 		return "bg-color-blue txt-color-white";
+	 	}
+	 	else {
+	  		for (var i = 0; i < recargos.length; i++) {
+	  			console.log(dias,recargos[i].dias,cobro);
+	  			if(recargos[i].dias<dias)
+	  				return "bg-color-orange txt-color-white";
+	  		};
+
 		  return "";
-	  }else if(pagada === 2){
-		  return "bg-color-orange txt-color-white";
-	  }else if(pagada === 3){
-		  return "bg-color-green txt-color-white";
-	  }
-  }
+		}
+  	}
   
   this.pagar = function(){
 		if (confirm("Está seguro de realizar el cobro por $" + parseFloat(rc.totalPagar))) {
 			var semanasPagadas = [];
-		  _.each(rc.misSemanas, function(semana){
+			for (var i = 0; i < rc.inscripciones.length; i++) {
+				for (var i = 0; i < rc.inscripciones[i].planPagoInscripcion.planPago.length; i++) {
+					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=1;
+					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=rc.inscripciones[i].planPagoInscripcion.cuota;
+
+				};
+			};
+			for (var i = 0; i < rc.inscripciones.length; i++) {
+				for (var i = 0; i < rc.inscripciones[i].planPagoInscripcion.planPago.length; i++) {
+					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=1;
+					rc.inscripciones[i].planPagoInscripcion.planPago[i].pagada=rc.inscripciones[i].planPagoInscripcion.cuota;
+
+				};
+			};
+		  
+
 			  if(semana.pagada === 2){	
 				  
 				  Pagos.insert({
