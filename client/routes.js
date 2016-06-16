@@ -232,7 +232,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
 		.state('root.grupo', {
       url: '/grupo/:id',
       templateUrl: 'client/grupos/form.ng.html',
-      controller: 'GruposCtrl as gp',
+      controller: 'NuevoGrupoCtrl as gp',
     })
     .state('root.editarGrupo', {
       url: '/grupo',

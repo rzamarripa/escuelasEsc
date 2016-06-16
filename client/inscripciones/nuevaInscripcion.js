@@ -7,7 +7,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		return [{estatus:true}]
 	});
 	this.subscribe("secciones");
-	this.subscribe("conceptosPago");
+	//this.subscribe("conceptosPago");
 	this.subscribe("tiposingresos");
 	this.subscribe('alumnoss',()=>{
 		return [{estatus:true}]
@@ -43,10 +43,10 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  },
 	  inscripciones : () => {
 		  return Inscripciones.find();
-	  },
+	  }/*,
 	  conceptosPago : () => {
 		  return ConceptosPago.find();
-	  }
+	  }*/
   });
 
 
@@ -61,21 +61,43 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.guardar = function(inscripcion)
 	{   
 		this.inscripcion.estatus = true;
-		_.each(inscripcion.conceptosSeleccionados, function(concepto){
+		/*_.each(inscripcion.conceptosSeleccionados, function(concepto){
 			delete concepto.$$hashKey;
-		})
-		Inscripciones.insert(inscripcion);
+		})*/
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
+
+		inscripcion.planPagoInscripcion = grupo.inscripcion;
+		inscripcion.planPagoColegiatura = grupo.colegiatura;
+		inscripcion.planPagoInscripcion.pago = parseFloat(inscripcion.importePagado);
+		
+		if(inscripcion.planPagoInscripcion.cuota<=parseFloat(inscripcion.importePagado))
+			inscripcion.planPagoInscripcion.planPago[0].pagada=1;
+
+		Inscripciones.insert(inscripcion);
+		//var grupo = Grupos.findOne(inscripcion.grupo_id);
 		console.log(grupo);
 		grupo.inscritos = parseInt(grupo.inscritos) + 1;
 		Grupos.update({_id: inscripcion.grupo_id},{$set:{grupo}});
 		toastr.success('inscripcion guardada.');
 		$state.go("root.inscripciones");
 	};
+
+	this.autorun(() => {
+	  	var grupoid = this.getReactively("inscripcion.grupo_id");
+	  	var grupo = undefined;
+	  	if(grupoid)
+			grupo = Grupos.findOne(grupoid);
+	  	if(grupo && grupo.inscripcion && grupo.inscripcion.cuota){
+	  		this.inscripcion.totalPagar = grupo.inscripcion.cuota;
+
+	  	}
+			
+		
+  	});
 	
 	//Conceptos de cobro
   
-  this.seleccionarConcepto = function(concepto) {	  
+  /*this.seleccionarConcepto = function(concepto) {	  
 	  var idx = this.inscripcion.conceptosSeleccionados.indexOf(concepto);
   
     if (idx > -1) {
@@ -86,10 +108,13 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	    this.inscripcion.totalPagar += parseFloat(concepto.importe);
       this.inscripcion.conceptosSeleccionados.push(concepto);
     }
-  };
+  };*/
 
 	this.cuantoPaga = function(importe){
-		this.inscripcion.cambio = parseFloat(importe) - parseFloat(this.inscripcion.totalPagar);
+		if(importe>this.inscripcion.totalPagar)
+			this.inscripcion.cambio = parseFloat(importe) - parseFloat(this.inscripcion.totalPagar);
+		else 
+			this.inscripcion.cambio =0;
 	}
 	
   this.getAlumnoSeleccionado= function(id)

@@ -219,15 +219,26 @@
 		        </header>
 		        <div>
 		          <div class="widget-body">
-		            <form class="smart-form">
+		            			<form class="smart-form" ng-repeat = "curso in al.inscripciones"> 
 									<header>
-										Semanas
+										{{curso.grupo_id}}
 									</header>		
+									<h2> Inscripcion </h2>
 									<fieldset>
 										<div class="row">
-											<section class="col col-1" ng-repeat="semana in al.misSemanas" ng-click="al.seleccionarSemana(semana)" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+											<section class="col col-1"  ng-click="al.seleccionarSemana(cobro,curso.planPagoInscripcion)" ng-repeat = "cobro in curso.planPagoInscripcion.planPago" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
 												<label class="input">
-													<input ng-class="al.obtenerEstatus(semana.pagada)" type="text" value="{{semana.numero}} / {{semana.anio}}" disabled="">
+													<input ng-class="al.obtenerEstatus(cobro,curso.planPagoInscripcion.recargos)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
+												</label>
+											</section>
+										</div>							
+									</fieldset>
+									<h2>Colegiaturas</h2>
+									<fieldset>
+										<div class="row">
+											<section class="col col-1"  ng-click="al.seleccionarSemana(cobro, curso.planPagoColegiatura)" ng-repeat = "cobro in curso.planPagoColegiatura.planPago" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input ng-class="al.obtenerEstatus(cobro,curso.planPagoColegiatura.recargos)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
 												</label>
 											</section>
 										</div>							
