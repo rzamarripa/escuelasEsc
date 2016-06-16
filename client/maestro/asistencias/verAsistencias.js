@@ -5,19 +5,19 @@ function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $statePar
 
 
 	this.subscribe('grupos',()=>{
+		return [{id:$stateParams.id, estatus:true}]
+	 });
+	this.subscribe('alumnoss',()=>{
 		return [{estatus:true}]
 	 });
-	this.subscribe('alumnos',()=>{
-		return [{estatus:true}]
-	 });
-	this.subscribe('asistencias',()=>{
-		return [{estatus:true}]
-	 });
+	 this.subscribe('asistencias',()=>{
+		return [{ grupo_id : $stateParams.id, estatus:true}]
+	});
 
 
 	this.helpers({
-	  grupos : () => {
-		  return Grupos.find();
+	  grupo : () => {
+		  return Grupos.findOne();
 	  },
 	  alumnos : () => {
 		  return Alumnos.find();

@@ -14,9 +14,19 @@ angular
 		}]
 	});
 
+  this.subscribe('asistencia', () => {
+		
+		return [{
+			_id : $stateParams.id, estatus : true
+		}]
+	});
+
  this.helpers({		
 		grupo : () => {
 			return Grupos.findOne($stateParams.id);
+		},
+		asistencia : () => {
+			return Asistencias.findOne($stateParams.id);
 		},
 	
   });

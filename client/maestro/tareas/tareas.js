@@ -14,7 +14,7 @@ $reactive(this).attach($scope);
 		return [{estatus:true}]
 	 });
 		this.subscribe('tareas',()=>{
-		return [{estatus:true}]
+		return [{ grupo_id : $stateParams.id, estatus:true}]
 	});
  
   this.helpers({

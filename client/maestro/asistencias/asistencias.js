@@ -2,6 +2,27 @@ angular.module("casserole").controller
 ("MaestroAsistenciasCtrl",MaestroAsistenciasCtrl);
 function MaestroAsistenciasCtrl($scope, $reactive, $meteor, $state, $stateParams, toastr) {
 	let rc =$reactive(this).attach($scope);
+
+
+
+    this.subscribe('grupos',()=>{
+		return [{estatus:true}]
+	 })
+
+	 this.subscribe('asistencias',()=>{
+		return [{ grupo_id : $stateParams.id, estatus:true}]
+	});
+
+ this.helpers({		
+		
+		asistencia : () => {
+			return Asistencias.findOne();
+		},
+		grupo : () => {
+		  return Grupos.findOne();
+	  },
+	
+  });
 	
 	this.asistencia = {};
   $meteor.call("getAlumnosGrupo", {grupo_id:$stateParams.id}).then(function (data) {	
@@ -10,6 +31,8 @@ function MaestroAsistenciasCtrl($scope, $reactive, $meteor, $state, $stateParams
   });
   
   this.guardar = function(asistencia){
+  	asistencia.grupo_id = $stateParams.id;
+  	
   	console.log(asistencia)
 	  _.each(asistencia.alumnos, function(alumno){
 		  delete alumno['$$hashKey'];
