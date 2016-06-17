@@ -14,11 +14,14 @@ Meteor.methods({
   },
   setAsistencia: function (asistencia) {
 	  var maestro = Maestros.findOne({nombreUsuario:Meteor.user().username});
+     var grupo = Grupos.findOne();
 	  asistencia.maestro_id = maestro._id; 
+    asistencia.grupo_id = grupo._id; 
 	  Asistencias.insert(asistencia);
 	  return true;
   },
   getAsistencias: function(grupo_id){
-	  return Asistencias.find({grupo_id:grupo_id},{sort:{fechaAsistencia:1}}).fetch();	  
+	  return Asistencias.find({grupo_id:grupo_id},{sort:{fechaAsistencia:1}}).fetch();
+      
   }
 });
