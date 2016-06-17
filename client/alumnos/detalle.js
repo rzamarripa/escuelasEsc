@@ -22,6 +22,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		}
 		return obj;
 	}
+		
+	//dfs
+	//deep first search
 
 	this.totalPagar = 0.00;
 	this.alumno = {};
