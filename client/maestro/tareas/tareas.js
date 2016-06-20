@@ -4,17 +4,17 @@ angular
 function TareasCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 $reactive(this).attach($scope);
   this.action = true;
-  this.grupo_id = '';
+
 	
 
-	//this.subscribe('tareas',()=>{
-	//	return [{estatus:true}]
-	 //});
+	this.subscribe('grupos',()=>{
+		return [{estatus:true}]
+	 })
 	this.subscribe('maestros',()=>{
 		return [{estatus:true}]
 	 });
 		this.subscribe('tareas',()=>{
-		return [{grupo_id:this.getReactively('grupo_id'), estatus:true}]
+		return [{ grupo_id : $stateParams.id, estatus:true}]
 	});
  
   this.helpers({
@@ -24,8 +24,8 @@ $reactive(this).attach($scope);
 	  maestros : () => {
 		  return Maestros.find();
 	  },
-	   grupos : () => {
-		  return Grupos.find();
+	   grupo : () => {
+		  return Grupos.findOne();
 	  },
 	 
   });
@@ -42,8 +42,8 @@ $reactive(this).attach($scope);
 	{
 		var maestro = Maestros.findOne({nombreUsuario:Meteor.user().username});
 	    tarea.maestro_id = maestro._id; 
-	    tarea.grupo_id = this.grupo_id;
-	    //tarea.grupo_id = $stateParams.id;
+
+	    tarea.grupo_id = $stateParams.id;
 		this.tarea.estatus = true;
 		console.log(this.tarea);
 		Tareas.insert(this.tarea);
@@ -55,6 +55,13 @@ $reactive(this).attach($scope);
 		
 	};
 
+
+   this.mostrarArchivos= function(id)
+	{
+		console.log(id);
+		rc.nada = nombre;
+		this.grupo_id = id;
+	};
 
 
 	

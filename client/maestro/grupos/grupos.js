@@ -5,7 +5,36 @@ angular
 
 	 	
 	let rc = $reactive(this).attach($scope);
+
 	
+ this.subscribe('grupo', () => {
+		
+		return [{
+			_id : $stateParams.id, estatus : true
+		}]
+	});
+
+  this.subscribe('asistencia', () => {
+		
+		return [{
+			_id : $stateParams.id, estatus : true
+		}]
+	});
+
+ this.helpers({		
+		grupo : () => {
+			return Grupos.findOne($stateParams.id);
+		},
+		asistencia : () => {
+			return Asistencias.findOne($stateParams.id);
+		},
+	
+  });
+
+
+	
+
+
 	this.grupos = [];
 	this.hoy = new Date();
 	$meteor.call("getGrupos").then(function (data) {
