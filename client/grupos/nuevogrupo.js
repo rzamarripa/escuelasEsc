@@ -92,11 +92,15 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 			this.grupo.inscripcion.planPago=inscripcion.planPago;
 		if( inscripcion && inscripcion.recargos)
 			this.grupo.inscripcion.recargos=inscripcion.recargos;
+		if( inscripcion && inscripcion.descuentos)
+			this.grupo.inscripcion.descuentos=inscripcion.descuentos;
 		
 		if( colegiatura && colegiatura.planPago)
 			this.grupo.colegiatura.planPago=colegiatura.planPago;
 		if( colegiatura && colegiatura.recargos)
 			this.grupo.colegiatura.recargos=colegiatura.recargos;
+		if( colegiatura && colegiatura.descuentos)
+			this.grupo.colegiatura.descuentos=colegiatura.descuentos;
 
 
 

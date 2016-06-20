@@ -221,7 +221,8 @@
 		          <div class="widget-body">
 		            			<form class="smart-form" ng-repeat = "curso in al.inscripciones"> 
 									<header>
-										{{curso.grupo_id}}
+										<h1> Grupo {{al.grupo(curso.grupo_id).nombre}} </h1>
+										
 									</header>		
 									<h2> Inscripcion </h2>
 									<fieldset>

@@ -136,6 +136,71 @@
 							</div>
 				    		
 						</div>
+
+						<div class="col-sm-12">
+				    		<div class="panel panel-default">
+								<div class="panel-heading">Descuentos</div>
+								<div class="panel-body">
+									<table class="table table-striped" ng-show="per.tipoFormulario == 'administrativo'" >
+										<thead>
+											<tr>
+												<td width="20%">
+													<label>Nombre del Descuento</label>
+												</td>
+												<td width="20%">
+													<label>Dias para realizar el Descuento</label>
+												</td>
+												<td width="20%">
+													<label>Tipo de Descuento</label>
+												</td>
+												<td width="20%">
+													<label>Descuento</label>
+												</td>
+												<td width="10%">
+													
+												</td>
+
+											</tr>
+											
+										</thead>
+										<tbody>
+											<tr ng-repeat="descuento in per.periodo.descuentos">
+												<td >
+				    								<input type="text"  ng-model='descuento.nombre'/>
+												</td>
+												<td width="20%">
+													
+							    					<input type="number"  ng-model='descuento.dias'/>
+												</td>
+												<td width="20%">
+													
+								    				<select class="form-control select2" placeholder="Seleccione" ng-model="descuento.tipoDescuento">
+													  	<option value="Porcentual">Porcentual</option>
+													  	<option value="Fijo">Cuota Fija</option>
+													  	
+								    				</select>
+												</td>
+												<td width="20%">
+													
+													<input type="number" ng-model='descuento.descuento'/>
+												</td>
+												<td width="10%">
+													<input type="button" ng-click="per.eliminarDescuento(descuento)" value="-" class="btn btn-danger"/>
+												</td>
+											</tr>
+											
+										</tbody>
+										
+ 
+									</table>
+								
+
+									<input type="button" ng-click="per.nuevoDescuento()" value="+" class="btn btn-success"/>
+							
+							  	</div>
+							</div>
+				    		
+						</div>
 			    	</div>
 			    	
 			    		

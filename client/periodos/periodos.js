@@ -11,6 +11,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
   	this.periodo = {};	
   	this.periodo.planPago = [];
   	this.periodo.recargos = [];
+  	this.periodo.descuentos = [];
   	this.tipoFormulario ="";
 
 	this.subscribe('periodos',()=>{
@@ -73,6 +74,9 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		_.each(periodo.recargos, function(recargo){
 			delete recargo.$$hashKey;
 		});
+		_.each(periodo.descuentos, function(descuento){
+			delete descuento.$$hashKey;
+		});
 		Periodos.insert(periodo);
 		toastr.success('Periodo guardado.');
 		this.periodo = {};
@@ -101,6 +105,9 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		});
 		_.each(periodo.recargos, function(recargo){
 			delete recargo.$$hashKey;
+		});
+		_.each(periodo.descuentos, function(descuento){
+			delete descuento.$$hashKey;
 		});
 		Periodos.update({_id:idTemp},{$set:periodo});
 		$('.collapse').collapse('hide');
@@ -141,15 +148,34 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			this.periodo.recargos=[];
 		this.periodo.recargos.push({});
 	}
+	this.nuevoDescuento = function(){
+		if(!this.periodo)
+			this.periodo={};
+		if(!this.periodo.descuentos)
+			this.periodo.descuentos=[];
+		this.periodo.descuentos.push({});
+	}
+
 	this.eliminarRecargo = function(recargo){
 		if(!this.periodo)
 			this.periodo={};
 		if(!this.periodo.recargos)
 			this.periodo.recargos=[];
-		console.log();
+		//console.log();
 		var itemToDelete = this.periodo.recargos.indexOf(recargo);
 		if(itemToDelete>=0)
 			this.periodo.recargos.splice(itemToDelete,1);
+	}
+
+	this.eliminarDescuento = function(descuento){
+		if(!this.periodo)
+			this.periodo={};
+		if(!this.periodo.descuentos)
+			this.periodo.descuentos=[];
+		//console.log();
+		var itemToDelete = this.periodo.descuentos.indexOf(descuento);
+		if(itemToDelete>=0)
+			this.periodo.descuentos.splice(itemToDelete,1);
 	}
 	
 	this.generar = function(periodo){

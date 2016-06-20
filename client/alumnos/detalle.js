@@ -40,6 +40,10 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	    id : $stateParams.id
     }];
   });
+
+	this.subscribe("grupos",() => {
+	    return [{}];
+	  });
   
   this.subscribe('pagosAlumno', () => {
     return [{
@@ -55,7 +59,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		  return Ocupaciones.find();
 	  },
 	  misPagos : () => {
-		  return Pagos.find().fetch();
+		  return Pagos.find();
 	  },
 	  inscripciones : () =>{
 	  	return Inscripciones.find();
@@ -84,6 +88,14 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		  return semanas;
 	  }*/
   });
+
+	 this.grupo = function (grupoId){
+	  	//console.log(grupoId);
+	  	var _grupo = Grupos.findOne(grupoId);
+	  	//console.log(_grupo);
+	  	return _grupo;
+	  }
+
   
 	this.actualizar = function(alumno)
 	{
@@ -121,8 +133,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  			var fechaActual = new Date();
   				var fechaCobro = new Date(plan.planPago[i].fecha);
   				var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  				var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
   				for (var j = 0; j < plan.recargos.length; j++) {
-
   					//console.log('aqui entre',dias,plan.recargos[j].dias);
 	  				if(plan.recargos[j].dias<dias){
 	  					if(plan.recargos[j].tipoRecargo=="Fijo"){
@@ -134,6 +146,20 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  				}
 
 	  			}
+	  			for (var j = 0; j < plan.descuentos.length; j++) {
+  					//console.log('aqui entre',dias,plan.recargos[j].dias);
+  					//console.log(plan.descuentos[j].dias,diasDescuento);
+	  				if(plan.descuentos[j].dias<diasDescuento){
+	  					if(plan.descuentos[j].tipoDescuento=="Fijo"){
+	  						rc.totalPagar-=plan.descuentos[j].descuento;
+	  					}
+	  					else if (plan.descuentos[j].tipoDescuento=="Procentual") {
+	  						rc.totalPagar-=((plan.descuentos[j].descuento/100)*plan.cuota);
+	  					}
+	  				}
+
+	  			}
+
 
 	  		}
 
@@ -207,7 +233,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		if (confirm("Está seguro de realizar el cobro por $" + parseFloat(rc.totalPagar))) {
 			var semanasPagadas = [];
 			for (var i = 0; i < rc.inscripciones.length; i++) {
-				console.log(rc.inscripciones[i].planPagoInscripcion.planPago);
+				//console.log(rc.inscripciones[i].planPagoInscripcion.planPago);
 				for (var j = 0; j < rc.inscripciones[i].planPagoInscripcion.planPago.length; j++) {
 					if(rc.inscripciones[i].planPagoInscripcion.planPago[j].pagada==2){
 						rc.inscripciones[i].planPagoInscripcion.planPago[j].pagada=1;
@@ -239,8 +265,10 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago=rc.inscripciones[i].planPagoColegiatura.cuota;
 						
 						var fechaActual = new Date();
-  						var fechaCobro = new Date(rc.inscripciones[i].planPagoColegiatura.planPago[j]);
+  						var fechaCobro = new Date(rc.inscripciones[i].planPagoColegiatura.planPago[j].fecha);
   						var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  						var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
+  						console.log(dias,diasDescuento,(fechaActual-fechaCobro),(fechaCobro-fechaActual));
 					
 						for (var k = rc.inscripciones[i].planPagoColegiatura.recargos.length - 1; k >= 0; k--) {
 							var recargo = rc.inscripciones[i].planPagoColegiatura.recargos[k];
@@ -253,6 +281,22 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			  					};
 			  				};
 						};
+						console.log(rc.inscripciones[i].planPagoColegiatura.descuentos);
+
+
+						for (var k = rc.inscripciones[i].planPagoColegiatura.descuentos.length - 1; k >= 0; k--) {
+							var descuento = rc.inscripciones[i].planPagoColegiatura.descuentos[k];
+							console.log(descuento.dias,diasDescuento);
+							if(descuento.dias<diasDescuento){
+			  					if(descuento.tipoDescuento=="Fijo"){
+			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago-=descuento.descuento;
+			  					}
+			  					else if (descuento.tipoDescuento=="Procentual") {
+			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago-=((descuento.descuento/100)*rc.inscripciones[i].planPagoColegiatura.cuota);
+			  					};
+			  				};
+						};
+
 						var pago = rc.inscripciones[i].planPagoColegiatura.planPago[j];
 						Pagos.insert({
 							fechaPago 	: new Date(),
@@ -267,15 +311,15 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 						semanasPagadas.push({
 							anio 	: pago.anio,
 							numero 	: pago.numero,
-							importe : pago.importe,
+							
 							pagada 	: 3,
 							importe : pago.pago
 						});
 					};
 				};
 				var _inscripcion = quitarhk(rc.inscripciones[i]);
-				console.log(rc.inscripciones[i]);
-				console.log(_inscripcion);
+				//console.log(rc.inscripciones[i]);
+				//console.log(_inscripcion);
 				var inscripcion_id=_inscripcion._id;
 				delete _inscripcion._id;
 				Inscripciones.update({_id:inscripcion_id},{$set:_inscripcion});
