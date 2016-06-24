@@ -95,7 +95,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		periodo.conceptos = [];
 		var conceptos = ConceptosPago.find().fetch();
 		for (var i = 0; i < conceptos.length; i++) {
-			perido.conceptos.push( { nombre : conceptos[i].nombre, 
+			periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
 								estatus : 1 })
 
@@ -130,7 +130,8 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var conceptos = ConceptosPago.find().fetch();
 		periodo.conceptos=[];
 		for (var i = 0; i < conceptos.length; i++) {
-			periodo.conceptos.push( { nombre : conceptos[i].nombre, 
+			if(conceptos[i].modulo==periodo.modulo)
+				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
 								estatus : 1 });
 
