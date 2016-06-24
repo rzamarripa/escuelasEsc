@@ -24,6 +24,9 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
 	});
+	this.subscribe('conceptosPago',()=>{
+		return [{estatus:true}]
+	 });
 
   	this.helpers({
 	  	subCiclos : () => {
@@ -34,7 +37,11 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  	},
 	  	ciclos : () =>{
 	  		return Ciclos.find();
-	  	}, 
+	  	},
+	  	conceptos :()=>{
+	  		console.log(ConceptosPago.find({modulo:this.getReactively('periodo.modulo')}).fetch());
+	  		return ConceptosPago.find({modulo:this.getReactively('periodo.modulo')})
+	  	}
   	});  	  
 
 
@@ -58,6 +65,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
     	this.action = true;
     	this.nuevo = !this.nuevo;
     	this.periodo = {};		
+
   	};
 	
   	this.guardar = function(periodo)
