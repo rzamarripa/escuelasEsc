@@ -69,15 +69,17 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		inscripcion.planPagoInscripcion = grupo.inscripcion;
 		inscripcion.planPagoColegiatura = grupo.colegiatura;
 		inscripcion.planPagoInscripcion.pago = parseFloat(inscripcion.importePagado);
-		
+		console.log(inscripcion);
 		if(inscripcion.planPagoInscripcion.cuota<=parseFloat(inscripcion.importePagado))
 			inscripcion.planPagoInscripcion.planPago[0].pagada=1;
+			//inscripcion.planPagoInscripcion.pagada=1;
+		
 
 		Inscripciones.insert(inscripcion);
 		//var grupo = Grupos.findOne(inscripcion.grupo_id);
 		console.log(grupo);
 		grupo.inscritos = parseInt(grupo.inscritos) + 1;
-		Grupos.update({_id: inscripcion.grupo_id},{$set:{grupo}});
+		Grupos.update({_id: inscripcion.grupo_id},{$set:grupo});
 		toastr.success('inscripcion guardada.');
 		$state.go("root.inscripciones");
 	};
