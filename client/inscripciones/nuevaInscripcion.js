@@ -67,8 +67,17 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
 
 		inscripcion.plan = grupo.plan;
-		
+		for (var i in inscripcion.plan) {
+			var _periodo = inscripcion.plan[i];
+			if(_periodo.tipoPlan=='inscripcion'){
+				_periodo.pago= parseFloat(inscripcion.importePagado);
+				
+				break;
+			}
+		}
+
 		inscripcion.planPagoInscripcion.pago = parseFloat(inscripcion.importePagado);
+
 		console.log(inscripcion);
 		if(inscripcion.planPagoInscripcion.cuota<=parseFloat(inscripcion.importePagado))
 			inscripcion.planPagoInscripcion.planPago[0].pagada=1;
@@ -98,7 +107,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  					for (var j = 0; j < _periodo.datos.length; j++) {
 	  						this.inscripcion.totalPagar+=_periodo.datos[j].importe
 	  					}
+	  					break;
 	  				}
+
 	  			
 	  		}
 

@@ -132,6 +132,8 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  		this.grupo.plan[periodo.nombre]={};
 	  		this.grupo.plan[periodo.nombre].tipoPlan = '';
 	  		this.grupo.plan[periodo.nombre].datos=[];
+	  		console.log(periodo.planPago);
+	  		this.grupo.plan[periodo.nombre].planPago = periodo.planPago;
 
 	  		console.log(periodo)
 	  		for (var j = 0; periodo && periodo.conceptos && j < periodo.conceptos.length; j++) {
@@ -140,7 +142,8 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  			var _grupo = {}
 	  			_grupo.activa=true
 	  			_grupo = concepto;
-	  			_grupo.plan = periodo.plan;
+	  			//_grupo.plan = periodo.plan;
+
 	  			//_grupo.modulo = periodo.modulo;
 	  			//_grupo = concepto;
 	  			if(planviejo && planviejo[periodo.nombre] &&
@@ -164,7 +167,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  	}
 
 	  	
-	  	console.log('si entre',this.grupo.plan);
+	  	console.log('si entre',this.grupo);
 	  	return Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')});
 	  }
   });
