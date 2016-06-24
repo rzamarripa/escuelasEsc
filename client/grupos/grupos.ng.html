@@ -49,7 +49,7 @@
 			    <td class="text-center">
 				    <div class="progress right">
 							<div class="progress-bar bg-color-blue" aria-valuetransitiongoal="75" aria-valuenow="75" style="width: {{gp.getInscritos(grupo._id)/grupo.cupo*100}}%;">
-								{{gp.getInscritos(grupo._id)/grupo.cupo*100}}%
+								{{gp.getInscritos(grupo._id)/grupo.cupo*100 | number:00}}%
 							</div>
 						</div>
 					</td>

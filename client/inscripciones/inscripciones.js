@@ -3,7 +3,7 @@ angular.module("casserole")
 function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
   let rc = $reactive(this).attach($scope);
 
-/*
+
 	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
 	});
@@ -45,7 +45,7 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  return Inscripciones.find();
 	  },
   });
-*/
+
 	this.inscripciones = [];
 	$meteor.call("getInscripciones").then(function (data) {
 		console.log(data);

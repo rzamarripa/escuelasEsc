@@ -13,7 +13,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('alumnos', () => {
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre') }
+	    where : { nombre : this.getReactively('buscar.nombre'), estatus : false }
     }] ;
   });
   
@@ -30,7 +30,10 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   
   this.guardar = function (alumno) {
 		this.alumno.estatus = true;
-		this.alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
+		var nombre = alumno.nombre != undefined ? alumno.nombre + " " : "";
+		var apPaterno = alumno.apPaterno != undefined ? alumno.apPaterno + " " : "";
+		var apMaterno = alumno.apMaterno != undefined ? alumno.apMaterno : ""
+		this.alumno.nombreCompleto = nombre + apPaterno + apMaterno;
 		Alumnos.insert(this.alumno, function(err, doc){
 			Meteor.call('createUsuario', rc.alumno, 'alumno');
 			toastr.success('Alumno guardado.');
