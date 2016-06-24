@@ -13,6 +13,23 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.periodosAcademicos = [];
 	this.periodosAdministrativos = [];
 
+	var quitarhk=function(obj){
+		if(Array.isArray(obj)){
+			for (var i = 0; i < obj.length; i++) {
+				obj[i] =quitarhk(obj[i]);
+			}
+		}
+		else if(obj !== null && typeof obj === 'object')
+		{
+			delete obj.$$hashKey;
+			for (var name in obj) {
+	  			obj[name] = quitarhk(obj[name]);
+			}
+
+		}
+		return obj;
+	}
+
 	this.subscribe('grupos', () => {
 			return [{
 				_id : $stateParams.id,
@@ -65,43 +82,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 			rc.grados.push(i);
 		}
 		
-		var subCiclo_id = this.getReactively("grupo.subCicloAdministrativo_id");
-		console.log(subCiclo_id);
-		var subCiclo = SubCiclos.findOne(subCiclo_id);
-		console.log(subCiclo);
-		var inscripcion = {};
-		var colegiatura = {};
-		if(subCiclo){
-			
-			var periodos =Periodos.find({subCiclo_id:subCiclo._id}).fetch();
-			console.log(subCiclo.periodos);
-			for (var i = 0; i < periodos.length; i++) {
-				if(periodos[i].nombre=='INSCRIPCION')
-					inscripcion=periodos[i];
-				if(periodos[i].nombre=='COLEGIATURA')
-					colegiatura=periodos[i];
-			};
-		}
-		if(!this.grupo.inscripcion)
-			this.grupo.inscripcion={};
-		if(!this.grupo.colegiatura)
-			this.grupo.colegiatura={};
-		console.log(inscripcion.planPago);
-		console.log(this.grupo);
-		if( inscripcion && inscripcion.planPago)
-			this.grupo.inscripcion.planPago=inscripcion.planPago;
-		if( inscripcion && inscripcion.recargos)
-			this.grupo.inscripcion.recargos=inscripcion.recargos;
-		if( inscripcion && inscripcion.descuentos)
-			this.grupo.inscripcion.descuentos=inscripcion.descuentos;
 		
-		if( colegiatura && colegiatura.planPago)
-			this.grupo.colegiatura.planPago=colegiatura.planPago;
-		if( colegiatura && colegiatura.recargos)
-			this.grupo.colegiatura.recargos=colegiatura.recargos;
-		if( colegiatura && colegiatura.descuentos)
-			this.grupo.colegiatura.descuentos=colegiatura.descuentos;
-
 
 
   	});
@@ -134,6 +115,58 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  maestros : () => {
 		  return Maestros.find();
 	  },
+	  periodosAdministrativos : () =>{
+	  	var periodos =Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')}).fetch();
+	  	var planviejo ={}
+	  	if(!this.grupo)
+	  		this.grupo={};
+	  	if(!this.grupo.plan)
+	  		this.grupo.plan={};
+	  	else{
+	  		planviejo=this.grupo.plan;
+	  		this.grupo.plan={};
+	  	}
+	  	for (var i = 0; i < periodos.length; i++) {
+	  		var periodo =periodos[i];
+	  		
+	  		this.grupo.plan[periodo.nombre]={};
+	  		this.grupo.plan[periodo.nombre].tipoPlan = '';
+	  		this.grupo.plan[periodo.nombre].datos=[];
+
+	  		console.log(periodo)
+	  		for (var j = 0; periodo && periodo.conceptos && j < periodo.conceptos.length; j++) {
+	  			var concepto=periodos[i].conceptos[j];
+
+	  			var _grupo = {}
+	  			_grupo.activa=true
+	  			_grupo = concepto;
+	  			_grupo.plan = periodo.plan;
+	  			//_grupo.modulo = periodo.modulo;
+	  			//_grupo = concepto;
+	  			if(planviejo && planviejo[periodo.nombre] &&
+	  				planviejo[periodo.nombre].datos )
+	  				{
+	  					var viejos=planviejo[periodo.nombre].datos ;
+	  					console.log(viejos);
+	  					for (var k = 0; k < viejos.length; k++) {
+	  						if(viejos[k].nombre==_grupo.nombre){
+	  							_grupo.importe = viejos[k].importe
+	  							_grupo.activa = viejos[k].activa
+	  						}
+	  					}
+
+	  				}
+	  			this.grupo.plan[periodo.nombre].tipoPlan = periodo.modulo;
+	  			this.grupo.plan[periodo.nombre].datos.push(_grupo);
+
+	  			
+	  		}
+	  	}
+
+	  	
+	  	console.log('si entre',this.grupo.plan);
+	  	return Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')});
+	  }
   });
   
   if($stateParams.id)
@@ -145,7 +178,8 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	{
 		this.grupo.estatus = true;
 		grupo.inscritos = 0;
-		Grupos.insert(this.grupo);
+		_grupo =quitarhk(grupo)
+		Grupos.insert(_grupo);
 		toastr.success('Grupo guardado.');
 		this.grupo = {}; 
 		$('.collapse').collapse('hide');
@@ -164,8 +198,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.actualizar = function(grupo)
 	{
 	  var idTemp = grupo._id;
-		delete grupo._id;		
-		Grupos.update({_id:$stateParams.id}, {$set : grupo});
+		delete grupo._id;	
+		_grupo =quitarhk(grupo)	
+		Grupos.update({_id:$stateParams.id}, {$set : _grupo});
 		toastr.success('Grupo guardado.');
 		$state.go("root.grupos",{"id":$stateParams.id});
 	};

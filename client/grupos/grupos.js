@@ -41,6 +41,7 @@ angular.module("casserole")
 	});
 	
 	this.subscribe('periodos', () => {
+
 		return [{
 			subCiclo_id : {$in : this.getCollectionReactively('subCiclos_ids')},
 		}]
@@ -97,6 +98,45 @@ angular.module("casserole")
 		  }
 		  return _subCiclos;
 	  },
+	  periodosAdministrativos : () =>{
+	  	var periodos =Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')}).fetch();
+	  	var planviejo ={}
+	  	if(!this.grupo)
+	  		this.grupo={};
+	  	if(!this.grupo.plan)
+	  		this.grupo.plan={};
+	  	else{
+	  		planviejo=this.grupo.plan;
+	  		this.grupo.plan={};
+	  	}
+
+	  	_.each(periodos,function(periodo){
+	  		this.grupo.plan[periodo.nombre]={};
+	  		_.each(periodo.conceptos,function(concepto){
+	  			this.grupo.plan[periodo.nombre][concepto.nombre]={}
+	  			this.grupo.plan[periodo.nombre][concepto.nombre].activa=true
+	  			this.grupo.plan[periodo.nombre][concepto.nombre].plan = periodo.plan;
+	  			this.grupo.plan[periodo.nombre][concepto.nombre].modulo = periodo.modulo;
+	  			this.grupo.plan[periodo.nombre][concepto.nombre].concepto = concepto;
+	  			if(planviejo && planviejo[periodo.nombre] && 
+	  				planviejo[periodo.nombre][concepto.nombre] && 
+	  				planviejo[periodo.nombre][concepto.nombre].concepto &&
+	  				planviejo[periodo.nombre][concepto.nombre].concepto.importe)
+	  					this.grupo.plan[periodo.nombre][concepto.nombre].concepto.importe=
+	  						planviejo[periodo.nombre][concepto.nombre].concepto.importe
+	  			if(planviejo && planviejo[periodo.nombre] && 
+	  				planviejo[periodo.nombre][concepto.nombre] && 
+	  				planviejo[periodo.nombre][concepto.nombre].activa )
+	  					this.grupo.plan[periodo.nombre][concepto.nombre].activa=
+	  						planviejo[periodo.nombre][concepto.nombre].activa
+
+	  			this.grupo.plan[periodo.nombre][concepto.nombre].procedimientos = periodo.procedimiento[concepto.nombre];
+	  				
+	  		})
+	  	});
+	  	console.log('si entre',this.grupo.plan);
+	  	return Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')});
+	  },
 	  periodos : () => {
 		  _periodos = Periodos.find().fetch();
 		  if(_periodos != undefined){
@@ -107,6 +147,7 @@ angular.module("casserole")
 		  return _periodos;
 	  },
   });
+ 
 
   this.nuevoGrupo = function()
   {

@@ -108,17 +108,17 @@
 											
 										</thead>
 										<tbody>
-											<tr ng-repeat="recargo in per.periodo.recargos[conepto.nombre]">
+											<tr ng-repeat="procedimiento in per.periodo.procedimiento[concepto.nombre]">
 												<td >
-				    								<input type="text"  ng-model='recargo.nombre'/>
+				    								<input type="text"  ng-model='procedimiento.nombre'/>
 												</td>
 												<td width="20%">
 													
-							    					<input type="number"  ng-model='recargo.dias'/>
+							    					<input type="number"  ng-model='procedimiento.dias'/>
 												</td>
 												<td width="20%">
 													
-								    				<select class="form-control select2" placeholder="Seleccione" ng-model="recargo.tipoRecargo">
+								    				<select class="form-control select2" placeholder="Seleccione" ng-model="procedimiento.tipoProcedimiento">
 													  	<option value="Recargo">Recargo</option>
 													  	<option value="Descuento">Descuento</option>
 													  	
@@ -126,16 +126,16 @@
 												</td>
 												<td width="20%">
 													
-													<input type="number" ng-model='recargo.recargo'/>
+													<input type="number" ng-model='procedimiento.monto'/>
 												</td>
 												<td width="10%">
-													<input type="button" ng-click="per.eliminarRecargo(recargo)" value="-" class="btn btn-danger"/>
+													<input type="button" ng-click="per.eliminarProcedimiento(procedimiento)" value="-" class="btn btn-danger"/>
 												</td>
 											</tr>
 											
 										</tbody>
 								</table>
-								<input type="button" ng-click="per.nuevoRecargo()" value="+" class="btn btn-success"/>
+								<input type="button" ng-click="per.nuevoProcedimiento(concepto.nombre)" value="+" class="btn btn-success"/>
 							</div>
 
 						</div>

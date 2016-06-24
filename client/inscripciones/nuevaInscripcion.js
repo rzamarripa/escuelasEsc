@@ -66,8 +66,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		})*/
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
 
-		inscripcion.planPagoInscripcion = grupo.inscripcion;
-		inscripcion.planPagoColegiatura = grupo.colegiatura;
+		inscripcion.plan = grupo.plan;
+		
 		inscripcion.planPagoInscripcion.pago = parseFloat(inscripcion.importePagado);
 		console.log(inscripcion);
 		if(inscripcion.planPagoInscripcion.cuota<=parseFloat(inscripcion.importePagado))
@@ -89,8 +89,18 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  	var grupo = undefined;
 	  	if(grupoid)
 			grupo = Grupos.findOne(grupoid);
-	  	if(grupo && grupo.inscripcion && grupo.inscripcion.cuota){
-	  		this.inscripcion.totalPagar = grupo.inscripcion.cuota;
+		console.log(grupo);
+	  	if(grupo && grupo.plan ){
+	  		this.inscripcion.totalPagar = 0;
+	  		for (var i in grupo.plan) {
+	  			var _periodo = grupo.plan[i]
+	  			if(_periodo.tipoPlan=='inscripcion'){
+	  					for (var j = 0; j < _periodo.datos.length; j++) {
+	  						this.inscripcion.totalPagar+=_periodo.datos[j].importe
+	  					}
+	  				}
+	  			
+	  		}
 
 	  	}
 			

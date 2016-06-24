@@ -141,17 +141,35 @@
 				</div>
 	  	</div>
 	  	<div class="well">	 
-		  	<div class="row">
-		  		<div class="col-sm-6">
-		  				<label >Costo de Incripcion</label>
-						<input type="number" class="form-control" id="costoInscripcion" placeholder="Costo de Inscripcion" ng-model="gp.grupo.inscripcion.cuota" >
-		  		</div>
-		  		<div class="col-sm-6">
-		  				<label >Cuota de Colegiatura</label>
-						<input type="number" class="form-control" id="cuotaColegiatura" placeholder="Cuota de Colegiatura" ng-model="gp.grupo.colegiatura.cuota" >
-		  		</div>
-		  	</div>
+	  		<div class="row"  ng-repeat="periodo in gp.periodosAdministrativos">
+				<div class="panel panel-default">
+					<div class="panel-heading">{{periodo.nombre}}</div>
+					<div class="panel-body">
+						<div ng-repeat='uno in gp.grupo.plan[periodo.nombre].datos'>
+							<div class="col-sm-4">
+								{{uno.nombre}}
+					  		</div>
+					  		<div class="col-sm-4">
+									<label >Importe			
+										
+					  				</label>
+					  				<input type="number" ng-model="uno.importe">
+									
+					  		</div>
+							<div class="col-sm-4">
+									<label >Activa			
+										<input type="checkbox" ng-model="uno.activa">
+					  				</label>
+									
+					  		</div>
+					  		
+					  		
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+	  	
 			<div class="row">
 				<div class="col-sm-12">
 					<input type="submit" ng-click="gp.guardar(gp.grupo)" value="Guardar" class="btn btn-primary" ng-show="gp.action">
