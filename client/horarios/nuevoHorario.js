@@ -2,7 +2,7 @@ angular
   .module('casserole')
   .controller('HorarioDetalleCtrl', HorarioDetalleCtrl);
  
-function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr) {
+function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $stateParams, toastr) {
 	$reactive(this).attach($scope);
 	
 	this.autorun(() => {
