@@ -1,5 +1,5 @@
-Meteor.publish("asistencias", function(){
-	return Asistencias.find();
+Meteor.publish("asistencias", function(options){
+	return Asistencias.find(options);
 });
 
 Meteor.publish("asistencia", function(){

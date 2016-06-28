@@ -264,4 +264,7 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
 
   /* event southises array*/
   this.eventSources = [this.horario.clases, clasesTotales, aulasTotales];
+  
+  var view = $('#calendar').fullCalendar('getView');
+	console.log(view)
 };

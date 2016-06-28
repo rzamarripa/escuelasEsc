@@ -8,7 +8,7 @@ angular
  	this.grupo = {};
   this.action = true;
 
- this.subscribe('inscripciones', () => {
+	this.subscribe('inscripciones', () => {
 	  return [{
 		  grupo_id : $stateParams.id
 	  }];

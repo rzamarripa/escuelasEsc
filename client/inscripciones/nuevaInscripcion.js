@@ -80,7 +80,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		console.log(grupo);
 		grupo.inscritos = parseInt(grupo.inscritos) + 1;
 		Grupos.update({_id: inscripcion.grupo_id},{$set:grupo});
-		toastr.success('inscripcion guardada.');
+		toastr.success('Alumno Inscrito');
 		$state.go("root.inscripciones");
 	};
 
@@ -147,10 +147,10 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.getGrupos = function(seccion_id, alumno_id){
 		var inscrito = Inscripciones.findOne({seccion_id : seccion_id, alumno_id : alumno_id});
 		if(!inscrito){
-			toastr.success('Todo bien');
+			toastr.success('El alumno puede inscribirse');
 			rc.grupos = Grupos.find({seccion_id : seccion_id, estatus : true}).fetch();
 		}else{
-			toastr.error('Este grupo ya está inscrito en esta Sección');
+			toastr.error('Este alumno ya está inscrito en esta Sección');
 		}
 	}	
 	
