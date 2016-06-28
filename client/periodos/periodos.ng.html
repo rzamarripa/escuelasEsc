@@ -71,25 +71,34 @@
 						</div>
 			    	</div>
 			    	<div class="row" ng-show="per.tipoFormulario == 'administrativo'">
-			    		<br>
-			    		<div class="col-sm-12">
-				    		<div class="panel panel-default">
-								<div class="panel-heading">Recargos</div>
-								<div class="panel-body">
-									<table class="table table-striped" ng-show="per.tipoFormulario == 'administrativo'" >
+				    	<div class="col-sm-4">
+				    		<label>Módulo</label>
+				    		<select class="form-control" ng-model="per.periodo.modulo">
+					    		<option value="inscripcion">Inscripción</option>
+					    		<option value="colegiatura">Colegiatura</option>
+					    		<option value="otros">Otros</option>
+				    		</select>
+				    	</div>
+				    </div>
+				    <BR/>
+				    <div class="row" ng-show="per.tipoFormulario == 'administrativo'" ng-repeat="concepto in per.conceptos">
+				    	<div class="panel panel-default">
+							<div class="panel-heading">{{concepto.nombre}}</div>
+							<div class="panel-body">
+								<table class="table table-striped" ng-show="per.tipoFormulario == 'administrativo'" >
 										<thead>
 											<tr>
 												<td width="20%">
-													<label>Nombre del Recargo</label>
+													<label>Nombre del Procedimiento</label>
 												</td>
 												<td width="20%">
-													<label>Dias para realizar el recargo</label>
+													<label>Dias para realizar el Procedimiento</label>
 												</td>
 												<td width="20%">
-													<label>Tipo de recargo</label>
+													<label>Tipo de Procedimiento</label>
 												</td>
 												<td width="20%">
-													<label>Recargo</label>
+													<label>Monto</label>
 												</td>
 												<td width="10%">
 													
@@ -99,44 +108,40 @@
 											
 										</thead>
 										<tbody>
-											<tr ng-repeat="recargo in per.periodo.recargos">
+											<tr ng-repeat="procedimiento in per.periodo.procedimiento[concepto.nombre]">
 												<td >
-				    								<input type="text"  ng-model='recargo.nombre'/>
+				    								<input type="text"  ng-model='procedimiento.nombre'/>
 												</td>
 												<td width="20%">
 													
-							    					<input type="number"  ng-model='recargo.dias'/>
+							    					<input type="number"  ng-model='procedimiento.dias'/>
 												</td>
 												<td width="20%">
 													
-								    				<select class="form-control select2" placeholder="Seleccione" ng-model="recargo.tipoRecargo">
-													  	<option value="Porcentual">Porcentual</option>
-													  	<option value="Fijo">Cuota Fija</option>
+								    				<select class="form-control select2" placeholder="Seleccione" ng-model="procedimiento.tipoProcedimiento">
+													  	<option value="Recargo">Recargo</option>
+													  	<option value="Descuento">Descuento</option>
 													  	
 								    				</select>
 												</td>
 												<td width="20%">
 													
-													<input type="number" ng-model='recargo.recargo'/>
+													<input type="number" ng-model='procedimiento.monto'/>
 												</td>
 												<td width="10%">
-													<input type="button" ng-click="per.eliminarRecargo(recargo)" value="-" class="btn btn-danger"/>
+													<input type="button" ng-click="per.eliminarProcedimiento(procedimiento)" value="-" class="btn btn-danger"/>
 												</td>
 											</tr>
 											
 										</tbody>
-										
- 
-									</table>
-								
-
-									<input type="button" ng-click="per.nuevoRecargo()" value="+" class="btn btn-success"/>
-							
-							  	</div>
+								</table>
+								<input type="button" ng-click="per.nuevoProcedimiento(concepto.nombre)" value="+" class="btn btn-success"/>
 							</div>
-				    		
+
 						</div>
-			    	</div>
+
+				    </div>
+			    	
 			    	
 			    		
 		  		</div>
