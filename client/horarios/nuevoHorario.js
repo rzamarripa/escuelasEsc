@@ -253,7 +253,7 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
         week: 'dddd',
         day: 'dddd'
       },
-      dayNames : ["Domingo", "Lunes", "Martes", "Miéthisoles", "Jueves", "Viernes", "Sábado"],
+      dayNames : ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
       dayNamesShort : ["Dom", "Lun", "Ma", "Mi", "Jue", "Vie", "Sab"],
       eventClick: this.alertOnEventClick,
       eventDrop: this.alertOnDrop,
