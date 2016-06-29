@@ -33,7 +33,14 @@
 				    <label for="nombre">Usuario</label>
 				    <input type="text" class="form-control" placeholder="Usuario" ng-model="al.alumno.nombreUsuario">
 					</div>
-					<div class="col-sm-3">				    
+					<div class="col-sm-1" ng-show="al.existeUsuario > 1" style="text-align: left">
+					  <div style="display: inline-block; vertical-align: auto; float: none;">
+					  	<h1 class="text-center text-danger">
+						  	<strong><i class="fa fa fa-times fa-lg"></i></strong>
+						  </h1>
+					  </div>
+					</div>
+					<div class="col-sm-{{al.existeUsuario > 1 ? '2' : '3'}}">
 				    <label for="nombre">Contraseña</label>
 				    <input type="password" class="form-control" placeholder="Contraseña" ng-model="al.alumno.contrasena">						
 					</div>
@@ -102,9 +109,6 @@
 				<div class="row">
 					<div class="col-sm-4">
 				  	<label for="vivePadres" class="checkbox-inline"><input type="checkbox" id="vivePadres" ng-model="al.alumno.vivePadres"> Vive con sus padres</label>					    
-				  	<label class="toggle">
-							<input type="checkbox" name="checkbox-toggle" checked="checked">
-							<i data-swchon-text="ON" data-swchoff-text="OFF"></i>Cassandra</label>
 			  	</div>
 					<div class="col-sm-4">
 						<label for="nivelSocial">Nivel social</label><br/>

@@ -2,7 +2,7 @@ angular
   .module('casserole')
   .controller('HorarioDetalleCtrl', HorarioDetalleCtrl);
  
-function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr) {
+function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $stateParams, toastr) {
 	$reactive(this).attach($scope);
 	
 	this.autorun(() => {
@@ -253,7 +253,7 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
         week: 'dddd',
         day: 'dddd'
       },
-      dayNames : ["Domingo", "Lunes", "Martes", "Miéthisoles", "Jueves", "Viernes", "Sábado"],
+      dayNames : ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
       dayNamesShort : ["Dom", "Lun", "Ma", "Mi", "Jue", "Vie", "Sab"],
       eventClick: this.alertOnEventClick,
       eventDrop: this.alertOnDrop,
@@ -264,4 +264,7 @@ function HorarioDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, to
 
   /* event southises array*/
   this.eventSources = [this.horario.clases, clasesTotales, aulasTotales];
+  
+  var view = $('#calendar').fullCalendar('getView');
+	console.log(view)
 };

@@ -209,7 +209,7 @@
 														<div class="col-sm-8">
 															<label>Plan de Estudios</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.plan_id">
-															  <option value="plan._id" ng-repeat="planesEstudio in ins.planesEstudios">
+															  <option value="{{planesEstudio._id}}" ng-repeat="planesEstudio in ins.planesEstudios">
 															  	{{planesEstudio.descripcion}}
 															  </option>
 															</select>

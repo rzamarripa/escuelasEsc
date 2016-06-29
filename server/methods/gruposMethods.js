@@ -1,10 +1,9 @@
 Meteor.methods({
-  getGrupos: function (query) {
+  getGrupos: function (query, usuario) {
     query = query || {};
     var maestro = Maestros.findOne({nombreUsuario:Meteor.user().username});
     var grupos = Grupos.find({maestro_id:maestro._id}).fetch();
-    
-    
+
     var secciones = Secciones.find().fetch();
     var ciclos	 	= Ciclos.find().fetch();
 

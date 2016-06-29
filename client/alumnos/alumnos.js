@@ -9,11 +9,18 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.alumno = {};
   this.buscar = {};
   this.buscar.nombre = '';
+  this.alumno.nombreUsuario = '';
 
-	this.subscribe('alumnos', () => {
+	this.subscribe('buscarAlumnos', () => {
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre'), estatus : false }
+	    where : { nombre : this.getReactively('buscar.nombre')}
+    }] ;
+  });
+  
+  this.subscribe('buscarUsuario', () => {
+    return [{
+	    where : { nombreUsuario : this.getReactively('alumno.nombreUsuario')}
     }] ;
   });
   
@@ -25,6 +32,11 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		},
 	  ocupaciones : () => {
 		  return Ocupaciones.find();
+	  },
+	  existeUsuario : ()  => {
+		  var existe = Meteor.users.find().count();
+		  console.log(existe);
+		  return existe;
 	  }
   });
   
