@@ -64,24 +64,27 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		/*_.each(inscripcion.conceptosSeleccionados, function(concepto){
 			delete concepto.$$hashKey;
 		})*/
+		console.log("hola")
+		console.log(inscripcion);
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
 
 		inscripcion.plan = grupo.plan;
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
+			console.log(_periodo);
 			if(_periodo.tipoPlan=='inscripcion'){
-				_periodo.pago= parseFloat(inscripcion.importePagado);
-				
+				_periodo.pago= parseFloat(inscripcion.importePagado);	
+				if(inscripcion.totalPagar<=parseFloat(inscripcion.importePagado)
+					&& _periodo.planPago && _periodo.planPago instanceof Array){
+					_periodo.planPago[0].pagada =1;
+				}
 				break;
 			}
 		}
 
-		inscripcion.planPagoInscripcion.pago = parseFloat(inscripcion.importePagado);
+		//inscripcion.planPagoInscripcion.pago = parseFloat(inscripcion.importePagado);
 
-		console.log(inscripcion);
-		if(inscripcion.planPagoInscripcion.cuota<=parseFloat(inscripcion.importePagado))
-			inscripcion.planPagoInscripcion.planPago[0].pagada=1;
-			//inscripcion.planPagoInscripcion.pagada=1;
+		
 		
 
 		Inscripciones.insert(inscripcion);
