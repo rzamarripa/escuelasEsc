@@ -21,8 +21,8 @@ Meteor.methods({
 	  Asistencias.insert(asistencia);
 	  return true;
   },
-  getAsistencias: function(grupo_id){
-	  return Asistencias.find({grupo_id:grupo_id},{sort:{fechaAsistencia:1}}).fetch();
+  getAsistencias: function(grupo_id, materia_id){
+	  return Asistencias.find({grupo_id:grupo_id, materia_id: materia_id},{sort:{fechaAsistencia:1}}).fetch();
   },
   getAsistencia: function(options){
 	  return Asistencias.find(options).fetch();
