@@ -310,7 +310,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'HorariosCtrl as ho',
     })
     .state('root.asistenciaGrupo', {
-      url: '/asistenciaGrupo/:id',
+      url: '/asistenciaGrupo/:id/:materia_id',
       templateUrl: 'client/maestro/asistencias/asistencias.ng.html',
       controller: 'MaestroAsistenciasCtrl as masas',
       resolve: {
@@ -326,7 +326,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       }
     })       
     .state('root.verAsistencias', {
-      url: '/verAsistencias/:id',
+      url: '/verAsistencias/:id/:materia_id',
       templateUrl: 'client/maestro/asistencias/verAsistencias.ng.html',
       controller: 'MaestroVerAsistenciasCtrl as mast',
       resolve: {

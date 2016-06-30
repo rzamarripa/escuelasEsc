@@ -2,7 +2,7 @@ angular.module("casserole")
 .controller("MaestroVerAsistenciasCtrl",MaestroVerAsistenciasCtrl);  
 function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr, $compile) {
 	let rc=$reactive(this).attach($scope);
-
+ /*
 	this.subscribe('grupos',()=>{
 		return [{id:$stateParams.id, estatus:true}]
 	 });
@@ -10,7 +10,7 @@ function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $statePar
 		return [{estatus:true}]
 	 });
 	 this.subscribe('asistencias',()=>{
-		return [{grupo_id : $stateParams.id}]
+		return [{grupo_id : $stateParams.id, materia_id : $stateParams.materia_id}]
 	});
 
 	this.helpers({
@@ -25,10 +25,10 @@ function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $statePar
 	  } 
 	 
   });
-	
+	*/
 	this.asistencia = {};
 	this.alumnos = [];
-  $meteor.call("getAsistencias", $stateParams.id).then(function (data) {	  
+  $meteor.call("getAsistencias", $stateParams.id, $stateParams.materia_id).then(function (data) {	  
 		this.asistencias = data;
 		var transmutar = {};
 		_.each(this.asistencias, function(asistencia){

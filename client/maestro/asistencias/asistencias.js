@@ -31,13 +31,14 @@ function MaestroAsistenciasCtrl($scope, $reactive, $meteor, $state, $stateParams
 		  alumnos : asistencia.alumnos,
 		  fechaAsistencia : new Date(),
 		  usuario : Meteor.user().username,
-		  grupo_id : $stateParams.id
+		  grupo_id : $stateParams.id,
+		  materia_id : $stateParams.materia_id,
 	  }
 
 		$meteor.call("setAsistencia", asistenciaActual).then(function (data) {
 			if(data == true){
 				toastr.success("Gracias por tomar asistencia");
-				$state.go("root.verAsistencias", {id:$stateParams.id});
+				$state.go("root.verAsistencias", {id:$stateParams.id, materia_id: $stateParams.materia_id});
 			}else{
 				toastr.success("Hubo un problema al tomar asistencia");
 			}
@@ -53,14 +54,15 @@ function MaestroAsistenciasCtrl($scope, $reactive, $meteor, $state, $stateParams
 		});
 		Asistencias.update({_id:asistencia._id},{$set:{alumnos : asistencia.alumnos}});
 		toastr.success("Ha actualizado la Asistencia");
-		$state.go("root.verAsistencias", {id:$stateParams.id});
+		$state.go("root.verAsistencias", {id:$stateParams.id, materia_id: $stateParams.materia_id});
 	}
 	
 	
 	
 	//TODO Me quedé validando la asistencia
 
-	$meteor.call("getAsistencia", {grupo_id:$stateParams.id, 
+	$meteor.call("getAsistencia", {grupo_id:$stateParams.id,
+		materia_id: $stateParams.materia_id, 
 	  fechaAsistencia : {
 		  	$gte: this.hoy.toDate(),
 		  	$lte: this.manana.toDate()

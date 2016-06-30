@@ -1,3 +1,3 @@
-Meteor.publish("maestros",function(){
-  	return Maestros.find({estatus:true});
+Meteor.publish("maestros",function(params){
+  	return Maestros.find(params);
 });
