@@ -2,7 +2,7 @@ angular.module("casserole")
 .controller("MaestroVerAsistenciasCtrl",MaestroVerAsistenciasCtrl);  
 function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr, $compile) {
 	let rc=$reactive(this).attach($scope);
-
+ /*
 	this.subscribe('grupos',()=>{
 		return [{id:$stateParams.id, estatus:true}]
 	 });
@@ -25,7 +25,7 @@ function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $statePar
 	  } 
 	 
   });
-	
+	*/
 	this.asistencia = {};
 	this.alumnos = [];
   $meteor.call("getAsistencias", $stateParams.id, $stateParams.materia_id).then(function (data) {	  
