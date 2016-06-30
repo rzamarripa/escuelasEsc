@@ -1,3 +1,6 @@
 Meteor.publish("maestros",function(params){
-  	return Maestros.find(params);
+		if(params != undefined)
+  		return Maestros.find(params);
+  	else
+  		return Maestros.find()
 });

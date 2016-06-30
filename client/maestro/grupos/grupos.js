@@ -17,23 +17,29 @@ angular
 	this.alumnos_id = [];
 	this.subscribe('grupos', () => {		
 		return [{
-			_id : {$in:this.getReactively('grupos_id')}
+			_id : {$in:this.getCollectionReactively('grupos_id')}
 		}]
 	});
 	this.subscribe('maestros', () => {		
 		return [{
-			_id : {$in:this.getReactively('maestros_id')}
+			_id : {$in:this.getCollectionReactively('maestros_id')}
 		}]
 	});
 	this.subscribe('materias', () => {		
 		return [{
-			_id : {$in:this.getReactively('materias_id')}
+			_id : {$in:this.getCollectionReactively('materias_id')}
 		}]
 	});
 
 	this.subscribe('inscripciones', () => {		
 		return [{
-			maestro_id : {$in:this.getReactively('maestros_id')}
+			grupo_id : {$in:this.getCollectionReactively('grupos_id')}
+		}]
+	});
+
+	this.subscribe('alumnos', () => {		
+		return [{
+			_id : {$in:this.getCollectionReactively('alumnos_id')}
 		}]
 	});
 
@@ -59,7 +65,12 @@ angular
 		      mmg.materia = Materias.findOne(mmg.materia_id);
 		      mmg.grupo = Grupos.findOne(mmg.grupo_id);
 	       	var inscripciones = Inscripciones.find({grupo_id:mmg.grupo_id}).fetch();
-	       	this.alumnos_id = _.pluck(inscripciones, 'alumno_id')
+	       	alumnos_id = _.pluck(inscripciones, 'alumno_id');
+	       	if(rc.alumnos_id != undefined)
+	       		rc.alumnos_id = _.union(rc.alumnos_id, alumnos_id);
+	       	else
+	       		rc.alumnos_id = alumnos_id;
+	       	console.log(inscripciones, rc.alumnos_id);
 		     	_.each(inscripciones,function(inscripcion){
 		        var alumno = Alumnos.findOne({_id:inscripcion.alumno_id});
 		        mmg.alumnos.push(alumno);
