@@ -179,12 +179,13 @@ angular.module("casserole")
 
 	this.cambiarEstatus = function(id)
 	{
-		var grupo = Grupos.findOne({_id:id});
+		/*var grupo = Grupos.findOne({_id:id});
 		if(grupo.estatus == true)
 			grupo.estatus = false;
 		else
 			grupo.estatus = true;		
-		Grupos.update({_id:id},  {$set : {estatus: grupo.estatus}});
+		Grupos.update({_id:id},  {$set : {estatus: grupo.estatus}});*/
+		Grupos.remove(id);
 	};
 
 	this.getSeccion = function(seccion_id)

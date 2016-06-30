@@ -9,7 +9,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe("secciones");
 	//this.subscribe("conceptosPago");
 	this.subscribe("tiposingresos");
-	this.subscribe('alumnoss',()=>{
+	this.subscribe('alumnos',()=>{
 		return [{estatus:true}]
 	});
 	this.subscribe("grupos",()=>{
@@ -52,7 +52,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 	this.inscripcion = {};
 	this.inscripcion.totalPagar = 0.00;
-	this.inscripcion.fechaInscripcion = new Date();
+	//this.inscripcion.fechaInscripcion = new Date();
 	this.inscripcion.conceptosSeleccionados = [];
 	this.alumnoSeleccionado = {};
 	this.cupo = false;
@@ -91,30 +91,61 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		//var grupo = Grupos.findOne(inscripcion.grupo_id);
 		console.log(grupo);
 		grupo.inscritos = parseInt(grupo.inscritos) + 1;
+		delete grupo._id;
 		Grupos.update({_id: inscripcion.grupo_id},{$set:grupo});
 		toastr.success('Alumno Inscrito');
 		$state.go("root.inscripciones");
 	};
-
+	this.calcularImporteU= function(datos,pago){
+		//console.log(datos,pago)
+		//console.log(this.inscripcion);
+		var fechaActual = this.inscripcion.fechaInscripcion;
+  		var fechaCobro = new Date(pago.fecha);
+  		//console.log(fechaActual,fechaCobro);
+  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
+  		var importe = datos.importe;
+  		//console.log(diasRecargo,diasDescuento);
+  		for (var i = 0; datos.procedimientos && i < datos.procedimientos.length; i++) {
+  			console.log(importe);
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && diasRecargo >=datos.procedimientos[i].dias){
+  			//	console.log('Recargo');
+  				importe+=datos.procedimientos[i].monto;
+  			}
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Descuento' && diasDescuento >=datos.procedimientos[i].dias){
+  			//	console.log('Descuento');
+  				importe-=datos.procedimientos[i].monto;
+  			}
+  		};
+  		return importe
+	}	
 	this.autorun(() => {
 	  	var grupoid = this.getReactively("inscripcion.grupo_id");
 	  	var grupo = undefined;
 	  	if(grupoid)
 			grupo = Grupos.findOne(grupoid);
-		console.log(grupo);
+		//console.log(grupo);
 	  	if(grupo && grupo.plan ){
 	  		this.inscripcion.totalPagar = 0;
-	  		for (var i in grupo.plan) {
-	  			var _periodo = grupo.plan[i]
-	  			if(_periodo.tipoPlan=='inscripcion'){
-	  					for (var j = 0; j < _periodo.datos.length; j++) {
-	  						this.inscripcion.totalPagar+=_periodo.datos[j].importe
-	  					}
-	  					break;
-	  				}
-
-	  			
+	  		var _periodo = null;
+	  		for(var ind in grupo.plan){
+	  			if(grupo.plan[ind] && grupo.plan[ind].tipoPlan=='inscripcion'){
+	  				_periodo = grupo.plan[ind];
+	  				break;
+	  			}
 	  		}
+	  		 
+	  		//console.log(_periodo);
+	  		for (var j = 0; j < _periodo.datos.length; j++) {
+	  			this.inscripcion.totalPagar+=this.calcularImporteU(_periodo.datos[j],_periodo.planPago[0]);
+
+	  		}
+	  		/*if(_periodo.tipoPlan=='inscripcion'){
+	  				for (var j = 0; j < _periodo.datos.length; j++) {
+	  					this.inscripcion.totalPagar+=_periodo.datos[j].importe
+	  				}
+	  				break;
+	  		}*/
 
 	  	}
 			
