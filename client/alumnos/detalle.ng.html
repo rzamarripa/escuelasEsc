@@ -225,6 +225,19 @@
 										<h1> Grupo {{al.grupo(curso.grupo_id).nombre}} </h1>
 	
 									</header>		
+									<div ng-repeat ="(idconcepto, concepto) in curso.plan">
+										<h2> {{idconcepto}} : </h2>	
+										<fieldset>
+											<div class="row">
+											<section class="col col-1"  ng-click="al.seleccionarSemana(cobro,concepto)" ng-repeat = "cobro in concepto.planPago" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input ng-class="al.obtenerEstatus(cobro)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
+												</label>
+											</section>
+											</div>
+										</fieldset>
+
+									</div>
 									<h2> Inscripción </h2>
 									<fieldset>
 										<div class="row">

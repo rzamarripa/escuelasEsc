@@ -122,7 +122,31 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  });
 	  return temp;
   }
-  
+  this.calcularImporteU= function(datos,pago){
+		console.log(datos,pago)
+		//console.log(this.inscripcion);
+		var fechaActual = new Date();
+  		var fechaCobro = new Date(pago.fecha);
+  		//console.log(fechaActual,fechaCobro);
+  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
+  		var importe = datos.importe;
+  		console.log(diasRecargo,diasDescuento);
+  		for (var i = 0; datos.procedimientos && i < datos.procedimientos.length; i++) {
+  			
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && diasRecargo >=datos.procedimientos[i].dias){
+  			//	console.log('Recargo');
+  				importe+=datos.procedimientos[i].monto;
+  			}
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Descuento' && diasDescuento >=datos.procedimientos[i].dias){
+  			//	console.log('Descuento');
+  				importe-=datos.procedimientos[i].monto;
+  			}
+  		};
+  		console.log(importe);
+  		return importe
+	}	
+
   this.seleccionarSemana = function(cobro,plan){
 	  //console.log(cobro);
 	  //var semSel = cobro.anio + cobro.numero;	
@@ -132,41 +156,19 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  		if(plan.planPago[i].pagada!=1){
 	  			rc.hayParaPagar = false;
 	  			plan.planPago[i].pagada =2;
-	  			rc.totalPagar+=plan.cuota;
-	  			var fechaActual = new Date();
-  				var fechaCobro = new Date(plan.planPago[i].fecha);
-  				var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
-  				var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
-  				for (var j = 0; j < plan.recargos.length; j++) {
-  					//console.log('aqui entre',dias,plan.recargos[j].dias);
-	  				if(plan.recargos[j].dias<dias){
-	  					if(plan.recargos[j].tipoRecargo=="Fijo"){
-	  						rc.totalPagar+=plan.recargos[j].recargo;
-	  					}
-	  					else if (plan.recargos[j].tipoRecargo=="Procentual") {
-	  						rc.totalPagar+=((plan.recargos[j].recargo/100)*plan.cuota);
-	  					}
-	  				}
+	  			
+	  			
+  				//rc.totalPagar+=plan.cuota;
+  				for (var j = 0; j < plan.datos.length; j++) {
+  					rc.totalPagar +=this.calcularImporteU( plan.datos[j],plan.planPago[i]);
+  					console.log(rc.totalPagar);
+  				}
 
-	  			}
-	  			for (var j = 0; j < plan.descuentos.length; j++) {
-  					//console.log('aqui entre',dias,plan.recargos[j].dias);
-  					//console.log(plan.descuentos[j].dias,diasDescuento);
-	  				if(plan.descuentos[j].dias<diasDescuento){
-	  					if(plan.descuentos[j].tipoDescuento=="Fijo"){
-	  						rc.totalPagar-=plan.descuentos[j].descuento;
-	  					}
-	  					else if (plan.descuentos[j].tipoDescuento=="Procentual") {
-	  						rc.totalPagar-=((plan.descuentos[j].descuento/100)*plan.cuota);
-	  					}
-	  				}
-
-	  			}
 
 
 	  		}
-
 	  };
+	  console.log(rc.totalPagar);
 	  for (var i = cobro.no; i < plan.planPago.length; i++) {
 	  	if(plan.planPago[i].pagada!=1){
 	  		plan.planPago[i].pagada=0;
@@ -209,12 +211,12 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   }
 
   
-  	this.obtenerEstatus = function(cobro,recargos){
-  		var fechaActual = new Date();
-  		var fechaCobro = new Date(cobro.fecha);
-  		var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  	this.obtenerEstatus = function(cobro){
+  		//var fechaActual = new Date();
+  		//var fechaCobro = new Date(cobro.fecha);
+  		//var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
   		//console.log(recargos);
-  		if(!recargos) recargos =[];
+  		//if(!recargos) recargos =[];
 	  	if(cobro.pagada==1){
 		  	return "bg-color-green txt-color-white";
 	 	}
@@ -222,11 +224,11 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	 		return "bg-color-blue txt-color-white";
 	 	}
 	 	else {
-	  		for (var i = 0; i < recargos.length; i++) {
+	  		//for (var i = 0; i < recargos.length; i++) {
 	  			//console.log(dias,recargos[i].dias,cobro);
-	  			if(recargos[i].dias<dias)
-	  				return "bg-color-orange txt-color-white";
-	  		};
+	  		//	if(recargos[i].dias<dias)
+	  		//		return "bg-color-orange txt-color-white";
+	  		//};
 
 		  return "";
 		}
@@ -236,91 +238,109 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		if (confirm("Está seguro de realizar el cobro por $" + parseFloat(rc.totalPagar))) {
 			var semanasPagadas = [];
 			for (var i = 0; i < rc.inscripciones.length; i++) {
-				//console.log(rc.inscripciones[i].planPagoInscripcion.planPago);
-				for (var j = 0; j < rc.inscripciones[i].planPagoInscripcion.planPago.length; j++) {
-					if(rc.inscripciones[i].planPagoInscripcion.planPago[j].pagada==2){
-						rc.inscripciones[i].planPagoInscripcion.planPago[j].pagada=1;
-						rc.inscripciones[i].planPagoInscripcion.planPago[j].pago=rc.inscripciones[i].planPagoInscripcion.cuota;	
-						var pago = rc.inscripciones[i].planPagoInscripcion.planPago[j];
-						Pagos.insert({
-							fechaPago 	: new Date(),
-							alumno_id 	: $stateParams.id,
-							numero 		: pago.no,
-							semana 		: pago.numero,
-							anio 		: pago.anio,
-							estatus 	: 1,
-							usuario_id 	: Meteor.userId(),
-							importe 	: pago.pago
-						});
-						semanasPagadas.push({
-							anio 	: pago.anio,
-							numero 	: pago.numero,
-							importe : pago.importe,
-							pagada 	: 3,
-							importe : pago.pago
-						});
+				var inscripcion=rc.inscripciones[i];
+				for(var idConcepto in inscripcion.plan){
+					var concepto = inscripcion.plan[idConcepto];
+					for (var j = 0; j < concepto.planPago.length; j++) {
+						var cobro =concepto.planPago[j];
+						if(cobro.pagada==2){
+							cobro.pagada = 1;
+							cobro.pago = 0;
+							for (var k = 0; k < concepto.datos.length; k++) {
+			  					cobro.pago +=this.calcularImporteU( concepto.datos[k],cobro);
+			  					console.log(cobro);
+				  				Pagos.insert({
+									fechaPago 	: new Date(),
+									alumno_id 	: $stateParams.id,
+									numero 		: cobro.no,
+									semana 		: cobro.numero,
+									anio 		: cobro.anio,
+									estatus 	: 1,
+									concepto 	: concepto.datos[k].nombre,
+									tipo 		: "Cobro",
+									usuario_id 	: Meteor.userId(),
+									importe 	: concepto.datos[k].importe
+								});
+								semanasPagadas.push({
+									fechaPago 	: new Date(),
+									alumno_id 	: $stateParams.id,
+									numero 		: cobro.no,
+									semana 		: cobro.numero,
+									anio 		: cobro.anio,
+									estatus 	: 1,
+									concepto 	: concepto.datos[k].nombre,
+									tipo 		: "Cobro",
+									usuario_id 	: Meteor.userId(),
+									importe 	: concepto.datos[k].importe
+								});
+								var procedimientos= concepto.datos[k].procedimientos;
+								var fechaActual = new Date();
+						  		var fechaCobro = new Date(cobro.fecha);
+						  		//console.log(fechaActual,fechaCobro);
+						  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+						  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
+								for (var l = 0; procedimientos && l < procedimientos.length; l++) {
+									var procedimiento = procedimientos[l]
+									if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
+  										Pagos.insert({
+											fechaPago 	: new Date(),
+											alumno_id 	: $stateParams.id,
+											numero 		: cobro.no,
+											semana 		: cobro.numero,
+											anio 		: cobro.anio,
+											estatus 	: 1,
+											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+											tipo 		: "Recargo",
+											usuario_id 	: Meteor.userId(),
+											importe 	: procedimiento.monto
+										});
+										semanasPagadas.push({
+											fechaPago 	: new Date(),
+											alumno_id 	: $stateParams.id,
+											numero 		: cobro.no,
+											semana 		: cobro.numero,
+											anio 		: cobro.anio,
+											estatus 	: 1,
+											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+											tipo 		: "Recargo",
+											usuario_id 	: Meteor.userId(),
+											importe 	: procedimiento.monto
+										});
+  									}
+						  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
+						  				Pagos.insert({
+											fechaPago 	: new Date(),
+											alumno_id 	: $stateParams.id,
+											numero 		: cobro.no,
+											semana 		: cobro.numero,
+											anio 		: cobro.anio,
+											estatus 	: 1,
+											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+											tipo 		: "Descuento",
+											usuario_id 	: Meteor.userId(),
+											importe 	: procedimiento.monto * (-1)
+										});
+										semanasPagadas.push({
+											fechaPago 	: new Date(),
+											alumno_id 	: $stateParams.id,
+											numero 		: cobro.no,
+											semana 		: cobro.numero,
+											anio 		: cobro.anio,
+											estatus 	: 1,
+											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+											tipo 		: "Descuento",
+											usuario_id 	: Meteor.userId(),
+											importe 	: procedimiento.monto * (-1)
+										});
+						  			}
+
+								}
+			  				}
+						}
 					}
-				};
-				
-				for (var j = 0; j < rc.inscripciones[i].planPagoColegiatura.planPago.length; j++) {
-					if(rc.inscripciones[i].planPagoColegiatura.planPago[j].pagada==2){
-						rc.inscripciones[i].planPagoColegiatura.planPago[j].pagada=1;
-						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago=rc.inscripciones[i].planPagoColegiatura.cuota;
-						
-						var fechaActual = new Date();
-  						var fechaCobro = new Date(rc.inscripciones[i].planPagoColegiatura.planPago[j].fecha);
-  						var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
-  						var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
-  						console.log(dias,diasDescuento,(fechaActual-fechaCobro),(fechaCobro-fechaActual));
-					
-						for (var k = rc.inscripciones[i].planPagoColegiatura.recargos.length - 1; k >= 0; k--) {
-							var recargo = rc.inscripciones[i].planPagoColegiatura.recargos[k];
-							if(recargo.dias<dias){
-			  					if(recargo.tipoRecargo=="Fijo"){
-			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago+=recargo.recargo;
-			  					}
-			  					else if (recargo.tipoRecargo=="Procentual") {
-			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago+=((recargo.recargo/100)*rc.inscripciones[i].planPagoColegiatura.cuota);
-			  					};
-			  				};
-						};
-						console.log(rc.inscripciones[i].planPagoColegiatura.descuentos);
-
-
-						for (var k = rc.inscripciones[i].planPagoColegiatura.descuentos.length - 1; k >= 0; k--) {
-							var descuento = rc.inscripciones[i].planPagoColegiatura.descuentos[k];
-							console.log(descuento.dias,diasDescuento);
-							if(descuento.dias<diasDescuento){
-			  					if(descuento.tipoDescuento=="Fijo"){
-			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago-=descuento.descuento;
-			  					}
-			  					else if (descuento.tipoDescuento=="Procentual") {
-			  						rc.inscripciones[i].planPagoColegiatura.planPago[j].pago-=((descuento.descuento/100)*rc.inscripciones[i].planPagoColegiatura.cuota);
-			  					};
-			  				};
-						};
-
-						var pago = rc.inscripciones[i].planPagoColegiatura.planPago[j];
-						Pagos.insert({
-							fechaPago 	: new Date(),
-							alumno_id 	: $stateParams.id,
-							numero 		: pago.no,
-							semana 		: pago.numero,
-							anio 		: pago.anio,
-							estatus 	: 1,
-							usuario_id 	: Meteor.userId(),
-							importe 	: pago.pago
-						});
-						semanasPagadas.push({
-							anio 	: pago.anio,
-							numero 	: pago.numero,
-							
-							pagada 	: 3,
-							importe : pago.pago
-						});
-					};
-				};
-				var _inscripcion = quitarhk(rc.inscripciones[i]);
+				}
+		
+				var _inscripcion = quitarhk(inscripcion);
 				//console.log(rc.inscripciones[i]);
 				//console.log(_inscripcion);
 				var inscripcion_id=_inscripcion._id;
