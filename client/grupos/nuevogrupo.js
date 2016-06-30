@@ -43,7 +43,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		}});
 	
 	this.subscribe('secciones');
-	
+	this.subscribe('horarios');
 	this.subscribe('ciclos', () => {
 		return [{
 			estatus : true,
@@ -111,6 +111,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  },
 	  turnos : () => {
 		  return Turnos.find();
+	  },
+	  horarios : ()=>{
+	  	return Horarios.find();
 	  },
 	  maestros : () => {
 		  return Maestros.find();
@@ -181,8 +184,16 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	{
 		this.grupo.estatus = true;
 		grupo.inscritos = 0;
+		horario = Horarios.findOne(grupo.horario_id);
 		_grupo =quitarhk(grupo)
-		Grupos.insert(_grupo);
+		__grupo_id = Grupos.insert(_grupo);
+		_.each(horario.clases, function(clase){
+			mmg = {}; 
+			mmg.materia_id = clase.materia_id; 
+			mmg.maestro_id = clase.maestro_id;
+			mmg.grupo_id = __grupo_id;
+			MaestrosMateriasGrupos.insert(mmg);
+		});
 		toastr.success('Grupo guardado.');
 		this.grupo = {}; 
 		$('.collapse').collapse('hide');
@@ -206,7 +217,6 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		Grupos.update({_id:$stateParams.id}, {$set : _grupo});
 		toastr.success('Grupo guardado.');
 		$state.go("root.grupos",{"id":$stateParams.id});
-	};
-	
+	};	
 
 };

@@ -342,7 +342,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       }
     })
     .state('root.maestroGrupos', {
-      url: '/gruposMaestro/:id',
+      url: '/gruposMaestro/:_id',
       templateUrl: 'client/maestro/grupos/grupos.ng.html',
       controller: 'MaestroGruposCtrl as masgrupo',
       resolve: {

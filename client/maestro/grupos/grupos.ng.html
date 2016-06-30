@@ -1,29 +1,30 @@
-<div class="row" ng-repeat="grupo in masgrupo.grupos">	
+<div class="row" ng-repeat="mmg in masgrupo.mmgs">	
   <div class="col-sm-12 col-md-12">
     <div class="panel panel-default coupon">
       <div class="panel-heading" id="head">
         <div class="panel-title" id="title">
-            <h4>{{grupo.seccion.clave}} - {{grupo.seccion.descripcionCorta}}<span class="pull-right">{{grupo.identificador}}</span></h4>
+            <h4>{{mmg.materia.clave}} - {{mmg.materia.etiqueta}}<span class="pull-right">{{mmg.grupo.identificador}} - {{mmg.grupo.nombre}}</span></h4>
         </div>
       </div>
       <div class="panel-body">
 	      <div class="col-sm-12 col-md-3">
 					<ul class="items">
-			      <li><a href="/asistenciaGrupo/{{grupo._id}}">Tomar asistencia</a></li>
-			      <li><a href="/verAsistencias/{{grupo._id}}">Ver asistencia</a></li>
-			      <li><a href="/calificacionesGrupo/{{grupo_id}}">Capturar calificaciones</a></li>
-			      <li><a href="/tareas/{{grupo._id}}/{{grupo.maestro_id}}">Tareas</a></li>
-			      <li><a href="/calificacionesGrupo/{{grupo_id}}">Exámenes</a></li>
+			      <li><a href="/asistenciaGrupo/{{mmg.grupo._id}}">Tomar asistencia</a></li>
+			      <li><a href="/verAsistencias/{{mmg.grupo._id}}">Ver asistencia</a></li>
+			      <li><a href="/calificacionesGrupo/{{mmg.grupo_id}}">Capturar calificaciones</a></li>
+			      <li><a href="/tareas/{{grupo._id}}/{{mmg.grupo.maestro_id}}">Tareas</a></li>
+			      <li><a href="/calificacionesGrupo/{{mmg.grupo_id}}">Exámenes</a></li>
 			    </ul>
 			    <div class="offer">
 			      <span class="usd"><sup>#</sup></span>
-			      <span class="number">{{grupo.inscritos}}</span>
+			      <span class="number">{{mmg.alumnos.length}}</span>
 			      <span class="cents"><sup>Alumnos</sup></span>
 			    </div>
 				</div>
+				
 				<div class="col-sm-12 col-md-9">
 					<div class="row-alumnos-fluid" style="overflow: auto;">
-						<div class="col-lg-alumnos-3" ng-repeat="alumno in grupo.alumnos">			
+						<div class="col-lg-alumnos-3" ng-repeat="alumno in mmg.alumnos">			
 	            <div class="card hovercard">
 	                <div class="cardheader">
 										
@@ -39,7 +40,8 @@
 	            </div>			
 						</div>	
 					</div>
-				</div>        
+				</div>
+   
       </div>
       <div class="panel-footer">
         <div class="coupon-code">
