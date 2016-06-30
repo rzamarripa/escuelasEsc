@@ -95,8 +95,10 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		periodo.conceptos = [];
 		var conceptos = ConceptosPago.find().fetch();
 		for (var i = 0; i < conceptos.length; i++) {
-			periodo.conceptos.push( { nombre : conceptos[i].nombre, 
+			if(periodo.modulo==conceptos[i].modulo)
+				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
+								procedimientos : periodo.procedimiento[conceptos[i].nombre],
 								estatus : 1 })
 
 
@@ -133,6 +135,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			if(conceptos[i].modulo==periodo.modulo)
 				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
+								procedimientos : periodo.procedimiento[conceptos[i].nombre],
 								estatus : 1 });
 
 
@@ -153,13 +156,14 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 	this.cambiarEstatus = function(id)
 	{
-		var periodo = SubCiclos.findOne({_id:id});
+		/*var periodo = SubCiclos.findOne({_id:id});
 		if(periodo.estatus == true)
 			periodo.estatus = false;
 		else
 			periodo.estatus = true;
 		
-		Periodos.update({_id:id}, {$set : {estatus : periodo.estatus}});
+		Periodos.update({_id:id}, {$set : {estatus : periodo.estatus}});*/
+		Periodos.remove(id);
 	};
 	
 	/*this.planPagos = function(subCiclo){
