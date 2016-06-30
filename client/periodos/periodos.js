@@ -94,12 +94,18 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		periodo.estatus = true;
 		periodo.conceptos = [];
 		var conceptos = ConceptosPago.find().fetch();
+		console.log(periodo);
 		for (var i = 0; i < conceptos.length; i++) {
-			if(periodo.modulo==conceptos[i].modulo)
+			if(periodo.modulo==conceptos[i].modulo){
+				var procc=[];
+				if(periodo.procedimiento &&  periodo.procedimiento[conceptos[i].nombre] )
+					procc= periodo.procedimiento[conceptos[i].nombre];
 				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
-								procedimientos : periodo.procedimiento[conceptos[i].nombre],
+								procedimientos : procc,
 								estatus : 1 })
+			}
+				
 
 
 		}
@@ -132,11 +138,16 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var conceptos = ConceptosPago.find().fetch();
 		periodo.conceptos=[];
 		for (var i = 0; i < conceptos.length; i++) {
-			if(conceptos[i].modulo==periodo.modulo)
+			if(conceptos[i].modulo==periodo.modulo){
+				var procc=[];
+				if(periodo.procedimiento &&  periodo.procedimiento[conceptos[i].nombre] )
+					procc= periodo.procedimiento[conceptos[i].nombre];
+
 				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
-								procedimientos : periodo.procedimiento[conceptos[i].nombre],
+								procedimientos : procc,
 								estatus : 1 });
+			}
 
 
 		}
@@ -199,28 +210,21 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.periodo.descuentos.push({});
 	}
 
-	this.eliminarRecargo = function(recargo){
+
+	this.eliminarProcedimiento = function(procedimiento,concepto){
 		if(!this.periodo)
 			this.periodo={};
-		if(!this.periodo.recargos)
-			this.periodo.recargos=[];
+		if(!this.periodo.procedimiento)
+			this.periodo.procedimiento={};
+		if(!this.periodo.procedimiento[concepto])
+			this.periodo.procedimiento[concepto]=[];
 		//console.log();
-		var itemToDelete = this.periodo.recargos.indexOf(recargo);
+		var itemToDelete = this.periodo.procedimiento[concepto].indexOf(procedimiento);
 		if(itemToDelete>=0)
-			this.periodo.recargos.splice(itemToDelete,1);
+			this.periodo.procedimiento[concepto].splice(itemToDelete,1);
 	}
 
-	this.eliminarDescuento = function(descuento){
-		if(!this.periodo)
-			this.periodo={};
-		if(!this.periodo.descuentos)
-			this.periodo.descuentos=[];
-		//console.log();
-		var itemToDelete = this.periodo.descuentos.indexOf(descuento);
-		if(itemToDelete>=0)
-			this.periodo.descuentos.splice(itemToDelete,1);
-	}
-	
+
 	this.generar = function(periodo){
 		var periodo = this.periodo;
 		console.log(periodo);
