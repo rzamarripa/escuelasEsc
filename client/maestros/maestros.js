@@ -27,7 +27,8 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	{
 		this.maestro.estatus = true;
 		console.log(this.maestro);
-		Maestros.insert(this.maestro);
+		var id = Maestros.insert(this.maestro);
+		rc.maestro.maestro_id = id;
 		Meteor.call('createUsuario', rc.maestro, 'maestro');
 		toastr.success("Maestro Creado \n Usuario Creado");
 		this.maestro = {};

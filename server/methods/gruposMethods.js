@@ -1,26 +1,21 @@
 Meteor.methods({
   getGrupos: function (query, usuario) {
     query = query || {};
-    var maestro = Maestros.findOne({nombreUsuario:Meteor.user().username});
-    var grupos = Grupos.find({maestro_id:maestro._id}).fetch();
+    var mmgs = MaestrosMateriasGrupos.find({maestro_id:Meteor.user().profile.maestro_id}).fetch()
 
-    var secciones = Secciones.find().fetch();
-    var ciclos	 	= Ciclos.find().fetch();
-
-    grupos.forEach(function (grupo) {
-			grupo.alumnos = [];
-      grupo.seccion = findInCollection(secciones, grupo.seccion_id);
-      grupo.ciclos = findInCollection(ciclos, grupo.ciclo_id);
-      grupo.maestro = maestro;
-      grupo.usuario = Meteor.user();
-      var inscripciones = Inscripciones.find({grupo_id:grupo._id}).fetch();
+    mmgs.forEach(function (mmg) {
+      mmg.alumnos = [];
+			mmg.maestro = Maestros.findOne(mmg.maestro_id);
+      mmg.materia = Materias.findOne(mmg.materia_id);
+      mmg.grupo = Grupos.findOne(mmg.grupo_id);
+      var inscripciones = Inscripciones.find({grupo_id:mmg.grupo_id}).fetch();
       inscripciones.forEach(function(inscripcion){
-	      var alumno = Alumnos.findOne({_id:inscripcion.alumno_id});
-	      grupo.alumnos.push(alumno);
+        var alumno = Alumnos.findOne({_id:inscripcion.alumno_id});
+        mmg.alumnos.push(alumno);
       });
     });
 		
-    return grupos;
+    return mmgs;
 
     function findInCollection(lista, valor) {
       return _.find(lista, function (x) {
