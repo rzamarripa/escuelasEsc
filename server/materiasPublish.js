@@ -1,3 +1,3 @@
-Meteor.publish("materias", function(){
-	return  Materias.find();
+Meteor.publish("materias", function(params){
+	return  Materias.find(params);
 });
