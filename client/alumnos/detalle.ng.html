@@ -231,33 +231,14 @@
 											<div class="row">
 											<section class="col col-1"  ng-click="al.seleccionarSemana(cobro,concepto)" ng-repeat = "cobro in concepto.planPago" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
 												<label class="input">
-													<input ng-class="al.obtenerEstatus(cobro)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
+													<input ng-class="al.obtenerEstatus(cobro,concepto)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
 												</label>
 											</section>
 											</div>
 										</fieldset>
 
 									</div>
-									<h2> Inscripción </h2>
-									<fieldset>
-										<div class="row">
-											<section class="col col-1"  ng-click="al.seleccionarSemana(cobro,curso.planPagoInscripcion)" ng-repeat = "cobro in curso.planPagoInscripcion.planPago" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
-												<label class="input">
-													<input ng-class="al.obtenerEstatus(cobro,curso.planPagoInscripcion.recargos)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
-												</label>
-											</section>
-										</div>							
-									</fieldset>
-									<h2>Colegiaturas</h2>
-									<fieldset>
-										<div class="row">
-											<section class="col col-1"  ng-click="al.seleccionarSemana(cobro, curso.planPagoColegiatura)" ng-repeat = "cobro in curso.planPagoColegiatura.planPago" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
-												<label class="input">
-													<input ng-class="al.obtenerEstatus(cobro,curso.planPagoColegiatura.recargos)" type="text" value="{{cobro.numero}} / {{cobro.anio}}" disabled="">
-												</label>
-											</section>
-										</div>							
-									</fieldset>
+									
 								</form>
 								<div class="well well-sm  bg-color-darken txt-color-white no-border">
 									<div class="fa-lg">

@@ -211,10 +211,12 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   }
 
   
-  	this.obtenerEstatus = function(cobro){
-  		//var fechaActual = new Date();
-  		//var fechaCobro = new Date(cobro.fecha);
-  		//var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  	this.obtenerEstatus = function(cobro,concepto){
+  		
+  		var fechaActual = new Date();
+  		var fechaCobro = new Date(cobro.fecha);
+  		var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+  		console.log(dias,concepto)
   		//console.log(recargos);
   		//if(!recargos) recargos =[];
 	  	if(cobro.pagada==1){
@@ -224,7 +226,16 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	 		return "bg-color-blue txt-color-white";
 	 	}
 	 	else {
-	  		//for (var i = 0; i < recargos.length; i++) {
+	  		for (var i = 0; concepto && concepto.datos && i < concepto.datos.length; i++) {
+	  			var procedimientos = concepto.datos[i].procedimientos;
+	  			procedimientos = procedimientos? procedimientos:[];
+
+	  			for (var j = 0; j < procedimientos.length; j++) {
+	  				var procedimiento = procedimientos[i];
+	  				if(procedimiento && procedimiento.dias<=dias && procedimiento.tipoProcedimiento=='Recargo')
+	  					return "bg-color-orange txt-color-white";
+	  			}
+	  		}
 	  			//console.log(dias,recargos[i].dias,cobro);
 	  		//	if(recargos[i].dias<dias)
 	  		//		return "bg-color-orange txt-color-white";
