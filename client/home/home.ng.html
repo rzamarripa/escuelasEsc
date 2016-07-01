@@ -1,5 +1,5 @@
-<h1></h1>
-<section id="widget-grid" data-widget-grid="data-widget-grid">
+<h1>Menú Principal</h1>
+<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'admin'">
   <div class="row">
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -13,10 +13,31 @@
 								<a ui-sref="root.alumnos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Alumnos</a>
 							</div>
 							<div class="col-sm-3">
-								<a ui-sref="root.maestros" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa fa-th"></i></span>Maestros</a>
+								<a ui-sref="root.maestros" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Maestros</a>
 							</div>
 							<div class="col-sm-3">
 								<a ui-sref="root.trabajadores" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Empleados</a>
+							</div>
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Finanzas</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.inscripciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-pencil"></i></span>Inscripciones</a>
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.inscripciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa fa-th"></i></span>Reportes</a>
 							</div>
 						</div>
           </div>
@@ -52,7 +73,7 @@
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
         <header>
-          <h2>Planes de Estudios y Secciones Academicas</h2>
+          <h2>Planes de Estudios y Secciones Académicas</h2>
         </header>
         <div>
           <div class="widget-body">
@@ -93,6 +114,12 @@
 							</div>
 							<div class="col-sm-3">
 								<a ui-sref="root.deptosAcademicos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-cubes"></i></span>Deptos. Académicos</a>
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.conceptosPago" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Conceptos de Pago</a>
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.listarHorarios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-calendar"></i></span>Horarios</a>
 							</div>
 						</div>
           </div>
@@ -139,6 +166,28 @@
 							<div class="col-sm-3">
 								<a ui-sref="root.ocupaciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-tag"></i></span>Ocupaciones</a>
 							</div>
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú de Maestros -->
+<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'maestro'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Grupos</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.maestroGrupos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Mis Grupos</a>
+							</div>							
 						</div>
           </div>
         </div>
