@@ -122,8 +122,18 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  });
 	  return temp;
   }
+  this.periodoVisible = function(periodo){
+  	for (var i = 0; periodo && periodo.datos && i < periodo.datos.length; i++) {
+  		if(periodo.datos[i] && periodo.datos[i].activa )
+  			return true;
+  	}
+  	return false;
+
+  }
   this.calcularImporteU= function(datos,pago){
 		console.log(datos,pago)
+		if(datos && datos.activa==false)
+			return 0;
 		//console.log(this.inscripcion);
 		var fechaActual = new Date();
   		var fechaCobro = new Date(pago.fecha);
@@ -230,7 +240,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  			var procedimientos = concepto.datos[i].procedimientos;
 	  			procedimientos = procedimientos? procedimientos:[];
 
-	  			for (var j = 0; j < procedimientos.length; j++) {
+	  			for (var j = 0;concepto.datos[i].activa && j < procedimientos.length; j++) {
 	  				var procedimiento = procedimientos[i];
 	  				if(procedimiento && procedimiento.dias<=dias && procedimiento.tipoProcedimiento=='Recargo')
 	  					return "bg-color-orange txt-color-white";
@@ -257,94 +267,96 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 						if(cobro.pagada==2){
 							cobro.pagada = 1;
 							cobro.pago = 0;
-							for (var k = 0; k < concepto.datos.length; k++) {
-			  					cobro.pago +=this.calcularImporteU( concepto.datos[k],cobro);
-			  					console.log(cobro);
-				  				Pagos.insert({
-									fechaPago 	: new Date(),
-									alumno_id 	: $stateParams.id,
-									numero 		: cobro.no,
-									semana 		: cobro.numero,
-									anio 		: cobro.anio,
-									estatus 	: 1,
-									concepto 	: concepto.datos[k].nombre,
-									tipo 		: "Cobro",
-									usuario_id 	: Meteor.userId(),
-									importe 	: concepto.datos[k].importe
-								});
-								semanasPagadas.push({
-									fechaPago 	: new Date(),
-									alumno_id 	: $stateParams.id,
-									numero 		: cobro.no,
-									semana 		: cobro.numero,
-									anio 		: cobro.anio,
-									estatus 	: 1,
-									concepto 	: concepto.datos[k].nombre,
-									tipo 		: "Cobro",
-									usuario_id 	: Meteor.userId(),
-									importe 	: concepto.datos[k].importe
-								});
-								var procedimientos= concepto.datos[k].procedimientos;
-								var fechaActual = new Date();
-						  		var fechaCobro = new Date(cobro.fecha);
-						  		//console.log(fechaActual,fechaCobro);
-						  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
-						  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
-								for (var l = 0; procedimientos && l < procedimientos.length; l++) {
-									var procedimiento = procedimientos[l]
-									if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
-  										Pagos.insert({
-											fechaPago 	: new Date(),
-											alumno_id 	: $stateParams.id,
-											numero 		: cobro.no,
-											semana 		: cobro.numero,
-											anio 		: cobro.anio,
-											estatus 	: 1,
-											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-											tipo 		: "Recargo",
-											usuario_id 	: Meteor.userId(),
-											importe 	: procedimiento.monto
-										});
-										semanasPagadas.push({
-											fechaPago 	: new Date(),
-											alumno_id 	: $stateParams.id,
-											numero 		: cobro.no,
-											semana 		: cobro.numero,
-											anio 		: cobro.anio,
-											estatus 	: 1,
-											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-											tipo 		: "Recargo",
-											usuario_id 	: Meteor.userId(),
-											importe 	: procedimiento.monto
-										});
-  									}
-						  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
-						  				Pagos.insert({
-											fechaPago 	: new Date(),
-											alumno_id 	: $stateParams.id,
-											numero 		: cobro.no,
-											semana 		: cobro.numero,
-											anio 		: cobro.anio,
-											estatus 	: 1,
-											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-											tipo 		: "Descuento",
-											usuario_id 	: Meteor.userId(),
-											importe 	: procedimiento.monto * (-1)
-										});
-										semanasPagadas.push({
-											fechaPago 	: new Date(),
-											alumno_id 	: $stateParams.id,
-											numero 		: cobro.no,
-											semana 		: cobro.numero,
-											anio 		: cobro.anio,
-											estatus 	: 1,
-											concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-											tipo 		: "Descuento",
-											usuario_id 	: Meteor.userId(),
-											importe 	: procedimiento.monto * (-1)
-										});
-						  			}
+							for (var k = 0; k < concepto.datos.length  ; k++) {
+								if(concepto.datos[k].activa){
+				  					cobro.pago +=this.calcularImporteU( concepto.datos[k],cobro);
+				  					console.log(cobro);
+					  				Pagos.insert({
+										fechaPago 	: new Date(),
+										alumno_id 	: $stateParams.id,
+										numero 		: cobro.no,
+										semana 		: cobro.numero,
+										anio 		: cobro.anio,
+										estatus 	: 1,
+										concepto 	: concepto.datos[k].nombre,
+										tipo 		: "Cobro",
+										usuario_id 	: Meteor.userId(),
+										importe 	: concepto.datos[k].importe
+									});
+									semanasPagadas.push({
+										fechaPago 	: new Date(),
+										alumno_id 	: $stateParams.id,
+										numero 		: cobro.no,
+										semana 		: cobro.numero,
+										anio 		: cobro.anio,
+										estatus 	: 1,
+										concepto 	: concepto.datos[k].nombre,
+										tipo 		: "Cobro",
+										usuario_id 	: Meteor.userId(),
+										importe 	: concepto.datos[k].importe
+									});
+									var procedimientos= concepto.datos[k].procedimientos;
+									var fechaActual = new Date();
+							  		var fechaCobro = new Date(cobro.fecha);
+							  		//console.log(fechaActual,fechaCobro);
+							  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+							  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
+									for (var l = 0; procedimientos && l < procedimientos.length; l++) {
+										var procedimiento = procedimientos[l]
+										if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
+	  										Pagos.insert({
+												fechaPago 	: new Date(),
+												alumno_id 	: $stateParams.id,
+												numero 		: cobro.no,
+												semana 		: cobro.numero,
+												anio 		: cobro.anio,
+												estatus 	: 1,
+												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+												tipo 		: "Recargo",
+												usuario_id 	: Meteor.userId(),
+												importe 	: procedimiento.monto
+											});
+											semanasPagadas.push({
+												fechaPago 	: new Date(),
+												alumno_id 	: $stateParams.id,
+												numero 		: cobro.no,
+												semana 		: cobro.numero,
+												anio 		: cobro.anio,
+												estatus 	: 1,
+												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+												tipo 		: "Recargo",
+												usuario_id 	: Meteor.userId(),
+												importe 	: procedimiento.monto
+											});
+	  									}
+							  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
+							  				Pagos.insert({
+												fechaPago 	: new Date(),
+												alumno_id 	: $stateParams.id,
+												numero 		: cobro.no,
+												semana 		: cobro.numero,
+												anio 		: cobro.anio,
+												estatus 	: 1,
+												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+												tipo 		: "Descuento",
+												usuario_id 	: Meteor.userId(),
+												importe 	: procedimiento.monto * (-1)
+											});
+											semanasPagadas.push({
+												fechaPago 	: new Date(),
+												alumno_id 	: $stateParams.id,
+												numero 		: cobro.no,
+												semana 		: cobro.numero,
+												anio 		: cobro.anio,
+												estatus 	: 1,
+												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+												tipo 		: "Descuento",
+												usuario_id 	: Meteor.userId(),
+												importe 	: procedimiento.monto * (-1)
+											});
+							  			}
 
+									}
 								}
 			  				}
 						}

@@ -72,7 +72,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
 			console.log(_periodo);
-			if(_periodo.tipoPlan=='inscripcion'){
+			if(_periodo.tipoPlan=='inscripcion' && _periodo.activa==true){
 				_periodo.pago= parseFloat(inscripcion.importePagado);	
 				if(inscripcion.totalPagar<=parseFloat(inscripcion.importePagado)
 					&& _periodo.planPago && _periodo.planPago instanceof Array){
@@ -99,6 +99,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.calcularImporteU= function(datos,pago){
 		//console.log(datos,pago)
 		//console.log(this.inscripcion);
+		if(datos && datos.activa==false)
+			return 0;
 		var fechaActual = this.inscripcion.fechaInscripcion;
   		var fechaCobro = new Date(pago.fecha);
   		//console.log(fechaActual,fechaCobro);

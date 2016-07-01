@@ -225,7 +225,7 @@
 										<h1> Grupo {{al.grupo(curso.grupo_id).nombre}} </h1>
 	
 									</header>		
-									<div ng-repeat ="(idconcepto, concepto) in curso.plan">
+									<div ng-repeat ="(idconcepto, concepto) in curso.plan" ng-if="al.periodoVisible(concepto)">
 										<h2> {{idconcepto}} : </h2>	
 										<fieldset>
 											<div class="row">
