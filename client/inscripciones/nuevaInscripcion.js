@@ -57,6 +57,14 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.alumnoSeleccionado = {};
 	this.cupo = false;
 	this.inscripcion.abono = 0.00;
+	this.periodoVisible = function(periodo){
+	  	for (var i = 0; periodo && periodo.datos && i < periodo.datos.length; i++) {
+	  		if(periodo.datos[i] && periodo.datos[i].activa )
+	  			return true;
+	  	}
+	  	return false;
+
+	}
 	
 	this.guardar = function(inscripcion)
 	{   
@@ -72,8 +80,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
 			console.log(_periodo);
-			if(_periodo.tipoPlan=='inscripcion' && _periodo.activa==true){
+			if(_periodo.tipoPlan=='inscripcion' && this.periodoVisible(_periodo)==true){
 				_periodo.pago= parseFloat(inscripcion.importePagado);	
+				console.log(_periodo.pago)
 				if(inscripcion.totalPagar<=parseFloat(inscripcion.importePagado)
 					&& _periodo.planPago && _periodo.planPago instanceof Array){
 					_periodo.planPago[0].pagada =1;
