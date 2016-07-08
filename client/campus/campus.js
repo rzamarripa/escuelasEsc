@@ -20,8 +20,12 @@ angular.module("casserole")
     this.campus = {};		
   };
   
-  this.guardar = function(campus)
+  this.guardar = function(campus,form)
 	{
+		if(form.$invalid){
+	        toastr.error('No se pudo guardar la Campus.');
+	        return;
+	    }
 		this.campus.estatus = true;
 		console.log(this.campus);
 		Campus.insert(this.campus);
@@ -29,7 +33,10 @@ angular.module("casserole")
 		this.campus = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.campus')
+		form.$setPristine();
+        form.$setUntouched();
+        //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
+		//$state.go('root.campus')
 	};
 	
 	this.editar = function(id)
