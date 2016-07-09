@@ -11,13 +11,13 @@
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
+				    	<input type="email" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion" minlength="8"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion" minlength="8" required></textarea>
 			    	</div>
 			    </div>
 				</div>
@@ -54,7 +54,7 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="campus in cp.campuses">
-			    <td>{{campus.nombre}}</td>
+			    <td><a href="/campus/{{campus._id}}">{{campus.nombre}}</a></td>
 			    <td>{{campus.descripcion}} </td>
 			    <td>
 				    <div class="text-center">

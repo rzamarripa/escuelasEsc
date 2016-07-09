@@ -1,0 +1,70 @@
+angular.module("casserole")
+.controller("CampusDetalleCtrl", CampusDetalleCtrl);  
+ function CampusDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+ 	$reactive(this).attach($scope);
+  this.action = true;
+  this.nuevo = true;
+
+	this.subscribe('campus');
+
+	this.helpers({
+	  campuses : () => {
+		  return Campus.find();
+	  }
+  });
+
+  this.nuevoCampus = function()
+  {
+    this.action = true;
+    this.nuevo = !this.nuevo;
+    this.campus = {};		
+  };
+  
+  this.guardar = function(campus,form)
+	{
+		if(form.$invalid){
+	        toastr.error('No se pudo guardar el Campus.');
+	        return;
+	    }
+		this.campus.estatus = true;
+		console.log(this.campus);
+		Campus.insert(this.campus);
+		toastr.success('campus guardado.');
+		this.campus = {}; 
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
+        //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
+		//$state.go('root.campus')
+	};
+	
+	this.editar = function(id)
+	{
+    this.campus = Campus.findOne({_id:id});
+    this.action = false;
+    $('.collapse').collapse('show');
+    this.nuevo = false;
+	};
+	
+	this.actualizar = function(campus)
+	{
+		var idTemp = campus._id;
+		delete campus._id;		
+		Campus.update({_id:idTemp},{$set:campus});
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+	};
+
+	this.cambiarEstatus = function(id)
+	{
+		var campus = Campus.findOne({_id:id});
+		if(campus.estatus == true)
+			campus.estatus = false;
+		else
+			campus.estatus = true;
+		
+		Campus.update({_id: id},{$set :  {estatus : campus.estatus}});
+  };
+		
+};
