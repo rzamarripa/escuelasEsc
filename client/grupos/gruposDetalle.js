@@ -14,7 +14,7 @@ angular
 	  }];
   });
   
-  this.subscribe('alumnoss', () => {
+  this.subscribe('alumnos', () => {
 	  return [{estatus:true}]
   });
   

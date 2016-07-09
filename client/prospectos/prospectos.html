@@ -1,0 +1,50 @@
+<h2>Prospectos</h2>
+<div class="row">
+	<div class="col-sm-12">
+		<a class="btn btn-primary" href="/nuevoProspecto">
+		  Nuevo
+		</a>
+		<label>Buscar: <input ng-model="fa.buscar.nombre" class="form-control"></label>
+	</div>
+</div>
+<br/>
+<!-- List -->
+<div class="row">
+  <div class="col-lg-12">
+    <h6 class="description">Nuestros Prospectos</h6>
+    <div class="row pt-md">
+      <div class="col-sm-12">
+        <table class="table table-bordered">
+	        <tr>
+		        <th>No.</th>
+		        <th>Nombre</th>		        
+		        <th>Teléfono</th>
+		        <th>Correo</th>
+		        <th>Interés</th>
+		        <th>Quiero Ser</th>
+		        <th>Información Adicional</th>
+		        <th>Asignar a</th>
+		        <th>Acciones</th>
+	        </tr>
+	        <tr ng-repeat="prospecto in fa.prospectos">
+		        <td>{{$index + 1}}</td>
+		        <td><a href="./prospecto/{{prospecto._id}}">{{prospecto.nombre}}</a></td>
+		        <td>{{prospecto.telefono}}</td>
+		        <td>{{prospecto.correo}}</td>
+		        <td>{{prospecto.estudioInteres}}</td>
+		        <td>{{prospecto.quieroSer}}</td>
+		        <td>{{prospecto.informacion}}</td>
+		        <td>
+<!-- 			        <select ng-options="empleado.id for empleado in fa.empleados" class="form-control" ng-model="prospecto.empleado_id" ng-change="fa.asignar(prospecto, empleado.nombre)"></select> -->
+			        
+              <select required ng-model="prospecto.empleado_id" class="form-control" ng-options="empleado._id as empleado.nombre + ' ' + empleado.apPaterno + ' ' + empleado.apMaterno for empleado in fa.empleados" ng-change="fa.asignar(prospecto, prospecto.empleado_id)"></select>
+			      </td>
+			      <td>
+							<button class="btn btn-danger" ng-confirm-click="Está seguro de eliminar el prospecto?" confirmed-click="fa.eliminar(prospecto)"><i class="fa fa-trash white"></i></button>
+		        </td>
+	        </tr>
+        </table>
+      </div>            
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 angular.module("casserole")
-.controller("CampusCtrl", CampusCtrl);  
- function CampusCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+.controller("CampusDetalleCtrl", CampusDetalleCtrl);  
+ function CampusDetalleCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	$reactive(this).attach($scope);
   this.action = true;
   this.nuevo = true;
