@@ -53,7 +53,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.inscripcion = {};
 	this.inscripcion.totalPagar = 0.00;
 	//this.inscripcion.fechaInscripcion = new Date();
-	this.inscripcion.conceptosSeleccionados = [];
+	//this.inscripcion.conceptosSeleccionados = [];
 	this.alumnoSeleccionado = {};
 	this.cupo = false;
 	this.inscripcion.abono = 0.00;
@@ -130,6 +130,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   		};
   		return importe
 	}	
+
 	this.autorun(() => {
 	  	var grupoid = this.getReactively("inscripcion.grupo_id");
 	  	var grupo = undefined;
@@ -138,6 +139,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		//console.log(grupo);
 	  	if(grupo && grupo.plan ){
 	  		this.inscripcion.totalPagar = 0;
+	  		this.inscripcion.plan = grupo.plan;
 	  		var _periodo = null;
 	  		for(var ind in grupo.plan){
 	  			if(grupo.plan[ind] && grupo.plan[ind].tipoPlan=='inscripcion'){
@@ -185,7 +187,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			this.inscripcion.cambio =0;
 	}
 	
-  this.getAlumnoSeleccionado= function(id)
+  	this.getAlumnoSeleccionado= function(id)
 	{
 		var alumno = Alumnos.findOne(id);
 		if(alumno){
