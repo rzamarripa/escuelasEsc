@@ -1,2 +1,134 @@
-<h2>Campus</h2>
-{{$stateParams}}
+<h2>Campus - detalle</h2>
+
+<!-- Menú de Vendedores ng-if="currentUser.roles[0] == 'admin'" -->
+<form name="form" class="form-horizontal" role="form">  
+	<section id="descripcion" data-widget-grid="data-widget-grid1" >
+		<div class="row">
+	    <div class="col-sm-12">
+	      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+	        <header>
+	          <h2>Información del Campus</h2>
+	        </header>
+          <div class="widget-body">
+	          <div class="row">
+		          <div class="col-sm-2">
+					    	<label>Teléfono 1</label>
+					    	<input type="number" class="form-control" placeholder="Teléfono 1" ng-model="cd.campus.detalle.telefono1" required>
+				    	</div>
+				    	<div class="col-sm-2">					    										
+					    	<label>Teléfono 2</label>																	
+					    	<input type="number" class="form-control" placeholder="Teléfono 2" ng-model="cd.campus.detalle.telefono2">
+				    	</div>
+				    	<div class="col-sm-8">
+						    <label>Dirección</label>
+						    <textarea class="form-control" placeholder="Dirección" ng-model="cd.campus.detalle.direccion" required></textarea>
+				    	</div>				    	
+				    </div>
+						<div class="row">
+				    	<div class="col-sm-12">
+						    <label>Descripción</label>
+						    <textarea class="form-control" placeholder="Descripción" ng-model="cd.campus.detalle.descripcion" required></textarea>
+				    	</div>
+				    </div>						
+				    <div class="row">
+					    <div class="col-sm-12">
+					    	<label>Logo del campus</label>																	
+					    	<input type="text" class="form-control" placeholder="http://" ng-model="cd.campus.detalle.logo" required>
+					    </div>
+				    </div>
+					</div>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+	<section id="usuario" data-widget-grid="data-widget-grid2" >
+	  <div class="row">
+	    <div class="col-sm-12">
+	      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+	        <header>
+	          <h2>Información del Director del Campus</h2>
+	        </header>
+	        <div>
+	          <div class="widget-body">							
+					    <div class="row">
+						    <div class="col-sm-2">					    
+						    	<label>Nombre</label>
+						    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cd.campus.detalle.nombre" required>
+					    	</div>
+					    	<div class="col-sm-2">					    
+						    	<label>Apellido Paterno</label>
+						    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="cd.campus.detalle.apPaterno" required>
+					    	</div>
+					    	<div class="col-sm-2">					    
+						    	<label>Apellido Materno</label>
+						    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="cd.campus.detalle.apMaterno" required>
+					    	</div>
+					    	<div class="col-sm-2">					    
+						    	<label>Usuario</label>
+						    	<input type="text" class="form-control" placeholder="Usuario" ng-model="cd.campus.detalle.username" required>
+					    	</div>																									
+					    	<div class="col-sm-2">					    										
+						    	<label>Contraseña</label>																	
+						    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="cd.campus.detalle.password" required>
+					    	</div>
+					    </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+	<section id="widget-grid" data-widget-grid="data-widget-grid3" >
+	  <div class="row">
+	    <div class="col-sm-12">
+	      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget3">
+	        <header>
+	          <h2>Periodos para dar de baja al alumno</h2>
+	        </header>
+	        <div>
+	          <div class="widget-body">							
+					    <div class="row">
+					    	<div class="col-sm-2">					    
+						    	<label>Semanas</label>
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.semanas" required>
+					    	</div>																									
+					    	<div class="col-sm-2">					    										
+						    	<label>Meses</label>																	
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.meses" required>
+					    	</div>																									
+					    	<div class="col-sm-2">					    										
+						    	<label>Bimestres</label>															
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.bimestres" required>
+					    	</div>																									
+					    	<div class="col-sm-2">					    										
+						    	<label>Trimestres</label>															
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.trimestres" required>
+					    	</div>																									
+					    	<div class="col-sm-2">					    										
+						    	<label>Tetramestres</label>														
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.tetramestres" required>
+					    	</div>																									
+					    	<div class="col-sm-1">					    										
+						    	<label>Semestres</label>															
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.semestres" required>
+					    	</div>																									
+					    	<div class="col-sm-1">					    										
+						    	<label>Años</label>																		
+						    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="cd.campus.detalle.anios" required>
+					    	</div>
+					    </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>		
+	<section>
+		<div class="row">
+			<div class="col-sm-12">
+				<input type="submit" ng-click="cd.guardar(cd.campus,form)" value="Guardar" class="btn btn-primary" ng-show="cd.action">
+				<input type="submit" ng-click="cd.actualizar(cd.campus)" value="Actualizar" class="btn btn-primary" ng-show="!cd.action">				
+			</div>
+		</div>	
+	</section>
+</form>

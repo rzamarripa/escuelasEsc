@@ -44,8 +44,7 @@ Meteor.methods({
 				empleado_id : id
 			}
 		}});
-		
-		Accounts.setPassword(id, usuario.contrasena, {logout: false});		
+		Accounts.setPassword(id, usuario.contrasena, {logout: false});
 	},
 	createGerenteVenta: function (usuario, rol) {
 	  console.log(usuario.profile);
