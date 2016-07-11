@@ -5,38 +5,51 @@ angular.module("casserole")
   this.action = true;
   this.nuevo = true;
 
-	this.subscribe('campus');
+	this.subscribe('campus', function(){
+		return [{
+			_id : $stateParams.id
+		}]
+	});
 
 	this.helpers({
-	  campuses : () => {
-		  return Campus.find();
+	  campusDetalle : () => {		  
+		  return Campus.findOne();
 	  }
   });
-
-  this.nuevoCampus = function()
-  {
-    this.action = true;
-    this.nuevo = !this.nuevo;
-    this.campus = {};		
-  };
   
-  this.guardar = function(campus,form)
+  this.guardar = function(campusDetalle,form)
 	{
+		
+		console.log(campusDetalle);
 		if(form.$invalid){
-	        toastr.error('No se pudo guardar el Campus.');
-	        return;
-	    }
-		this.campus.estatus = true;
-		console.log(this.campus);
-		Campus.insert(this.campus);
-		toastr.success('campus guardado.');
-		this.campus = {}; 
-		$('.collapse').collapse('hide');
+      toastr.error('No se pudo guardar la información del Campus.');
+      return;
+		}
+
+		Campus.update({ _id : $stateParams.id }, { $set : campusDetalle } );
+		var nombre = campusDetalle.detalle.nombre != undefined ? campusDetalle.detalle.nombre + " " : "";
+		var apPaterno = campusDetalle.detalle.apPaterno != undefined ? campusDetalle.detalle.apPaterno + " " : "";
+		var apMaterno = campusDetalle.detalle.apMaterno != undefined ? campusDetalle.detalle.apMaterno : ""
+		campusDetalle.detalle.nombreCompleto = nombre + apPaterno + apMaterno;
+		var usuario = {
+			username : campusDetalle.detalle.username,
+			password : campusDetalle.detalle.password,
+			profile : {
+				nombre : campusDetalle.detalle.nombre,
+				apPaterno : campusDetalle.detalle.apPaterno,
+				apMaterno : campusDetalle.detalle.apMaterno,
+				nombreCompleto : nombre + apPaterno + apMaterno,
+				campus_id : $stateParams.id,
+				estatus : true
+			}
+		}
+		console.log(campusDetalle);
+		Meteor.call('createGerenteVenta', usuario, 'director');
+		toastr.success('Se ha guardado la información del Campus correctamente.');
+		this.campusDetalle = {}; 
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
-        //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
-		//$state.go('root.campus')
+    form.$setUntouched();
 	};
 	
 	this.editar = function(id)

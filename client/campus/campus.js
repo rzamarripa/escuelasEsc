@@ -5,7 +5,11 @@ angular.module("casserole")
   this.action = true;
   this.nuevo = true;
 
-	this.subscribe('campus');
+	this.subscribe('campus', function(){
+		return [{
+			estatus : true
+		}]
+	});
 
 	this.helpers({
 	  campuses : () => {
@@ -34,8 +38,8 @@ angular.module("casserole")
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
-        //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
+    form.$setUntouched();
+    //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
 		//$state.go('root.campus')
 	};
 	

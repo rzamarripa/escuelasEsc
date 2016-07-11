@@ -14,7 +14,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var vendedores = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "vendedor"){
+			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == Meteor.user().profile.campus_id ){
 				  vendedores.push(usuario);
 			  }
 		  });
@@ -24,7 +24,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "gerenteVenta"){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user().profile.campus_id){
 				  gerentes.push(usuario);
 			  }
 		  });
@@ -44,6 +44,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 	{		
 		console.log(vendedor);
 		vendedor.profile.estatus = true;
+		vendedor.profile.campus_id = Meteor.user().profile.campus_id;
 		Meteor.call('createGerenteVenta', vendedor, 'vendedor');
 		toastr.success('Vendedor Guardado.');
 		this.nuevo = true;

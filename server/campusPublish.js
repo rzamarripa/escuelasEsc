@@ -1,3 +1,3 @@
-Meteor.publish("campus", function(){
-	return Campus.find();
+Meteor.publish("campus", function(options){
+	return Campus.find(options);
 });

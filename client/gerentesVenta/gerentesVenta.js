@@ -15,7 +15,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
 			  console.log(usuario);
-			  if(usuario.roles[0] == "gerenteVenta"){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user().profile.campus_id){
 				  gerentes.push(usuario);
 			  }
 		  });
@@ -35,6 +35,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 	{		
 		console.log(gerenteVenta);
 		gerenteVenta.profile.estatus = true;
+		gerenteVenta.profile.campus_id = Meteor.user().profile.campus_id;
 		Meteor.call('createGerenteVenta', gerenteVenta, 'gerenteVenta');
 		toastr.success('Gerente de Venta Guardado.');
 		this.nuevo = true;

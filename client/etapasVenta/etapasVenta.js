@@ -20,6 +20,7 @@ angular.module("casserole")
     this.etapaVenta = {};		
   };
   //TODO me quedé haciendo la etapa de venta para mostrar el formulario del prospecto
+  //TODO me quedé haciendo el detalle del prospecto
   this.guardar = function(etapaVenta)
 	{
 		this.etapaVenta.estatus = true;
