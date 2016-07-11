@@ -122,14 +122,15 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  });
 	  return temp;
   }
+  
   this.periodoVisible = function(periodo){
   	for (var i = 0; periodo && periodo.datos && i < periodo.datos.length; i++) {
   		if(periodo.datos[i] && periodo.datos[i].activa )
   			return true;
   	}
   	return false;
-
   }
+  
   this.calcularImporteU= function(datos,pago){
 		console.log(datos,pago)
 		if(datos && datos.activa==false)
