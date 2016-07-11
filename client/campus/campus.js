@@ -47,7 +47,7 @@ angular.module("casserole")
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(campus)
+	this.actualizar = function(campus,form)
 	{
 		if(form.$invalid){
 	        toastr.error('Error al actualizar los datos del Campus.');

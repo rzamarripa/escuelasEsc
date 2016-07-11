@@ -23,8 +23,14 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.ciclo = {};		
   };
 	
-  this.guardar = function(ciclo)
+  this.guardar = function(ciclo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Ciclo.');
+	        return;
+	    }
+		
+		
 		this.ciclo.estatus = true;
 		console.log(this.ciclo);
 		Ciclos.insert(this.ciclo);
@@ -33,6 +39,8 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		$state.go('root.ciclos');
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -43,13 +51,19 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(ciclo)
+	this.actualizar = function(ciclo,form)
 	{
+	    if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Ciclo.');
+	        return;
+	    }
 		var idTemp = ciclo._id;
 		delete ciclo._id;		
 		Ciclos.update({_id:idTemp},{$set:ciclo});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)
