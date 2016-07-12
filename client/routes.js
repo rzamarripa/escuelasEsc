@@ -253,6 +253,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/campus',
       templateUrl: 'client/campus/campus.ng.html',
       controller: 'CampusCtrl as cp',
+    })    
+    .state('root.campusDetalle', {
+      url: '/campus/:id',
+      templateUrl: 'client/campus/campusDetalle.ng.html',
+      controller: 'CampusDetalleCtrl as cd',
     })
     .state('root.aulas', {
       url: '/aulas',
@@ -308,6 +313,36 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/horarios',
       templateUrl: 'client/horarios/horarios.ng.html',
       controller: 'HorariosCtrl as ho',
+    })    
+    .state('root.gerentesVenta', {
+      url: '/gerentesVenta',
+      templateUrl: 'client/gerentesVenta/gerentesVenta.html',
+      controller: 'GerentesVentaCtrl as gv',
+    })       
+    .state('root.vendedores', {
+      url: '/vendedores',
+      templateUrl: 'client/vendedores/vendedores.html',
+      controller: 'VendedoresCtrl as v',
+    })
+    .state('root.prospectos', {
+      url: '/prospectos',
+      templateUrl: 'client/prospectos/prospectos.html',
+      controller: 'ProspectosCtrl as fa',
+    })
+    .state('root.nuevoProspecto', {
+      url: '/nuevoProspecto',
+      templateUrl: 'client/prospectos/nuevoProspecto.html',
+      controller: 'ProspectosCtrl as fa',
+    })        
+    .state('root.prospecto', {
+      url: '/prospecto/:id',
+      templateUrl: 'client/prospceto/prospecto.html',
+      controller: 'ProspectoCtrl as fa',
+    })
+    .state('root.etapasVenta', {
+      url: '/etapasVenta',
+      templateUrl: 'client/etapasVenta/etapasVenta.html',
+      controller: 'EtapasVentaCtrl as ev',
     })
     .state('root.financiero', {
       url: '/financiero',

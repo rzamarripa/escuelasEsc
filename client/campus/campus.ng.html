@@ -6,25 +6,25 @@
 		 {{cp.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre">
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion" minlength="8" required></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="cp.guardar(campus)" value="Guardar" class="btn btn-primary" ng-show="cp.action">
-						<input type="submit" ng-click="cp.actualizar(campus)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
+						<input type="submit" ng-click="cp.guardar(campus,form)" value="Guardar" class="btn btn-primary" ng-show="cp.action">
+						<input type="submit" ng-click="cp.actualizar(campus,form)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -54,7 +54,7 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="campus in cp.campuses">
-			    <td>{{campus.nombre}}</td>
+			    <td><a href="/campus/{{campus._id}}">{{campus.nombre}}</a></td>
 			    <td>{{campus.descripcion}} </td>
 			    <td>
 				    <div class="text-center">

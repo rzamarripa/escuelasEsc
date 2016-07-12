@@ -53,10 +53,18 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.inscripcion = {};
 	this.inscripcion.totalPagar = 0.00;
 	//this.inscripcion.fechaInscripcion = new Date();
-	this.inscripcion.conceptosSeleccionados = [];
+	//this.inscripcion.conceptosSeleccionados = [];
 	this.alumnoSeleccionado = {};
 	this.cupo = false;
 	this.inscripcion.abono = 0.00;
+	this.periodoVisible = function(periodo){
+	  	for (var i = 0; periodo && periodo.datos && i < periodo.datos.length; i++) {
+	  		if(periodo.datos[i] && periodo.datos[i].activa )
+	  			return true;
+	  	}
+	  	return false;
+
+	}
 	
 	this.guardar = function(inscripcion)
 	{   
@@ -72,8 +80,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
 			console.log(_periodo);
-			if(_periodo.tipoPlan=='inscripcion'){
+			if(_periodo.tipoPlan=='inscripcion' && this.periodoVisible(_periodo)==true){
 				_periodo.pago= parseFloat(inscripcion.importePagado);	
+				console.log(_periodo.pago)
 				if(inscripcion.totalPagar<=parseFloat(inscripcion.importePagado)
 					&& _periodo.planPago && _periodo.planPago instanceof Array){
 					_periodo.planPago[0].pagada =1;
@@ -99,6 +108,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.calcularImporteU= function(datos,pago){
 		//console.log(datos,pago)
 		//console.log(this.inscripcion);
+		if(datos && datos.activa==false)
+			return 0;
 		var fechaActual = this.inscripcion.fechaInscripcion;
   		var fechaCobro = new Date(pago.fecha);
   		//console.log(fechaActual,fechaCobro);
@@ -119,6 +130,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   		};
   		return importe
 	}	
+
 	this.autorun(() => {
 	  	var grupoid = this.getReactively("inscripcion.grupo_id");
 	  	var grupo = undefined;
@@ -127,6 +139,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		//console.log(grupo);
 	  	if(grupo && grupo.plan ){
 	  		this.inscripcion.totalPagar = 0;
+	  		this.inscripcion.plan = grupo.plan;
 	  		var _periodo = null;
 	  		for(var ind in grupo.plan){
 	  			if(grupo.plan[ind] && grupo.plan[ind].tipoPlan=='inscripcion'){
@@ -174,7 +187,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			this.inscripcion.cambio =0;
 	}
 	
-  this.getAlumnoSeleccionado= function(id)
+  	this.getAlumnoSeleccionado= function(id)
 	{
 		var alumno = Alumnos.findOne(id);
 		if(alumno){

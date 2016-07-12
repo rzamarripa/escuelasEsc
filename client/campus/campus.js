@@ -5,7 +5,11 @@ angular.module("casserole")
   this.action = true;
   this.nuevo = true;
 
-	this.subscribe('campus');
+	this.subscribe('campus', function(){
+		return [{
+			estatus : true
+		}]
+	});
 
 	this.helpers({
 	  campuses : () => {
@@ -20,8 +24,12 @@ angular.module("casserole")
     this.campus = {};		
   };
   
-  this.guardar = function(campus)
+  this.guardar = function(campus,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Campus.');
+	        return;
+	    }
 		this.campus.estatus = true;
 		console.log(this.campus);
 		Campus.insert(this.campus);
@@ -29,7 +37,10 @@ angular.module("casserole")
 		this.campus = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.campus')
+		form.$setPristine();
+    form.$setUntouched();
+    //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
+		//$state.go('root.campus')
 	};
 	
 	this.editar = function(id)
@@ -40,13 +51,19 @@ angular.module("casserole")
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(campus)
+	this.actualizar = function(campus,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Campus.');
+	        return;
+	    }
 		var idTemp = campus._id;
 		delete campus._id;		
 		Campus.update({_id:idTemp},{$set:campus});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)

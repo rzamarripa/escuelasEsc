@@ -7,9 +7,17 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
 	});
-	this.subscribe("secciones");
-	this.subscribe("tiposingresos");
-	this.subscribe('alumnoss',()=>{
+	this.subscribe("secciones",() => {
+		return [{
+		
+		}]
+	});
+	this.subscribe("tiposingresos",() => {
+		return [{
+		
+		}]
+	});
+	this.subscribe('alumnos',()=>{
 		return [{estatus:true}]
 	});
 	this.subscribe("grupos", () => {
@@ -17,12 +25,20 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		 estatus:true,
 		}]
 	});
-	this.subscribe("planesEstudios");
-	this.subscribe('inscripciones');
+	this.subscribe("planesEstudios",() => {
+		return [{
+		
+		}]
+	});
+	this.subscribe('inscripciones',() => {
+		return [{
+		 
+		}]
+	});
 
 
 
-	this.helpers({
+	rc.helpers({
 		ciclos : () => {
 			return Ciclos.find();
 		},
@@ -42,15 +58,37 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  return PlanesEstudios.find();
 	  },
 	  inscripciones : () => {
-		  return Inscripciones.find();
+	  	function findInCollection(lista, valor) {
+	      return _.find(lista, function (x) {
+	        return x._id == valor;
+	      });
+	    }
+	  	var a=Inscripciones.find();
+	  	var _inscripciones = Inscripciones.find().fetch();
+	  	var alumnos 	= Alumnos.find().fetch();
+	    var grupos 		= Grupos.find().fetch();
+	    var secciones = Secciones.find().fetch();
+	    var ciclos	 	= Ciclos.find().fetch();
+	    var planesEstudios = PlanesEstudios.find().fetch();
+	    _inscripciones.forEach(function (inscripcion) {
+	      inscripcion.alumno = findInCollection(alumnos, inscripcion.alumno_id);
+	      inscripcion.grupo = findInCollection(grupos, inscripcion.grupo_id);
+	      inscripcion.seccion = findInCollection(secciones, inscripcion.seccion_id);
+	      inscripcion.ciclo = findInCollection(ciclos, inscripcion.ciclo_id);
+	      inscripcion.planEstudio = findInCollection(planesEstudios, inscripcion.planEstudio_id);
+	    });
+	    console.log(_inscripciones);
+	    
+	    return _inscripciones;
+		 // return Inscripciones.find();
 	  },
   });
 
-	this.inscripciones = [];
+	/*this.inscripciones = [];
 	$meteor.call("getInscripciones").then(function (data) {
 		console.log(data);
-  	rc.inscripciones = data;
-  });
+	  	rc.inscripciones = data;
+	  });*/
 
 	this.getCiclo= function(ciclo_id)
 	{
