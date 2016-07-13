@@ -40,7 +40,12 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  }
   });
   
-  this.guardar = function (alumno) {
+  this.guardar = function (alumno,form) {
+  
+  		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Alumno.');
+	        return;
+	    }
 		this.alumno.estatus = true;
 		var nombre = alumno.nombre != undefined ? alumno.nombre + " " : "";
 		var apPaterno = alumno.apPaterno != undefined ? alumno.apPaterno + " " : "";
@@ -52,6 +57,8 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			$state.go('root.alumnoDetalle',{'id':doc});			
 			this.nuevo = true;
 		});
+		form.$setPristine();
+        form.$setUntouched();
 	};
   	
 	this.cambiarEstatus = function (id) {

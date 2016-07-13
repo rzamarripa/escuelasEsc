@@ -100,8 +100,12 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  }
 
   
-	this.actualizar = function(alumno)
+	this.actualizar = function(alumno,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Alumno.');
+	        return;
+	    }
 		alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
 		delete alumno._id;		
 		Alumnos.update({_id:$stateParams.id}, {$set : alumno});

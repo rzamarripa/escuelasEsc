@@ -6,7 +6,7 @@
 		  {{nac.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
@@ -21,8 +21,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="nac.guardar(nacionalidad)" value="Guardar" class="btn btn-primary" ng-show="nac.action">
-						<input type="submit" ng-click="nac.actualizar(nacionalidad)" value="Actualizar" class="btn btn-primary" ng-show="!nac.action">				
+						<input type="submit" ng-click="nac.guardar(nac.nacionalidad,form)" value="Guardar" class="btn btn-primary" ng-show="nac.action">
+						<input type="submit" ng-click="nac.actualizar(nac.nacionalidad,form)" value="Actualizar" class="btn btn-primary" ng-show="!nac.action">				
 					</div>
 				</div>	  
 		  </form>

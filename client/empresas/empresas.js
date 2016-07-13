@@ -5,7 +5,10 @@ angular
 function EmpresasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
-  this.subscribe('empresas');
+  this.subscribe('empresas',()=>{
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+	 });
+	 
   this.action = true;  
   this.nuevo = true;
   
@@ -23,34 +26,46 @@ function EmpresasCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.empresa = {}; 
   };
   
- this.guardar = function(empresa)
+ this.guardar = function(empresa,form)
 	{
-	  this.empresa.estatus = true;
-		console.log(this.empresa);
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de la Empresa.');
+	        return;
+	    }
+	    this.empresa.estatus = true;
+	    this.empresa.campus_id = Meteor.user().profile.campus_id;
 		Empresas.insert(this.empresa);
 		toastr.success('Empresa guardado.');
 		this.empresa = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.empresas');
 	};
 	
 	this.editar = function(id)
 	{
 		this.empresa = Empresas.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 		
 	};
 	
-	this.actualizar = function(empresa)
+	this.actualizar = function(empresa,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de la Empresa.');
+	        return;
+	    }
 		var idTemp = empresa._id;
 		delete empresa._id;		
 		Ciclos.update({_id:idTemp},{$set:empresa});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)

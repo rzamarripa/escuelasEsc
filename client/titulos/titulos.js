@@ -5,7 +5,10 @@ angular
 function TitulosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
-  this.subscribe("titulos");
+  this.subscribe("titulos",()=>{
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+	 });
+
   this.action = true;  
 	this.nuevo = true;
 	
@@ -22,15 +25,21 @@ function TitulosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.titulo = {}; 
 	};
   
-  this.guardar = function(titulo)
+  this.guardar = function(titulo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Título.');
+	        return;
+	    }
 		this.titulo.estatus = true;
-		console.log(this.titulo);
+		this.titulo.campus_id = Meteor.user().profile.campus_id;
 		Titulos.insert(this.titulo);
 		toastr.success('Titulo guardado.');
 		this.titulo = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.titulos');
 		
 	};
@@ -38,19 +47,25 @@ function TitulosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.editar = function(id)
 	{
 		this.titulo = Titulos.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 		
 	};
 	
-	this.actualizar = function(titulo)
+	this.actualizar = function(titulo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Título.');
+	        return;
+	    }
 		var idTemp = titulo._id;
 		delete titulo._id;		
 		Titulos.update({_id:idTemp},{$set:titulo});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		
 	};
 

@@ -2,17 +2,18 @@ angular
 .module("casserole")
 .controller("MaestrosCtrl", MaestrosCtrl);
 function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
+	
 	let rc = $reactive(this).attach($scope);
-  this.action = true;
-	this.subscribe('maestros');
+	this.action = true;
+	this.subscribe('maestros',()=>{
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+	 });
 
 	this.helpers({
 	  maestros : () => {
 		  return Maestros.find();
 	  }
   });
-
- 
 
   this.nuevo = true;
   	  
@@ -23,38 +24,49 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
     this.maestro = {}; 
   };
 
-	this.guardar = function(maestro)
+	this.guardar = function(maestro,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Maestro.');
+	        return;
+	    }
+	
 		this.maestro.estatus = true;
-		console.log(this.maestro);
+		this.maestro.campus_id = Meteor.user().profile.campus_id;
 		var id = Maestros.insert(this.maestro);
 		rc.maestro.maestro_id = id;
 		Meteor.call('createUsuario', rc.maestro, 'maestro');
 		toastr.success("Maestro Creado \n Usuario Creado");
 		this.maestro = {};
-		$('.collapse').collapse('show');
+		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.maestros');
 	};
 
-
-
-
 	this.editar = function(id)
 	{
-     this.maestro = Maestros.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+		console.log(id);
+	    this.maestro = Maestros.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(maestro)
+	this.actualizar = function(maestro,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Maestro.');
+	        return;
+	    }
 		var idTemp = maestro._id;
 		delete maestro._id;		
 		Maestros.update({_id:idTemp},{$set:maestro});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)
@@ -69,8 +81,8 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	};
 
 	this.tomarFoto = function(){
-		$meteor.getPicture().then(function(data){
-			this.maestro.fotografia = data;
+			$meteor.getPicture().then(function(data){
+			rc.maestro.fotografia = data;
 		});
 	};
 	

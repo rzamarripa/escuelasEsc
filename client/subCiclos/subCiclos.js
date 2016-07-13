@@ -6,12 +6,12 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('subCiclos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
 	 });
 
 
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id}]
 	 });
 
   this.helpers({
@@ -31,15 +31,23 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.subCiclo = {};		
   };
 	
-  this.guardar = function(subCiclo)
+  this.guardar = function(subCiclo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del SubCiclo.');
+	        return;
+	    }
+	
 		this.subCiclo.estatus = true;
+		this.subCiclo.campus_id = Meteor.user().profile.campus_id;
 		console.log(this.subCiclo);
 		SubCiclos.insert(this.subCiclo);
 		toastr.success('SubCiclo guardado.');
 		this.subCiclo = {};
 		$('.collapse').collapse('show');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.subCiclos');
 	};
 	
@@ -51,14 +59,22 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(subCiclo)
+	this.actualizar = function(subCiclo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Ciclo.');
+	        return;
+	    }
+	
 		var idTemp = subCiclo._id;
 		delete subCiclo._id;		
 		SubCiclos.update({_id:idTemp},{$set:subCiclo});
 		$('.collapse').collapse('hide');
 		console.log(this.subCiclo);
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
+
 	};
 
 	this.getCiclo= function(ciclo_id)

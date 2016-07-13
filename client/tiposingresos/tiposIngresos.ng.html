@@ -6,25 +6,25 @@
 				{{tiping.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 				<div class="well">
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="col-sm-4">
 								<label> Clave </label>
-								<input type="text" class="form-control" placeholder="Clave" ng-model="tiping.tipoingreso.clave" >
+								<input type="text" class="form-control" placeholder="Clave" ng-model="tiping.tipoingreso.clave" required="">
 					    </div>
 					    <div class="col-sm-8">
 						    <label>Descripción</label>
-					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="tiping.tipoingreso.descripcion" >
+					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="tiping.tipoingreso.descripcion" required="">
 					    </div>
 			    	</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="tiping.guardar(tipoingreso)" value="Guardar" class="btn btn-primary" ng-show="tiping.action">
-						<input type="submit" ng-click="tiping.actualizar(tipoingreso)" value="Actualizar" class="btn btn-primary" ng-show="!tiping.action">				
+						<input type="submit" ng-click="tiping.guardar(tiping.tipoingreso,form)" value="Guardar" class="btn btn-primary" ng-show="tiping.action">
+						<input type="submit" ng-click="tiping.actualizar(tiping.tipoingreso,form)" value="Actualizar" class="btn btn-primary" ng-show="!tiping.action">				
 					</div>
 				</div>	  
 		  </form>
