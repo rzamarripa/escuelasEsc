@@ -1,4 +1,4 @@
-Meteor.publish("empresas",function(){
-  	return Empresas.find({estatus:true});
+Meteor.publish("empresas",function(params){
+  	return Empresas.find(params);
 });
 

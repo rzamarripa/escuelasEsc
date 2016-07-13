@@ -4,7 +4,7 @@ angular.module("casserole")
  	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('documentos',()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id')}]
 	 });
 
 

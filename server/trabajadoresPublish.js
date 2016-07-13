@@ -1,3 +1,3 @@
-Meteor.publish("trabajadores",function(){
-  	return Trabajadores.find({estatus:true});
+Meteor.publish("trabajadores",function(params){
+  	return Trabajadores.find(params);
 });

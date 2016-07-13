@@ -6,7 +6,7 @@ function NacionalidadesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
   this.subscribe("nacionalidades",()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	 });
   this.action = true;  
   this.helpers({

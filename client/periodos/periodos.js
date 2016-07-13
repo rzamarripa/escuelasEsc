@@ -32,17 +32,17 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	}
 
 	this.subscribe('periodos',()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id}]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	});
 
 	this.subscribe('subCiclos',()=>{
-		return [{estatus:true,ciclo_id:this.getReactively('periodo.ciclo_id'), campus_id : Meteor.user().profile.campus_id }]
+		return [{estatus:true,ciclo_id:this.getReactively('periodo.ciclo_id'), campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	});
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	});
 	this.subscribe('conceptosPago',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	 });
 
   	this.helpers({

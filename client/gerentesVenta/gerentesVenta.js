@@ -8,7 +8,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
   this.nuevo = true;  
   
 	this.subscribe('gerentesVenta',()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	 });
  
   this.helpers({

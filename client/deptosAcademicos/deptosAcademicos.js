@@ -7,7 +7,10 @@ function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.action = true;
   this.nuevo = true  
   
-  this.subscribe("deptosAcademicos");
+  this.subscribe("deptosAcademicos",()=>{
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+	 });
+
   this.helpers({
 	  deptosAcademicos : () => {
 		  return DeptosAcademicos.find();
@@ -21,31 +24,45 @@ function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.deptoAcademico = {};
   };
   
-  this.guardar = function(deptoAcademico)
+  	this.guardar = function(deptoAcademico,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Departamento Académico.');
+	        return;
+	    }
+
 		this.deptoAcademico.estatus = true;
+		this.deptoAcademico.campus_id = Meteor.user().profile.campus_id;
 		DeptosAcademicos.insert(deptoAcademico);
 		toastr.success('Departamento guardado.');
 		this.deptoAcademico = {};
-	  $('.collapse').collapse('show');
-    this.nuevo = true;
+	    $('.collapse').collapse('hide');
+        this.nuevo = true;
+        form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
 	{
-    this.deptoAcademico = DeptosAcademicos.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.deptoAcademico = DeptosAcademicos.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(deptoAcademico)
+	this.actualizar = function(deptoAcademico,form)
 	{		
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Departamento Académico.');
+	        return;
+	    }
 		var idTemp = deptoAcademico._id;
 		delete deptoAcademico._id;		
 		DeptosAcademicos.update({_id:idTemp},{$set:deptoAcademico});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)

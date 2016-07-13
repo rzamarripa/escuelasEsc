@@ -1,3 +1,3 @@
-Meteor.publish("ocupaciones", function(){
-	return Ocupaciones.find({estatus:true});
+Meteor.publish("ocupaciones", function(params){
+	return Ocupaciones.find(params);
 });

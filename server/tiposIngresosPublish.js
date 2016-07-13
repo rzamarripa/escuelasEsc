@@ -1,3 +1,3 @@
-Meteor.publish("tiposingresos", function(){
-	return TiposIngresos.find({estatus:true});
+Meteor.publish("tiposingresos", function(params){
+	return TiposIngresos.find(params);
 });
