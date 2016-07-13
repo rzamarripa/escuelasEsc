@@ -6,6 +6,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('ciclos',()=>{
 		return [{estatus:true}]
 	});
+	this.subscribe('vendedores');
 	this.subscribe("secciones");
 	//this.subscribe("conceptosPago");
 	this.subscribe("tiposingresos");
@@ -20,12 +21,40 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		return [{estatus:true}]
 	});
 
+	var quitarhk=function(obj){
+		if(Array.isArray(obj)){
+			for (var i = 0; i < obj.length; i++) {
+				obj[i] =quitarhk(obj[i]);
+			}
+		}
+		else if(obj !== null && typeof obj === 'object')
+		{
+			delete obj.$$hashKey;
+			for (var name in obj) {
+	  			obj[name] = quitarhk(obj[name]);
+			}
+
+		}
+		return obj;
+	}
+
+
 
 
 	this.helpers({
 		ciclos : () => {
 			return Ciclos.find();
 		},
+		vendedores : () => {
+		  var usuarios = Meteor.users.find().fetch();
+		  var vendedores = [];
+		  _.each(usuarios, function(usuario){
+			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == Meteor.user().profile.campus_id ){
+				  vendedores.push(usuario);
+			  }
+		  });
+		  return vendedores;
+	  	},
 	  secciones : () => {
 		  return Secciones.find();
 	  },
@@ -50,7 +79,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
 
 
-	this.inscripcion = {};
+	this.inscripcion = {tipoInscripcion:""};
 	this.inscripcion.totalPagar = 0.00;
 	//this.inscripcion.fechaInscripcion = new Date();
 	//this.inscripcion.conceptosSeleccionados = [];
@@ -73,10 +102,13 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			delete concepto.$$hashKey;
 		})*/
 		console.log("hola")
+		quitarhk(inscripcion);
 		console.log(inscripcion);
+
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
 
-		inscripcion.plan = grupo.plan;
+		//inscripcion.plan = grupo.plan;
+		inscripcion.campus_id=Meteor.user().profile.campus_id;
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
 			console.log(_periodo);
@@ -105,6 +137,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		toastr.success('Alumno Inscrito');
 		$state.go("root.inscripciones");
 	};
+
 	this.calcularImporteU= function(datos,pago){
 		//console.log(datos,pago)
 		//console.log(this.inscripcion);
@@ -119,7 +152,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   		//console.log(diasRecargo,diasDescuento);
   		for (var i = 0; datos.procedimientos && i < datos.procedimientos.length; i++) {
   			console.log(importe);
-  			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && diasRecargo >=datos.procedimientos[i].dias){
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && diasRecargo >=datos.procedimientos[i].dias ){
   			//	console.log('Recargo');
   				importe+=datos.procedimientos[i].monto;
   			}
@@ -131,25 +164,32 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   		return importe
 	}	
 
-	this.autorun(() => {
-	  	var grupoid = this.getReactively("inscripcion.grupo_id");
+	this.calcularImporte=function(concepto){
+		console.log("calcular importe");
+		console.log(concepto);
+		var grupoid = this.getReactively("inscripcion.grupo_id");
+	  	var tipoInsc = this.getReactively("inscripcion.tipoInscripcion");
 	  	var grupo = undefined;
 	  	if(grupoid)
 			grupo = Grupos.findOne(grupoid);
 		//console.log(grupo);
 	  	if(grupo && grupo.plan ){
 	  		this.inscripcion.totalPagar = 0;
-	  		this.inscripcion.plan = grupo.plan;
+	  		if(!this.inscripcion.plan || this.inscripcion.plan.grupo_id!=grupo._id){
+	  			this.inscripcion.plan = grupo.plan;
+	  			this.inscripcion.plan.grupo_id=grupo._id
+	  		}
+	  		
 	  		var _periodo = null;
-	  		for(var ind in grupo.plan){
-	  			if(grupo.plan[ind] && grupo.plan[ind].tipoPlan=='inscripcion'){
-	  				_periodo = grupo.plan[ind];
+	  		for(var ind in this.inscripcion.plan){
+	  			if(this.inscripcion.plan[ind] && ind == tipoInsc){
+	  				_periodo = this.inscripcion.plan[ind];
 	  				break;
 	  			}
 	  		}
 	  		 
 	  		//console.log(_periodo);
-	  		for (var j = 0; j < _periodo.datos.length; j++) {
+	  		for (var j = 0; _periodo && j < _periodo.datos.length; j++) {
 	  			this.inscripcion.totalPagar+=this.calcularImporteU(_periodo.datos[j],_periodo.planPago[0]);
 
 	  		}
@@ -161,6 +201,10 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  		}*/
 
 	  	}
+	}
+
+	this.autorun(() => {
+	  	this.calcularImporte();
 			
 		
   	});

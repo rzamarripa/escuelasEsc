@@ -136,7 +136,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   }
   
   this.calcularImporteU= function(datos,pago){
-		console.log(datos,pago)
+		//console.log(datos,pago)
 		if(datos && datos.activa==false)
 			return 0;
 		//console.log(this.inscripcion);
@@ -146,7 +146,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
   		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24)); 
   		var importe = datos.importe;
-  		console.log(diasRecargo,diasDescuento);
+  		//console.log(diasRecargo,diasDescuento);
   		for (var i = 0; datos.procedimientos && i < datos.procedimientos.length; i++) {
   			
   			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && diasRecargo >=datos.procedimientos[i].dias){
@@ -158,7 +158,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   				importe-=datos.procedimientos[i].monto;
   			}
   		};
-  		console.log(importe);
+  		//console.log(importe);
   		return importe
 	}	
 
@@ -176,14 +176,14 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   				//rc.totalPagar+=plan.cuota;
   				for (var j = 0; j < plan.datos.length; j++) {
   					rc.totalPagar +=this.calcularImporteU( plan.datos[j],plan.planPago[i]);
-  					console.log(rc.totalPagar);
+  					//console.log(rc.totalPagar);
   				}
 
 
 
 	  		}
 	  };
-	  console.log(rc.totalPagar);
+	  //console.log(rc.totalPagar);
 	  for (var i = cobro.no; i < plan.planPago.length; i++) {
 	  	if(plan.planPago[i].pagada!=1){
 	  		plan.planPago[i].pagada=0;
@@ -231,7 +231,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   		var fechaActual = new Date();
   		var fechaCobro = new Date(cobro.fecha);
   		var dias = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
-  		console.log(dias,concepto)
+  		//console.log(dias,concepto)
   		//console.log(recargos);
   		//if(!recargos) recargos =[];
 	  	if(cobro.pagada==1){
@@ -265,9 +265,13 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			var semanasPagadas = [];
 			for (var i = 0; i < rc.inscripciones.length; i++) {
 				var inscripcion=rc.inscripciones[i];
+				console.log(inscripcion.plan)
 				for(var idConcepto in inscripcion.plan){
+
 					var concepto = inscripcion.plan[idConcepto];
-					for (var j = 0; j < concepto.planPago.length; j++) {
+					console.log(idConcepto)
+					console.log(concepto)
+					for (var j = 0; (idConcepto==inscripcion.tipoInscripcion || idConcepto==inscripcion.tipoColegiatura) &&concepto.planPago && j < concepto.planPago.length; j++) {
 						var cobro =concepto.planPago[j];
 						if(cobro.pagada==2){
 							cobro.pagada = 1;
@@ -279,6 +283,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 					  				Pagos.insert({
 										fechaPago 	: new Date(),
 										alumno_id 	: $stateParams.id,
+										campus_id 	:Meteor.user().profile.campus_id,
 										numero 		: cobro.no,
 										semana 		: cobro.numero,
 										anio 		: cobro.anio,
@@ -291,6 +296,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 									semanasPagadas.push({
 										fechaPago 	: new Date(),
 										alumno_id 	: $stateParams.id,
+										campus_id 	:Meteor.user().profile.campus_id,
 										numero 		: cobro.no,
 										semana 		: cobro.numero,
 										anio 		: cobro.anio,
@@ -313,6 +319,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 												fechaPago 	: new Date(),
 												alumno_id 	: $stateParams.id,
 												numero 		: cobro.no,
+												campus_id 	:Meteor.user().profile.campus_id,
 												semana 		: cobro.numero,
 												anio 		: cobro.anio,
 												estatus 	: 1,
@@ -324,6 +331,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 											semanasPagadas.push({
 												fechaPago 	: new Date(),
 												alumno_id 	: $stateParams.id,
+												campus_id 	:Meteor.user().profile.campus_id,
 												numero 		: cobro.no,
 												semana 		: cobro.numero,
 												anio 		: cobro.anio,
@@ -338,6 +346,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 							  				Pagos.insert({
 												fechaPago 	: new Date(),
 												alumno_id 	: $stateParams.id,
+												campus_id 	:Meteor.user().profile.campus_id,
 												numero 		: cobro.no,
 												semana 		: cobro.numero,
 												anio 		: cobro.anio,
@@ -350,6 +359,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 											semanasPagadas.push({
 												fechaPago 	: new Date(),
 												alumno_id 	: $stateParams.id,
+												campus_id 	:Meteor.user().profile.campus_id,
 												numero 		: cobro.no,
 												semana 		: cobro.numero,
 												anio 		: cobro.anio,

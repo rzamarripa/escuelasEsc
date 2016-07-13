@@ -10,6 +10,8 @@ angular.module('casserole',
     'smartadmin',
     'datePicker',
     'ui.calendar',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'checklist-model'
   ]
 );
+

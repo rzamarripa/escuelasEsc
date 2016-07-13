@@ -25,3 +25,25 @@ angular.module('smartadmin').directive('jarvisWidget', ['$rootScope', function (
     }
   };
 }]);
+
+angular.module('smartadmin').directive('ngConfirmClick', [
+    function(){
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Está seguro?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click',function (event) {
+                    if ( window.confirm(msg) ) {
+                        scope.$eval(clickAction)
+                    }
+                });
+            }
+        };
+}])
+
+
+angular.module('smartadmin').directive('bsPopover', function() {
+    return function(scope, element, attrs) {
+        element.find("a[rel=popover]").popover({ placement: 'bottom', html: 'true'});
+    };
+});
