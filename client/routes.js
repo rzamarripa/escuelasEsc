@@ -336,13 +336,38 @@ angular.module('casserole').config(['$injector', function ($injector) {
     })        
     .state('root.prospecto', {
       url: '/prospecto/:id',
-      templateUrl: 'client/prospceto/prospecto.html',
+      templateUrl: 'client/prospectos/prospecto.html',
       controller: 'ProspectoCtrl as fa',
+    })
+    .state('root.actividades', {
+      url: '/actividades',
+      templateUrl: 'client/actividades/actividades.html',
+      controller: 'ActividadesCtrl as ac',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
     })
     .state('root.etapasVenta', {
       url: '/etapasVenta',
       templateUrl: 'client/etapasVenta/etapasVenta.html',
       controller: 'EtapasVentaCtrl as ev',
+    })
+    .state('root.financiero', {
+      url: '/financiero',
+      templateUrl: 'client/gastos/financiero.ng.html',
+      controller: 'FinancieroCtrl as fc',
+    })
+    .state('root.gastos', {
+      url: '/gastos',
+      templateUrl: 'client/gastos/gastos.ng.html',
+      controller: 'GastosCtrl as gc',
+    })
+    .state('root.agregarGasto', {
+      url: '/agregarGasto/:tipoGasto',
+      templateUrl: 'client/gastos/agregarGasto.ng.html',
+      controller: 'AgregarGastoCtrl as gc',
     })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id/:materia_id',

@@ -27,9 +27,9 @@ angular.module("casserole")
   this.guardar = function(campus,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Campus.');
-	        return;
-	    }
+      toastr.error('Error al guardar los datos del Campus.');
+      return;
+	  }
 		this.campus.estatus = true;
 		console.log(this.campus);
 		Campus.insert(this.campus);

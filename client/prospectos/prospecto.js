@@ -4,29 +4,32 @@ angular.module("casserole")
  	rc = $reactive(this).attach($scope);
   
   this.subscribe('prospecto', () => {
-	  console.log($stateParams.id);
     return [{
-	    id : $stateParams.id
+	    _id : $stateParams.id
     }];
   });
   
-  this.subscribe('etapasVenta');
+  this.subscribe('etapasVenta', function(){
+	  return [{
+		  campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+	  }]
+  });
   
   this.subscribe('llamadas', () => {
     return [{
-	    id : $stateParams.id
+	    prospecto_id : $stateParams.id
     }];
   });
   
   this.subscribe('reuniones', () => {
     return [{
-	    id : $stateParams.id
+	    prospecto_id : $stateParams.id
     }];
   });
   
   this.subscribe('tareas', () => {
     return [{
-	    id : $stateParams.id
+	    prospecto_id : $stateParams.id
     }];
   });
   
@@ -111,6 +114,9 @@ angular.module("casserole")
   
   this.guardarLlamada = function(llamada){
 	  llamada.prospecto_id = $stateParams.id;
+	  llamada.fechaCreacion = new Date();
+	  llamada.vendedor_id = Meteor.userId();
+	  llamada.estatus = false;
 	  Llamadas.insert(llamada);
 	  this.llamada = {};
 	  $('.collapseLlamada').collapse('hide');
@@ -137,6 +143,9 @@ angular.module("casserole")
   
   this.guardarReunion = function(reunion){
 	  reunion.prospecto_id = $stateParams.id;
+	  reunion.fechaCreacion = new Date();
+	  reunion.vendedor_id = Meteor.userId();
+	  reunion.estatus = false;
 	  Reuniones.insert(reunion);
 	  this.reunion = {};
 	  $('.collapseReunion').collapse('hide');
@@ -163,6 +172,9 @@ angular.module("casserole")
   
   this.guardarTarea = function(tarea){
 	  tarea.prospecto_id = $stateParams.id;
+	  tarea.fechaCreacion = new Date();
+	  tarea.vendedor_id = Meteor.userId();
+	  tarea.estatus = false;
 	  Tareas.insert(tarea);
 	  this.tarea = {};
 	  $('.collapseTarea').collapse('hide');
@@ -185,5 +197,11 @@ angular.module("casserole")
 		$('.collapseTarea').collapse('hide');
 		this.actionTarea = true;
 	};
+	
+	this.getEtapaVenta = function(etapaVenta_id){
+	  var etapaVenta = EtapasVenta.findOne(etapaVenta_id);
+	  if(etapaVenta)
+	  	return etapaVenta.nombre;
+  }
 		
 };

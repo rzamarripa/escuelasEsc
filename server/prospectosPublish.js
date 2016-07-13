@@ -1,5 +1,6 @@
 Meteor.publish("prospecto", function(options){
-	return Prospectos.find({_id:options.id});
+	console.log(options);
+	return Prospectos.find(options);
 });
 
 Meteor.publish("prospectos",function(options){
