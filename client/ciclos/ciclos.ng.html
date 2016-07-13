@@ -7,12 +7,12 @@
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">
 				    	<label>Nombre</label>
-					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion">
+					    <input type="text" class="form-control" ng-model="cl.ciclo.descripcion" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Fecha Inicio</label>
@@ -26,8 +26,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="cl.guardar(cl.ciclo)" class="btn btn-primary" ng-show="cl.action">
-						<input type="submit" ng-click="cl.actualizar(cl.ciclo)" value="Actualizar" class="btn btn-primary" ng-show="!cl.action">				
+						<input type="submit" value="Guardar" ng-click="cl.guardar(cl.ciclo,form)" class="btn btn-primary" ng-show="cl.action">
+						<input type="submit" ng-click="cl.actualizar(cl.ciclo,form)" value="Actualizar" class="btn btn-primary" ng-show="!cl.action">				
 					</div>
 				</div>	  
 		  </form>

@@ -226,10 +226,18 @@
 									  		<div class="panel panel-default">
 												<div class="panel-heading">Tipo de inscripcion</div>
 												<div class="panel-body">
-													<div >
-														<label ng-repeat="(nombre, plan) in ins.inscripcion.plan" ng-if="plan.tipoPlan=='inscripcion'"> 
-													  		<input type="radio" name="rbInscripcion" ng-model="ins.tipoInscripcion" >
+													<div ng-repeat="(nombre, plan) in ins.inscripcion.plan">
+														<label  ng-if="plan.tipoPlan=='inscripcion'"> 
+													  		<input type="radio" name="rbInscripcion" ng-model="ins.tipoInscripcion" ng-value="nombre">
 													  		{{nombre}}
+													  		<div class="row" ng-show="nombre==ins.tipoInscripcion" ng-repeat="concepto in plan.datos">
+													  			<div class="col-sm-6">
+													  				<label > 
+														  				<input type="checkbox" ng-model="concepto.activa" >
+														  				{{concepto.nombre}}
+														  			</label>
+													  			</div>
+													  		</div>
 													  	</label>	  		
 													</div>
 												</div>

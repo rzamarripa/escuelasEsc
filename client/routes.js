@@ -354,6 +354,21 @@ angular.module('casserole').config(['$injector', function ($injector) {
       templateUrl: 'client/etapasVenta/etapasVenta.html',
       controller: 'EtapasVentaCtrl as ev',
     })
+    .state('root.financiero', {
+      url: '/financiero',
+      templateUrl: 'client/gastos/financiero.ng.html',
+      controller: 'FinancieroCtrl as fc',
+    })
+    .state('root.gastos', {
+      url: '/gastos',
+      templateUrl: 'client/gastos/gastos.ng.html',
+      controller: 'GastosCtrl as gc',
+    })
+    .state('root.agregarGasto', {
+      url: '/agregarGasto/:tipoGasto',
+      templateUrl: 'client/gastos/agregarGasto.ng.html',
+      controller: 'AgregarGastoCtrl as gc',
+    })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id/:materia_id',
       templateUrl: 'client/maestro/asistencias/asistencias.ng.html',
