@@ -336,8 +336,18 @@ angular.module('casserole').config(['$injector', function ($injector) {
     })        
     .state('root.prospecto', {
       url: '/prospecto/:id',
-      templateUrl: 'client/prospceto/prospecto.html',
+      templateUrl: 'client/prospectos/prospecto.html',
       controller: 'ProspectoCtrl as fa',
+    })
+    .state('root.actividades', {
+      url: '/actividades',
+      templateUrl: 'client/actividades/actividades.html',
+      controller: 'ActividadesCtrl as ac',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
     })
     .state('root.etapasVenta', {
       url: '/etapasVenta',
