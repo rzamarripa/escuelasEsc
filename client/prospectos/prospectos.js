@@ -28,7 +28,7 @@ angular.module("casserole")
 		console.log("entré");
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id")}
+	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id") }
     }] ;
   });
   

@@ -1,4 +1,4 @@
-Meteor.publish("civiles",function(){
-  	return Civiles.find({estatus:true});
+Meteor.publish("civiles",function(params){
+  	return Civiles.find(params);
 });
 

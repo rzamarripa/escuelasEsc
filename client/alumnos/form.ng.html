@@ -20,7 +20,7 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<form id="formAlumno" class="form-horizontal" role="form" data-parsley-validate>
+		<form id="form" class="form-horizontal" role="form" data-parsley-validate>
 			<h4>Datos de Usuario</h4>
 			<div class="well">
 				<div class="row">
@@ -31,7 +31,7 @@
 					</div>
 				  <div class="col-sm-3">				    
 				    <label for="nombre">Usuario</label>
-				    <input type="text" class="form-control" placeholder="Usuario" ng-model="al.alumno.nombreUsuario">
+				    <input type="text" class="form-control" placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="">
 					</div>
 					<div class="col-sm-1" ng-show="al.existeUsuario > 1" style="text-align: left">
 					  <div style="display: inline-block; vertical-align: auto; float: none;">
@@ -42,11 +42,11 @@
 					</div>
 					<div class="col-sm-{{al.existeUsuario > 1 ? '2' : '3'}}">
 				    <label for="nombre">Contraseña</label>
-				    <input type="password" class="form-control" placeholder="Contraseña" ng-model="al.alumno.contrasena">						
+				    <input type="password" class="form-control" placeholder="Contraseña" ng-model="al.alumno.contrasena" required="">						
 					</div>
 					<div class="col-sm-3">
 				    <label for="apPaterno">Repetir Contraseña</label>
-				    <input type="password" class="form-control" placeholder="Repetir Contraseña" ng-model="al.alumno.repetirContrasena">
+				    <input type="password" class="form-control" placeholder="Repetir Contraseña" ng-model="al.alumno.repetirContrasena" required="">
 					</div>
 				</div>
 			</div>			
@@ -55,15 +55,15 @@
 		  	<div class="row">
 			    <div class="col-sm-3">				    
 				    <label for="nombre">Matrícula</label>
-				    <input type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula">
+				    <input type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="">
 		    	</div>
 		    	<div class="col-sm-3">				    
 				    <label for="nombre">Nombre</label>
-				    <input type="text" class="form-control" placeholder="Nombre" ng-model="al.alumno.nombre">						
+				    <input type="text" class="form-control" placeholder="Nombre" ng-model="al.alumno.nombre" required="">						
 		    	</div>
 		    	<div class="col-sm-3">
 				    <label for="apPaterno">Apellido Paterno</label>
-				    <input type="text" class="form-control" id="apPaterno" placeholder="Apellido Paterno" ng-model="al.alumno.apPaterno">
+				    <input type="text" class="form-control" id="apPaterno" placeholder="Apellido Paterno" ng-model="al.alumno.apPaterno" required="">
 		    	</div>
 		    	<div class="col-sm-3">
 				    <label for="apMaterno">Apellido Materno</label>
@@ -77,7 +77,7 @@
 		    	</div>
 					<div class="col-sm-4">
 						<label for="fechaNac">Fecha de nacimiento</label>
-						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="al.alumno.fechaNac"/>
+						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="al.alumno.fechaNac" required="" />
 					</div>
 					<div class="col-sm-4">
 						<label for="lugarNac">Lugar de nacimiento</label>
@@ -103,7 +103,7 @@
 					</div>	
 					<div class="col-sm-4">
 						<label for="escolaridad">Escolaridad</label>
-						<input type="text" class="form-control" id="escolaridad" placeholder="Escolaridad" ng-model="al.alumno.escolaridad">
+						<input type="text" class="form-control" id="escolaridad" placeholder="Escolaridad" ng-model="al.alumno.escolaridad" required="">
 					</div>
 				</div>
 				<div class="row">
@@ -140,7 +140,7 @@
 					</div>
 					<div class="col-sm-4">
 						<label for="correoCalificaciones">Correo para calificaciones</label>
-						<input type="email" class="form-control" id="correoCalificaciones" placeholder="Correo calificaciones" ng-model="al.alumno.correoCalificaciones">
+						<input type="email" class="form-control" id="correoCalificaciones" placeholder="Correo calificaciones" ng-model="al.alumno.correoCalificaciones" required="">
 					</div>
 					<div class="col-sm-4">
 						<label for="talla">Talla uniforme</label><br/>
@@ -170,11 +170,11 @@
 			  <div class="row">
 			  	<div class="col-sm-6">
 			  		<label for="calleNum">Calle y número</label>
-				    <input type="text" class="form-control" id="calleNum" placeholder="Calle y Número" ng-model="al.alumno.calleNum">
+				    <input type="text" class="form-control" id="calleNum" placeholder="Calle y Número" ng-model="al.alumno.calleNum" required="">
 			  	</div>
 			  	<div class="col-sm-6">
 						<label for="colonia">Colonia</label>
-						<input type="text" class="form-control" id="colonia" placeholder="Colonia" ng-model="al.alumno.colonia">
+						<input type="text" class="form-control" id="colonia" placeholder="Colonia" ng-model="al.alumno.colonia" required="">
 			  	</div>
 			  </div>
 			  <div class="row">
@@ -213,7 +213,7 @@
 			  <div class="row">
 			  	<div class="col-sm-6">
 			  		<label for="padreTutor">Padre o Tutor</label>
-				    <input type="text" class="form-control" id="padreTutor" placeholder="Padre o Tutor" ng-model="al.alumno.padreTutor">
+				    <input type="text" class="form-control" id="padreTutor" placeholder="Padre o Tutor" ng-model="al.alumno.padreTutor" required="">
 			  	</div>
 			  	<div class="col-sm-6">
 						<label for="ocupacionPadreTutor">Ocupación</label>
@@ -223,7 +223,7 @@
 			  <div class="row">
 			  	<div class="col-sm-6">
 			  		<label for="madre">Madre</label>
-						<input type="text" class="form-control" id="madre" placeholder="Madre" ng-model="al.alumno.madre">
+						<input type="text" class="form-control" id="madre" placeholder="Madre" ng-model="al.alumno.madre" required="">
 			  	</div>
 			  	<div class="col-sm-6">
 						<label for="ocupacionMadre">Ocupación</label>
@@ -240,8 +240,8 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="al.guardar(al.alumno)" value="Guardar" class="btn btn-primary" ng-show="al.action">
-					<input type="submit" ng-click="al.actualizar(al.alumno)" value="Actualizar" class="btn btn-primary" ng-show="!al.action">				
+					<input type="submit" ng-click="al.guardar(al.alumno,form)" value="Guardar" class="btn btn-primary" ng-show="al.action">
+					<input type="submit" ng-click="al.actualizar(al.alumno,form)" value="Actualizar" class="btn btn-primary" ng-show="!al.action">				
 				</div>
 			</div>	  
 	  </form>

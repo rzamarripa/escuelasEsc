@@ -5,7 +5,10 @@ angular
 function CivilesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
-  this.subscribe("civiles");
+  this.subscribe("civiles",()=>{
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+	 });
+
   this.action = true;  
   this.nuevo = true;
   
@@ -23,15 +26,22 @@ function CivilesCtrl($scope, $meteor, $reactive, $state, toastr) {
     
   };
   
- this.guardar = function(civil)
+ this.guardar = function(civil,form)
 	{
+		
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Estado Civil.');
+	        return;
+	    }
 		this.civil.estatus = true;
-		console.log(this.civil);
+		this.civil.campus_id = Meteor.user().profile.campus_id;
 		Civiles.insert(this.civil);
 		toastr.success('Estado guardado.');
 		this.civil = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.estadoCivil');
 		
 	};
@@ -45,13 +55,19 @@ function CivilesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 	};
 	
-	this.actualizar = function(civil)
+	this.actualizar = function(civil,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Estado Civil.');
+	        return;
+	    }
 		var idTemp = civil._id;
 		delete civil._id;		
 		Civiles.update({_id:idTemp},{$set:civil});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		
 	};
 		

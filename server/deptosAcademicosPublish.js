@@ -1,3 +1,3 @@
-Meteor.publish("deptosAcademicos", function(){
-	return DeptosAcademicos.find();
+Meteor.publish("deptosAcademicos", function(params){
+	return DeptosAcademicos.find(params);
 });

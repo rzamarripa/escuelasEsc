@@ -6,20 +6,20 @@
 		  {{maes.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form name="form" class="form-horizontal" role="form" >
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Nombre de usuario</label>
-				    	<input type="text" class="form-control" placeholder="Nombre de usuario" ng-model="maes.maestro.nombreUsuario" required>
+				    	<input type="text" class="form-control" placeholder="Nombre de usuario" ng-model="maes.maestro.nombreUsuario" required="">
 			    	</div>    	   
 			    	<div class="col-sm-4">					    
 				    	<label>Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="maes.maestro.contrasena" required>
+				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="maes.maestro.contrasena" required="">
 			    	</div>		    				    	    
 			    	<div class="col-sm-4">					    
 				    	<label>Confirmar Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="maes.maestro.confirmarContrasena" required>
+				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="maes.maestro.confirmarContrasena" required="">
 			    	</div>
 					</div>
 				</div> 
@@ -27,25 +27,25 @@
 			    <div class="row">
 			    	<div class="col-sm-1">					    
 				    	<label>Título</label>
-				    	<input type="text" class="form-control" placeholder="Título" ng-model="maes.maestro.titulo" required>
+				    	<input type="text" class="form-control" placeholder="Título" ng-model="maes.maestro.titulo" required="">
 			    	</div>
 			    	<div class="col-sm-3">					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="maes.maestro.nombre" required>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="maes.maestro.nombre" required="">
 			    	</div>
 			    	<div class="col-sm-4">					    
 				    	<label>Apellido Paterno</label>
-				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="maes.maestro.apPaterno" required>
+				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="maes.maestro.apPaterno" required="">
 			    	</div>
 			    	<div class="col-sm-4">					    
 				    	<label>Apellido Materno</label>
-				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="maes.maestro.apMaterno" required>
+				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="maes.maestro.apMaterno">
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Correo</label>
-				    	<input type="text" class="form-control" placeholder="Correo" ng-model="maes.maestro.correo" required>
+				    	<input type="text" class="form-control" placeholder="Correo" ng-model="maes.maestro.correo">
 			    	</div>
 			    	<div class="col-sm-4">
 				    		 <label>Género</label>
@@ -73,14 +73,14 @@
 			    	<div class="col-sm-4">
 							<label for="talla">Fotografía</label>
 							<button class="btn btn-primary" ng-click="maes.tomarFoto()"><i class="fa fa-camera"></i></button>
-							<img width="100px" ng-src="{{maestro.fotografia}}" ng-class="{'img-thumbnail': !!maestro.fotografia}" />
+							<img width="100px" ng-src="{{maes.maestro.fotografia}}" ng-class="{'img-thumbnail': !!maestro.fotografia}" />
 			    	</div>
 					</div>
 	    	</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="maes.guardar(maestro)" value="Guardar" class="btn btn-primary" ng-show="maes.action">
-						<input type="submit" ng-click="maes.actualizar(maestro)" value="Actualizar" class="btn btn-primary" ng-show="!maes.action">				
+						<input type="submit" ng-click="maes.guardar(maes.maestro,form)" value="Guardar" class="btn btn-primary" ng-show="maes.action">
+						<input type="submit" ng-click="maes.actualizar(maes.maestro,form)" value="Actualizar" class="btn btn-primary" ng-show="!maes.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -134,8 +134,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="editar(maestro._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cambiarEstatus(maestro._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="maes.editar(maestro._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="maes.cambiarEstatus(maestro._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

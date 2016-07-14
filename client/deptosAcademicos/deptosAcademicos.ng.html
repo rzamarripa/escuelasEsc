@@ -6,29 +6,29 @@
 		{{da.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="da.deptoAcademico.clave" required>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="da.deptoAcademico.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Descripción Corta</label>
-				    	<input type="text" class="form-control" placeholder="Corta" ng-model="da.deptoAcademico.descripcionCorta" required>
+				    	<input type="text" class="form-control" placeholder="Corta" ng-model="da.deptoAcademico.descripcionCorta" required="">
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="da.deptoAcademico.descripcion"></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="da.deptoAcademico.descripcion" required=""></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="da.guardar(da.deptoAcademico)" value="Guardar" class="btn btn-primary" ng-show="da.action">
-						<input type="submit" ng-click="da.actualizar(da.deptoAcademico)" value="Actualizar" class="btn btn-primary" ng-show="!da.action">				
+						<input type="submit" ng-click="da.guardar(da.deptoAcademico,form)" value="Guardar" class="btn btn-primary" ng-show="da.action">
+						<input type="submit" ng-click="da.actualizar(da.deptoAcademico,form)" value="Actualizar" class="btn btn-primary" ng-show="!da.action">				
 					</div>
 				</div>	  
 		  </form>

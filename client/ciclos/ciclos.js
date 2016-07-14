@@ -30,7 +30,6 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	        return;
 	    }
 		
-		
 		this.ciclo.estatus = true;
 		this.ciclo.campus_id = Meteor.user().profile.campus_id;
 		console.log(this.ciclo);
@@ -46,10 +45,10 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	this.editar = function(id)
 	{
-    this.ciclo = Ciclos.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.ciclo = Ciclos.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
 	this.actualizar = function(ciclo,form)

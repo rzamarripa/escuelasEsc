@@ -1,4 +1,4 @@
-Meteor.publish("titulos",function(){
-  	return Titulos.find({estatus:true});
+Meteor.publish("titulos",function(params){
+  	return Titulos.find(params);
 });
 

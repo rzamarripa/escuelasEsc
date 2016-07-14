@@ -32,17 +32,17 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	}
 
 	this.subscribe('periodos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	});
 
 	this.subscribe('subCiclos',()=>{
-		return [{estatus:true,ciclo_id:this.getReactively('periodo.ciclo_id')}]
+		return [{estatus:true,ciclo_id:this.getReactively('periodo.ciclo_id'), campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	});
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	});
 	this.subscribe('conceptosPago',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
 	 });
 
   	this.helpers({
@@ -85,13 +85,20 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
   	};
 	
-  	this.guardar = function(periodo)
+  	this.guardar = function(periodo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del SubCiclo.');
+	        return;
+	    }
+
+	
 		var sub = SubCiclos.findOne(this.periodo.subCiclo_id);
 		if(sub && sub.tipo === "Administrativo")
 			this.generar(periodo);
 
 		periodo.estatus = true;
+		this.periodo.campus_id = Meteor.user().profile.campus_id;
 		periodo.conceptos = [];
 		var conceptos = ConceptosPago.find().fetch();
 		console.log(periodo);
@@ -117,6 +124,8 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.periodo = {};
 		$('.collapse').collapse('show');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -128,8 +137,13 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
     	this.nuevo = false;
 	};
 	
-	this.actualizar = function(periodo)
+	this.actualizar = function(periodo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del SubCiclo.');
+	        return;
+	    }
+		
 		var idTemp = periodo._id;
 		delete periodo._id;
 		var sub = SubCiclos.findOne(this.periodo.subCiclo_id);
@@ -156,6 +170,8 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		Periodos.update({_id:idTemp},{$set:_perdiodo});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 
 	this.getSubCiclo= function(subCiclo_id)

@@ -6,16 +6,16 @@
 		  {{per.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form name="form" class="form-horizontal" role="form" data-parsley-validate>
 		  		<div class="container-fluid well">	    
 			    	<div class="row">
 			    		<div class="col-sm-4">					    
 					    	<label>Nombre</label>
-					    	<input type="text" class="form-control" placeholder="Periodo" ng-model="per.periodo.nombre" >
+					    	<input type="text" class="form-control" placeholder="Periodo" ng-model="per.periodo.nombre" required="">
 				    	</div>	
 				    	<div class="col-sm-4">
 							<label >Ciclo Escolar</label>
-							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.ciclo_id" >
+							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.ciclo_id" required>
 							 	<option  value="{{ciclo._id}}" ng-repeat="ciclo in per.ciclos">
 									{{ciclo.descripcion}} 
 								</option>
@@ -23,7 +23,7 @@
 						</div>
 				    	<div class="col-sm-4">
 							<label >Subciclo Escolar</label>
-							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" >
+							<select class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" required>
 							 	<option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">
 									{{subCiclo.nombre}} | {{subCiclo.tipo}}
 								</option>
@@ -35,11 +35,11 @@
 				    			    
 				    		<div class="col-sm-4">
 					    		<label>Fecha Inicio</label>
-						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" />
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" required/>
 				    		</div>
 				    		<div class="col-sm-4">
 					    		<label>Fecha Fin</label>
-						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" />
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" required/>
 				    		</div>  
 						</div> 	
 						<div ng-show="per.tipoFormulario == 'administrativo'">
@@ -47,16 +47,16 @@
 							
 							<div class="col-sm-4">
 					    		<label>Fecha Inicio</label>
-						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" />
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" required/>
 				    		</div>
 				    		<div class="col-sm-4">
 					    		<label>Fecha Fin</label>
-						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" />
+						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" required/>
 				    		</div>
 
 				    		<div class="col-sm-4">
 								<label >Plazo</label>
-								<select class="form-control select2" placeholder="Seleccione" ng-model="per.periodo.plazo">
+								<select class="form-control select2" placeholder="Seleccione" ng-model="per.periodo.plazo" required>
 								  	<option value="Semanal">Semanal</option>
 								  	<option value="Mensual">Mensual</option>
 								  	<option value="Bimestral">Bimestral</option>
@@ -73,7 +73,7 @@
 			    	<div class="row" ng-show="per.tipoFormulario == 'administrativo'">
 				    	<div class="col-sm-4">
 				    		<label>Módulo</label>
-				    		<select class="form-control" ng-model="per.periodo.modulo">
+				    		<select class="form-control" ng-model="per.periodo.modulo" required>
 					    		<option value="inscripcion">Inscripción</option>
 					    		<option value="colegiatura">Colegiatura</option>
 					    		<option value="otros">Otros</option>
@@ -148,8 +148,8 @@
 		  			    
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="per.guardar(per.periodo)" value="Guardar" class="btn btn-primary" ng-show="per.action">
-						<input type="submit" ng-click="per.actualizar(per.periodo)" value="Actualizar" class="btn btn-primary" ng-show="!per.action">				
+						<input type="submit" ng-click="per.guardar(per.periodo,form)" value="Guardar" class="btn btn-primary" ng-show="per.action">
+						<input type="submit" ng-click="per.actualizar(per.periodo,form)" value="Actualizar" class="btn btn-primary" ng-show="!per.action">				
 					</div>
 				</div>	  
 		  	</form>

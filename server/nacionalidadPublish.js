@@ -1,4 +1,4 @@
-Meteor.publish("nacionalidades",function(){
-  	return Nacionalidades.find({estatus:true});
+Meteor.publish("nacionalidades",function(params){
+  	return Nacionalidades.find(params);
 });
 
