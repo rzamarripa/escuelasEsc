@@ -35,7 +35,6 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  },
 	  existeUsuario : ()  => {
 		  var existe = Meteor.users.find().count();
-		  console.log(existe);
 		  return existe;
 	  }
   });

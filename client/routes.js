@@ -78,7 +78,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '',
       abstract: true,
       templateUrl: 'client/layouts/root.ng.html',
-      controller: 'RootCtrl',
+      controller: 'RootCtrl as ro',
     })
     .state('root.home', {
       url: '/',
