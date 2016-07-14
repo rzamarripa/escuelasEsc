@@ -1,7 +1,7 @@
 angular.module("casserole")
 .controller("ProspectosCtrl", ProspectosCtrl);  
  function ProspectosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
- 	$reactive(this).attach($scope); 	
+ 	let rc = $reactive(this).attach($scope); 	
  	
   this.action = true;
   
@@ -22,11 +22,12 @@ angular.module("casserole")
   
   this.buscar = {};
   this.buscar.nombre = '';
+  this.buscar.etapaVenta_id = '';
 
 	this.subscribe('prospectos', () => {
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre'), estatus : 2 }
+	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id") }
     }] ;
   });
   
@@ -38,12 +39,6 @@ angular.module("casserole")
   
   this.subscribe("etapaVenta", () =>{
 	  return [{estatus : true, campus_id : this.getReactively("Meteor.user().profile.campus_id")}]
-  });
-  
-  this.subscribe('prospecto', () => {
-    return [{
-	    id : $stateParams.id
-    }];
   });
   
   this.helpers({
@@ -108,6 +103,10 @@ angular.module("casserole")
 	  var etapaVenta = EtapasVenta.findOne(etapaVenta_id);
 	  if(etapaVenta)
 	  	return etapaVenta.nombre;
+  }
+  
+  this.filtrarEtapaVenta = function(etapaVenta_id){
+	  this.buscar.etapaVenta_id = etapaVenta_id;
   }
 };
 

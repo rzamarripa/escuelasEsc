@@ -28,12 +28,13 @@
 
 <aside id="left-panel">
   <div class="login-info">
-		<span ng-show="{{isLoggedIn()}}"> <!-- User image size is adjusted inside CSS, it should stay as it --> 
+		<span ng-if="ro.usuarioActual._id"> <!-- User image size is adjusted inside CSS, it should stay as it --> 
 			
 			<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-				<img ng-src="{{currentUser.profile.fotografia}}" alt="yo" class="online"> 
+				<img ng-if="ro.usuarioActual.profile.fotografia" ng-src="{{ro.usuarioActual.profile.fotografia}}" alt="yo" class="online"> 
+				<img ng-if="!ro.usuarioActual.profile.fotografia" src="/img/avatars/male.png" alt="yo" class="online"> 
 				<span>
-					{{currentUser.profile.nombre}} {{currentUser.profile.apPaterno}} {{currentUser.profile.apMaterno}}
+					{{ro.usuarioActual.profile.nombre}} {{ro.usuarioActual.profile.apPaterno}} {{ro.usuarioActual.profile.apMaterno}}
 				</span>
 			</a> 
 			
