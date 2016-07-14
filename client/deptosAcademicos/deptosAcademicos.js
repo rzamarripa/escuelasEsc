@@ -8,7 +8,7 @@ function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.nuevo = true  
   
   this.subscribe("deptosAcademicos",()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id }]
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 
   this.helpers({

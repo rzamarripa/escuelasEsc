@@ -5,10 +5,18 @@ angular
 function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
-  this.subscribe("secciones");
-  this.subscribe("deptosAcademicos");
-  this.subscribe("turnos");
-  this.subscribe("campus");
+  this.subscribe("secciones",()=>{
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+	 });
+  this.subscribe("deptosAcademicos",()=>{
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+	 });
+  this.subscribe("turnos",()=>{
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+	 });
+  this.subscribe("campus",()=>{
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+	 });
   this.action = true;  
   this.nuevo = true;
   
@@ -28,13 +36,13 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
 
  
- this.getDeptoAcademico = function(id)
+  this.getDeptoAcademico = function(id)
   { 
   	var depto = $meteor.object(DeptosAcademicos, id, false);
   	return depto.descripcionCorta; 
   }; 
   
-	this.getCampus = function(id)
+  this.getCampus = function(id)
   { 
   	var campus = $meteor.object(Campus, id, false);
   	return campus.nombre; 
