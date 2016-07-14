@@ -50,6 +50,8 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var apPaterno = alumno.apPaterno != undefined ? alumno.apPaterno + " " : "";
 		var apMaterno = alumno.apMaterno != undefined ? alumno.apMaterno : ""
 		this.alumno.nombreCompleto = nombre + apPaterno + apMaterno;
+		this.alumno.fechaCreacion = new Date();
+		this.alumno.campus_id = Meteor.user().profile.campus_id;
 		Alumnos.insert(this.alumno, function(err, doc){
 			Meteor.call('createUsuario', rc.alumno, 'alumno');
 			toastr.success('Alumno guardado.');
@@ -84,6 +86,19 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			  
 	  }else{
 		  return foto;
+	  }
+  }
+  
+  this.getMatricula = function(){
+	  var cantidad = Alumnos.find({campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}).count();
+	  if(cantidad > 0){
+		  var ultimoAlumno = Alumnos.findOne({}, {sort: {_id:-1}});
+		  if(ultimoAlumno)
+		  	rc.alumno.nombreUsuario = parseInt(ultimoAlumno.matricula) + 1;
+		  	rc.alumno.matricula = parseInt(ultimoAlumno.matricula) + 1;
+	  }else{
+		  rc.alumno.nombreUsuario = "0000001";
+		  rc.alumno.matricula = "0000001";
 	  }
   }
 }

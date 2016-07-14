@@ -25,7 +25,6 @@ angular.module("casserole")
   this.buscar.etapaVenta_id = '';
 
 	this.subscribe('prospectos', () => {
-		console.log("entré");
     return [{
 	    options : { limit: 10 },
 	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id") }
@@ -41,14 +40,6 @@ angular.module("casserole")
   this.subscribe("etapaVenta", () =>{
 	  return [{estatus : true, campus_id : this.getReactively("Meteor.user().profile.campus_id")}]
   });
-  
-/*
-  this.subscribe('prospecto', () => {
-    return [{
-	    id : $stateParams.id
-    }];
-  });
-*/
   
   this.helpers({
 	  prospectos : () => {
