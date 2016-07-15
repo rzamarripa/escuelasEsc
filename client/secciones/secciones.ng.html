@@ -11,11 +11,11 @@
 			    <div class="row">
 			    	<div class="col-sm-2">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Descripción Corta</label>
-				    	<input type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required>
+				    	<input type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required="">
 			    	</div>
 			    	<div class="col-sm-6">
 					    <label>Descripción</label>
@@ -27,13 +27,13 @@
 			    <div class='row'>
 			    	<div class="col-sm-4">
 							<label >Departamento académico</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.deptoAcademico_id">
+							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.deptoAcademico_id" required="">
 								<option ng-repeat="deptoAcademico in sec.deptosAcademicos" value="{{deptoAcademico._id}}">{{deptoAcademico.descripcionCorta}}</option>
 							</select>
 						</div>
 						<div class="col-sm-4">
 							<label >Campus</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.campus_id">
+							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.campus_id" required="">
 								<option ng-repeat="campus in sec.campus" value="{{campus._id}}">{{campus.nombre}}</option>
 							</select>
 <!--
@@ -62,12 +62,12 @@
 			    	</div>
 				    	<div class="col-sm-4">
 				    		 <label>Nivel educativo</label>
-					    <select ng-model="seccion.nivelEdu" class="form-control">
+					    <select ng-model="seccion.nivelEdu" class="form-control" required="">
 							  <option value="Bachillerato">Bachillerato</option>
-						    <option value="Carrera">Carrera</option>
-						    <option value="Curso">Curso</option>
-							  <option value="Profesional">Profesional</option>
-							</select>
+						      <option value="Carrera">Carrera</option>
+						      <option value="Curso">Curso</option>
+					  	      <option value="Profesional">Profesional</option>
+						</select>
 			    	</div>
 			    	<div class="col-sm-4">
 					    <label>Categoria </label>
@@ -79,7 +79,7 @@
 			    	</div>		    	
 						<div class="col-sm-4">
 							<label >Turno</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.turno_id">
+							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.turno_id" required="">
 								<option ng-repeat="turno in sec.turnos" value="{{turno._id}}">{{turno.nombre}}</option>
 							</select>
 						</div>
@@ -115,8 +115,8 @@
 	    </div>
 	    <div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="sec.guardar(sec.seccion)" value="Guardar" class="btn btn-primary" ng-show="sec.action">
-					<input type="submit" ng-click="sec.actualizar(sec.seccion)" value="Actualizar" class="btn btn-primary" ng-show="!sec.action">				
+					<input type="submit" ng-click="sec.guardar(sec.seccion,form)" value="Guardar" class="btn btn-primary" ng-show="sec.action">
+					<input type="submit" ng-click="sec.actualizar(sec.seccion,form)" value="Actualizar" class="btn btn-primary" ng-show="!sec.action">				
 				</div>
 			</div>	  
 		</form>

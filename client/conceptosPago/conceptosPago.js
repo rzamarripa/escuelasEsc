@@ -6,7 +6,7 @@ function ConceptosPagoCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('conceptosPago',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	 });
   
   this.helpers({
@@ -23,15 +23,22 @@ function ConceptosPagoCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.conceptoPago = {};		
   };
 	
-  this.guardar = function(conceptoPago)
+  this.guardar = function(conceptoPago,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de Pago.');
+	        return;
+	    }
 		conceptoPago.estatus = true;
+		this.conceptoPago.campus_id = Meteor.user().profile.campus_id;
 		console.log(this.conceptoPago);
 		ConceptosPago.insert(this.conceptoPago);
 		toastr.success('Concepto de Pago guardado.');
 		this.conceptoPago = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -42,13 +49,19 @@ function ConceptosPagoCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(conceptoPago)
+	this.actualizar = function(conceptoPago,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de Pago.');
+	        return;
+	    }
 		var idTemp = conceptoPago._id;
 		delete conceptoPago._id;		
 		ConceptosPago.update({_id:idTemp},{$set:conceptoPago});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)

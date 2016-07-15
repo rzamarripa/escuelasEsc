@@ -21,15 +21,22 @@ function GeneracionesCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
     this.generacion = {}; 
   };
   
- this.guardar = function(generacion)
+  	this.guardar = function(generacion,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de las Generación.');
+	        return;
+	    }
 	    this.generacion.estatus = true;
+	    this.generacion.campus_id = Meteor.user().profile.campus_id;
 		console.log(this.generacion);
 		Generaciones.insert(this.generacion);		
 		toastr.success('Generación guardada.');
-    this.generacion = {};
+		this.generacion = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -40,13 +47,19 @@ function GeneracionesCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(generacion)
+	this.actualizar = function(generacion,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de las Generación.');
+	        return;
+	    }
 		var idTemp = generacion._id;
 		delete generacion._id;		
 		Generaciones.update({_id:idTemp},{$set:generacion});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
     this.cambiarEstatus = function(id)

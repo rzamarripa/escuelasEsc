@@ -14,7 +14,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe('buscarAlumnos', () => {
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre')}
+	    where : { nombre : this.getReactively('buscar.nombre'), campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }
     }] ;
   });
   
@@ -24,7 +24,9 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
     }] ;
   });
   
-  this.subscribe('ocupaciones');
+  this.subscribe('ocupaciones',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
   
 	this.helpers({
 		alumnos : () => {

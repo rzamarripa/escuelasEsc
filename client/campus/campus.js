@@ -7,7 +7,7 @@ angular.module("casserole")
 
 	this.subscribe('campus', function(){
 		return [{
-			estatus : true
+			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
 
@@ -27,28 +27,28 @@ angular.module("casserole")
   this.guardar = function(campus,form)
 	{
 		if(form.$invalid){
-      toastr.error('Error al guardar los datos del Campus.');
-      return;
+			toastr.error('Error al guardar los datos del Campus.');
+			return;
 	  }
 		this.campus.estatus = true;
-		console.log(this.campus);
+		this.campus.campus_id = Meteor.user().profile.campus_id;
 		Campus.insert(this.campus);
 		toastr.success('campus guardado.');
 		this.campus = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-    form.$setUntouched();
+		form.$setUntouched();
     //Bert.alert( 'Campus Guardado', 'success','growl-top-right');
 		//$state.go('root.campus')
 	};
 	
 	this.editar = function(id)
 	{
-    this.campus = Campus.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.campus = Campus.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
 	this.actualizar = function(campus,form)

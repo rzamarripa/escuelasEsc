@@ -6,7 +6,7 @@ function RvoeCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('rvoe',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	 });
   
   this.helpers({
@@ -23,15 +23,21 @@ function RvoeCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.rvoe = {};		
   };
 	
-  this.guardar = function(rvoe)
+  this.guardar = function(rvoe,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Rvoe.');
+	        return;
+	    }
 		this.rvoe.estatus = true;
-		console.log(this.rvoe);
+	    this.rvoe.campus_id = Meteor.user().profile.campus_id;
 		Rvoe.insert(this.rvoe);
 		toastr.success('Rvoe guardado.');
 		this.rvoe = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.rvoe');
 	};
 	
@@ -43,13 +49,19 @@ function RvoeCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(rvoe)
+	this.actualizar = function(rvoe,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Rvoe.');
+	        return;
+	    }
 		var idTemp = rvoe._id;
 		delete rvoe._id;		
 		Rvoe.update({_id:idTemp},{$set:rvoe});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)

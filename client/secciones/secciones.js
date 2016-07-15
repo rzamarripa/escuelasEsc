@@ -6,16 +6,16 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
   this.subscribe("secciones",()=>{
-		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   this.subscribe("deptosAcademicos",()=>{
-		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   this.subscribe("turnos",()=>{
-		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   this.subscribe("campus",()=>{
-		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   this.action = true;  
   this.nuevo = true;
@@ -55,8 +55,12 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.seccion = {}; 
   };
   
-  this.guardar = function(seccion)
+  this.guardar = function(seccion,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de la Sección.');
+	        return;
+	    }
 		this.seccion.estatus = true;
 		console.log(this.seccion);
 		Secciones.insert(this.seccion);
@@ -64,6 +68,8 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.seccion = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.secciones');
 		
 	};
@@ -77,14 +83,20 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 	};
 	
-	this.actualizar = function(seccion)
+	this.actualizar = function(seccion,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de la Sección.');
+	        return;
+	    }
 		console.log(seccion);
 		var idTemp = seccion._id;
 		delete seccion._id;		
 		Secciones.update({_id:idTemp},{$set:seccion});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		
 	};
 
