@@ -7,7 +7,6 @@ angular.module("casserole")
  	this.autorun(function() {
 	 	
     if(Meteor.user() && Meteor.user()._id){
-     	console.log(Meteor.user().profile)
       rc.usuarioActual=Meteor.user();      
     }
     
