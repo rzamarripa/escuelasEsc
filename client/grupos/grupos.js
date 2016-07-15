@@ -17,45 +17,49 @@ angular.module("casserole")
 	
 	this.subscribe('grupos', () => {
 		return [{
-			estatus : true,
+			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
 	console.log($stateParams.id);
 	this.subscribe('grupo', () => {
 		
-		return [{_id : $stateParams.id, estatus : true}];
+		return [{_id : $stateParams.id, estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}];
 	});
 	
-	this.subscribe('secciones');
+	this.subscribe('secciones',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 	
 	this.subscribe('inscripciones', () => {
 		return [{
-			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},
+			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
 	
 	this.subscribe('subCiclos', () => {
 		return [{
-			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},
+			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
 	
 	this.subscribe('periodos', () => {
 
 		return [{
-			subCiclo_id : {$in : this.getCollectionReactively('subCiclos_ids')},
+			subCiclo_id : {$in : this.getCollectionReactively('subCiclos_ids')},campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
 	
-	this.subscribe('ciclos', () => {
-		return [{estatus: true}]
-	});
+	this.subscribe('ciclos',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 
-	this.subscribe('maestros', () => {
-		return [{estatus: true}]
-	});
+	this.subscribe('maestros',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 	
-	this.subscribe('turnos'); 
+	this.subscribe('turnos',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 }); 
 
 	this.helpers({		
 		grupo : () => {
@@ -156,25 +160,38 @@ angular.module("casserole")
     this.grupo = {};
   }; 
 
-  this.guardar = function(grupo)
+  this.guardar = function(grupo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Grupo.');
+	        return;
+	    }
 		this.grupo.estatus = true;
+		this.grupo.campus_id = Meteor.user().profile.campus_id;
 		grupo.inscritos = 0;
 		Grupos.insert(this.grupo);
 		toastr.success('Grupo guardado.');
 		this.grupo = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.grupos');
 	};
 
 	
   this.actualizar = function(grupo){
-    var idTemp = grupo._id;
+    	if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Grupo.');
+	        return;
+	    }
+    	var idTemp = grupo._id;
 		delete grupo._id;		
 		Grupos.update({_id:$stateParams.id}, {$set : grupo});
 		toastr.success('Grupo guardado.');
 		$state.go("root.grupos",{"id":$stateParams.id});
+		form.$setPristine();
+        form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)

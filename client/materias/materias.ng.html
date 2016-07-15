@@ -6,20 +6,20 @@
 		  {{mat.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">		  		
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 						  <label>Clave</label>
-				    	<input type="text" class="form-control"  ng-model="mat.materia.clave">
+				    	<input type="text" class="form-control"  ng-model="mat.materia.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 						  <label>Etiqueta</label>
-				    	<input type="text" class="form-control"  ng-model="mat.materia.etiqueta" >
+				    	<input type="text" class="form-control"  ng-model="mat.materia.etiqueta" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 						  <label>Descripción Corta</label>
-				    	<input type="text" class="form-control"  ng-model="mat.materia.descripcionCorta" >
+				    	<input type="text" class="form-control"  ng-model="mat.materia.descripcionCorta" required="">
 			    	</div>
 			    </div>
 			    <div class="row">
@@ -31,8 +31,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="mat.guardar(mat.materia)" value="Guardar" class="btn btn-primary" ng-show="mat.action">
-						<input type="submit" ng-click="mat.actualizar(mat.materia)" value="Actualizar" class="btn btn-primary" ng-show="!mat.action">				
+						<input type="submit" ng-click="mat.guardar(mat.materia,form)" value="Guardar" class="btn btn-primary" ng-show="mat.action">
+						<input type="submit" ng-click="mat.actualizar(mat.materia,form)" value="Actualizar" class="btn btn-primary" ng-show="!mat.action">				
 					</div>
 				</div>	  
 		  </form>

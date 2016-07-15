@@ -8,7 +8,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
   this.nuevo = true;  
   
 	this.subscribe('vendedores',()=>{
-		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
  
   this.helpers({
@@ -16,7 +16,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var vendedores = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == this.getReactively('Meteor.user().profile.campus_id') ){
+			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" ){
 				  vendedores.push(usuario);
 			  }
 		  });
@@ -26,7 +26,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == this.getReactively('Meteor.user().profile.campus_id')){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""){
 				  gerentes.push(usuario);
 			  }
 		  });

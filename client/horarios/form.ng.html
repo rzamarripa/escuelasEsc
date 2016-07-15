@@ -10,10 +10,10 @@
 </div>
 <div class="row" style="margin-bottom: 20px;">
 	<div class="col-sm-8">
-		<input type="text" id="nombreHorario" class="form-control input-lg" ng-model="ho.horario.nombre" placeholder="Nombre del Horario"/>
+		<input type="text" id="nombreHorario" class="form-control input-lg" ng-model="ho.horario.nombre" placeholder="Nombre del Horario" required=""/>
 	</div>
 	<div class="col-sm-4">
-		<input type="submit" ng-click="ho.guardarHorario()" value="Guardar" class="btn btn-primary btn-block btn-lg" ng-show="ho.action">
+		<input type="submit" ng-click="ho.guardarHorario(form)" value="Guardar" class="btn btn-primary btn-block btn-lg" ng-show="ho.action">
 		<input type="submit" ng-click="ho.modificarHorario(ho.horario)" value="Actualizar" class="btn btn-primary btn-block btn-lg" ng-show="!ho.action">
 	</div>
 </div>
@@ -26,11 +26,11 @@
 			</header>
 		<div>
 		<div class="widget-body">
-			<form id="add-event-form">
+			<form id="form">
 				<fieldset>
 					<div class="form-group">
 						<label for="materia">Materia</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.materia_id">
+						<select class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.materia_id" required="">
 							<option value=""></option>
 						  <option ng-repeat="materia in ho.materias" value="{{materia._id}}">
 						  	{{materia.etiqueta}}

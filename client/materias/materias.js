@@ -6,9 +6,15 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 	this.action = true; 
 	
-	this.subscribe("materias");
-	this.subscribe("deptosAcademicos");
-	this.subscribe("ocupaciones");
+	this.subscribe("materias",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+	this.subscribe("deptosAcademicos",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+	this.subscribe("ocupaciones",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
     
    
     
@@ -50,32 +56,44 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
   
 
   
-  this.guardar = function(materia)
+  	this.guardar = function(materia,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de la Materia.');
+	        return;
+	    }
 		this.materia.estatus = true;
-		console.log(this.materia);
+		this.materia.campus_id = Meteor.user().profile.campus_id;
 		Materias.insert(this.materia);
 		toastr.success('Materia guardada.');
 		this.materia = {};
 		$('.collapse').collapse('hide');
-		this.nuevo = true;		
+		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
 	{
-    this.materia = Materias.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.materia = Materias.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(materia)
+	this.actualizar = function(materia,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de la Materia.');
+	        return;
+	    }
 		var idTemp = materia._id;
 		delete materia._id;		
 		Materias.update({_id:idTemp},{$set:materia});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		
 	};
 		

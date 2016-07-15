@@ -24,19 +24,26 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 			rc.nuevo = false;
 		}
   });
-  rc.subscribe('secciones');
-  rc.subscribe('materias');
+  rc.subscribe('secciones',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+  rc.subscribe('materias',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
   rc.subscribe('ciclos', ()=>{
 	  return [{
-		  estatus:true
+		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 	  }]
   });
   rc.subscribe('rvoe', ()=>{
 	  return [{
-		  estatus:true
+		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 	  }]
   });
-  rc.subscribe('generaciones');
+  rc.subscribe('generaciones',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+
 
   
   
@@ -96,8 +103,6 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	rc.agregarMateria = function(nuevaMateria){
 		var gradosActuales=rc.plan? (rc.plan.grado? rc.plan.grado:0 ):0;
 		crearGrados(gradosActuales);
-		
-		
 		rc.plan.grados[nuevaMateria.grado].push(nuevaMateria);
 		rc.nuevaMateria="";
 	};
@@ -107,10 +112,14 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		rc.plan.grados[_materia.grado].splice( i, 1 );
 	}
 
-	rc.guardar = function(plan)
+	rc.guardar = function(plan,form)
 	{
-		
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Plan.');
+	        return;
+	    }
 		plan.estatus = true;
+		this.plan.campus_id = Meteor.user().profile.campus_id;
 		delete plan.$$hashKey;
 		for (var i = 0; i < plan.grados.length; i++) {
 			for (var j = 0; j < plan.grados[i].length; j++) {
@@ -123,20 +132,26 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		rc.plan = {}; 
 		$('.collapse').collapse('hide');
 		rc.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go("root.planEstudio");
 	};
 
 	rc.editar = function(id)
 	{
-    rc.plan = PlanesEstudios.findOne({_id:id});
-    rc.action = false;
-    $('.collapse').coll
-    rc.nuevo = false;
-    console.log(rc.plan );
+	    rc.plan = PlanesEstudios.findOne({_id:id});
+	    rc.action = false;
+	    $('.collapse').coll
+	    rc.nuevo = false;
+	    console.log(rc.plan );
 	};
 
-	rc.actualizar = function()
+	rc.actualizar = function(plan,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Plan.');
+	        return;
+	    }
 		var idTemp = rc.plan._id;
 		delete rc.plan._id;	
 		delete rc.plan.$$hashKey;
@@ -148,6 +163,8 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		PlanesEstudios.update({_id:idTemp},{$set:rc.plan});
 		$('.collapse').collapse('hide');
 		rc.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 
 

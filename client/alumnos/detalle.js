@@ -31,21 +31,25 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	this.fechaActual = new Date();
 	this.hayParaPagar = true;
 	
-	this.subscribe("ocupaciones");
+	this.subscribe("ocupaciones",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 
 	this.subscribe('inscripciones', () => {
 	    return [{
-		    alumno_id : $stateParams.id
+		    alumno_id : $stateParams.id,
+		    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 	    }];
 	  });
 	this.subscribe('alumno', () => {
     return [{
-	    id : $stateParams.id
+	    id : $stateParams.id,
+	    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
     }];
   });
 
 	this.subscribe("grupos",() => {
-	    return [{}];
+	    return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }];
 	  });
   
   this.subscribe('pagosAlumno', () => {

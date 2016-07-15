@@ -7,23 +7,23 @@
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">
 				    	<label>Clave</label>
-					    <input type="text" class="form-control" ng-model="rv.rvoe.clave"/>
+					    <input type="text" class="form-control" ng-model="rv.rvoe.clave" required=""/>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Nombre</label>
-					    <input type="text" class="form-control" ng-model="rv.rvoe.nombre">
+					    <input type="text" class="form-control" ng-model="rv.rvoe.nombre" required="">
 			    	</div>
 			    </div>				  
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="rv.guardar(rv.rvoe)" class="btn btn-primary" ng-show="rv.action">
-						<input type="submit" ng-click="rv.actualizar(rv.rvoe)" value="Actualizar" class="btn btn-primary" ng-show="!rv.action">				
+						<input type="submit" value="Guardar" ng-click="rv.guardar(rv.rvoe,form)" class="btn btn-primary" ng-show="rv.action">
+						<input type="submit" value="Actualizar" ng-click="rv.actualizar(rv.rvoe,form)" class="btn btn-primary" ng-show="!rv.action">				
 					</div>
 				</div>	  
 		  </form>

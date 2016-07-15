@@ -8,7 +8,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
   this.nuevo = true;  
   
 	this.subscribe('gerentesVenta',()=>{
-		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
  
   this.helpers({
@@ -17,7 +17,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
 			  console.log(usuario);
-			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user().profile.campus_id){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""){
 				  gerentes.push(usuario);
 			  }
 		  });

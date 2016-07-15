@@ -3,7 +3,9 @@ angular.module("casserole")
  function TurnosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	$reactive(this).attach($scope);
   this.action = true;
-	this.subscribe('turnos');
+	this.subscribe('turnos',()=>{
+		return [{estatus:true, campus_id : this.getReactively('Meteor.user().profile.campus_id') }]
+	 });
 
 	this.helpers({
 	  turnos : () => {
@@ -20,33 +22,46 @@ angular.module("casserole")
     this.turno = {};		
   };
   
-  this.guardar = function(turno)
+  this.guardar = function(turno,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Turno.');
+	        return;
+	    }
 		this.turno.estatus = true;
-		console.log(this.turno);
+		this.turno.campus_id = Meteor.user().profile.campus_id;
 		Turnos.insert(this.turno);
 		toastr.success('Turno guardado.');
 		this.turno = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.turnos')
 	};
 	
 	this.editar = function(id)
 	{
-    this.turno = Turnos.findOne({_id:id});
-    this.action = false;
-    $('.collapse').coll
-    this.nuevo = false;
+	    this.turno = Turnos.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').coll
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(turno)
+	this.actualizar = function(turno,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Turno.');
+	        return;
+	    }
 		var idTemp = turno._id;
 		delete turno._id;		
 		Turnos.update({_id:idTemp},{$set:turno});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
+
 	};
 
 	this.cambiarEstatus = function(id)

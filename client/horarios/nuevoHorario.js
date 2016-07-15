@@ -22,10 +22,18 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   var m = date.getMonth();
   var y = date.getFullYear();
   
-  this.subscribe("maestros");
-  this.subscribe("materias");
-  this.subscribe("horarios");
-  this.subscribe("aulas");
+  this.subscribe("maestros",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+  this.subscribe("materias",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+  this.subscribe("horarios",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+  this.subscribe("aulas",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
   	
 	this.helpers({
 		maestros : () => {
@@ -202,8 +210,9 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   /* add custom event*/
   this.guardarHorario = function() {
 	  eliminarTemporalesOcupados();
-    Horarios.insert(this.horario);
-    toastr.success("Se guardó el horario");
+	  this.horario.campus_id = Meteor.user().profile.campus_id;
+      Horarios.insert(this.horario);
+      toastr.success("Se guardó el horario");
   };
   
   /* remove event */
