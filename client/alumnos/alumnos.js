@@ -42,10 +42,12 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
   
   this.guardar = function (alumno,form) {
-  
+	  console.log("entre")
+	  		console.log(form);  
   		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Alumno.');
-	        return;
+
+        toastr.error('Error al guardar los datos del Alumno.');
+        return;
 	    }
 		this.alumno.estatus = true;
 		var nombre = alumno.nombre != undefined ? alumno.nombre + " " : "";

@@ -31,7 +31,7 @@
 						</div>
 				    </div>
 				    <div class="row">
-						<div ng-show="per.tipoFormulario == 'academico'">
+						<div ng-if="per.tipoFormulario == 'academico'">
 				    			    
 				    		<div class="col-sm-4">
 					    		<label>Fecha Inicio</label>
@@ -42,7 +42,7 @@
 						    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" required/>
 				    		</div>  
 						</div> 	
-						<div ng-show="per.tipoFormulario == 'administrativo'">
+						<div ng-if="per.tipoFormulario == 'administrativo'">
 							
 							
 							<div class="col-sm-4">
@@ -70,7 +70,7 @@
 				    		
 						</div>
 			    	</div>
-			    	<div class="row" ng-show="per.tipoFormulario == 'administrativo'">
+			    	<div class="row" ng-if="per.tipoFormulario == 'administrativo'">
 				    	<div class="col-sm-4">
 				    		<label>Módulo</label>
 				    		<select class="form-control" ng-model="per.periodo.modulo" required>
@@ -81,11 +81,11 @@
 				    	</div>
 				    </div>
 				    <BR/>
-				    <div class="row" ng-show="per.tipoFormulario == 'administrativo'" ng-repeat="concepto in per.conceptos">
+				    <div class="row" ng-if="per.tipoFormulario == 'administrativo'" ng-repeat="concepto in per.conceptos">
 				    	<div class="panel panel-default">
 							<div class="panel-heading">{{concepto.nombre}}</div>
 							<div class="panel-body">
-								<table class="table table-striped" ng-show="per.tipoFormulario == 'administrativo'" >
+								<table class="table table-striped" ng-if="per.tipoFormulario == 'administrativo'" >
 										<thead>
 											<tr>
 												<td width="20%">

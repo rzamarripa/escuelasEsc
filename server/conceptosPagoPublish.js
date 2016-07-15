@@ -1,3 +1,3 @@
-Meteor.publish("conceptosPago", function(){
-	return ConceptosPago.find({estatus:true});
+Meteor.publish("conceptosPago", function(options){
+	return ConceptosPago.find(options);
 });

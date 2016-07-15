@@ -29,9 +29,9 @@
 						<button class="btn btn-primary" ng-click="al.tomarFoto()"><i class="fa fa-camera"></i></button>
 						<img width="100px" ng-src="{{al.alumno.fotografia}}" ng-class="{'img-thumbnail': !!al.alumno.fotografia}" />
 					</div>
-				  <div class="col-sm-3">				    
+				  <div class="col-sm-3" ng-class="{ 'has-warning': form.nombreUsuario.$invalid }">				    
 				    <label for="nombre">Usuario</label>
-				    <input type="text" class="form-control" placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="">
+				    <input name="nombreUsuario" type="text" class="form-control"  placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="">
 					</div>
 					<div class="col-sm-1" ng-show="al.existeUsuario > 1" style="text-align: left">
 					  <div style="display: inline-block; vertical-align: auto; float: none;">
@@ -40,30 +40,30 @@
 						  </h1>
 					  </div>
 					</div>
-					<div class="col-sm-{{al.existeUsuario > 1 ? '2' : '3'}}">
+					<div class="col-sm-{{al.existeUsuario > 1 ? '2' : '3'}}" ng-class="{ 'has-warning': form.contrasena.$invalid }">
 				    <label for="nombre">Contraseña</label>
-				    <input type="password" class="form-control" placeholder="Contraseña" ng-model="al.alumno.contrasena" required="">						
+				    <input name="contrasena" type="password" class="form-control " placeholder="Contraseña" ng-model="al.alumno.contrasena" required="">						
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3" ng-class="{ 'has-warning': form.contrasena2.$invalid }">
 				    <label for="apPaterno">Repetir Contraseña</label>
-				    <input type="password" class="form-control" placeholder="Repetir Contraseña" ng-model="al.alumno.repetirContrasena" required="">
+				    <input name="contrasena2" type="password" class="form-control" placeholder="Repetir Contraseña" ng-model="al.alumno.repetirContrasena" required="">
 					</div>
 				</div>
 			</div>			
 	  	<h4>Datos Personales</h4>
 	  	<div class="well">		
 		  	<div class="row">
-			    <div class="col-sm-3">				    
+			    <div class="col-sm-3" ng-class="{ 'has-warning': form.matricula.$invalid }">				    
 				    <label for="nombre">Matrícula</label>
-				    <input type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="">
+				    <input name="matricula" type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="">
 		    	</div>
-		    	<div class="col-sm-3">				    
+		    	<div class="col-sm-3" ng-class="{ 'has-warning': form.nombre.$invalid }" >				    
 				    <label for="nombre">Nombre</label>
-				    <input type="text" class="form-control" placeholder="Nombre" ng-model="al.alumno.nombre" required="">						
+				    <input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="al.alumno.nombre" required="">						
 		    	</div>
-		    	<div class="col-sm-3">
+		    	<div class="col-sm-3" ng-class="{ 'has-warning': form.apPaterno.$invalid }">
 				    <label for="apPaterno">Apellido Paterno</label>
-				    <input type="text" class="form-control" id="apPaterno" placeholder="Apellido Paterno" ng-model="al.alumno.apPaterno" required="">
+				    <input name="apPaterno" type="text" class="form-control" id="apPaterno" placeholder="Apellido Paterno" ng-model="al.alumno.apPaterno" required="">
 		    	</div>
 		    	<div class="col-sm-3">
 				    <label for="apMaterno">Apellido Materno</label>
@@ -75,9 +75,9 @@
 				    <label for="curp">Curp</label>
 				    <input type="text" class="form-control" id="curp" placeholder="CURP" ng-model="al.alumno.curp">
 		    	</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" ng-class="{ 'has-warning': form.fechaNac.$invalid }">
 						<label for="fechaNac">Fecha de nacimiento</label>
-						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="al.alumno.fechaNac" required="" />
+						<input name="fechaNac" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="al.alumno.fechaNac" required="" />
 					</div>
 					<div class="col-sm-4">
 						<label for="lugarNac">Lugar de nacimiento</label>
@@ -101,9 +101,9 @@
 						  </option>
 						</select>
 					</div>	
-					<div class="col-sm-4">
+					<div class="col-sm-4" ng-class="{ 'has-warning': form.escolaridad.$invalid }">
 						<label for="escolaridad">Escolaridad</label>
-						<input type="text" class="form-control" id="escolaridad" placeholder="Escolaridad" ng-model="al.alumno.escolaridad" required="">
+						<input name="escolaridad" type="text" class="form-control" id="escolaridad" placeholder="Escolaridad" ng-model="al.alumno.escolaridad" required="">
 					</div>
 				</div>
 				<div class="row">
@@ -138,9 +138,9 @@
 						<label for="correo">Correo electrónico</label>
 						<input type="email" class="form-control" placeholder="Correo" ng-model="al.alumno.correo">
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4"  ng-class="{ 'has-warning': form.correoCalificaciones.$invalid }">
 						<label for="correoCalificaciones">Correo para calificaciones</label>
-						<input type="email" class="form-control" id="correoCalificaciones" placeholder="Correo calificaciones" ng-model="al.alumno.correoCalificaciones" required="">
+						<input name="correCalificaciones" type="email" class="form-control" id="correoCalificaciones" placeholder="Correo calificaciones" ng-model="al.alumno.correoCalificaciones" required="">
 					</div>
 					<div class="col-sm-4">
 						<label for="talla">Talla uniforme</label><br/>
@@ -168,13 +168,13 @@
 		  <h4>Domicilio</h4>
 		  <div class="well">
 			  <div class="row">
-			  	<div class="col-sm-6">
+			  	<div class="col-sm-6" ng-class="{ 'has-warning': form.calleNum.$invalid }">
 			  		<label for="calleNum">Calle y número</label>
-				    <input type="text" class="form-control" id="calleNum" placeholder="Calle y Número" ng-model="al.alumno.calleNum" required="">
+				    <input name="calleNum" type="text" class="form-control" id="calleNum" placeholder="Calle y Número" ng-model="al.alumno.calleNum" required="">
 			  	</div>
-			  	<div class="col-sm-6">
+			  	<div class="col-sm-6" ng-class="{ 'has-warning': form.colonia.$invalid }">
 						<label for="colonia">Colonia</label>
-						<input type="text" class="form-control" id="colonia" placeholder="Colonia" ng-model="al.alumno.colonia" required="">
+						<input name="colonia" type="text" class="form-control" id="colonia" placeholder="Colonia" ng-model="al.alumno.colonia" required="">
 			  	</div>
 			  </div>
 			  <div class="row">
@@ -211,9 +211,9 @@
 			<h4>Información Familiar</h4>
 			<div class="well">  
 			  <div class="row">
-			  	<div class="col-sm-6">
+			  	<div class="col-sm-6" ng-class="{ 'has-warning': form.padreTutor.$invalid }">
 			  		<label for="padreTutor">Padre o Tutor</label>
-				    <input type="text" class="form-control" id="padreTutor" placeholder="Padre o Tutor" ng-model="al.alumno.padreTutor" required="">
+				    <input name="padreTutor" type="text" class="form-control" id="padreTutor" placeholder="Padre o Tutor" ng-model="al.alumno.padreTutor" required="">
 			  	</div>
 			  	<div class="col-sm-6">
 						<label for="ocupacionPadreTutor">Ocupación</label>
@@ -221,9 +221,9 @@
 			  	</div>
 			  </div>
 			  <div class="row">
-			  	<div class="col-sm-6">
+			  	<div class="col-sm-6" ng-class="{ 'has-warning': form.madre.$invalid }">
 			  		<label for="madre">Madre</label>
-						<input type="text" class="form-control" id="madre" placeholder="Madre" ng-model="al.alumno.madre" required="">
+						<input name="madre" type="text" class="form-control" id="madre" placeholder="Madre" ng-model="al.alumno.madre" required="">
 			  	</div>
 			  	<div class="col-sm-6">
 						<label for="ocupacionMadre">Ocupación</label>

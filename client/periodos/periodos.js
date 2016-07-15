@@ -122,7 +122,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 		toastr.success('Periodo guardado.');
 		this.periodo = {};
-		$('.collapse').collapse('show');
+		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
         form.$setUntouched();
