@@ -7,6 +7,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.grupo = {};
 	this.grupo.inscripcion = {};
 	this.grupo.colegiatura = {};
+	this.grupo.comisiones=[];
 	this.grados = [];
 	this.subCiclosAcademicos = [];
 	this.subCiclosAdministrativos = [];
@@ -41,6 +42,10 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
   			console.log(rc.grupo);
   			console.log($stateParams.id);
 		}});
+
+	this.subscribe('conceptosComision',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+	});
 	
 	this.subscribe('secciones',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
@@ -91,6 +96,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		for(var i = 1; seccionSeleccionada && i <= seccionSeleccionada.grados; i++ ){
 			rc.grados.push(i);
 		}
+
+
+
 		
 		
 
@@ -128,6 +136,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  maestros : () => {
 		  return Maestros.find();
 	  },
+
 	  periodosAdministrativos : () =>{
 	  	var periodos =Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')}).fetch();
 	  	var planviejo ={}
@@ -138,6 +147,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  	else{
 	  		planviejo=this.grupo.plan;
 	  		this.grupo.plan={};
+	  	}
+	  	if(!this.grupo.comisiones || this.grupo.comisiones.length==0){
+	  		this.grupo.comisiones = ConceptosComision.find().fetch();
 	  	}
 	  	for (var i = 0; i < periodos.length; i++) {
 	  		var periodo =periodos[i];

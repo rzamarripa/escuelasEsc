@@ -148,7 +148,7 @@
 				</div>
 				</div>
 	  	</div>
-	  	<div class="well">	 
+	  	<div class="well" ng-if="gp.grupo.subCicloAdministrativo_id">	 
 	  		<div class="row"  ng-repeat="periodo in gp.periodosAdministrativos">
 				<div class="panel panel-default">
 					<div class="panel-heading">{{periodo.nombre}}</div>
@@ -170,8 +170,31 @@
 					  				</label>
 									
 					  		</div>
-					  		
-					  		
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">Comisiones</div>
+					<div class="panel-body">
+						<div class="row" ng-repeat='comision in gp.grupo.comisiones'>
+							<div class="col-sm-4">
+								{{comision.nombre}}
+					  		</div>
+					  		<div class="col-sm-4">
+									<label >Importe			
+										
+					  				</label>
+					  				<input type="number" ng-model="comision.importe">
+									
+					  		</div>
+							<div class="col-sm-4">
+									<label >Activa			
+										<input type="checkbox" ng-model="comision.activa">
+					  				</label>
+									
+					  		</div>
 						</div>
 					</div>
 				</div>

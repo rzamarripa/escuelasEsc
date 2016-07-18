@@ -304,6 +304,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/conceptosPago',
       templateUrl: 'client/conceptosPago/conceptosPago.ng.html',
       controller: 'ConceptosPagoCtrl as cp',
+    })
+    .state('root.conceptosComision', {
+      url: '/conceptosComision',
+      templateUrl: 'client/conceptosComision/conceptosComision.ng.html',
+      controller: 'ConceptosComisionCtrl as ccm',
     })    
     .state('root.editarHorario', {
       url: '/editarHorario/:id',
