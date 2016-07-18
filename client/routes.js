@@ -83,6 +83,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
     .state('root.home', {
       url: '/',
       templateUrl: 'client/home/home.ng.html',      
+      controller: 'HomeCtrl as ho',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();
@@ -160,7 +161,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'TitulosCtrl as tit',
     })
     .state('root.secciones', {
-      url: '/secciones',
+      url: '/secciones/:campus_id',
       templateUrl: 'client/secciones/secciones.ng.html',
       controller: 'SeccionesCtrl as sec',
     })

@@ -6,7 +6,7 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "",  }]
 	 });
   
   this.helpers({
@@ -32,6 +32,7 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 		this.ciclo.estatus = true;
 		this.ciclo.campus_id = Meteor.user().profile.campus_id;
+		this.ciclo.seccion_id = Meteor.user().profile.seccion_id;
 		console.log(this.ciclo);
 		Ciclos.insert(this.ciclo);
 		toastr.success('Ciclo guardado.');

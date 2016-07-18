@@ -1,13 +1,14 @@
 angular.module("casserole")
 .controller("CampusCtrl", CampusCtrl);  
  function CampusCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
- 	$reactive(this).attach($scope);
+ 	let rc = $reactive(this).attach($scope);
   this.action = true;
   this.nuevo = true;
+  this.campus = {};
 
 	this.subscribe('campus', function(){
 		return [{
-			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
 
@@ -16,12 +17,29 @@ angular.module("casserole")
 		  return Campus.find();
 	  }
   });
-
+  
   this.nuevoCampus = function()
   {
     this.action = true;
     this.nuevo = !this.nuevo;
     this.campus = {};		
+    var cantidad = Campus.find().count();
+	  if(cantidad > 0){
+		  var ultimo = Campus.findOne({}, {sort: {fechaCreacion:-1}});
+		  if(ultimo){
+			  anterior = parseInt(ultimo.clave) + 1;
+			  anterior = '' + anterior;
+
+			  for(var i = 0; i <= ultimo.clave.length; i++){
+				  if(anterior.length <= 1){
+					  anterior = "0" + anterior;
+				  }
+			  }
+		  	rc.campus.clave = anterior;
+		  }
+	  }else{
+		  rc.campus.clave = "01";
+	  }
   };
   
   this.guardar = function(campus,form)
@@ -32,6 +50,7 @@ angular.module("casserole")
 	  }
 		this.campus.estatus = true;
 		this.campus.campus_id = Meteor.user().profile.campus_id;
+		this.campus.fechaCreacion = new Date();
 		Campus.insert(this.campus);
 		toastr.success('campus guardado.');
 		this.campus = {}; 

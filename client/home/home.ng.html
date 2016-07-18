@@ -1,6 +1,6 @@
-<h1>Menú Principal</h1>
+<h1>Menú Principal de la sección {{ho.seccion.descripcion}} del campus {{ho.campus.descripcion}}</h1>
 <!-- Menú de Administrador -->
-<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'admin'">
+<section id="administrador" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'admin'">
 
   <div class="row">
     <div class="col-sm-12">
@@ -23,7 +23,7 @@
 </section>
 
 <!-- Menú de Directores -->
-<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'director'">
+<section id="director" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'director'">
   <div class="row">
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -216,7 +216,7 @@
 </section>
 
 <!-- Menú de Maestros -->
-<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'maestro'">
+<section id="maestro" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'maestro'">
   <div class="row">
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -238,7 +238,7 @@
 </section>
 
 <!-- Menú de Vendedores -->
-<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'vendedor'">
+<section id="vendedor" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'vendedor'">
   <div class="row">
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -263,7 +263,7 @@
 </section>
 
 <!-- Menú de Gerentes de Venta -->
-<section id="widget-grid" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'gerenteVenta'">
+<section id="gerenteVenta" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'gerenteVenta'">
   <div class="row">
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">

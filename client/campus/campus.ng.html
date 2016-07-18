@@ -9,7 +9,11 @@
 			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-1">					    
+				    	<label>Clave</label>
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="cp.campus.clave" required="" maxlength="2" minlength="2" disabled="">
+			    	</div>
+			    	<div class="col-sm-11">					    
 				    	<label>Nombre</label>
 				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
 			    	</div>
@@ -38,6 +42,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
+					<th width="10%"><div class="text-center">Clave</div></th>
 					<th width="10%"><div class="text-center">Nombre</div></th>
 					<th width="20%"><div class="text-center">Descripción</div></th>	
 					<th width="10%">
@@ -54,6 +59,7 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="campus in cp.campuses">
+			    <td>{{campus.clave}} </td>
 			    <td><a href="/campus/{{campus._id}}">{{campus.nombre}}</a></td>
 			    <td>{{campus.descripcion}} </td>
 			    <td>
