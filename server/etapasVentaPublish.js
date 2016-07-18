@@ -1,5 +1,5 @@
 Meteor.publish("etapasVenta", function(options){
-	return EtapasVenta.find({estatus : true});
+	return EtapasVenta.find(options,{sort:{orden:1}});
 });
 
 Meteor.publish("etapaVenta", function(options){

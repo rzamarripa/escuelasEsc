@@ -7,20 +7,20 @@
 		</a>
 		
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
 				    <div class="col-sm-4">
 				    	<label>Orden</label>
-					    <input type="text" class="form-control" ng-model="cp.conceptoPago.orden"/>
+					    <input type="text" class="form-control" ng-model="cp.conceptoPago.orden" required=""/>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Nombre</label>
-					    <input type="text" class="form-control" ng-model="cp.conceptoPago.nombre"/>
+					    <input type="text" class="form-control" ng-model="cp.conceptoPago.nombre" required=""/>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Importe</label>
-					    <input type="number" class="form-control" ng-model="cp.conceptoPago.importe">
+					    <input type="number" class="form-control" ng-model="cp.conceptoPago.importe" required=""/>
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Módulo</label>
@@ -34,8 +34,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="cp.guardar(cp.conceptoPago)" class="btn btn-primary" ng-show="cp.action">
-						<input type="submit" ng-click="cp.actualizar(cp.conceptoPago)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
+						<input type="submit" value="Guardar" ng-click="cp.guardar(cp.conceptoPago,form)" class="btn btn-primary" ng-show="cp.action">
+						<input type="submit" ng-click="cp.actualizar(cp.conceptoPago,form)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
 					</div>
 				</div>	  
 		  </form>

@@ -5,7 +5,9 @@ angular
 function NacionalidadesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 
-  this.subscribe("nacionalidades");
+  this.subscribe("nacionalidades",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
   this.action = true;  
   this.helpers({
 	  nacionalidades : () => {
@@ -21,34 +23,47 @@ function NacionalidadesCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.nacionalidad = {}; 
   };
   
-   this.guardar = function(nacionalidad)
+   this.guardar = function(nacionalidad,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de la Nacionalidad.');
+	        return;
+	    }
 		this.nacionalidad.estatus = true;
-		console.log(this.nacionalidad);
+		this.nacionalidad.campus_id = Meteor.user().profile.campus_id;
 		Nacionalidades.insert(this.nacionalidad);
 		toastr.success('Nacionalidad guardado.');
 		this.nacionalidad = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		
 	};
 	
 	this.editar = function(id)
 	{
 		this.nacionalidad = Nacionalidades.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 		
 	};
 	
-	this.actualizar = function(nacionalidad)
+	this.actualizar = function(nacionalidad,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de la Nacionalidad.');
+	        return;
+	    }
 		var idTemp = nacionalidad._id;
 		delete nacionalidad._id;		
 		Nacionalidades.update({_id:idTemp},{$set:nacionalidad});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
+
 		
 	};
 		

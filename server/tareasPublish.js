@@ -1,4 +1,3 @@
-Meteor.publish("tareas", function(params){
-	return Tareas.find(params);
-}); 
-
+Meteor.publish("tareas", function(options){
+	return Tareas.find(options);
+});

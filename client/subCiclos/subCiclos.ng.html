@@ -10,12 +10,12 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" >
+			<form name="form" class="form-horizontal" role="form" >
 				<div class="well">	    
 			    <div class="row">
 				    <div class="col-sm-4">
 							<label >Ciclo Escolar</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id">
+							<select class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id" required>
 								<option  value="{{ciclo._id}}" ng-repeat="ciclo in sub.ciclos">
 									{{ciclo.descripcion}}
 								</option>
@@ -23,7 +23,7 @@
 						</div>
 				    <div class="col-sm-4">
 				    	<label>Nombre</label>
-					    <input type="text" class="form-control" ng-model="sub.subCiclo.nombre" >
+					    <input type="text" class="form-control" ng-model="sub.subCiclo.nombre" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 			    	<label>Tipo de Subciclo</label>
@@ -42,8 +42,8 @@
 				</div> 
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="sub.guardar(sub.subCiclo)" class="btn btn-primary" ng-show="sub.action">
-						<input type="submit" ng-click="sub.actualizar(sub.subCiclo)" value="Actualizar" class="btn btn-primary" ng-show="!sub.action">			
+						<input type="submit" value="Guardar" ng-click="sub.guardar(sub.subCiclo,form)" class="btn btn-primary" ng-show="sub.action">
+						<input type="submit" ng-click="sub.actualizar(sub.subCiclo,form)" value="Actualizar" class="btn btn-primary" ng-show="!sub.action">			
 					</div>
 				</div>	  
 		  </form>

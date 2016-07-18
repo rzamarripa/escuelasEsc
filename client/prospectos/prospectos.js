@@ -1,7 +1,7 @@
 angular.module("casserole")
 .controller("ProspectosCtrl", ProspectosCtrl);  
  function ProspectosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
- 	$reactive(this).attach($scope); 	
+ 	let rc = $reactive(this).attach($scope); 	
  	
   this.action = true;
   
@@ -22,24 +22,23 @@ angular.module("casserole")
   
   this.buscar = {};
   this.buscar.nombre = '';
+  this.buscar.etapaVenta_id = '';
 
 	this.subscribe('prospectos', () => {
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre'), estatus : 2 }
+	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id") }
     }] ;
   });
   
   this.subscribe("empleados");
   
   this.subscribe("etapaVenta", () =>{
-	  return [{orden : "1", estatus : true}]
+	  return [{orden : "1", estatus : true, campus_id : this.getReactively("Meteor.user().profile.campus_id")}]
   });
   
-  this.subscribe('prospecto', () => {
-    return [{
-	    id : $stateParams.id
-    }];
+  this.subscribe("etapaVenta", () =>{
+	  return [{estatus : true, campus_id : this.getReactively("Meteor.user().profile.campus_id")}]
   });
   
   this.helpers({
@@ -48,6 +47,9 @@ angular.module("casserole")
 	  },
 	  etapaVenta : () => {
 		  return EtapasVenta.findOne();
+	  },
+	  etapasVenta : () => {
+		  return EtapasVenta.find();
 	  }
   });
   
@@ -56,16 +58,13 @@ angular.module("casserole")
 		this.prospecto.estatus = 1;
 		this.prospecto.fecha = new Date();
 		this.prospecto.etapaVenta_id = this.etapaVenta._id;
-		Prospectos.insert(this.prospecto);
+		this.prospecto.vendedor_id = Meteor.userId();
+		var prospecto_id = Prospectos.insert(this.prospecto);
 		toastr.success('prospecto guardado.');
 		this.prospecto = {}; 
 		$('.collapse').collapse('hide');
-		$state.go('root.listarProspectos');
+		$state.go('root.prospecto',{id : prospecto_id});
 	};
-	
-	this.asignar = function(prospecto, empleado_id) {
-    Prospectos.update({ _id: prospecto._id }, { $set : { empleado_id : empleado_id, estatus : 2 } } );
-	}
 	
 	this.editar = function(id)
 	{
@@ -85,6 +84,7 @@ angular.module("casserole")
 	};
 	
 	this.eliminar = function(prospecto){
+		console.log(prospecto);
 		Prospectos.remove({_id : prospecto._id});		
 	}
 
@@ -98,5 +98,15 @@ angular.module("casserole")
 		
 		Prospectos.update({_id: id},{$set :  {estatus : prospecto.estatus}});
   };		
+  
+  this.getEtapaVenta = function(etapaVenta_id){
+	  var etapaVenta = EtapasVenta.findOne(etapaVenta_id);
+	  if(etapaVenta)
+	  	return etapaVenta.nombre;
+  }
+  
+  this.filtrarEtapaVenta = function(etapaVenta_id){
+	  this.buscar.etapaVenta_id = etapaVenta_id;
+  }
 };
 

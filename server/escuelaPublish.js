@@ -1,3 +1,3 @@
-Meteor.publish("escuelas",function(){
-  	return Escuelas.find({estatus:true});
+Meteor.publish("escuelas",function(params){
+  	return Escuelas.find(params);
 });

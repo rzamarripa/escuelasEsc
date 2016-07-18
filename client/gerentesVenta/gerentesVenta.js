@@ -3,11 +3,13 @@ angular
 .controller("GerentesVentaCtrl", GerentesVentaCtrl);
 function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 	
-	let rc = $reactive(this).attach($scope);
+  let rc = $reactive(this).attach($scope);
   this.action = true;
   this.nuevo = true;  
   
-	this.subscribe('gerentesVenta');
+	this.subscribe('gerentesVenta',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
  
   this.helpers({
 	  gerentesVenta : () => {
@@ -15,7 +17,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
 			  console.log(usuario);
-			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user().profile.campus_id){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""){
 				  gerentes.push(usuario);
 			  }
 		  });
@@ -33,7 +35,10 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
  
 	this.guardar = function(gerenteVenta)
 	{		
-		console.log(gerenteVenta);
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Gerente de Venta.');
+	        return;
+	    }
 		gerenteVenta.profile.estatus = true;
 		gerenteVenta.profile.campus_id = Meteor.user().profile.campus_id;
 		Meteor.call('createGerenteVenta', gerenteVenta, 'gerenteVenta');
@@ -42,21 +47,29 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		this.gerenteVenta = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;		
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
 	{
-    this.gerenteVenta = Meteor.users.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.gerenteVenta = Meteor.users.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
 	this.actualizar = function(gerenteVenta)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Gerente de Venta.');
+	        return;
+	    }
 		Meteor.call('updateGerenteVenta', gerenteVenta, 'gerenteVenta');
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.tomarFoto = function(){

@@ -4,7 +4,11 @@ angular
  
 function TiposIngresosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
-	this.subscribe('tiposingresos')
+	
+	this.subscribe('tiposingresos',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+	 
 	this.action = true;	
 	
 	
@@ -22,35 +26,48 @@ this.nuevo = true;
     this.tipoingreso = {}; 
 	};
 	
-	this.guardar = function(tipoingreso)
+	this.guardar = function(tipoingreso,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Tipo de Ingreso.');
+	        return;
+	    }
 		this.tipoingreso.estatus = true;
-		console.log(this.tipoingreso);
+		this.tipoingreso.campus_id = Meteor.user().profile.campus_id;
 		TiposIngresos.insert(this.tipoingreso);
 		toastr.success('TipoIngreso guardado.');
 		this.tipoingreso = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.tiposingresos');
 	};
 	
 	this.editar = function(id)
 	{
 		this.tipoingreso = TiposIngresos.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
     
 	};
 	
-	this.actualizar = function(tipoingreso)
+	this.actualizar = function(tipoingreso,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Tipo de Ingreso.');
+	        return;
+	    }
 		var idTemp = tipoingreso._id;
 		delete tipoingreso._id;		
 		TiposIngresos.update({_id:idTemp},{$set:tipoingreso});
 		$('.collapse').collapse('hide');
-		this.nuevo = true;	};
-	
+		this.nuevo = true;	
+		form.$setPristine();
+        form.$setUntouched();
+	};
+		
 	this.cambiarEstatus = function(id)
 	{
 		var tipoingreso = TiposIngresos.findOne({_id:id});

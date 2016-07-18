@@ -78,11 +78,12 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '',
       abstract: true,
       templateUrl: 'client/layouts/root.ng.html',
-      controller: 'RootCtrl',
+      controller: 'RootCtrl as ro',
     })
     .state('root.home', {
       url: '/',
       templateUrl: 'client/home/home.ng.html',      
+      controller: 'HomeCtrl as ho',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();
@@ -160,7 +161,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'TitulosCtrl as tit',
     })
     .state('root.secciones', {
-      url: '/secciones',
+      url: '/secciones/:campus_id',
       templateUrl: 'client/secciones/secciones.ng.html',
       controller: 'SeccionesCtrl as sec',
     })
@@ -303,6 +304,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/conceptosPago',
       templateUrl: 'client/conceptosPago/conceptosPago.ng.html',
       controller: 'ConceptosPagoCtrl as cp',
+    })
+    .state('root.conceptosComision', {
+      url: '/conceptosComision',
+      templateUrl: 'client/conceptosComision/conceptosComision.ng.html',
+      controller: 'ConceptosComisionCtrl as ccm',
     })    
     .state('root.editarHorario', {
       url: '/editarHorario/:id',
@@ -336,8 +342,18 @@ angular.module('casserole').config(['$injector', function ($injector) {
     })        
     .state('root.prospecto', {
       url: '/prospecto/:id',
-      templateUrl: 'client/prospceto/prospecto.html',
+      templateUrl: 'client/prospectos/prospecto.html',
       controller: 'ProspectoCtrl as fa',
+    })
+    .state('root.actividades', {
+      url: '/actividades',
+      templateUrl: 'client/actividades/actividades.html',
+      controller: 'ActividadesCtrl as ac',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
     })
     .state('root.etapasVenta', {
       url: '/etapasVenta',

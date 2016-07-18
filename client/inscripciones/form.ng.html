@@ -228,12 +228,12 @@
 												<div class="panel-body">
 													<div ng-repeat="(nombre, plan) in ins.inscripcion.plan">
 														<label  ng-if="plan.tipoPlan=='inscripcion'"> 
-													  		<input type="radio" name="rbInscripcion" ng-model="ins.tipoInscripcion" ng-value="nombre">
+													  		<input type="radio" name="rbInscripcion" ng-model="ins.inscripcion.tipoInscripcion" ng-value="nombre">
 													  		{{nombre}}
-													  		<div class="row" ng-show="nombre==ins.tipoInscripcion" ng-repeat="concepto in plan.datos">
-													  			<div class="col-sm-6">
+													  		<div class="row" ng-show="nombre==ins.inscripcion.tipoInscripcion" ng-repeat="concepto in plan.datos">
+													  			<div class="col-sm-12">
 													  				<label > 
-														  				<input type="checkbox" ng-model="concepto.activa" >
+														  				<input type="checkbox" ng-model="concepto.activa" ng-change="ins.calcularImporte(concepto)">
 														  				{{concepto.nombre}}
 														  			</label>
 													  			</div>
@@ -247,7 +247,7 @@
 												<div class="panel-body">
 													<div  ng-repeat="(nombre, plan) in ins.inscripcion.plan" ng-if="plan.tipoPlan=='colegiatura'">
 													  	<label > 
-													  		<input type="radio" name="rbColegiatura" ng-model="ins.tipoColegiatura"  ng-value="nombre">
+													  		<input type="radio" name="rbColegiatura" ng-model="ins.inscripcion.tipoColegiatura"  ng-value="nombre">
 													  		{{nombre}}
 													  		<div ng-show="nombre==ins.tipoColegiatura">
 													  			<p>Total de pagos: {{plan.planPago.length}} </p>
@@ -267,6 +267,15 @@
 												<h4 class="text-center text-success">Total a pagar: {{ins.inscripcion.totalPagar | currency}}</h4>
 											</div>
 											<div class="col-sm-4">
+												<div class="row">
+													<div class="col-sm-12">
+														<label>Vendedor</label>
+														
+														<select class="form-control" ng-model="ins.inscripcion.vendedor_id">
+													    	<option value="{{vendedor._id}}" ng-repeat="vendedor in ins.vendedores">{{vendedor.profile.nombre}} {{vendedor.profile.apPaterno}}</option>
+												    	</select>
+													</div>
+												</div>
 												<div class="row">
 													<div class="col-sm-12">
 														<label>Cuánto paga</label>

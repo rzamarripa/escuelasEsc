@@ -68,7 +68,7 @@
 											    	</div>
 											    	<div class="col-sm-4">					    
 												    	<label>Fecha</label>
-												    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="fa.llamada.fecha"/>
+												    	<input date-time class="form-control" view="year" max-view="year" min-view="minutes" ng-model="fa.llamada.fecha"/>
 											    	</div>
 											    	<div class="col-sm-4">
 											    		<label class="toggle">
@@ -110,7 +110,7 @@
 											    	</div>
 											    	<div class="col-sm-2">					    
 												    	<label>Fecha</label>
-												    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="fa.reunion.fecha"/>
+												    	<input date-time class="form-control" view="year" max-view="year" min-view="minutes" ng-model="fa.reunion.fecha"/>
 											    	</div>
 											    	<div class="col-sm-4">					    
 												    	<label>Lugar</label>
@@ -156,7 +156,7 @@
 											    	</div>
 											    	<div class="col-sm-4">					    
 												    	<label>Fecha</label>
-												    	<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="fa.tarea.fecha"/>
+												    	<input date-time class="form-control" view="year" max-view="year" min-view="minutes" ng-model="fa.tarea.fecha"/>
 											    	</div>
 											    	<div class="col-sm-4">
 											    		<label class="toggle">
@@ -192,7 +192,7 @@
 													<div class="row">
 														<section class="col col-1">
 															<button class="btn btn-primary btn-sm" ng-click="fa.tomarFoto()"><i class="fa fa-camera"></i></button>
-															<img width="100px" ng-src="{{al.alumno.fotografia}}" ng-class="{'img-thumbnail': !!al.alumno.fotografia}" />
+															<img width="100px" ng-src="{{al.prospecto.fotografia}}" ng-class="{'img-thumbnail': !!al.prospecto.fotografia}" />
 														</section>
 														<section class="col col-6">								
 															<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -280,7 +280,8 @@
 								<section id="widget-grid" data-widget-grid="data-widget-grid">
 								  <div class="row">
 									  <div class="col-sm-3 profile-pic" style="text-align: center;">
-											<img class="thumbnail" ng-src="{{fa.prospecto.fotografia}}" style="height: 100px; text-align: center;" alt="Foto Perfil">
+											<img class="thumbnail" ng-if="fa.prospecto.fotografia" ng-src="{{fa.prospecto.fotografia}}" style="height: 100px; text-align: center;" alt="Foto Perfil">
+											<img class="thumbnail" ng-if="!fa.prospecto.fotografia" src="/img/avatars/male.png" style="height: 100px; text-align: center;" alt="Foto Perfil">
 											<div class="padding-10" style="text-align: left;">
 												<ul class="list-unstyled">
 													<li>
@@ -306,6 +307,11 @@
 													<li>
 														<p class="text-muted">
 															<i class="fa fa-book"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{fa.prospecto.estudioInteres}}</span>
+														</p>
+													</li>
+													<li>
+														<p class="text-muted">
+															<i class="fa fa-tasks"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{fa.getEtapaVenta(fa.prospecto.etapaVenta_id)}}</span>
 														</p>
 													</li>
 												</ul>

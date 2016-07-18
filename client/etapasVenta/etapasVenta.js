@@ -3,7 +3,10 @@ angular.module("casserole")
  function EtapasVentaCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	$reactive(this).attach($scope);
   this.action = true;
-	this.subscribe('etapasVenta');
+	
+	this.subscribe('etapasVenta', function(){
+		return [{estatus:true, campus_id : Meteor.user().profile.campus_id}];
+	});
 
 	this.helpers({
 	  etapasVenta : () => {
@@ -25,6 +28,7 @@ angular.module("casserole")
 	{
 		this.etapaVenta.estatus = true;
 		console.log(this.etapaVenta);
+		etapaVenta.campus_id = Meteor.user().profile.campus_id;
 		EtapasVenta.insert(this.etapaVenta);
 		toastr.success('Etapa de Venta guardada.');
 		this.etapaVenta = {}; 

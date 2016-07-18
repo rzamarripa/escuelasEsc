@@ -5,8 +5,10 @@ angular.module("casserole")
   this.action = true;
   this.nuevo = true;	  
   
-	this.subscribe('escuelas');
-
+	this.subscribe('escuelas',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+	 
 	this.helpers({
 	  escuelas : () => {
 		  return Escuelas.find();
@@ -20,33 +22,46 @@ angular.module("casserole")
     this.escuela = {};		
   };
   
-  this.guardar = function(escuela)
+  this.guardar = function(escuela,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de la Escuela de Procedencia.');
+	        return;
+	    }
 		this.escuela.estatus = true;
+		this.escuela.campus_id = Meteor.user().profile.campus_id;
 		console.log(this.escuela);
 		Escuelas.insert(this.escuela);
 		toastr.success('Escuela guardada.');
 		this.escuela = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
+		
 	};
 	
 	this.editar = function(id)
 	{
-    this.escuela = Escuelas.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.escuela = Escuelas.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(escuela)
+	this.actualizar = function(escuela,form)
 	{
-		console.log(escuela);
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de la Escuela de Procedencia.');
+	        return;
+	    }
 		var idTemp = escuela._id;
 		delete escuela._id;		
 		Escuelas.update({_id:idTemp},{$set : escuela});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)

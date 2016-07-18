@@ -6,45 +6,45 @@
 	 {{emp.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form name="form" class="form-horizontal" role="form" >
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 				    	<label>Usuario</label>
-				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="emp.trabajador.usuario" required>
+				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="emp.trabajador.usuario" required="">
 			    	</div>
 			    	<div class="col-sm-4">					    
 				    	<label>Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="emp.trabajador.contrasena" required>
+				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="emp.trabajador.contrasena" required="">
 			    	</div>		    				    	    
 			    	<div class="col-sm-4">					    
 				    	<label>Confirmar Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="emp.trabajador.confirmarContrasena" required>
+				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="emp.trabajador.confirmarContrasena" required="">
 					</div>
 			    	<div class="col-sm-4">
 			    		<label>Nombre </label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="emp.trabajador.nombre" required>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="emp.trabajador.nombre" required="">
 			    	</div>
 
 			    	<div class="col-sm-4">
 			    		<label>Apellido Paterno </label>
-				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="emp.trabajador.apPaterno" required>
+				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="emp.trabajador.apPaterno" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Apellido Materno</label>
-				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="emp.trabajador.apMaterno" required>
+				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="emp.trabajador.apMaterno">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Dirección</label>
-				    	<input type="text" class="form-control" placeholder="Dirección" ng-model="emp.trabajador.direccion" required>
+				    	<input type="text" class="form-control" placeholder="Dirección" ng-model="emp.trabajador.direccion">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Teléfono</label>
-				    	<input type="text" class="form-control" placeholder="Teléfono" ng-model="emp.trabajador.telefono" required>
+				    	<input type="text" class="form-control" placeholder="Teléfono" ng-model="emp.trabajador.telefono">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Correo</label>
-				    	<input type="text" class="form-control" placeholder="Correo" ng-model="emp.trabajador.correo" required>
+				    	<input type="text" class="form-control" placeholder="Correo" ng-model="emp.trabajador.correo">
 			    	</div>
 			    	<!--
 			    	<div class="col-sm-4">
@@ -62,14 +62,14 @@
 			    	<div class="col-sm-4">
 						<label for="talla">Fotografía</label>
 						<button class="btn btn-primary" ng-click="emp.tomarFoto()"><i class="fa fa-camera"></i></button>
-						<img width="100px" ng-src="{{trabajador.fotografia}}" ng-class="{'img-thumbnail': !!trabajador.fotografia}" />
+						<img width="100px" ng-src="{{emp.trabajador.fotografia}}" ng-class="{'img-thumbnail': !!trabajador.fotografia}" />
 					</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="emp.guardar(trabajador)" value="Guardar" class="btn btn-primary" ng-show="emp.action">
-						<input type="submit" ng-click="emp.actualizar(trabajador)" value="Actualizar" class="btn btn-primary" ng-show="!emp.action">				
+						<input type="submit" ng-click="emp.guardar(emp.trabajador,form)" value="Guardar" class="btn btn-primary" ng-show="emp.action">
+						<input type="submit" ng-click="emp.actualizar(emp.trabajador,form)" value="Actualizar" class="btn btn-primary" ng-show="!emp.action">				
 					</div>
 				</div>	  
 		  </form>
@@ -126,7 +126,7 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="emp.editar(trabajador._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							   <li><a href="#" ng-click="emp.cambiarEstatus(trabajador._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
+							    <li><a href="#" ng-click="emp.cambiarEstatus(trabajador._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

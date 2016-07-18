@@ -6,117 +6,221 @@
 		  {{sec.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form">
-		  	<div class="well">	    
-			    <div class="row">
-			    	<div class="col-sm-2">					    
-				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required>
-			    	</div>
-			    	<div class="col-sm-4">
-			    		<label>Descripción Corta</label>
-				    	<input type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required>
-			    	</div>
-			    	<div class="col-sm-6">
-					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="sec.seccion.descripcion"></textarea>
-			    	</div>
-			    </div>
-		  	</div>
-		  	<div class="well">
-			    <div class='row'>
-			    	<div class="col-sm-4">
-							<label >Departamento academico</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.deptoAcademico_id">
-								<option ng-repeat="deptoAcademico in sec.deptosAcademicos" value="{{deptoAcademico._id}}">{{deptoAcademico.descripcionCorta}}</option>
-							</select>
-						</div>
-						<div class="col-sm-4">
-							<label >Campus</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.campus_id">
-								<option ng-repeat="campus in sec.campus" value="{{campus._id}}">{{campus.nombre}}</option>
-							</select>
-<!--
-						<ui-select ng-model="seccion.campus_id"
-					             theme="bootstrap"
-					             ng-disabled="disabled"
-					             reset-search-input="false">
-					    <ui-select-match placeholder="Seleccione">{{$select.selected.nombre}}</ui-select-match>
-					    <ui-select-choices repeat="campus._id as campus in campuss | filter: $select.search">
-					      <div ng-bind-html="campus.nombre | highlight: $select.search"></div>
-					    </ui-select-choices>
-					  </ui-select>
--->
-						</div>
-			    	<div class="col-sm-4">
-					    <label> Orden</label>
-					    <input type="text" class="form-control" placeholder="Orden" ng-model="sec.seccion.orden">
-			    	</div>
-			    	<div class="col-sm-4">
-					    <label>Dependencia</label>
-					    <input type="text" class="form-control" placeholder="Dependencia" ng-model="sec.seccion.dependencia">
-			    	</div>
-			    	<div class="col-sm-4">
-					    <label>Servicio </label>
-					    <input type="text" class="form-control" placeholder="Servicio" ng-model="sec.seccion.servicio">
-			    	</div>
-				    	<div class="col-sm-4">
-				    		 <label>Nivel educativo</label>
-					    <select ng-model="seccion.nivelEdu" class="form-control">
-							  <option value="Bachillerato">Bachillerato</option>
-						    <option value="Carrera">Carrera</option>
-						    <option value="Curso">Curso</option>
-							  <option value="Profesional">Profesional</option>
-							</select>
-			    	</div>
-			    	<div class="col-sm-4">
-					    <label>Categoria </label>
-					    <input type="text" class="form-control" placeholder="Categoria" ng-model="sec.seccion.categoria">
-			    	</div>
-			    	<div class="col-sm-4">
-					    <label>Clave de incorporación  </label>
-					    <input type="text" class="form-control" placeholder="Clave de incorporación " ng-model="sec.seccion.claveIncor">
-			    	</div>		    	
-						<div class="col-sm-4">
-							<label >Turno</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.turno_id">
-								<option ng-repeat="turno in sec.turnos" value="{{turno._id}}">{{turno.nombre}}</option>
-							</select>
-						</div>
-					<div class="col-sm-4">
-				    <label>Grados </label>
-				    <input type="text" class="form-control" placeholder="Grados" ng-model="sec.seccion.grados">
-		    	</div>
-				</div>
-			</div>			    	
-			<div class="well">
-	      <div class='row'>
-	    		<div class="col-sm-3">
-			    <label>Zona escolar </label>
-			    <input type="text" class="form-control" placeholder="Zona escolar" ng-model="sec.seccion.zonaEsc">
-	    	</div>
-	    	<div class="col-sm-2">
-			    <label>Edad de </label>
-			    <input type="text"  class="form-control" placeholder="Edad" ng-model="sec.seccion.edad">
-	    	</div>
-	    	<div class="col-sm-1">
-			    <label>A </label>
-			    <input type="text"  class="form-control" placeholder="18" ng-model="sec.seccion.a">
-	    	</div>
-	    	<div class="col-sm-3">
-			    <label>Cuenta contable 1  </label>
-			    <input type="text" class="form-control" placeholder="Cuenta contable 1 " ng-model="sec.seccion.cuenta1">
-	    	</div>
-	    	<div class="col-sm-3">
-			    <label>Cuenta contable 2  </label>
-			    <input type="text" class="form-control" placeholder="Cuenta contable 2 " ng-model="sec.seccion.cuenta2">
-			   </div>
-	    	</div>
-	    </div>
+			<form name="form" class="form-horizontal" role="form">
+				<section id="usuario" data-widget-grid="data-widget-grid3" >
+				  <div class="row">
+				    <div class="col-sm-12">
+				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+				        <header>
+				          <h2>Información del Director de la Sección</h2>
+				        </header>
+				        <div>
+				          <div class="widget-body">							
+								    <div class="row">
+									    <div class="col-sm-2">					    
+									    	<label>Nombre</label>
+									    	<input type="text" class="form-control" placeholder="Nombre" ng-model="sec.seccion.nombre" required>
+								    	</div>
+								    	<div class="col-sm-3">					    
+									    	<label>Apellido Paterno</label>
+									    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="sec.seccion.apPaterno" required>
+								    	</div>
+								    	<div class="col-sm-3">					    
+									    	<label>Apellido Materno</label>
+									    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="sec.seccion.apMaterno" >
+								    	</div>
+								    	<div class="col-sm-2">					    
+									    	<label>Usuario</label>
+									    	<input type="text" class="form-control" placeholder="Usuario" ng-model="sec.seccion.username" required>
+								    	</div>																									
+								    	<div class="col-sm-2">					    										
+									    	<label>Contraseña</label>																	
+									    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="sec.seccion.password" required>
+								    	</div>
+								    </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</section>
+				<section id="informacion" data-widget-grid="data-widget-grid1" >
+					<div class="row">
+				    <div class="col-sm-12">
+				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+				        <header>
+				          <h2>Información de la Sección</h2>
+				        </header>
+			          <div class="widget-body">
+									<div class="row">
+							    	<div class="col-sm-2">					    
+								    	<label>Clave</label>
+								    	<input type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required="">
+							    	</div>
+							    	<div class="col-sm-4">
+							    		<label>Descripción Corta</label>
+								    	<input type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required="">
+							    	</div>
+							    	<div class="col-sm-6">
+									    <label>Descripción</label>
+									    <textarea class="form-control" placeholder="Descripción" ng-model="sec.seccion.descripcion" required=""></textarea>
+							    	</div>
+							    </div>
+				          <div class="row">
+					          <div class="col-sm-2">
+								    	<label>Teléfono 1</label>
+								    	<input type="number" class="form-control" placeholder="Teléfono 1" ng-model="sec.seccion.telefono1" required>
+							    	</div>
+							    	<div class="col-sm-2">					    										
+								    	<label>Teléfono 2</label>																	
+								    	<input type="number" class="form-control" placeholder="Teléfono 2" ng-model="sec.seccion.telefono2">
+							    	</div>
+							    	<div class="col-sm-8">
+									    <label>Dirección</label>
+									    <textarea class="form-control" placeholder="Dirección" ng-model="sec.seccion.direccion" required></textarea>
+							    	</div>				    	
+							    </div>					
+							    <div class="row">
+								    <div class="col-sm-3">
+											<img src="{{sec.seccion.logo}}" height="100" class="thumbnail" style="height: 100px !important"/>
+								    </div>
+								    <div class="col-sm-9">
+								    	<label>Logo de la sección</label>																	
+								    	<input type="text" class="form-control" placeholder="http://" ng-model="sec.seccion.logo" required>
+								    </div>
+							    </div>
+							    <div class='row'>
+						    		<div class="col-sm-3">
+									    <label>Zona escolar </label>
+									    <input type="text" class="form-control" placeholder="Zona escolar" ng-model="sec.seccion.zonaEsc">
+							    	</div>
+							    	<div class="col-sm-2">
+									    <label>Edad de </label>
+									    <input type="text"  class="form-control" placeholder="Edad" ng-model="sec.seccion.edad">
+							    	</div>
+							    	<div class="col-sm-1">
+									    <label>A </label>
+									    <input type="text"  class="form-control" placeholder="18" ng-model="sec.seccion.a">
+							    	</div>
+									</div>
+								</div>
+				      </div>
+				    </div>
+				  </div>
+				</section>
+				<section id="periodos" data-widget-grid="data-widget-grid4" >
+				  <div class="row">
+				    <div class="col-sm-12">
+				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget3">
+				        <header>
+				          <h2>Periodos para dar de baja al alumno</h2>
+				        </header>
+				        <div>
+				          <div class="widget-body">							
+								    <div class="row">
+								    	<div class="col-sm-2">					    
+									    	<label>Semanas</label>
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semanas" required>
+								    	</div>																									
+								    	<div class="col-sm-2">					    										
+									    	<label>Meses</label>																	
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.meses" required>
+								    	</div>																									
+								    	<div class="col-sm-2">					    										
+									    	<label>Bimestres</label>															
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.bimestres" required>
+								    	</div>																									
+								    	<div class="col-sm-2">					    										
+									    	<label>Trimestres</label>															
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.trimestres" required>
+								    	</div>																									
+								    	<div class="col-sm-2">					    										
+									    	<label>Tetramestres</label>														
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.tetramestres" required>
+								    	</div>																									
+								    	<div class="col-sm-1">					    										
+									    	<label>Semestres</label>															
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semestres" required>
+								    	</div>																									
+								    	<div class="col-sm-1">					    										
+									    	<label>Años</label>																		
+									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.anios" required>
+								    	</div>
+								    </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</section>
+				<section id="equipo" data-widget-grid="data-widget-grid5" >
+					<div class="row">
+				    <div class="col-sm-12">
+				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+				        <header>
+				          <h2>Estructura de la Sección</h2>
+				        </header>
+			          <div class="widget-body">
+							    <div class='row'>
+							    	<div class="col-sm-4">
+											<label >Departamento académico</label>
+											<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.deptoAcademico_id">
+												<option ng-repeat="deptoAcademico in sec.deptosAcademicos" value="{{deptoAcademico._id}}">{{deptoAcademico.descripcionCorta}}</option>
+											</select>
+										</div>
+							    	<div class="col-sm-4">
+									    <label> Orden</label>
+									    <input type="text" class="form-control" placeholder="Orden" ng-model="sec.seccion.orden">
+							    	</div>
+							    	<div class="col-sm-4">
+									    <label>Grados </label>
+									    <input type="text" class="form-control" placeholder="Grados" ng-model="sec.seccion.grados">
+							    	</div>
+							    </div>
+							    <div class="row">
+							    	<div class="col-sm-4">
+									    <label>Dependencia</label>
+									    <input type="text" class="form-control" placeholder="Dependencia" ng-model="sec.seccion.dependencia">
+							    	</div>
+							    	<div class="col-sm-4">
+									    <label>Servicio </label>
+									    <input type="text" class="form-control" placeholder="Servicio" ng-model="sec.seccion.servicio">
+							    	</div>
+							    	<div class="col-sm-4">
+							    		<label>Nivel educativo</label>
+									    <select ng-model="seccion.nivelEdu" class="form-control" required="">
+											  <option value="Bachillerato">Bachillerato</option>
+										    <option value="Carrera">Carrera</option>
+										    <option value="Curso">Curso</option>
+									  	  <option value="Profesional">Profesional</option>
+											</select>
+							    	</div>
+							    </div>
+							    <div class="row">
+							    	<div class="col-sm-4">
+									    <label>Categoria </label>
+									    <input type="text" class="form-control" placeholder="Categoria" ng-model="sec.seccion.categoria">
+							    	</div>
+							    	<div class="col-sm-4">
+									    <label>Clave de incorporación  </label>
+									    <input type="text" class="form-control" placeholder="Clave de incorporación " ng-model="sec.seccion.claveIncor">
+							    	</div>		    	
+										<div class="col-sm-4">
+											<label >Turno</label>
+											<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.turno_id" >
+												<option ng-repeat="turno in sec.turnos" value="{{turno._id}}">{{turno.nombre}}</option>
+											</select>
+										</div>
+							    </div>
+			          </div>
+				      </div>
+				    </div>
+					</div>
+				</section>
 	    <div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="sec.guardar(sec.seccion)" value="Guardar" class="btn btn-primary" ng-show="sec.action">
-					<input type="submit" ng-click="sec.actualizar(sec.seccion)" value="Actualizar" class="btn btn-primary" ng-show="!sec.action">				
+					<input type="submit" ng-click="sec.guardar(sec.seccion,form)" value="Guardar" class="btn btn-primary" ng-show="sec.action">
+					<input type="submit" ng-click="sec.actualizar(sec.seccion,form)" value="Actualizar" class="btn btn-primary" ng-show="!sec.action">				
 				</div>
 			</div>	  
 		</form>

@@ -2,9 +2,13 @@ angular
 .module("casserole")
 .controller("TrabajadoresCtrl", TrabajadoresCtrl);
 function TrabajadoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
-$reactive(this).attach($scope);
+//$reactive(this).attach($scope);
+let rc = $reactive(this).attach($scope);
+
   this.action = true;
-	this.subscribe('trabajadores');
+	this.subscribe('trabajadores',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 	//this.subscribe('deptosAcademicos');
  
   this.helpers({
@@ -24,8 +28,14 @@ $reactive(this).attach($scope);
     this.trabajador = {}; 
   };
  
-	this.guardar = function(trabajador)
+	this.guardar = function(trabajador,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Empleado.');
+	        return;
+	    }
+
+	
 		Accounts.createUser({
 			username: this.trabajador.nombreUsuario,
 			password: this.trabajador.contrasena,
@@ -41,31 +51,40 @@ $reactive(this).attach($scope);
 				}
 		});
 		this.trabajador.estatus = true;
-		console.log(this.trabajador);
+		this.trabajador.campus_id = Meteor.user().profile.campus_id;
 		Trabajadores.insert(this.trabajador);
 		toastr.success('Trabajador guardado.');
 		this.trabajador = {};
-		$('.collapse').collapse('show');
+		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.trabajadores');
 		
 	};
 	
 	this.editar = function(id)
 	{
-    this.trabajador = Trabajadores.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+    	this.trabajador = Trabajadores.findOne({_id:id});
+		this.action = false;
+		$('.collapse').collapse('show');
+		this.nuevo = false;
 	};
 	
-	this.actualizar = function(trabajador)
+	this.actualizar = function(trabajador,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Empleado.');
+	        return;
+	    }
+		
 		var idTemp = trabajador._id;
 		delete trabajador._id;		
 		Trabajadores.update({_id:idTemp},{$set:trabajador});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)
@@ -80,8 +99,8 @@ $reactive(this).attach($scope);
 	};
 
 	 this.tomarFoto = function(){
-		$meteor.getPicture().then(function(data){
-			this.trabajador.fotografia = data;
+			$meteor.getPicture().then(function(data){
+			rc.trabajador.fotografia = data;
 		});
 	};
 

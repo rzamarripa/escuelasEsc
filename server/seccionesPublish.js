@@ -1,4 +1,4 @@
-Meteor.publish("secciones",function(){
-  	return Secciones.find({estatus:true});
+Meteor.publish("secciones",function(params){
+  	return Secciones.find(params);
 });
 

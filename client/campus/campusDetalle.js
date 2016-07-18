@@ -10,43 +10,52 @@ angular.module("casserole")
 			_id : $stateParams.id
 		}]
 	});
+	
+	this.subscribe('secciones', function(){
+		return [{
+			campus_id : $stateParams.id
+		}]
+	});
 
 	this.helpers({
-	  campusDetalle : () => {		  
+	  campus : () => {		  
 		  return Campus.findOne();
+	  },
+	  secciones : () => {
+		  return Secciones.find();
 	  }
   });
   
-  this.guardar = function(campusDetalle,form)
+  this.guardar = function(campus,form)
 	{
-		
-		console.log(campusDetalle);
 		if(form.$invalid){
       toastr.error('No se pudo guardar la información del Campus.');
       return;
 		}
-
-		Campus.update({ _id : $stateParams.id }, { $set : campusDetalle } );
-		var nombre = campusDetalle.detalle.nombre != undefined ? campusDetalle.detalle.nombre + " " : "";
-		var apPaterno = campusDetalle.detalle.apPaterno != undefined ? campusDetalle.detalle.apPaterno + " " : "";
-		var apMaterno = campusDetalle.detalle.apMaterno != undefined ? campusDetalle.detalle.apMaterno : ""
-		campusDetalle.detalle.nombreCompleto = nombre + apPaterno + apMaterno;
+		delete campus._id;
+		Campus.update({ _id : $stateParams.id }, { $set : campus } );
+		
+		var nombre = campus.detalle.nombre != undefined ? campus.detalle.nombre + " " : "";
+		var apPaterno = campus.detalle.apPaterno != undefined ? campus.detalle.apPaterno + " " : "";
+		var apMaterno = campus.detalle.apMaterno != undefined ? campus.detalle.apMaterno : ""
+		campus.detalle.nombreCompleto = nombre + apPaterno + apMaterno;
 		var usuario = {
-			username : campusDetalle.detalle.username,
-			password : campusDetalle.detalle.password,
+			username : campus.detalle.username,
+			password : campus.detalle.password,
 			profile : {
-				nombre : campusDetalle.detalle.nombre,
-				apPaterno : campusDetalle.detalle.apPaterno,
-				apMaterno : campusDetalle.detalle.apMaterno,
+				nombre : campus.detalle.nombre,
+				apPaterno : campus.detalle.apPaterno,
+				apMaterno : campus.detalle.apMaterno,
 				nombreCompleto : nombre + apPaterno + apMaterno,
 				campus_id : $stateParams.id,
+				campus_clave : campus.clave,
 				estatus : true
 			}
 		}
-		console.log(campusDetalle);
+
 		Meteor.call('createGerenteVenta', usuario, 'director');
 		toastr.success('Se ha guardado la información del Campus correctamente.');
-		this.campusDetalle = {}; 
+		this.campus = {}; 
 		this.nuevo = true;
 		form.$setPristine();
     form.$setUntouched();

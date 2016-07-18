@@ -7,6 +7,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.grupo = {};
 	this.grupo.inscripcion = {};
 	this.grupo.colegiatura = {};
+	this.grupo.comisiones=[];
 	this.grados = [];
 	this.subCiclosAcademicos = [];
 	this.subCiclosAdministrativos = [];
@@ -33,7 +34,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('grupos', () => {
 			return [{
 				_id : $stateParams.id,
-				estatus : true,
+				estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 			}];
 		}, {
 		onReady:function(){
@@ -41,18 +42,26 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
   			console.log(rc.grupo);
   			console.log($stateParams.id);
 		}});
+
+	this.subscribe('conceptosComision',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+	});
 	
-	this.subscribe('secciones');
-	this.subscribe('horarios');
+	this.subscribe('secciones',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+	this.subscribe('horarios',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 	this.subscribe('ciclos', () => {
 		return [{
-			estatus : true,
+			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}];
 	});
 	
 	this.subscribe('subCiclos', () => {
 		return [{
-			ciclo_id : this.getReactively("grupo.ciclo_id")
+			ciclo_id : this.getReactively("grupo.ciclo_id"), campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}];
 	});
 	
@@ -64,14 +73,20 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	*/
 	this.subscribe('periodos', () => {
 		return [{
-			subCiclo_id : this.getReactively("grupo.subCicloAdministrativo_id")
+			subCiclo_id : this.getReactively("grupo.subCicloAdministrativo_id"), campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}];
 	});
 		
 	
-	this.subscribe('turnos');
+	this.subscribe('turnos',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+
 	
-	this.subscribe('maestros');
+	this.subscribe('maestros',()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
+
 
 	this.autorun(() => {
 	  	var seccion_id  = this.getReactively("grupo.seccion_id");
@@ -81,6 +96,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		for(var i = 1; seccionSeleccionada && i <= seccionSeleccionada.grados; i++ ){
 			rc.grados.push(i);
 		}
+
+
+
 		
 		
 
@@ -118,6 +136,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  maestros : () => {
 		  return Maestros.find();
 	  },
+
 	  periodosAdministrativos : () =>{
 	  	var periodos =Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')}).fetch();
 	  	var planviejo ={}
@@ -128,6 +147,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  	else{
 	  		planviejo=this.grupo.plan;
 	  		this.grupo.plan={};
+	  	}
+	  	if(!this.grupo.comisiones || this.grupo.comisiones.length==0){
+	  		this.grupo.comisiones = ConceptosComision.find().fetch();
 	  	}
 	  	for (var i = 0; i < periodos.length; i++) {
 	  		var periodo =periodos[i];
@@ -180,9 +202,14 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
   else
   	this.action = true;
 
-	this.guardar = function(grupo)
+	this.guardar = function(grupo,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Grupo.');
+	        return;
+	    }
 		this.grupo.estatus = true;
+		this.grupo.campus_id = Meteor.user().profile.campus_id;
 		grupo.inscritos = 0;
 		horario = Horarios.findOne(grupo.horario_id);
 		_grupo =quitarhk(grupo)
@@ -198,25 +225,33 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		this.grupo = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 		$state.go('root.grupos');
 	};
 	
 	this.editarGrupo = function(id)
 	{
-    rc.grupo = Grupos.findOne({_id:$stateParams.id});
-    this.action = false;
-    $('.collapse').collapse("show");
-    this.nuevo = false;
+	    rc.grupo = Grupos.findOne({_id:$stateParams.id});
+	    this.action = false;
+	    $('.collapse').collapse("show");
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(grupo)
+	this.actualizar = function(grupo,form)
 	{
-	  var idTemp = grupo._id;
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Grupo.');
+	        return;
+	    }
+		var idTemp = grupo._id;
 		delete grupo._id;	
 		_grupo =quitarhk(grupo)	
 		Grupos.update({_id:$stateParams.id}, {$set : _grupo});
 		toastr.success('Grupo guardado.');
 		$state.go("root.grupos",{"id":$stateParams.id});
+		form.$setPristine();
+        form.$setUntouched();
 	};	
 
 };

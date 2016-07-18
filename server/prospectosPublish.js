@@ -1,13 +1,17 @@
 Meteor.publish("prospecto", function(options){
-	return Prospectos.find({_id:options.id});
+	console.log(options);
+	return Prospectos.find(options);
 });
-
+//TODO no he podido hacer que filtre por etapa de venta
 Meteor.publish("prospectos",function(options){
+	console.log(options.where.nombre);
+	console.log(options.where.etapaVenta_id);
 	let selector = {
   	nombre: { '$regex' : '.*' + options.where.nombre || '' + '.*', '$options' : 'i' },
-  	estatus: 1
+  	etapaVenta_id : options.where.etapaVenta_id,
 	}	
-	return Prospectos.find(selector, options.options);
+	console.log(selector);
+	return Prospectos.find(selector, options.options); 
 });
 
 Meteor.publish("prospectosStaff",function(options){
