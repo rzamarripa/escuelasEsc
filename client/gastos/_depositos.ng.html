@@ -6,23 +6,23 @@
     <div class="collapse" id="depositosForm">
 			<div class="well col-sm-12">	
 				<div class="row">
-					<div class="form-group col-sm-12">					    
+					<div class="form-group col-sm-4">					    
 					  <label>Semana</label>
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.semana">
 					</div>
-					<div class="form-group col-sm-12">
+					<div class="form-group col-sm-4">
 						<label for="fechaLimite">Fecha</label>
 						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gc.gasto.fecha"/>
 					</div>
-					<div class="form-group col-sm-12">
+					<div class="form-group col-sm-4">
 					  <label>Cuenta a nombre de</label>
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.aNombreDe" >
 					</div>
-					<div class="form-group col-sm-12">
+					<div class="form-group col-sm-4">
 					  <label>Importe</label>
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.importe" >
 					</div>
-					<div class="form-group col-sm-12">
+					<div class="form-group col-sm-4">
 						<label for="tipo">Tipo</label>
 						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.tipo">
 						  <option value="carrera">Carrera</option>
@@ -30,7 +30,7 @@
 						</select>
 					</div>
 				</div>
-				<a class="btn btn-primary pull-right" ng-click="gc.save(gc.gasto)">Guardar</a>
+				<a class="btn btn-primary pull-right" ng-click="gc.guardar(gc.gasto, form)">Guardar</a>
 			</div>
 		</div>
 	</div>
