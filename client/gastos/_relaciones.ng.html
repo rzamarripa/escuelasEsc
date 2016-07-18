@@ -10,9 +10,9 @@
 					  <label>Registros</label>
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.registros">
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" validador>
 					  <label>Importe</label>
-				  	<input type="text" class="form-control"  ng-model="gc.gasto.importe" >
+				  	<input name="importe" type="number" class="form-control"  ng-model="gc.gasto.importe" required>
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="fechaLimite">Fecha Limite</label>
@@ -20,14 +20,14 @@
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="concepto">Concepto</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.concepto">
-						  <option ng-repeat="conceptos in gc.conceptos" value="{{concepto._id}}">
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.concepto_id">
+						  <option ng-repeat="concepto in gc.conceptos" value="{{concepto._id}}">
 						  	{{concepto.nombre}}
 						  </option>
 						</select>
 					</div>
 				</div>
-				<a class="btn btn-primary pull-right" ng-click="gc.save(gc.gasto)">Guardar</a>
+				<a class="btn btn-primary pull-right" ng-click="gc.guardar(gc.gasto, form)">Guardar</a>
 			</div>
 		</div>
 	</div>
