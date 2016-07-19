@@ -5,9 +5,6 @@ angular
 function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $stateParams, toastr) {
 	$reactive(this).attach($scope);
 	
-	this.autorun(() => {
-		
-	})
 	this.clase = {};
   this.actionAgregar = true;
   this.colorSeleccionado = null;
@@ -152,7 +149,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 			  }		
 		  }		    
 	  });	  
-	  console.log(clasesTotales);
   }
   
   this.muestraAulasMaestro = function(aula_id){
@@ -171,12 +167,10 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 			  }		
 		  }
 	  });	  
-	  console.log(aulasTotales);
   }
   
   /* alert on eventClick */
   this.alertOnEventClick = function(date, jsEvent, view){
-	  console.log("entré");
 	  eliminarTemporalesOcupados();
 	  for(i = 0; i < this.horario.clases.length; i++){
 		  if(this.horario.clases[i]._id == date._id){
@@ -211,8 +205,9 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.guardarHorario = function() {
 	  eliminarTemporalesOcupados();
 	  this.horario.campus_id = Meteor.user().profile.campus_id;
-      Horarios.insert(this.horario);
-      toastr.success("Se guardó el horario");
+    Horarios.insert(this.horario);
+    toastr.success("Se guardó el horario");
+		$state.go("root.listarHorarios");
   };
   
   /* remove event */

@@ -22,12 +22,10 @@ angular.module("casserole")
     this.nuevo = !this.nuevo;
     this.etapaVenta = {};		
   };
-  //TODO me quedé haciendo la etapa de venta para mostrar el formulario del prospecto
-  //TODO me quedé haciendo el detalle del prospecto
+
   this.guardar = function(etapaVenta)
 	{
 		this.etapaVenta.estatus = true;
-		console.log(this.etapaVenta);
 		etapaVenta.campus_id = Meteor.user().profile.campus_id;
 		EtapasVenta.insert(this.etapaVenta);
 		toastr.success('Etapa de Venta guardada.');
@@ -40,7 +38,7 @@ angular.module("casserole")
 	{
     this.etapaVenta = EtapasVenta.findOne({_id:id});
     this.action = false;
-    $('.collapse').coll
+    $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	

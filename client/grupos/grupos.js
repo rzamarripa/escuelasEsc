@@ -20,15 +20,10 @@ angular.module("casserole")
 			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}]
 	});
-	console.log($stateParams.id);
 	this.subscribe('grupo', () => {
 		
 		return [{_id : $stateParams.id, estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}];
 	});
-	
-	this.subscribe('secciones',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
 	
 	this.subscribe('inscripciones', () => {
 		return [{
@@ -67,7 +62,6 @@ angular.module("casserole")
 		},
 	  grupos : () => {
 		  _grupos = Grupos.find().fetch();
-		  console.log(_grupos);
 		  if(_grupos != undefined){
 			  _.each(_grupos, function(grupo){
 				  rc.grupos_ids.push(grupo._id);
@@ -138,7 +132,6 @@ angular.module("casserole")
 	  				
 	  		})
 	  	});
-	  	console.log('si entre',this.grupo.plan);
 	  	return Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')});
 	  },
 	  periodos : () => {
@@ -168,6 +161,7 @@ angular.module("casserole")
 	    }
 		this.grupo.estatus = true;
 		this.grupo.campus_id = Meteor.user().profile.campus_id;
+		this.grupo.seccion_id = Meteor.user().profile.seccion_id;
 		grupo.inscritos = 0;
 		Grupos.insert(this.grupo);
 		toastr.success('Grupo guardado.');

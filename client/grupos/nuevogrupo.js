@@ -39,23 +39,23 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		}, {
 		onReady:function(){
 			rc.grupo = Grupos.findOne({_id:$stateParams.id});
-  			console.log(rc.grupo);
-  			console.log($stateParams.id);
-		}});
+	}});
 
 	this.subscribe('conceptosComision',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	});
 	
 	this.subscribe('secciones',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, _id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
+	 
 	this.subscribe('horarios',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
+	 
 	this.subscribe('ciclos', () => {
 		return [{
-			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}];
 	});
 	
@@ -65,45 +65,21 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		}];
 	});
 	
-/*	this.subscribe('periodos', () => {
-		return [{
-			subCiclo_id : this.getReactively("grupo.subCicloAcademico_id")
-		}];
-	});
-	*/
 	this.subscribe('periodos', () => {
 		return [{
 			subCiclo_id : this.getReactively("grupo.subCicloAdministrativo_id"), campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 		}];
 	});
 		
-	
 	this.subscribe('turnos',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
-
 	
 	this.subscribe('maestros',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 
 
-	this.autorun(() => {
-	  	var seccion_id  = this.getReactively("grupo.seccion_id");
-		console.log(seccion_id);
-		rc.grados = [];
-		var seccionSeleccionada = Secciones.findOne(seccion_id);
-		for(var i = 1; seccionSeleccionada && i <= seccionSeleccionada.grados; i++ ){
-			rc.grados.push(i);
-		}
-
-
-
-		
-		
-
-
-  	});
 
 	this.helpers({
 	  subCiclosAcademicos : () => {
@@ -122,7 +98,12 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		  return Grupos.findOne();
 	  },
 	  secciones : () => {
-		  return Secciones.find();
+		  rc.grados = [];
+			var seccionSeleccionada = Secciones.findOne();
+			for(var i = 1; seccionSeleccionada && i <= seccionSeleccionada.grados; i++ ){
+				rc.grados.push(i);
+			}
+		  return Secciones.findOne();
 	  },
 	  ciclos : () => {
 		  return Ciclos.find();
@@ -157,10 +138,8 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  		this.grupo.plan[periodo.nombre]={};
 	  		this.grupo.plan[periodo.nombre].tipoPlan = '';
 	  		this.grupo.plan[periodo.nombre].datos=[];
-	  		console.log(periodo.planPago);
 	  		this.grupo.plan[periodo.nombre].planPago = periodo.planPago;
 
-	  		console.log(periodo)
 	  		for (var j = 0; periodo && periodo.conceptos && j < periodo.conceptos.length; j++) {
 	  			var concepto=periodos[i].conceptos[j];
 
@@ -175,7 +154,6 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  				planviejo[periodo.nombre].datos )
 	  				{
 	  					var viejos=planviejo[periodo.nombre].datos ;
-	  					console.log(viejos);
 	  					for (var k = 0; k < viejos.length; k++) {
 	  						if(viejos[k].nombre==_grupo.nombre){
 	  							_grupo.importe = viejos[k].importe
@@ -190,9 +168,6 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  			
 	  		}
 	  	}
-
-	  	
-	  	console.log('si entre',this.grupo);
 	  	return Periodos.find({subCiclo_id:this.getReactively('grupo.subCicloAdministrativo_id')});
 	  }
   });
@@ -205,9 +180,9 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.guardar = function(grupo,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Grupo.');
-	        return;
-	    }
+      toastr.error('Error al guardar los datos del Grupo.');
+      return;
+	  }
 		this.grupo.estatus = true;
 		this.grupo.campus_id = Meteor.user().profile.campus_id;
 		grupo.inscritos = 0;
@@ -226,24 +201,24 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 		$state.go('root.grupos');
 	};
 	
 	this.editarGrupo = function(id)
 	{
-	    rc.grupo = Grupos.findOne({_id:$stateParams.id});
-	    this.action = false;
-	    $('.collapse').collapse("show");
-	    this.nuevo = false;
+    rc.grupo = Grupos.findOne({_id:$stateParams.id});
+    this.action = false;
+    $('.collapse').collapse("show");
+    this.nuevo = false;
 	};
 	
 	this.actualizar = function(grupo,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Grupo.');
-	        return;
-	    }
+      toastr.error('Error al actualizar los datos del Grupo.');
+      return;
+	  }
 		var idTemp = grupo._id;
 		delete grupo._id;	
 		_grupo =quitarhk(grupo)	
@@ -251,7 +226,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		toastr.success('Grupo guardado.');
 		$state.go("root.grupos",{"id":$stateParams.id});
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 	};	
 
 };
