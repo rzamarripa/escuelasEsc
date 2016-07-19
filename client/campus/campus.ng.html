@@ -11,24 +11,24 @@
 			    <div class="row">
 			    	<div class="col-sm-1">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="cp.campus.clave" required="" maxlength="2" minlength="2" disabled="">
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="cp.campus.clave" disabled="">
 			    	</div>
-			    	<div class="col-sm-11">					    
+			    	<div class="col-sm-11" valida>					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
+				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
 			    	</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-12">
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion" minlength="8" required></textarea>
+					    <textarea class="form-control" placeholder="Descripción" ng-model="cp.campus.descripcion"></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="cp.guardar(campus,form)" value="Guardar" class="btn btn-primary" ng-show="cp.action">
-						<input type="submit" ng-click="cp.actualizar(campus,form)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
+						<input type="submit" ng-click="cp.guardar(cp.campus,form)" value="Guardar" class="btn btn-primary" ng-show="cp.action" valida-form />
+						<input type="submit" ng-click="cp.actualizar(cp.campus,form)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action" valida-form />				
 					</div>
 				</div>	  
 		  </form>
