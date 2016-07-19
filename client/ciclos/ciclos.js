@@ -26,9 +26,9 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.guardar = function(ciclo,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Ciclo.');
-	        return;
-	    }
+      toastr.error('Error al guardar los datos del Ciclo.');
+      return;
+    }
 		
 		this.ciclo.estatus = true;
 		this.ciclo.campus_id = Meteor.user().profile.campus_id;

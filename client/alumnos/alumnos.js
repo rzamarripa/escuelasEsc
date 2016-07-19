@@ -84,7 +84,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			this.nuevo = true;
 		});
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 	};
   	
 	this.cambiarEstatus = function (id) {

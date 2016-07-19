@@ -1,7 +1,6 @@
-<h1>Menú Principal de la sección {{ho.seccion.descripcion}} del campus {{ho.campus.descripcion}}</h1>
+<h1>{{ho.seccion.descripcion}} - {{ho.campus.descripcion}}</h1>
 <!-- Menú de Administrador -->
 <section id="administrador" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'admin'">
-
   <div class="row">
     <div class="col-sm-12">
       <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -75,6 +74,9 @@
 							<div class="col-sm-3">
 								<a ui-sref="root.conceptosComision" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Conceptos de Comisión</a>
 							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.conceptosPago" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Conceptos de Pago</a>
+							</div>
 						</div>
           </div>
         </div>
@@ -123,11 +125,19 @@
 							</div>
 -->
 							<div class="col-sm-3">
+								<a ui-sref="root.listarHorarios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-calendar"></i></span>Horarios</a>
+							</div>
+<!--
+							<div class="col-sm-3">
 								<a ui-sref="root.secciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="glyphicon glyphicon-th-list"></i></span>Secciones</a>
 							</div>
+-->
 							<div class="col-sm-3">
 								<a ui-sref="root.aulas" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-home"></i></span>Aulas</a>
 <!-- 								<button type="button" class="btn" style="background: #ff9e00">Aulas</button> -->
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.deptosAcademicos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-cubes"></i></span>Deptos. Académicos</a>
 							</div>
 						</div>
 						<br/>
@@ -149,16 +159,7 @@
 						<div class="row">
 							<div class="col-sm-3">
 								<a ui-sref="root.rvoe" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-circle-o-notch"></i></span>Rvoe</a>
-							</div>
-							<div class="col-sm-3">
-								<a ui-sref="root.deptosAcademicos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-cubes"></i></span>Deptos. Académicos</a>
-							</div>
-							<div class="col-sm-3">
-								<a ui-sref="root.conceptosPago" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Conceptos de Pago</a>
-							</div>
-							<div class="col-sm-3">
-								<a ui-sref="root.listarHorarios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-calendar"></i></span>Horarios</a>
-							</div>
+							</div>							
 						</div>
           </div>
         </div>

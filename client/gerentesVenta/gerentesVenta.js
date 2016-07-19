@@ -36,9 +36,9 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 	this.guardar = function(gerenteVenta)
 	{		
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Gerente de Venta.');
-	        return;
-	    }
+      toastr.error('Error al guardar los datos del Gerente de Venta.');
+      return;
+	  }
 		gerenteVenta.profile.estatus = true;
 		gerenteVenta.profile.campus_id = Meteor.user().profile.campus_id;
 		Meteor.call('createGerenteVenta', gerenteVenta, 'gerenteVenta');
@@ -48,7 +48,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		$('.collapse').collapse('hide');
 		this.nuevo = true;		
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 	};
 	
 	this.editar = function(id)
