@@ -29,3 +29,11 @@ angular.module('casserole').directive('depositos', depositos);
     templateUrl: 'client/gastos/_depositos.ng.html'
   }
 }
+
+angular.module('casserole').directive('conceptos', conceptos);
+  function conceptos () {
+  return {
+    restrict: 'E',
+    templateUrl: 'client/gastos/_conceptos.ng.html',
+  }
+}

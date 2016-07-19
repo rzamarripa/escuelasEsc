@@ -6,23 +6,23 @@
     <div class="collapse" id="chequesForm">
 			<div class="well col-sm-12">	
 				<div class="row">
-					<div class="form-group col-sm-4">					    
+					<div class="form-group col-sm-4" valida>
 					  <label>No. Factura</label>
-				  	<input type="text" class="form-control"  ng-model="gc.gasto.numeroFactura">
+				  	<input name="numeroFactura" type="text" class="form-control"  ng-model="gc.gasto.numeroFactura" required>
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" valida>
 					  <label>Importe</label>
-				  	<input type="text" class="form-control"  ng-model="gc.gasto.importe" >
+				  	<input name="importe" type="number" class="form-control" ng-model="gc.gasto.importe" required>
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="fechaLimite">Fecha Limite</label>
-						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gc.gasto.fechaLimite"/>
+						<input name="fechaLimite" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gc.gasto.fechaLimite"/>
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" valida>
 						<label for="concepto">Concepto</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.concepto">
-						  <option ng-repeat="conceptos in gc.conceptos" value="{{concepto._id}}">
-						  	{{concepto.nombre}}
+						<select name="concepto_id" class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.concepto_id" required>
+						  <option ng-repeat="concepto in gc.conceptos" value="{{concepto._id}}">
+						  	{{concepto.codigo}} | {{concepto.nombre}}
 						  </option>
 						</select>
 					</div>
@@ -31,7 +31,7 @@
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.chequeReferenciado" >
 					</div>
 				</div>
-				<a class="btn btn-primary pull-right" ng-click="gc.save(gc.gasto)">Guardar</a>
+				<input value="Guardar" type="submit" class="btn btn-primary pull-right" ng-click="gc.guardar(gc.gasto, form)" valida-form>
 			</div>
 		</div>
 	</div>
@@ -42,18 +42,19 @@
 	    <thead>
 	      <tr>
 	        <th class="hidden-xs">No. Factura</th>
-	        <th>Importe</th>
+	        <th>Concepto</th>
 	        <th>Fecha Limite</th>
+	        <th>Importe</th>
 	        <th><em class="fa fa-cog"></em></th>
 	      </tr> 
 	    </thead>
 	    <tbody>
 	      <tr ng-repeat="gasto in gc.gastos">
 	        <td class="hidden-xs">{{gasto.numeroFactura}}</td>
-	        <td>{{gasto.importe}}</td>
+	        <td>{{gc.getConcepto(gasto.concepto_id)}}</td>
 	        <td>{{gasto.fechaLimite}}</td>
+	        <td>{{gasto.importe | currency}}</td>
 	        <td align="center">
-	          <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
 	          <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
 	        </td>
 	      </tr>
