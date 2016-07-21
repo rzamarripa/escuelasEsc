@@ -4,7 +4,9 @@ angular
 function GeneracionesCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
 	$reactive(this).attach($scope);
   this.action = true;
-	this.subscribe('generaciones');
+	this.subscribe('generaciones',()=>{
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "",  }]
+	 });
 
 	this.helpers({
 	  generaciones : () => {
@@ -29,6 +31,7 @@ function GeneracionesCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 	    }
 	    this.generacion.estatus = true;
 	    this.generacion.campus_id = Meteor.user().profile.campus_id;
+	    this.generacion.seccion_id = Meteor.user().profile.seccion_id;
 		console.log(this.generacion);
 		Generaciones.insert(this.generacion);		
 		toastr.success('Generación guardada.');

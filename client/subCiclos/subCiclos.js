@@ -6,12 +6,12 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('subCiclos',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
 
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
   this.helpers({
@@ -40,11 +40,12 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 		this.subCiclo.estatus = true;
 		this.subCiclo.campus_id = Meteor.user().profile.campus_id;
+		this.subCiclo.seccion_id = Meteor.user().profile.seccion_id;
 		console.log(this.subCiclo);
 		SubCiclos.insert(this.subCiclo);
 		toastr.success('SubCiclo guardado.');
 		this.subCiclo = {};
-		$('.collapse').collapse('show');
+		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
         form.$setUntouched();

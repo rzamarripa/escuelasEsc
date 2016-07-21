@@ -6,7 +6,7 @@ function ConceptosPagoCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('conceptosPago',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	 });
   
   this.helpers({
@@ -30,7 +30,8 @@ function ConceptosPagoCtrl($scope, $meteor, $reactive, $state, toastr) {
 	        return;
 	    }
 		conceptoPago.estatus = true;
-		this.conceptoPago.campus_id = Meteor.user().profile.campus_id;
+		conceptoPago.campus_id = Meteor.user().profile.campus_id;
+		conceptoPago.seccion_id = Meteor.user().profile.seccion_id;
 		console.log(this.conceptoPago);
 		ConceptosPago.insert(this.conceptoPago);
 		toastr.success('Concepto de Pago guardado.');

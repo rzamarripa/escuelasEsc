@@ -8,7 +8,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
   this.nuevo = true;  
   
 	this.subscribe('gerentesVenta',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
  
   this.helpers({
@@ -17,7 +17,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
 			  console.log(usuario);
-			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.seccion_id == Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""){
 				  gerentes.push(usuario);
 			  }
 		  });
@@ -33,14 +33,15 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
     this.gerenteVenta.profile = {};
   };
  
-	this.guardar = function(gerenteVenta)
+	this.guardar = function(gerenteVenta,form)
 	{		
 		if(form.$invalid){
-      toastr.error('Error al guardar los datos del Gerente de Venta.');
-      return;
-	  }
+	      toastr.error('Error al guardar los datos del Gerente de Venta.');
+	      return;
+		}
 		gerenteVenta.profile.estatus = true;
 		gerenteVenta.profile.campus_id = Meteor.user().profile.campus_id;
+		gerenteVenta.seccion_id = Meteor.user().profile.seccion_id;
 		Meteor.call('createGerenteVenta', gerenteVenta, 'gerenteVenta');
 		toastr.success('Gerente de Venta Guardado.');
 		this.nuevo = true;
@@ -48,7 +49,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 		$('.collapse').collapse('hide');
 		this.nuevo = true;		
 		form.$setPristine();
-    form.$setUntouched();
+		form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -59,7 +60,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(gerenteVenta)
+	this.actualizar = function(gerenteVenta,form)
 	{
 		if(form.$invalid){
 	        toastr.error('Error al actualizar los datos del Gerente de Venta.');

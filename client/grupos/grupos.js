@@ -17,43 +17,43 @@ angular.module("casserole")
 	
 	this.subscribe('grupos', () => {
 		return [{
-			estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 	this.subscribe('grupo', () => {
 		
-		return [{_id : $stateParams.id, estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}];
+		return [{_id : $stateParams.id, estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}];
 	});
 	
 	this.subscribe('inscripciones', () => {
 		return [{
-			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			grupo_id : {$in : this.getCollectionReactively('grupos_ids')},seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 	
 	this.subscribe('subCiclos', () => {
 		return [{
-			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 	
 	this.subscribe('periodos', () => {
 
 		return [{
-			subCiclo_id : {$in : this.getCollectionReactively('subCiclos_ids')},campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			subCiclo_id : {$in : this.getCollectionReactively('subCiclos_ids')},seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 	
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
 	this.subscribe('maestros',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	
 	this.subscribe('turnos',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 }); 
 
 	this.helpers({		

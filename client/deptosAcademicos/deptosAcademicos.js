@@ -8,7 +8,7 @@ function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.nuevo = true  
   
   this.subscribe("deptosAcademicos",()=>{
-		return [{estatus:true, campus_id : Meteor.user().profile.campus_id != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user().profile.seccion_id != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
   this.helpers({
@@ -33,6 +33,7 @@ function DeptosAcademicosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 		this.deptoAcademico.estatus = true;
 		this.deptoAcademico.campus_id = Meteor.user().profile.campus_id;
+		this.deptoAcademico.seccion_id = Meteor.user().profile.seccion_id;
 		DeptosAcademicos.insert(deptoAcademico);
 		toastr.success('Departamento guardado.');
 		this.deptoAcademico = {};

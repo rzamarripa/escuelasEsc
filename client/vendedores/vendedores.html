@@ -6,39 +6,39 @@
 			{{v.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-				    <div class="col-sm-3">					    
+				    <div class="col-sm-3" valida>					    
 				    	<label>Gerente</label>
-				    	<select class="form-control" ng-model="v.vendedor.profile.gerenteVenta_id">
+				    	<select name="gerente" class="form-control" ng-model="v.vendedor.profile.gerenteVenta_id" required>
 					    	<option value="{{gerente._id}}" ng-repeat="gerente in v.gerentesVenta">{{gerente.profile.nombre}} {{gerente.profile.apPaterno}}</option>
 				    	</select>
 			    	</div>
-			    	<div class="col-sm-3">					    
+			    	<div class="col-sm-3" valida>					    
 				    	<label>Usuario</label>
-				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="v.vendedor.username" required>
+				    	<input name="usuario" type="text" class="form-control" placeholder="Usuario" ng-model="v.vendedor.username" required>
 			    	</div>
-			    	<div class="col-sm-3">					    
+			    	<div class="col-sm-3" valida>					    
 				    	<label>Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="v.vendedor.password" required>
+				    	<input name="contrasena" type="password" class="form-control" placeholder="Contraseña" ng-model="v.vendedor.password" required>
 			    	</div>		    				    	    
-			    	<div class="col-sm-3">					    
+			    	<div class="col-sm-3" valida>					    
 				    	<label>Confirmar Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="v.vendedor.confirmarContrasena" required>
+				    	<input name="confirmar" type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="v.vendedor.confirmarContrasena" required>
 					</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Nombre </label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="v.vendedor.profile.nombre" required>
+				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="v.vendedor.profile.nombre" required>
 			    	</div>
 
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Apellido Paterno </label>
-				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="v.vendedor.profile.apPaterno" required>
+				    	<input name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="v.vendedor.profile.apPaterno" required>
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Apellido Materno</label>
-				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="v.vendedor.profile.apMaterno" required>
+				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="v.vendedor.profile.apMaterno">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Dirección</label>
@@ -46,11 +46,11 @@
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Teléfono</label>
-				    	<input type="text" class="form-control" placeholder="Teléfono" ng-model="v.vendedor.profile.telefono" required>
+				    	<input name="telefono" type="text" class="form-control" placeholder="Teléfono" ng-model="v.vendedor.profile.telefono" required>
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Correo</label>
-				    	<input type="text" class="form-control" placeholder="Correo" ng-model="v.vendedor.profile.correo" required>
+				    	<input name="correo" type="text" class="form-control" placeholder="Correo" ng-model="v.vendedor.profile.correo" required>
 			    	</div>
 			    	<div class="col-sm-4">
 							<label for="talla">Fotografía</label>
@@ -61,8 +61,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="v.guardar(v.vendedor)" value="Guardar" class="btn btn-primary" ng-show="v.action">
-						<input type="submit" ng-click="v.actualizar(v.vendedor)" value="Actualizar" class="btn btn-primary" ng-show="!v.action">				
+						<input type="submit" ng-click="v.guardar(v.vendedor,form)" value="Guardar" class="btn btn-primary" ng-show="v.action" valida-form />
+						<input type="submit" ng-click="v.actualizar(v.vendedor,form)" value="Actualizar" class="btn btn-primary" ng-show="!v.action" valida-form />				
 					</div>
 				</div>	  
 		  </form>

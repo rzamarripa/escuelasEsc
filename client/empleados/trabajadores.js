@@ -7,7 +7,7 @@ let rc = $reactive(this).attach($scope);
 
   this.action = true;
 	this.subscribe('trabajadores',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	//this.subscribe('deptosAcademicos');
  
@@ -52,6 +52,7 @@ let rc = $reactive(this).attach($scope);
 		});
 		this.trabajador.estatus = true;
 		this.trabajador.campus_id = Meteor.user().profile.campus_id;
+		this.trabajador.seccion_id = Meteor.user().profile.seccion_id;
 		Trabajadores.insert(this.trabajador);
 		toastr.success('Trabajador guardado.');
 		this.trabajador = {};

@@ -20,20 +20,20 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<form name="form" class="form-horizontal" role="form" data-parsley-validate>
+		<form name="form" class="form-horizontal" role="form" >
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
-							<label for="clave">Clave</label>
-					    <input type="text" class="form-control" placeholder="Clave" ng-model="pl.plan.clave" required="">
+			    	<div class="col-sm-4" valida>					    
+						<label for="clave">Clave</label>
+					    <input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="pl.plan.clave" required="">
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 					    <label for="descripcion">Descripción</label>
-					    <input type="text" class="form-control" placeholder="Descripción" ng-model="pl.plan.descripcion" required>
+					    <input name="descripcion" type="text" class="form-control" placeholder="Descripción" ng-model="pl.plan.descripcion" required>
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 							<label for="seccion_id">Sección</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id">
+							<select name="seccion" class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id" required>
 								<option ng-repeat="seccion in pl.secciones" value="{{seccion._id}}">{{seccion.descripcion}}</option>
 							</select>
 							<!--<ui-select ng-model="plan.seccion_id"
@@ -52,9 +52,9 @@
 					    <label for="formulo">Formuló</label>
 					    <input type="text" class="form-control" ng-model="pl.plan.formulo">
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 							<label for="tipo">Tipo</label><br/>
-					    	<select ng-model="pl.plan.tipo" class="form-control" required="">
+					    	<select name="tipo" ng-model="pl.plan.tipo" class="form-control" required="">
 							  <option value="Baja">Interno</option>
 							  <option value="Media">Externo</option>
 							</select>
@@ -69,9 +69,9 @@
 					    <label for="fecha">Fecha</label>
 					    <input type="date" class="form-control" ng-model="pl.plan.fecha">
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 					    <label for="grado">Grados</label>
-					    <input type="number" class="form-control" min="0" ng-model="pl.plan.grado" required="">
+					    <input name="grados" type="number" class="form-control" min="0" ng-model="pl.plan.grado" required="">
 			    	</div>
 						<div class="col-sm-4">
 							<label for="seccion_id">Generación</label>
@@ -136,8 +136,8 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="pl.guardar(pl.plan,form)"  class="btn btn-primary" ng-show="pl.action">
-					<input type="submit" ng-click="pl.actualizar(pl.plan,form)"  class="btn btn-primary" ng-show="!pl.action">				
+					<input type="submit" ng-click="pl.guardar(pl.plan,form)"  class="btn btn-primary" ng-show="pl.action" valida-form>
+					<input type="submit" ng-click="pl.actualizar(pl.plan,form)"  class="btn btn-primary" ng-show="!pl.action" valida-form>				
 				</div>
 			</div>	  
 		</form>
