@@ -97,15 +97,14 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<label for="gradoNuevaMateria">Grado</label><br/>
-			    	<select ng-model="pl.nuevaMateria.grado" class="form-control">
+						<select ng-model="pl.nuevaMateria.grado" class="form-control">
 						 	<option ng-repeat="_grado in pl.getGrados()" value="{{_grado}}">{{_grado+1}}</option>
 						</select>
 					</div>
-			    <div class="col-sm-4">
-				    <label>Materia</label>
-				    <select class="form-control" placeholder="Seleccione" 
-						ng-options="option.descripcion for option in pl.materias track by option._id"
-						ng-model="pl.nuevaMateria.materia">							
+					<div class="col-sm-4">
+					    <label>Materia</label>
+					    <select class="form-control" placeholder="Seleccione" 
+					    	    ng-options="option.etiqueta for option in pl.materias track by option._id" ng-model="pl.nuevaMateria.materia">							
 						</select>				     					
 					</div>	
 					<div class="col-sm-4">
