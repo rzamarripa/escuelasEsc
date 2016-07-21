@@ -2,27 +2,27 @@
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{ev.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaEtapaVenta" ng-click="ev.nuevaEtapaVenta()">
-		  {{ev.nuevo == true ? 'Nuevo' : 'Cancelar'}}
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaEtapaVenta" ng-click="ev.nuevoEtapaVenta()">
+				{{ev.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" data-parsley-validate>
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-			    <div class="col-sm-1">
+			    <div class="col-sm-1" valida>
 				    <label>Orden</label>
-			    	<input type="text" class="form-control" placeholder="Orden" ng-model="ev.etapaVenta.orden" required>
+			    	<input name="orden" type="text" class="form-control" placeholder="Orden" ng-model="ev.etapaVenta.orden" required>
 			    </div>
-			    <div class="col-sm-4">
+			    <div class="col-sm-4" valida>
 				    <label>Nombre</label>
-			    	<input type="text" class="form-control" placeholder="Nombre" ng-model="ev.etapaVenta.nombre" required>
+			    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="ev.etapaVenta.nombre" required>
 			    </div>
 				</div>
 			</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="ev.guardar(ev.etapaVenta)" value="Guardar" class="btn btn-primary" ng-show="ev.action">
-						<input type="submit" ng-click="ev.actualizar(ev.etapaVenta)" value="Actualizar" class="btn btn-primary" ng-show="!ev.action">				
+						<input type="submit" ng-click="ev.guardar(ev.etapaVenta,form)" value="Guardar" class="btn btn-primary" ng-show="ev.action" valida-form>
+						<input type="submit" ng-click="ev.actualizar(ev.etapaVenta,form)" value="Actualizar" class="btn btn-primary" ng-show="!ev.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>
