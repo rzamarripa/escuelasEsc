@@ -9,20 +9,20 @@
 			<form name="form" class="form-horizontal" role="form" novalidate>
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="nac.nacionalidad.clave" required>
+				    	<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="nac.nacionalidad.clave" required>
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Descripción </label>
-				    	<input type="text" class="form-control" placeholder="Descripción" ng-model="nac.nacionalidad.descripcion" required>
+				    	<input name="descripcion" type="text" class="form-control" placeholder="Descripción" ng-model="nac.nacionalidad.descripcion" required>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="nac.guardar(nac.nacionalidad,form)" value="Guardar" class="btn btn-primary" ng-show="nac.action">
-						<input type="submit" ng-click="nac.actualizar(nac.nacionalidad,form)" value="Actualizar" class="btn btn-primary" ng-show="!nac.action">				
+						<input type="submit" ng-click="nac.guardar(nac.nacionalidad,form)" value="Guardar" class="btn btn-primary" ng-show="nac.action" valida-form>
+						<input type="submit" ng-click="nac.actualizar(nac.nacionalidad,form)" value="Actualizar" class="btn btn-primary" ng-show="!nac.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>

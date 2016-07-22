@@ -19,8 +19,8 @@ function OcupacionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.nuevaOcupacion = function()
 	{
 		  this.action = true;
-      this.nuevo = !this.nuevo;
-      this.ocupacion = {}; 
+	      this.nuevo = !this.nuevo;
+	      this.ocupacion = {}; 
 	};
 	
 	this.guardar = function(ocupacion,form)

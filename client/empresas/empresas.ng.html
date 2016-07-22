@@ -6,99 +6,99 @@
 		 {{emp.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form name="form" class="form-horizontal" role="form">
+			<form name="form" class="form-horizontal" role="form" novalidate >
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4">					    
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Clave</label>
-					    	<input type="text" class="form-control" placeholder="clave" ng-model="emp.empresa.clave" required>
+					    	<input name="clave" type="text" class="form-control" placeholder="clave" ng-model="emp.empresa.clave" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Razón Social;</label>
-					    	<input type="text" class="form-control" placeholder="Razón Social" ng-model="emp.empresa.razonSocial" required>
+					    	<input name="razonsocial" type="text" class="form-control" placeholder="Razón Social" ng-model="emp.empresa.razonSocial" required>
 					    </div>
 			    	</div>
 
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 					    <label for="domicilio">Domicilio</label>
-					    <input type="text" class="form-control" placeholder="Domicilio" ng-model="emp.empresa.domicilio" required>
+					    <input name="domicilio" type="text" class="form-control" placeholder="Domicilio" ng-model="emp.empresa.domicilio" required>
 			    	</div>
 			    	<div class="col-sm-4">				    	
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>No.Exterior</label>
-					    	<input type="text" class="form-control" placeholder="No.Exterior" ng-model="emp.empresa.nEx" required>
+					    	<input name="numeroext" type="text" class="form-control" placeholder="No.Exterior" ng-model="emp.empresa.nEx" required>
 					    </div>
 					    <div class="col-sm-6">
 						    <label>No.Interior</label>
-					    	<input type="text" class="form-control" placeholder="No.Interior" ng-model="emp.empresa.nInt" required>
+					    	<input type="text" class="form-control" placeholder="No.Interior" ng-model="emp.empresa.nInt">
 					    </div>
 					</div>
 			    </div>
 					 <div class="row">
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Referencia Domicilio;</label>
-					    	<input type="text" class="form-control" placeholder="Referencia Domicilio" ng-model="emp.empresa.refDomicilio" required>
+					    	<input name="referenciadom" type="text" class="form-control" placeholder="Referencia Domicilio" ng-model="emp.empresa.refDomicilio" required>
 					    </div>
-					     <div class="col-sm-6">
+					     <div class="col-sm-6" valida>
 						    <label>CP</label>
-					    	<input type="text" class="form-control" placeholder="codigo postal" ng-model="emp.empresa.CP" required>
+					    	<input name="cp" type="text" class="form-control" placeholder="codigo postal" ng-model="emp.empresa.CP" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Colonia</label>
-					    	<input type="text" class="form-control" placeholder="Colonia" ng-model="emp.empresa.colonia" required>
+					    	<input name="colonia" type="text" class="form-control" placeholder="Colonia" ng-model="emp.empresa.colonia" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Municipio</label>
-					    	<input type="text" class="form-control" placeholder="Municipio" ng-model="emp.empresa.municipio" required>
+					    	<input name="municipio" type="text" class="form-control" placeholder="Municipio" ng-model="emp.empresa.municipio" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Ciudad</label>
-					    	<input type="text" class="form-control" placeholder="Ciudad" ng-model="emp.empresa.ciudad" required>
+					    	<input name="ciudad" type="text" class="form-control" placeholder="Ciudad" ng-model="emp.empresa.ciudad" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Estado</label>
-					    	<input type="text" class="form-control" placeholder="Estado" ng-model="emp.empresa.estado" required>
+					    	<input name="estado" type="text" class="form-control" placeholder="Estado" ng-model="emp.empresa.estado" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>País</label>
-					    	<input type="text" class="form-control" placeholder="Pais" ng-model="emp.empresa.pais" required>
+					    	<input name="pais" type="text" class="form-control" placeholder="Pais" ng-model="emp.empresa.pais" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Teléfonos</label>
-					    	<input type="text" class="form-control" placeholder="Teléfonos" ng-model="emp.empresa.telefonos" required>
+					    	<input name="telefono" type="text" class="form-control" placeholder="Teléfonos" ng-model="emp.empresa.telefonos" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Fax</label>
-					    	<input type="text" class="form-control" placeholder="Fax" ng-model="emp.empresa.fax" required>
+					    	<input name="fax" type="text" class="form-control" placeholder="Fax" ng-model="emp.empresa.fax" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>RFC</label>
-					    	<input type="text" class="form-control" placeholder="RFC" ng-model="emp.empresa.rfc" required>
+					    	<input name="rfc" type="text" class="form-control" placeholder="RFC" ng-model="emp.empresa.rfc" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Tipo Persona</label>
-					    	<input type="text" class="form-control" placeholder="Tipo Perso " ng-model="emp.empresa.tipoPersona" required>
+					    	<input name="tipopersona" type="text" class="form-control" placeholder="Tipo Persona" ng-model="emp.empresa.tipoPersona" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>E-mail</label>
-					    	<input type="text" class="form-control" placeholder="E-mail" ng-model="emp.empresa.email" required>
+					    	<input name="correo" type="text" class="form-control" placeholder="E-mail" ng-model="emp.empresa.email" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Titular</label>
-					    	<input tape="text" class="form-control" placeholder="Titular" ng-model="emp.empresa.titular" required>
+					    	<input name="titular" tape="text" class="form-control" placeholder="Titular" ng-model="emp.empresa.titular" required>
 					    </div>
-					    <div class="col-sm-6">
+					    <div class="col-sm-6" valida>
 						    <label>Puesto del titular</label>
-					    	<input type="text" class="form-control" placeholder="Puesto del titular" ng-model="emp.empresa.puestoTitular" required>
+					    	<input name="puestotitular" type="text" class="form-control" placeholder="Puesto del titular" ng-model="emp.empresa.puestoTitular" required>
 					    </div>
 			    	</div>
 			    </div>  
 			
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="emp.guardar(emp.empresa,form)" value="Guardar" class="btn btn-primary" ng-show="emp.action">
-						<input type="submit" ng-click="emp.actualizar(emp.empresa,form)" value="Actualizar" class="btn btn-primary" ng-show="!emp.action">				
+						<input type="submit" ng-click="emp.guardar(emp.empresa,form)" value="Guardar" class="btn btn-primary" ng-show="emp.action" valida-form>
+						<input type="submit" ng-click="emp.actualizar(emp.empresa,form)" value="Actualizar" class="btn btn-primary" ng-show="!emp.action" valida-form>
 					</div>
 				</div>	  
 		  </form>

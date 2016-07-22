@@ -15,7 +15,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
     return [{
 	    options : { limit: 10 },
 	    where : { nombre : this.getReactively('buscar.nombre'), 
-		    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }
+		    seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }
     }] ;
   });
   
@@ -41,7 +41,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  return Ocupaciones.find();
 	  },
 	  cantidad : () => {
-		  return Alumnos.find({campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}).count();
+		  return Alumnos.find({seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}).count();
 	  },
 	  matricula : () => {
 		  if(Meteor.user()){
@@ -77,6 +77,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		this.alumno.nombreCompleto = nombre + apPaterno + apMaterno;
 		this.alumno.fechaCreacion = new Date();
 		this.alumno.campus_id = Meteor.user().profile.campus_id;
+		this.alumno.seccion_id = Meteor.user().profile.seccion_id;
 		Alumnos.insert(this.alumno, function(err, doc){
 			Meteor.call('createUsuario', rc.alumno, 'alumno');
 			toastr.success('Alumno guardado.');
