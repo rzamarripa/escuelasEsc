@@ -133,7 +133,7 @@
 											<div class="col-sm-12">
 												<div class="well">
 											    <div class="row">
-														<div class="col-sm-3">
+														<div class="col-sm-6">
 															<label >Ciclo Escolar</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.ciclo_id">
 															  <option  value="{{ciclo._id}}" ng-repeat="ciclo in ins.ciclos">
@@ -143,25 +143,16 @@
 																
 										
 														</div>
-											    	<div class="col-sm-6">
+											    	<!--<div class="col-sm-6">
 												    	<label >Sección</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id" ng-change="ins.getGrupos(ins.inscripcion.seccion_id, ins.inscripcion.alumno_id)">
 															  <option value="{{seccion._id}}" ng-repeat="seccion in ins.secciones">
 															  	{{seccion.descripcion}}
 															  </option>
 															</select>
-															<!--<label >Secciones</label>
-															<ui-select ng-model="inscripcion.seccion_id"
-														             theme="bootstrap"
-														             ng-disabled="disabled"
-														             reset-search-input="false">
-														    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
-														    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
-														      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
-														    </ui-select-choices>
-														  </ui-select>-->
-														</div>
-														<div class="col-sm-3">
+															
+														</div>-->
+														<div class="col-sm-6">
 															<label >Tipo de Ingreso</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.tiposIngreso_id">
 															  <option  ng-repeat="tiposIngreso in ins.tiposIngresos">

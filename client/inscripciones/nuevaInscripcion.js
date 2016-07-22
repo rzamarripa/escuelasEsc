@@ -95,6 +95,88 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 	}
 	
+	this.pagosRealizados =[];
+	this.comisiones = []
+
+	this.llenarPago=function(concepto,plan){
+		this.pagosRealizados.push({
+						fechaPago 	: new Date(),
+						alumno_id 	: this.inscripcion.alumno_id,
+						grupo_id	: this.inscripcion.grupo_id,
+						seccion_id  : Meteor.user().profile.seccion_id,
+						campus_id 	: Meteor.user().profile.campus_id,
+						numero 		: plan.no,
+						semana 		: plan.numero,
+						anio 		: plan.anio,
+						estatus 	: 1,
+						concepto 	: concepto.nombre,
+						tipo 		: "Cobro",
+						usuario_id 	: Meteor.userId(),
+						importe 	: concepto.importe
+					});
+		var procedimientos= concepto.procedimientos;
+		var fechaActual = this.inscripcion.fechaInscripcion;
+		var fechaCobro = new Date(plan.fecha);
+
+		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
+		for (var procid in procedimientos) {
+			var procedimiento = procedimientos[procid];
+			if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
+					this.pagosRealizados.push({
+								fechaPago 	: new Date(),
+								alumno_id 	: this.inscripcion.alumno_id,
+								grupo_id	: this.inscripcion.grupo_id,
+								seccion_id  : Meteor.user().profile.seccion_id,
+								campus_id 	: Meteor.user().profile.campus_id,
+								numero 		: plan.no,
+								semana 		: plan.numero,
+								anio 		: plan.anio,
+								estatus 	: 1,
+								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+								tipo 		: "Recargo",
+								usuario_id 	: Meteor.userId(),
+								importe 	: procedimiento.monto
+							});
+			}
+			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
+				this.pagosRealizados.push({
+								fechaPago 	: new Date(),
+								alumno_id 	: this.inscripcion.alumno_id,
+								grupo_id	: this.inscripcion.grupo_id,
+								seccion_id  : Meteor.user().profile.seccion_id,
+								campus_id 	: Meteor.user().profile.campus_id,
+								numero 		: plan.no,
+								semana 		: plan.numero,
+								anio 		: plan.anio,
+								estatus 	: 1,
+								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+								tipo 		: "Recargo",
+								usuario_id 	: Meteor.userId(),
+								importe 	: procedimiento.monto
+							});
+			}	
+		}
+	}
+	this.llenarComision = function(comision,importe){
+		var vendedor = Meteor.users.findOne({_id:this.inscripcion.vendedor_id});
+		console.log(vendedor)
+		this.comisiones.push({
+			fechaPago 	: new Date(),
+			alumno_id 	: this.inscripcion.alumno_id,
+			grupo_id	: this.inscripcion.grupo_id,
+			seccion_id  : Meteor.user().profile.seccion_id,
+			campus_id 	: Meteor.user().profile.campus_id,
+			vendedor_id	: vendedor._id,
+			gerente_id	: vendedor.profile.gerenteVenta_id,
+			status		: 1,
+			beneficiario : comision.beneficiario,
+			importe 	: importe,
+			modulo		: comision.modulo,
+			comision_id : comision._id
+		});
+	}
+	
 	this.guardar = function(inscripcion)
 	{   
 		this.inscripcion.estatus = true;
@@ -104,22 +186,128 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		console.log("hola")
 		quitarhk(inscripcion);
 		console.log(inscripcion);
+		this.pagosRealizados = [];
+		this.comisiones =[]
 
 		var grupo = Grupos.findOne(inscripcion.grupo_id);
 
 		//inscripcion.plan = grupo.plan;
+		var comisionColegiaturaObligatoria =0;
+		if(grupo.comisiones){
+			
+  			for(var ind in grupo.comisiones){
+  				var comision = grupo.comisiones[ind];
+				if(comision && comision.activa && comision.prioridad=='Alta' && comision.modulo=='colegiatura'){
+	  				comisionColegiaturaObligatoria+=comision.importe;
+	  				console.log(comisionColegiaturaObligatoria)
+	  				this.llenarComision(comision,comision.importe);
+				}
+	  		}
+	  		
+	  		var rPagoInscripcion= parseFloat(inscripcion.importePagado)-comisionColegiaturaObligatoria;
+	  		for(var ind in grupo.comisiones){
+  				var comision = grupo.comisiones[ind];
+				if(comision && comision.activa && comision.prioridad=='Alta' && comision.modulo=='inscripcion'){
+	  				var rfPago =0;
+	  				if(rPagoInscripcion>=comision.importe){
+	  					rfPago=comision.importe;
+	  					rPagoInscripcion-=comision.importe;
+	  				}else{
+	  					rfPago= rPagoInscripcion;
+	  					rPagoInscripcion=0;
+	  				}
+	  				this.llenarComision(comision,rfPago);
+				}
+	  		}
+	  		for(var ind in grupo.comisiones){
+  				var comision = grupo.comisiones[ind];
+				if(comision && comision.activa && comision.prioridad=='Media' && comision.modulo=='inscripcion'){
+	  				var rfPago =0;
+	  				if(rPagoInscripcion>=comision.importe){
+	  					rfPago=comision.importe;
+	  					rPagoInscripcion-=comision.importe;
+	  				}else{
+	  					rfPago= rPagoInscripcion;
+	  					rPagoInscripcion=0;
+	  				}
+	  				this.llenarComision(comision,rfPago);
+				}
+	  		}
+	  		for(var ind in grupo.comisiones){
+  				var comision = grupo.comisiones[ind];
+				if(comision && comision.activa && comision.prioridad=='Baja' && comision.modulo=='inscripcion'){
+	  				var rfPago =0;
+	  				if(rPagoInscripcion>=comision.importe){
+	  					rfPago=comision.importe;
+	  					rPagoInscripcion-=comision.importe;
+	  				}else{
+	  					rfPago= rPagoInscripcion;
+	  					rPagoInscripcion=0;
+	  				}
+	  				this.llenarComision(comision,rfPago);
+				}
+	  		}
+	  	}
+
+
 		inscripcion.campus_id=Meteor.user().profile.campus_id;
+		inscripcion.seccion_id = Meteor.user().profile.seccion_id;
+
+		
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
-			console.log(_periodo);
+			//console.log(_periodo);
 			if(_periodo.tipoPlan=='inscripcion' && this.periodoVisible(_periodo)==true){
-				_periodo.pago= parseFloat(inscripcion.importePagado);	
+				_periodo.pago= parseFloat(inscripcion.importePagado)-comisionColegiaturaObligatoria;	
+
 				console.log(_periodo.pago)
 				if(inscripcion.totalPagar<=parseFloat(inscripcion.importePagado)
 					&& _periodo.planPago && _periodo.planPago instanceof Array){
+					_periodo.planPago[0].pago= parseFloat(inscripcion.importePagado)-comisionColegiaturaObligatoria;	
 					_periodo.planPago[0].pagada =1;
+					for (var conceptoid in  _periodo.datos) {
+						var concepto = _periodo.datos[conceptoid]
+						console.log(concepto.nombre)
+						this.llenarPago(concepto,_periodo.planPago[0]);
+						
+					}
+
 				}
-				break;
+				//break;
+			}
+			if(comisionColegiaturaObligatoria>0 && _periodo.tipoPlan=='colegiatura' && this.periodoVisible(_periodo)==true){
+				var resta = comisionColegiaturaObligatoria;
+				var valorColegiatura =0;
+				for(var j in _periodo.datos){
+					var datoColegiatura = _periodo.datos[j];
+					if (datoColegiatura.activa && datoColegiatura.estatus==1) {
+						valorColegiatura+=datoColegiatura.importe;
+					}
+				}
+				for (var j = 0; resta>0 && j < _periodo.planPago.length; j++) {
+					var pago = _periodo.planPago[j];
+					var fechaPago = new Date(pago.fecha);
+					
+					if((fechaPago-this.inscripcion.fechaInscripcion)>0){
+						pago.pagada=1
+						pago.pago = (valorColegiatura>=resta)? valorColegiatura: resta;
+						for(var k in _periodo.datos){
+							var concepto = _periodo.datos[k];
+							this.llenarPago(concepto,pago);
+						}
+						if(resta>valorColegiatura){
+							resta-=valorColegiatura;
+						}
+						else{
+							resta =0;
+						}
+
+					}
+					else{
+						pago.pagada=5;
+					}
+					//console.log()
+				}
 			}
 		}
 
@@ -136,6 +324,15 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		Grupos.update({_id: inscripcion.grupo_id},{$set:grupo});
 		toastr.success('Alumno Inscrito');
 		$state.go("root.inscripciones");
+		for (var i = 0; i < this.pagosRealizados.length; i++) {
+			Pagos.insert(this.pagosRealizados[i]);
+		}
+		for (var i = 0; i < this.comisiones.length; i++) {
+			Comisiones.insert(this.comisiones[i]);
+		}
+		console.log(this.inscripcion);
+		console.log(this.pagosRealizados)
+		console.log(this.comisiones)
 	};
 
 	this.calcularImporteU= function(datos,pago){
@@ -185,6 +382,13 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  			if(this.inscripcion.plan[ind] && ind == tipoInsc){
 	  				_periodo = this.inscripcion.plan[ind];
 	  				break;
+	  			}
+	  		}
+	  		if(grupo.comisiones){
+	  			for(var ind in grupo.comisiones){
+	  				var comision = grupo.comisiones[ind];
+	  				if(comision && comision.activa && comision.prioridad=='Alta' && comision.modulo=='colegiatura')
+	  					this.inscripcion.totalPagar+=comision.importe;
 	  			}
 	  		}
 	  		 

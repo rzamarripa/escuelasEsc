@@ -185,6 +185,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	  }
 		this.grupo.estatus = true;
 		this.grupo.campus_id = Meteor.user().profile.campus_id;
+		this.grupo.seccion_id = Meteor.user().profile.seccion_id;
 		grupo.inscritos = 0;
 		horario = Horarios.findOne(grupo.horario_id);
 		_grupo =quitarhk(grupo)
