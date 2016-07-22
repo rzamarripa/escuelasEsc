@@ -40,7 +40,6 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 		this.subCiclo.estatus = true;
 		this.subCiclo.campus_id = Meteor.user().profile.campus_id;
-		console.log(this.subCiclo);
 		SubCiclos.insert(this.subCiclo);
 		toastr.success('SubCiclo guardado.');
 		this.subCiclo = {};
@@ -70,7 +69,6 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		delete subCiclo._id;		
 		SubCiclos.update({_id:idTemp},{$set:subCiclo});
 		$('.collapse').collapse('hide');
-		console.log(this.subCiclo);
 		this.nuevo = true;
 		form.$setPristine();
         form.$setUntouched();

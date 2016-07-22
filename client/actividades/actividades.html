@@ -39,7 +39,7 @@
 								<strong><a href="/prospecto/{{llamada.prospecto_id}}">{{llamada.prospecto.nombre}}</a></strong> - {{llamada.asunto}}
 								<span class="text-muted">{{llamada.resultado}} </span>
 								<span class="date">{{llamada.fecha | date : 'dd-MM-yyyy HH:mm'}}</span>
-								<form name="form">
+								<form name="form" novalidate >
 									<span ng-if="llamada.estatus == true" >
 										<label class="date pull-right"><strong>Escriba el resultado de la llamada</strong></label>
 										<input class="form-control" placeholder="Resultado" ng-model="llamada.resultado"/>
