@@ -10,21 +10,21 @@
 			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-				    <div class="col-sm-4">
+				    <div class="col-sm-4" valida>
 				    	<label>Orden</label>
-					    <input type="text" class="form-control" ng-model="cp.conceptoPago.orden" required=""/>
+					    <input name="orden" type="text" class="form-control" ng-model="cp.conceptoPago.orden" required=""/>
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 				    	<label>Nombre</label>
-					    <input type="text" class="form-control" ng-model="cp.conceptoPago.nombre" required=""/>
+					    <input name="nombre" type="text" class="form-control" ng-model="cp.conceptoPago.nombre" required=""/>
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 				    	<label>Importe</label>
-					    <input type="number" class="form-control" ng-model="cp.conceptoPago.importe" required=""/>
+					    <input name="importe" type="number" class="form-control" ng-model="cp.conceptoPago.importe" required=""/>
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Módulo</label>
-			    		<select class="form-control" ng-model="cp.conceptoPago.modulo">
+			    		<select name="modulo" class="form-control" ng-model="cp.conceptoPago.modulo" required>
 				    		<option value="inscripcion">Inscripción</option>
 				    		<option value="colegiatura">Colegiatura</option>
 				    		<option value="otros">Otros</option>
@@ -34,8 +34,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="cp.guardar(cp.conceptoPago,form)" class="btn btn-primary" ng-show="cp.action">
-						<input type="submit" ng-click="cp.actualizar(cp.conceptoPago,form)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action">				
+						<input type="submit" value="Guardar" ng-click="cp.guardar(cp.conceptoPago,form)" class="btn btn-primary" ng-show="cp.action" valida-form />
+						<input type="submit" ng-click="cp.actualizar(cp.conceptoPago,form)" value="Actualizar" class="btn btn-primary" ng-show="!cp.action" valida-form />				
 					</div>
 				</div>	  
 		  </form>

@@ -6,45 +6,45 @@
 			{{gv.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form name="form" class="form-horizontal" role="form" data-parsley-validate>
+			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Usuario</label>
-				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="gv.gerenteVenta.username" required>
+				    	<input name="usuario" type="text" class="form-control" placeholder="Usuario" ng-model="gv.gerenteVenta.username" required>
 			    	</div>
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="gv.gerenteVenta.password" required>
+				    	<input name="contrasena" type="password" class="form-control" placeholder="Contraseña" ng-model="gv.gerenteVenta.password" required>
 			    	</div>		    				    	    
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Confirmar Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="gv.gerenteVenta.confirmarContrasena" required>
+				    	<input name="confirmar" type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="gv.gerenteVenta.confirmarContrasena" required>
 					</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Nombre </label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="gv.gerenteVenta.profile.nombre" required>
+				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="gv.gerenteVenta.profile.nombre" required>
 			    	</div>
 
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Apellido Paterno </label>
-				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="gv.gerenteVenta.profile.apPaterno" required>
+				    	<input name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="gv.gerenteVenta.profile.apPaterno" required>
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Apellido Materno</label>
-				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="gv.gerenteVenta.profile.apMaterno" required>
+				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="gv.gerenteVenta.profile.apMaterno">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Dirección</label>
 				    	<input type="text" class="form-control" placeholder="Dirección" ng-model="gv.gerenteVenta.profile.direccion">
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Teléfono</label>
-				    	<input type="text" class="form-control" placeholder="Teléfono" ng-model="gv.gerenteVenta.profile.telefono" required>
+				    	<input name="telefono" type="text" class="form-control" placeholder="Teléfono" ng-model="gv.gerenteVenta.profile.telefono" required>
 			    	</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Correo</label>
-				    	<input type="text" class="form-control" placeholder="Correo" ng-model="gv.gerenteVenta.profile.correo" required>
+				    	<input name="correo" type="text" class="form-control" placeholder="Correo" ng-model="gv.gerenteVenta.profile.correo" required>
 			    	</div>
 			    	<div class="col-sm-4">
 						<label for="talla">Fotografía</label>
@@ -55,8 +55,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="gv.guardar(gv.gerenteVenta)" value="Guardar" class="btn btn-primary" ng-show="gv.action">
-						<input type="submit" ng-click="gv.actualizar(gv.gerenteVenta)" value="Actualizar" class="btn btn-primary" ng-show="!gv.action">				
+						<input type="submit" ng-click="gv.guardar(gv.gerenteVenta,form)" value="Guardar" class="btn btn-primary" ng-show="gv.action" valida-form />
+						<input type="submit" ng-click="gv.actualizar(gv.gerenteVenta,form)" value="Actualizar" class="btn btn-primary" ng-show="!gv.action" valida-form />				
 					</div>
 				</div>	  
 		  </form>

@@ -23,8 +23,12 @@ angular.module("casserole")
     this.etapaVenta = {};		
   };
 
-  this.guardar = function(etapaVenta)
+  this.guardar = function(etapaVenta,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos de la Etapa de Venta.');
+	        return;
+	    }
 		this.etapaVenta.estatus = true;
 		etapaVenta.campus_id = Meteor.user().profile.campus_id;
 		EtapasVenta.insert(this.etapaVenta);
@@ -32,6 +36,8 @@ angular.module("casserole")
 		this.etapaVenta = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -42,13 +48,19 @@ angular.module("casserole")
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(etapaVenta)
+	this.actualizar = function(etapaVenta,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos de la Etapa de Venta.');
+	        return;
+	    }
 		var idTemp = etapaVenta._id;
 		delete etapaVenta._id;		
 		EtapasVenta.update({_id:idTemp},{$set:etapaVenta});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+        form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)

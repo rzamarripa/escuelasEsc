@@ -28,20 +28,20 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   rc.subscribe('materias',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   rc.subscribe('ciclos', ()=>{
 	  return [{
-		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+		  estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 	  }]
   });
   rc.subscribe('rvoe', ()=>{
 	  return [{
-		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+		  estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 	  }]
   });
   rc.subscribe('generaciones',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
 
@@ -120,6 +120,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 	    }
 		plan.estatus = true;
 		this.plan.campus_id = Meteor.user().profile.campus_id;
+		this.plan.seccion_id = Meteor.user().profile.seccion_id;
 		delete plan.$$hashKey;
 		for (var i = 0; i < plan.grados.length; i++) {
 			for (var j = 0; j < plan.grados[i].length; j++) {

@@ -7,7 +7,6 @@ angular.module('casserole').directive('valida', validador);
     	element.carga = false
 			input = element.find('.form-control');
     	var formName = element.parents('form').attr('name');
-    	console.log(element);
     	scope.$watch(formName + '.' + input[0].name + '.$invalid', function (val) {
     		if(element.carga){
           if(val)
@@ -27,16 +26,19 @@ angular.module('casserole').directive('validaForm', validaForm);
   return {
     restrict: 'A',
      link: function(scope, element, attrs) {
-    	//console.log(scope.form)
 			element.on("click", function () {
 				errors = scope.form.$error.required;
-				errors.forEach(function(error){
-					if(error.$invalid == true){
-						var elem = document.getElementsByName(error.$name)[0].parentElement;
-						elem.className += " has-error";
-					}
-				})
-			})
+        if(errors != undefined){
+  				errors.forEach(function(error){
+  					if(error.$invalid == true){
+  						var elem = document.getElementsByName(error.$name)[0].parentElement;
+  						elem.className += " has-error";
+  					}
+  				});
+        }else{
+          setTimeout(function() {$("div").removeClass("has-error");}, 10);  
+        }
+			});
 		}
-  };
+  }
 }

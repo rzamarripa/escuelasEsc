@@ -6,31 +6,31 @@
     <div class="collapse" id="depositosForm">
 			<div class="well col-sm-12">	
 				<div class="row">
-					<div class="form-group col-sm-4">					    
+					<div class="form-group col-sm-4" valida>					    
 					  <label>Semana</label>
-				  	<input type="text" class="form-control"  ng-model="gc.gasto.semana">
+				  	<input type="text" class="form-control"  ng-model="gc.gasto.semana" name="semana" required>
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" valida>
 						<label for="fechaLimite">Fecha</label>
-						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gc.gasto.fecha"/>
+						<input date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="gc.gasto.fecha" name="fecha" required/>
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" valida>
 					  <label>Cuenta a nombre de</label>
-				  	<input type="text" class="form-control"  ng-model="gc.gasto.aNombreDe" >
+				  	<input type="text" class="form-control"  ng-model="gc.gasto.aNombreDe" name="aNombreDe" required>
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" valida>
 					  <label>Importe</label>
-				  	<input type="text" class="form-control"  ng-model="gc.gasto.importe" >
+				  	<input type="number" class="form-control"  ng-model="gc.gasto.importe" name="improte" required>
 					</div>
-					<div class="form-group col-sm-4">
+					<div class="form-group col-sm-4" valida>
 						<label for="tipo">Tipo</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.tipo">
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.tipo" name="tipo" required>
 						  <option value="carrera">Carrera</option>
 						  <option value="curso">Curso</option>
 						</select>
 					</div>
 				</div>
-				<a class="btn btn-primary pull-right" ng-click="gc.guardar(gc.gasto, form)">Guardar</a>
+				<a class="btn btn-primary pull-right" ng-click="gc.guardar(gc.gasto, form)" valida-form>Guardar</a>
 			</div>
 		</div>
 	</div>

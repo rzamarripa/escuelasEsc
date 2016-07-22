@@ -13,23 +13,23 @@
 			<form name="form" class="form-horizontal" role="form" >
 				<div class="well">	    
 			    <div class="row">
-				    <div class="col-sm-4">
+				    <div class="col-sm-4" valida>
 							<label >Ciclo Escolar</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id" required>
+							<select name="ciclo" class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id" required>
 								<option  value="{{ciclo._id}}" ng-repeat="ciclo in sub.ciclos">
 									{{ciclo.descripcion}}
 								</option>
 							</select>
 						</div>
-				    <div class="col-sm-4">
+				    <div class="col-sm-4" valida>
 				    	<label>Nombre</label>
-					    <input type="text" class="form-control" ng-model="sub.subCiclo.nombre" required="">
+					    <input name="nombre" type="text" class="form-control" ng-model="sub.subCiclo.nombre" required="">
 			    	</div>
-			    	<div class="col-sm-4">
-			    	<label>Tipo de Subciclo</label>
-			    	<select class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.tipo">
-						  <option value="Administrativo">Administrativo </option>
-							<option value="Academico">Académico</option>
+			    	<div class="col-sm-4" valida>
+				    	<label>Tipo de Subciclo</label>
+				    	<select name="tiposubciclo" class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.tipo" required="">
+							  <option value="Administrativo">Administrativo </option>
+								<option value="Academico">Académico</option>
 						</select>
 					</div>
 			    	
@@ -42,8 +42,8 @@
 				</div> 
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="sub.guardar(sub.subCiclo,form)" class="btn btn-primary" ng-show="sub.action">
-						<input type="submit" ng-click="sub.actualizar(sub.subCiclo,form)" value="Actualizar" class="btn btn-primary" ng-show="!sub.action">			
+						<input type="submit" value="Guardar" ng-click="sub.guardar(sub.subCiclo,form)" class="btn btn-primary" ng-show="sub.action" valida-form>
+						<input type="submit" ng-click="sub.actualizar(sub.subCiclo,form)" value="Actualizar" class="btn btn-primary" ng-show="!sub.action" valida-form>			
 					</div>
 				</div>	  
 		  </form>

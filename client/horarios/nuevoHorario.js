@@ -20,16 +20,16 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   var y = date.getFullYear();
   
   this.subscribe("maestros",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("materias",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("horarios",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("aulas",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   	
 	this.helpers({
@@ -205,6 +205,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.guardarHorario = function() {
 	  eliminarTemporalesOcupados();
 	  this.horario.campus_id = Meteor.user().profile.campus_id;
+	  this.horario.seccion_id = Meteor.user().profile.seccion_id;
     Horarios.insert(this.horario);
     toastr.success("Se guardó el horario");
 		$state.go("root.listarHorarios");

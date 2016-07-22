@@ -9,19 +9,16 @@
 			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
-                    <div class="col-sm-12">
+			    	<div class="col-sm-4" valida>					    
 						    <label>Estado civil</label>
-					    	<input type="text" class="form-control" placeholder="Estado civil" ng-model="civ.civil.estado" required>
-					    </div>
-			    	
+					    	<input name="estadocivil" type="text" class="form-control" placeholder="Estado civil" ng-model="civ.civil.estado" required>
 			    	</div>
 			    </div>   
 			</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="civ.guardar(civ.civil,form)" value="Guardar" class="btn btn-primary" ng-show="civ.action">
-						<input type="submit" ng-click="civ.actualizar(civ.civil,form)" value="Actualizar" class="btn btn-primary" ng-show="!civ.action">	
+						<input type="submit" ng-click="civ.guardar(civ.civil,form)" value="Guardar" class="btn btn-primary" ng-show="civ.action" valida-form>
+						<input type="submit" ng-click="civ.actualizar(civ.civil,form)" value="Actualizar" class="btn btn-primary" ng-show="!civ.action" valida-form>	
 
 					</div>
 				</div>

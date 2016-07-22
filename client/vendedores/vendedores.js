@@ -4,11 +4,11 @@ angular
 function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 	
 	let rc = $reactive(this).attach($scope);
-  this.action = true;
-  this.nuevo = true;  
+	  this.action = true;
+	  this.nuevo = true;  
   
 	this.subscribe('vendedores',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
  
   this.helpers({
@@ -16,7 +16,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var vendedores = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" ){
+			  if(usuario.roles[0] == "vendedor" && usuario.profile.seccion_id == Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" ){
 				  vendedores.push(usuario);
 			  }
 		  });
@@ -26,7 +26,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.seccion_id == Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""){
 				  gerentes.push(usuario);
 			  }
 		  });
@@ -37,37 +37,50 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
   this.nuevoVendedor = function()
   {
 		this.action = true;
-    this.nuevo = !this.nuevo;
-    this.vendedor = {}; 
-    this.vendedor.profile = {};
+	    this.nuevo = !this.nuevo;
+	    this.vendedor = {}; 
+	    this.vendedor.profile = {};
   };
  
-	this.guardar = function(vendedor)
+	this.guardar = function(vendedor,form)
 	{		
+		if(form.$invalid){
+	        toastr.error('Error al guardar los datos del Vendedor.');
+	        return;
+	    }
 		console.log(vendedor);
 		vendedor.profile.estatus = true;
 		vendedor.profile.campus_id = Meteor.user().profile.campus_id;
+		vendedor.seccion_id = Meteor.user().profile.seccion_id;
 		Meteor.call('createGerenteVenta', vendedor, 'vendedor');
 		toastr.success('Vendedor Guardado.');
 		this.nuevo = true;
 		this.vendedor = {};
 		$('.collapse').collapse('hide');
-		this.nuevo = true;		
+		this.nuevo = true;	
+		form.$setPristine();
+		form.$setUntouched();	
 	};
 	
 	this.editar = function(id)
 	{
-    this.vendedor = Meteor.users.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.vendedor = Meteor.users.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(vendedor)
+	this.actualizar = function(vendedor,form)
 	{
+		if(form.$invalid){
+	        toastr.error('Error al actualizar los datos del Vendedor.');
+	        return;
+	    }
 		Meteor.call('updateGerenteVenta', vendedor, 'vendedor');
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		form.$setPristine();
+		form.$setUntouched();
 	};
 		
 	this.tomarFoto = function(){
