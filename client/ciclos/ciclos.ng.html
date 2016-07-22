@@ -12,7 +12,7 @@
 			    <div class="row">
 			    	<div class="col-sm-4" valida>
 				    	<label>Nombre</label>
-					    <input name="nombre" type="text" class="form-control" ng-model="cl.ciclo.descripcion" required="">
+					    <input name="nombre" type="text" class="form-control" ng-model="cl.ciclo.descripcion" required>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Fecha Inicio</label>
@@ -26,8 +26,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" value="Guardar" ng-click="cl.guardar(cl.ciclo,form)" class="btn btn-primary" ng-show="cl.action">
-						<input type="submit" ng-click="cl.actualizar(cl.ciclo,form)" value="Actualizar" class="btn btn-primary" ng-show="!cl.action">				
+						<input type="submit" value="Guardar" ng-click="cl.guardar(cl.ciclo,form)" class="btn btn-primary" ng-show="cl.action" valida-form>
+						<input type="submit" ng-click="cl.actualizar(cl.ciclo,form)" value="Actualizar" class="btn btn-primary" ng-show="!cl.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>

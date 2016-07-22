@@ -22,31 +22,31 @@
 		<form name="form" class="form-horizontal" role="form" novalidate >
 	  	<div class="well">	 
 		  	<div class="row">
-		  		<div class="col-sm-6">
+		  		<div class="col-sm-6" valida>
 		  			<label for="grupo">Grupo</label>
-				    <input type="text" class="form-control" placeholder="Grupo" ng-model="gp.grupo.nombre" required="">
+				    <input name="grupo" type="text" class="form-control" placeholder="Grupo" ng-model="gp.grupo.nombre" required="">
 		  		</div>
-		  		<div class="col-sm-6">
+		  		<div class="col-sm-6" valida>
 		  			<label for="identificador">Identificador</label>
-						<input type="text" class="form-control" id="identificador" placeholder="Identificador" ng-model="gp.grupo.identificador" required="">
+					<input name="identificador" type="text" class="form-control" id="identificador" placeholder="Identificador" ng-model="gp.grupo.identificador" required="">
 		  		</div>
 		  	</div>   
 		    <div class="row">
-					<div class="col-sm-4">
+					<div class="col-sm-4" valida>
 						<label>Ciclo Escolar</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id" required="">
+						<select name="cicloescolar" class="form-control" placeholder="Seleccione" ng-model="gp.grupo.ciclo_id" required="">
 							<option ng-repeat="ciclo in gp.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
 						</select>
 					</div>
-		    	<div ng-show="gp.grupo.ciclo_id != undefined" class="col-sm-4">				    
+		    	<div ng-show="gp.grupo.ciclo_id != undefined" class="col-sm-4" valida>				    
 						<label>Sub-Ciclo Académico</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCicloAcademico_id" required="">
+						<select name="subcicloAc" class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCicloAcademico_id" required="">
 							<option ng-repeat="subCiclo in gp.subCiclosAcademicos" value="{{subCiclo._id}}">{{subCiclo.nombre}}</option>
 						</select>
 		    	</div>
-		    	<div ng-show="gp.grupo.ciclo_id != undefined" class="col-sm-4 ">
+		    	<div ng-show="gp.grupo.ciclo_id != undefined" class="col-sm-4 " valida>
 		    		<label>Sub-Ciclo Administrativo</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCicloAdministrativo_id" required="">
+						<select name="subcicloAd" class="form-control" placeholder="Seleccione" ng-model="gp.grupo.subCicloAdministrativo_id" required="">
 							<option ng-repeat="subCiclo in gp.subCiclosAdministrativos" value="{{subCiclo._id}}">{{subCiclo.nombre}}</option>
 						</select>
 		    	</div>
@@ -55,21 +55,21 @@
 	  	
 	  	<div class="well">				 
 				<div class="row">						
-					<div class="col-sm-4">
+					<div class="col-sm-4" valida>
 				    <label for="tipo">Tipo</label>
-				    <select ng-model="gp.grupo.tipo" data-placeholder="Seleccione" class="form-control" >
+				    <select name="tipo" ng-model="gp.grupo.tipo" data-placeholder="Seleccione" class="form-control" required="">
 						    <option value=""></option>
 						    <option value="Cerrado">Cerrado</option>
 						    <option value="Abierto">Abierto</option>
 						</select>
 		    	</div>
-		    	<div class="col-sm-4">
+		    	<div class="col-sm-4" valida>
 				    <label for="cupo">Cupo</label>
-				    <input type="number" class="form-control" id="cupo" min="0" placeholder="Cupo" ng-model="gp.grupo.cupo" >
+				    <input name="cupo" type="number" class="form-control" id="cupo" min="0" placeholder="Cupo" ng-model="gp.grupo.cupo" required="">
 		    	</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" valida>
 						<label >Turno</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.turno_id" required="">
+						<select name="turno" class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.turno_id" required="">
 							<option ng-repeat="turno in gp.turnos" value="{{turno._id}}">{{turno.nombre}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.turno_id"
@@ -88,9 +88,9 @@
 
 				</div>
 				<div class="row">						
-					<div class="col-sm-4">
+					<div class="col-sm-4" valida>
 						<label >Grado</label>
-						<select class="form-control" placeholder="Seleccione" ng-model="gp.grupo.grado">
+						<select name="grado" class="form-control" placeholder="Seleccione" ng-model="gp.grupo.grado" required>
 							<option ng-repeat="grado in gp.grados" value="{{grado}}">{{grado}}</option>
 						</select>
 						<!--<ui-select ng-model="gp.grupo.grado"
@@ -123,9 +123,9 @@
 					</div>
 				</div>
 				<div class="row">
-				<div class="col-sm-12">
+				<div class="col-sm-12" valida>
 					<label>Horario</label>
-					<select class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.horario_id" required="">
+					<select name="horario" class="form-control select2" placeholder="Seleccione" ng-model="gp.grupo.horario_id" required="">
 						<option ng-repeat="horario in gp.horarios" value="{{horario._id}}">{{horario.nombre}}</option>
 					</select>
 				</div>
@@ -186,8 +186,8 @@
 	  	
 			<div class="row">
 				<div class="col-sm-12">
-					<input type="submit" ng-click="gp.guardar(gp.grupo,form)" value="Guardar" class="btn btn-primary" ng-show="gp.action">
-					<input type="submit" ng-click="gp.actualizar(gp.grupo,form)" value="Actualizar" class="btn btn-primary" ng-show="!gp.action">				
+					<input type="submit" ng-click="gp.guardar(gp.grupo,form)" value="Guardar" class="btn btn-primary" ng-show="gp.action" valida-form>
+					<input type="submit" ng-click="gp.actualizar(gp.grupo,form)" value="Actualizar" class="btn btn-primary" ng-show="!gp.action" valida-form>				
 				</div>
 			</div>	  
 	  </form>

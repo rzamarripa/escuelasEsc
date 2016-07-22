@@ -9,26 +9,26 @@
 			<form name="form" class="form-horizontal" role="form" novalidate >
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida> 					    
 				    	<label>Usuario</label>
-				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="emp.trabajador.usuario" required="">
+				    	<input name="usuario" type="text" class="form-control" placeholder="Usuario" ng-model="emp.trabajador.usuario" required="">
 			    	</div>
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="emp.trabajador.contrasena" required="">
+				    	<input name="contrasena" type="password" class="form-control" placeholder="Contraseña" ng-model="emp.trabajador.contrasena" required="">
 			    	</div>		    				    	    
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Confirmar Contraseña</label>
-				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="emp.trabajador.confirmarContrasena" required="">
+				    	<input name="confirmar" type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="emp.trabajador.confirmarContrasena" required="">
 					</div>
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Nombre </label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="emp.trabajador.nombre" required="">
+				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="emp.trabajador.nombre" required="">
 			    	</div>
 
-			    	<div class="col-sm-4">
+			    	<div class="col-sm-4" valida>
 			    		<label>Apellido Paterno </label>
-				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="emp.trabajador.apPaterno" required="">
+				    	<input name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="emp.trabajador.apPaterno" required="">
 			    	</div>
 			    	<div class="col-sm-4">
 			    		<label>Apellido Materno</label>
@@ -68,8 +68,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="emp.guardar(emp.trabajador,form)" value="Guardar" class="btn btn-primary" ng-show="emp.action">
-						<input type="submit" ng-click="emp.actualizar(emp.trabajador,form)" value="Actualizar" class="btn btn-primary" ng-show="!emp.action">				
+						<input type="submit" ng-click="emp.guardar(emp.trabajador,form)" value="Guardar" class="btn btn-primary" ng-show="emp.action" valida-form />
+						<input type="submit" ng-click="emp.actualizar(emp.trabajador,form)" value="Actualizar" class="btn btn-primary" ng-show="!emp.action" valida-form />				
 					</div>
 				</div>	  
 		  </form>

@@ -9,22 +9,22 @@
 			<form name="form" class="form-horizontal" role="form">
 				<div class="well">
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-12" valida>
 							<div class="col-sm-4">
 								<label> Clave </label>
-								<input type="text" class="form-control" placeholder="Clave" ng-model="tiping.tipoingreso.clave" required="">
+								<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="tiping.tipoingreso.clave" required="">
 					    </div>
-					    <div class="col-sm-8">
+					    <div class="col-sm-8" valida>
 						    <label>Descripción</label>
-					    	<input type="text" class="form-control" placeholder="Descripción" ng-model="tiping.tipoingreso.descripcion" required="">
+					    	<input name="descripcion" type="text" class="form-control" placeholder="Descripción" ng-model="tiping.tipoingreso.descripcion" required="">
 					    </div>
 			    	</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="tiping.guardar(tiping.tipoingreso,form)" value="Guardar" class="btn btn-primary" ng-show="tiping.action">
-						<input type="submit" ng-click="tiping.actualizar(tiping.tipoingreso,form)" value="Actualizar" class="btn btn-primary" ng-show="!tiping.action">				
+						<input type="submit" ng-click="tiping.guardar(tiping.tipoingreso,form)" value="Guardar" class="btn btn-primary" ng-show="tiping.action" valida-form>
+						<input type="submit" ng-click="tiping.actualizar(tiping.tipoingreso,form)" value="Actualizar" class="btn btn-primary" ng-show="!tiping.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>

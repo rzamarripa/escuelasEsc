@@ -59,8 +59,8 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
   this.guardar = function(seccion,form)
 	{
 		if(form.$invalid){
-      toastr.error('Error al guardar los datos de la Sección.');
-      return;
+	      toastr.error('Error al guardar los datos de la Sección.');
+	      return;
 		}
 		this.seccion.estatus = true;
 		this.seccion.campus_id = $stateParams.campus_id;

@@ -9,13 +9,13 @@
 			<form name="form" class="form-horizontal" role="form" novalidate>
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="au.aula.clave" required="">
+				    	<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="au.aula.clave" required="">
 			    	</div>
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Nombre</label>
-				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="au.aula.nombre" required="">
+				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="au.aula.nombre" required="">
 			    	</div>
 			    </div> 
 			    <div class="row">
@@ -27,8 +27,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="au.guardar(au.aula,form)" value="Guardar" class="btn btn-primary" ng-show="au.action">
-						<input type="submit" ng-click="au.actualizar(au.aula,form)" value="Actualizar" class="btn btn-primary" ng-show="!au.action">				
+						<input type="submit" ng-click="au.guardar(au.aula,form)" value="Guardar" class="btn btn-primary" ng-show="au.action" valida-form>
+						<input type="submit" ng-click="au.actualizar(au.aula,form)" value="Actualizar" class="btn btn-primary" ng-show="!au.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>

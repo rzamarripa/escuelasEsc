@@ -9,16 +9,16 @@
 			<form name="form" class="form-horizontal" role="form" novalidate>
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Documento</label>
-				    	<input type="text" class="form-control" placeholder="Nombre de documento" ng-model="doc.documento.nombre" required>
+				    	<input name="documento" type="text" class="form-control" placeholder="Nombre de documento" ng-model="doc.documento.nombre" required>
 			    	</div>    	   			    
 			    </div>
 			</div> 
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="doc.guardar(doc.documento,form)" value="Guardar" class="btn btn-primary" ng-show="doc.action">
-						<input type="submit" ng-click="doc.actualizar(doc.documento,form)" value="Actualizar" class="btn btn-primary" ng-show="!doc.action">				
+						<input type="submit" ng-click="doc.guardar(doc.documento,form)" value="Guardar" class="btn btn-primary" ng-show="doc.action" valida-form>
+						<input type="submit" ng-click="doc.actualizar(doc.documento,form)" value="Actualizar" class="btn btn-primary" ng-show="!doc.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>

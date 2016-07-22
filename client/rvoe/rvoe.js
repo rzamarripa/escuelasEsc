@@ -6,7 +6,7 @@ function RvoeCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('rvoe',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	 });
   
   this.helpers({
@@ -31,6 +31,7 @@ function RvoeCtrl($scope, $meteor, $reactive, $state, toastr) {
 	    }
 		this.rvoe.estatus = true;
 	    this.rvoe.campus_id = Meteor.user().profile.campus_id;
+	    this.rvoe.seccion_id = Meteor.user().profile.seccion_id;
 		Rvoe.insert(this.rvoe);
 		toastr.success('Rvoe guardado.');
 		this.rvoe = {};
@@ -43,10 +44,10 @@ function RvoeCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	this.editar = function(id)
 	{
-    this.rvoe = Rvoe.findOne({_id:id});
-    this.action = false;
-    $('.collapse').collapse('show');
-    this.nuevo = false;
+	    this.rvoe = Rvoe.findOne({_id:id});
+	    this.action = false;
+	    $('.collapse').collapse('show');
+	    this.nuevo = false;
 	};
 	
 	this.actualizar = function(rvoe,form)

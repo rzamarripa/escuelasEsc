@@ -8,7 +8,7 @@ function ConceptosComisionCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 	self.action = true;
 	self.subscribe('conceptosComision',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	});
 
 	self.helpers({
@@ -29,10 +29,11 @@ function ConceptosComisionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	{
 		if(form.$invalid){
 			toastr.error('Error al guardar los datos de Comsión.');
-		return;
-	}
+			return;
+		}
 		conceptoComision.estatus = true;
 		self.conceptoComision.campus_id = Meteor.user().profile.campus_id;
+		self.conceptoComision.seccion_id = Meteor.user().profile.seccion_id;
 		console.log(self.conceptoComision);
 		ConceptosComision.insert(self.conceptoComision);
 		toastr.success('Concepto de Comsión guardado.');

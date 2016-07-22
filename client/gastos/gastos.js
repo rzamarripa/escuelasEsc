@@ -5,6 +5,8 @@ angular
 function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.tipoGasto = 'cheques';
+  this.gasto = {};
+  this.gasto.fechaLimite = new Date();
 
   this.subscribe('gastos', () => {
     return [{tipoGasto: this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
@@ -30,7 +32,6 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
   this.guardar = function(gasto, form){
     if(form.$invalid){
-      console.log(form)
       toastr.error('error.');
       return;
     }

@@ -9,22 +9,22 @@
 			<form name="form" class="form-horizontal" role="form">
 		  	<div class="well">	    
 			    <div class="row">
-			    	<div class="col-sm-4">					    
+			    	<div class="col-sm-4" valida>					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="tit.titulo.clave" required="">
+				    	<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="tit.titulo.clave" required="">
 		    	</div>	
 			    </div>
 			    <div class="row">
-			    	<div class="col-sm-12">
+			    	<div class="col-sm-12" valida>
 					    <label>Descripción</label>
-					    <textarea class="form-control" placeholder="Descripción" ng-model="tit.titulo.descripcion" required=""></textarea>
+					    <textarea name="descripcion" class="form-control" placeholder="Descripción" ng-model="tit.titulo.descripcion" required=""></textarea>
 			    	</div>
 			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="tit.guardar(tit.titulo,form)" value="Guardar" class="btn btn-primary" ng-show="tit.action">
-						<input type="submit" ng-click="tit.actualizar(tit.titulo,form)" value="Actualizar" class="btn btn-primary" ng-show="!tit.action">				
+						<input type="submit" ng-click="tit.guardar(tit.titulo,form)" value="Guardar" class="btn btn-primary" ng-show="tit.action" valida-form>
+						<input type="submit" ng-click="tit.actualizar(tit.titulo,form)" value="Actualizar" class="btn btn-primary" ng-show="!tit.action" valida-form>				
 					</div>
 				</div>	  
 		  </form>

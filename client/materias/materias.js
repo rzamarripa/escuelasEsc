@@ -7,13 +7,13 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.action = true; 
 	
 	this.subscribe("materias",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	this.subscribe("deptosAcademicos",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	this.subscribe("ocupaciones",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
     
    
@@ -64,6 +64,7 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	    }
 		this.materia.estatus = true;
 		this.materia.campus_id = Meteor.user().profile.campus_id;
+		this.materia.seccion_id = Meteor.user().profile.seccion_id;
 		Materias.insert(this.materia);
 		toastr.success('Materia guardada.');
 		this.materia = {};
