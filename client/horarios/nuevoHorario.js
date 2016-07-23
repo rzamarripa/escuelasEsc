@@ -26,7 +26,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("horarios",()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, _id : $stateParams.id }]
 	 });
   this.subscribe("aulas",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
@@ -42,8 +42,8 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		aulas : () => {
 			return Aulas.find();
 		},
-		horarios : () => {
-			return Horarios.find();
+		horario : () => {
+			return Horarios.findOne();
 		},
 	});
 		
@@ -62,7 +62,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	    toastr.error('Error al agregar la Clase.');
 	    return;
     }
-	  console.log(clase);
 	  eliminarTemporalesOcupados();
 	  var materia 	= Materias.findOne(clase.materia_id);
 		var maestro 	= Maestros.findOne(clase.maestro_id);

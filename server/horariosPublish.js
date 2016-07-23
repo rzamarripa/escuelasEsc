@@ -1,3 +1,3 @@
-Meteor.publish("horarios", function(){
-	return Horarios.find();
+Meteor.publish("horarios", function(options){
+	return Horarios.find(options);
 });

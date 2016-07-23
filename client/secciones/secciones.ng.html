@@ -1,13 +1,13 @@
 <h2>Secciones</h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{sec.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoseccion" ng-click="sec.nuevoSeccion()">
-		  {{sec.nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		<a class="btn btn-{{!sec.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" ng-click="sec.nuevoSeccion()">
+		  {{!sec.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form name="form" class="form-horizontal" role="form" novalidate>
-				<section id="usuario" data-widget-grid="data-widget-grid3" >
+			<form name="form" class="form-horizontal" role="form"  novalidate>
+				<section id="usuario" data-widget-grid="data-widget-grid1" >
 				  <div class="row">
 				    <div class="col-sm-12">
 				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -17,25 +17,25 @@
 				        <div>
 				          <div class="widget-body">							
 								    <div class="row">
-									    <div class="col-sm-2">					    
-									    	<label>Nombre</label>
-									    	<input type="text" class="form-control" placeholder="Nombre" ng-model="sec.seccion.nombre" required>
+									    <div class="col-sm-2" valida>					    
+									    	<label>Nombre *</label>
+									    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="sec.seccion.nombre" required>
 								    	</div>
-								    	<div class="col-sm-3">					    
-									    	<label>Apellido Paterno</label>
-									    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="sec.seccion.apPaterno" required>
+								    	<div class="col-sm-3" valida>					    
+									    	<label>Apellido Paterno *</label>
+									    	<input name="apPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="sec.seccion.apPaterno" required>
 								    	</div>
 								    	<div class="col-sm-3">					    
 									    	<label>Apellido Materno</label>
 									    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="sec.seccion.apMaterno" >
 								    	</div>
-								    	<div class="col-sm-2">					    
-									    	<label>Usuario</label>
-									    	<input type="text" class="form-control" placeholder="Usuario" ng-model="sec.seccion.username" required>
+								    	<div class="col-sm-2" valida>					    
+									    	<label>Usuario *</label>
+									    	<input name="usuario" type="text" class="form-control" placeholder="Usuario" ng-model="sec.seccion.username" required>
 								    	</div>																									
-								    	<div class="col-sm-2">					    										
-									    	<label>Contraseña</label>																	
-									    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="sec.seccion.password" required>
+								    	<div class="col-sm-2" valida>					    										
+									    	<label>Contraseña *</label>																	
+									    	<input name="password" type="password" class="form-control" placeholder="Contraseña" ng-model="sec.seccion.password" required>
 								    	</div>
 								    </div>
 				          </div>
@@ -44,49 +44,49 @@
 				    </div>
 				  </div>
 				</section>
-				<section id="informacion" data-widget-grid="data-widget-grid1" >
+				<section id="informacion" data-widget-grid="data-widget-grid2" >
 					<div class="row">
 				    <div class="col-sm-12">
-				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget2">
 				        <header>
 				          <h2>Información de la Sección</h2>
 				        </header>
 			          <div class="widget-body">
 									<div class="row">
-							    	<div class="col-sm-2">					    
-								    	<label>Clave</label>
-								    	<input type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required="">
+							    	<div class="col-sm-2" valida>					    
+								    	<label>Clave *</label>
+								    	<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required="">
 							    	</div>
-							    	<div class="col-sm-4">
-							    		<label>Descripción Corta</label>
-								    	<input type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required="">
+							    	<div class="col-sm-4" valida>
+							    		<label>Descripción Corta *</label>
+								    	<input name="descripcionCorta" type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required="">
 							    	</div>
-							    	<div class="col-sm-6">
-									    <label>Descripción</label>
-									    <textarea class="form-control" placeholder="Descripción" ng-model="sec.seccion.descripcion" required=""></textarea>
+							    	<div class="col-sm-6" valida>
+									    <label>Descripción *</label>
+									    <textarea name="descripcion" class="form-control" placeholder="Descripción" ng-model="sec.seccion.descripcion" required=""></textarea>
 							    	</div>
 							    </div>
-				          <div class="row">
+				          <div class="row" valida>
 					          <div class="col-sm-2">
-								    	<label>Teléfono 1</label>
-								    	<input type="number" class="form-control" placeholder="Teléfono 1" ng-model="sec.seccion.telefono1" required>
+								    	<label>Teléfono 1 *</label>
+								    	<input name="telefono1" type="number" class="form-control" placeholder="Teléfono 1" ng-model="sec.seccion.telefono1" required>
 							    	</div>
 							    	<div class="col-sm-2">					    										
 								    	<label>Teléfono 2</label>																	
 								    	<input type="number" class="form-control" placeholder="Teléfono 2" ng-model="sec.seccion.telefono2">
 							    	</div>
-							    	<div class="col-sm-8">
-									    <label>Dirección</label>
-									    <textarea class="form-control" placeholder="Dirección" ng-model="sec.seccion.direccion" required></textarea>
+							    	<div class="col-sm-8" valida>
+									    <label>Dirección *</label>
+									    <textarea name="direccion" class="form-control" placeholder="Dirección" ng-model="sec.seccion.direccion" required></textarea>
 							    	</div>				    	
 							    </div>					
 							    <div class="row">
 								    <div class="col-sm-3">
 											<img src="{{sec.seccion.logo}}" height="100" class="thumbnail" style="height: 100px !important"/>
 								    </div>
-								    <div class="col-sm-9">
-								    	<label>Logo de la sección</label>																	
-								    	<input type="text" class="form-control" placeholder="http://" ng-model="sec.seccion.logo" required>
+								    <div class="col-sm-9" valida>
+								    	<label>Logo de la sección *</label>																	
+								    	<input name="logo" type="text" class="form-control" placeholder="http://" ng-model="sec.seccion.logo" required>
 								    </div>
 							    </div>
 							    <div class='row'>
@@ -108,7 +108,7 @@
 				    </div>
 				  </div>
 				</section>
-				<section id="periodos" data-widget-grid="data-widget-grid4" >
+				<section id="periodos" data-widget-grid="data-widget-grid3" >
 				  <div class="row">
 				    <div class="col-sm-12">
 				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget3">
@@ -118,33 +118,33 @@
 				        <div>
 				          <div class="widget-body">							
 								    <div class="row">
-								    	<div class="col-sm-2">					    
-									    	<label>Semanas</label>
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semanas" required>
+								    	<div class="col-sm-2" valida>					    
+									    	<label>Semanas *</label>
+									    	<input name="semanas" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semanas" required>
 								    	</div>																									
-								    	<div class="col-sm-2">					    										
-									    	<label>Meses</label>																	
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.meses" required>
+								    	<div class="col-sm-2" valida>					    										
+									    	<label>Meses *</label>																	
+									    	<input name="meses" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.meses" required>
 								    	</div>																									
-								    	<div class="col-sm-2">					    										
-									    	<label>Bimestres</label>															
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.bimestres" required>
+								    	<div class="col-sm-2" valida>					    										
+									    	<label>Bimestres *</label>															
+									    	<input name="bimestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.bimestres" required>
 								    	</div>																									
-								    	<div class="col-sm-2">					    										
-									    	<label>Trimestres</label>															
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.trimestres" required>
+								    	<div class="col-sm-2" valida>					    										
+									    	<label>Trimestres *</label>															
+									    	<input name="trimestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.trimestres" required>
 								    	</div>																									
-								    	<div class="col-sm-2">					    										
-									    	<label>Tetramestres</label>														
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.tetramestres" required>
+								    	<div class="col-sm-2" valida>					    										
+									    	<label>Tetramestres *</label>														
+									    	<input name="tetramestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.tetramestres" required>
 								    	</div>																									
-								    	<div class="col-sm-1">					    										
-									    	<label>Semestres</label>															
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semestres" required>
+								    	<div class="col-sm-1" valida>					    										
+									    	<label>Semestres *</label>															
+									    	<input name="semestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semestres" required>
 								    	</div>																									
-								    	<div class="col-sm-1">					    										
-									    	<label>Años</label>																		
-									    	<input type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.anios" required>
+								    	<div class="col-sm-1" valida>					    										
+									    	<label>Años *</label>																		
+									    	<input name="anios" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.anios" required>
 								    	</div>
 								    </div>
 				          </div>
@@ -153,7 +153,7 @@
 				    </div>
 				  </div>
 				</section>
-				<section id="equipo" data-widget-grid="data-widget-grid5" >
+				<section id="equipo" data-widget-grid="data-widget-grid4" >
 					<div class="row">
 				    <div class="col-sm-12">
 				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -186,9 +186,9 @@
 									    <label>Servicio </label>
 									    <input type="text" class="form-control" placeholder="Servicio" ng-model="sec.seccion.servicio">
 							    	</div>
-							    	<div class="col-sm-4">
-							    		<label>Nivel educativo</label>
-									    <select ng-model="seccion.nivelEdu" class="form-control" required="">
+							    	<div class="col-sm-4" valida>
+							    		<label>Nivel educativo *</label>
+									    <select name="nivelEdu" ng-model="seccion.nivelEdu" class="form-control" required="">
 											  <option value="Bachillerato">Bachillerato</option>
 										    <option value="Carrera">Carrera</option>
 										    <option value="Curso">Curso</option>
@@ -217,15 +217,15 @@
 				    </div>
 					</div>
 				</section>
-	    <div class="row">
-				<div class="col-sm-12">
-					<input type="submit" ng-click="sec.guardar(sec.seccion,form)" value="Guardar" class="btn btn-primary" ng-show="sec.action">
-					<input type="submit" ng-click="sec.actualizar(sec.seccion,form)" value="Actualizar" class="btn btn-primary" ng-show="!sec.action">				
-				</div>
-			</div>	  
-		</form>
-	</div>
- </div>
+		    <div class="row">
+					<div class="col-sm-12">
+						<input type="submit" ng-click="sec.guardar(sec.seccion,form)" value="Guardar" class="btn btn-primary" ng-show="sec.action" valida-form formulario="form">
+						<input type="submit" ng-click="sec.actualizar(sec.seccion,form)" value="Actualizar" class="btn btn-primary" ng-show="!sec.action" valida-form formulario="form">				
+					</div>
+				</div>	  
+			</form>
+		</div>
+ 	</div>
 </div>
 <br/>
 
