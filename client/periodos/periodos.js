@@ -181,6 +181,13 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		if(subCiclo)
 		return subCiclo.descripcion;
 	};
+	
+	this.getCiclo= function(ciclo_id)
+	{
+		var ciclo = Ciclos.findOne(ciclo_id);
+		if(subCiclo)
+		return ciclo.descripcion;
+	};
 		
 	this.cambiarEstatus = function(id)
 	{
