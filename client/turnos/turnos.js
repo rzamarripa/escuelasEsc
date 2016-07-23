@@ -4,7 +4,7 @@ angular.module("casserole")
  	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('turnos',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 
 	this.helpers({
@@ -30,7 +30,7 @@ angular.module("casserole")
 	    }
 		this.turno.estatus = true;
 		this.turno.campus_id = Meteor.user().profile.campus_id;
-		this.turno.seccion_id = Meteor.user().profile.seccion_id;
+		//this.turno.seccion_id = Meteor.user().profile.seccion_id;
 		Turnos.insert(this.turno);
 		toastr.success('Turno guardado.');
 		this.turno = {}; 

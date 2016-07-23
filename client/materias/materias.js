@@ -12,10 +12,7 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.subscribe("deptosAcademicos",()=>{
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
-	this.subscribe("ocupaciones",()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
-	 });
-    
+
    
     
   this.helpers({
@@ -24,16 +21,12 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  },
 		deptosAcademicos : () => {
 		  return DeptosAcademicos.find();
-	  },
-		ocupaciones : () => {
-		  return Ocupaciones.find();
-	  },
+	  }
+		
 	  
   });
     
-  $(document).ready(function() {
-	  $(".select2").select2();
-	});
+
 	
   this.nuevo = true;
   this.nuevaMateria = function()

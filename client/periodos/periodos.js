@@ -42,7 +42,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	});
 	this.subscribe('conceptosPago',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
   	this.helpers({
@@ -185,7 +185,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.getCiclo= function(ciclo_id)
 	{
 		var ciclo = Ciclos.findOne(ciclo_id);
-		if(subCiclo)
+		if(ciclo)
 		return ciclo.descripcion;
 	};
 		

@@ -14,20 +14,21 @@
 				    	<input name="clave" type="text" class="form-control"  ng-model="mat.materia.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-						  <label>Etiqueta</label>
-				    	<input name="etiqueta" type="text" class="form-control"  ng-model="mat.materia.etiqueta" required="">
+						  <label>Nombre</label>
+				    	<input name="nombre" type="text" class="form-control"  ng-model="mat.materia.nombre" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-						  <label>Descripción Corta</label>
-				    	<input name="descripcionCorta" type="text" class="form-control"  ng-model="mat.materia.descripcionCorta" required="">
+						  <label>Nombre Corto</label>
+				    	<input name="nombreCorto" type="text" class="form-control"  ng-model="mat.materia.nombreCorto" required="" maxlength="6">
 			    	</div>
+			    	<div class="col-sm-4" valida>
+						<label>Departamento Academico</label>
+						<select name="deptoAcademico" class="form-control" placeholder="Seleccione" ng-model="mat.materia.deptoAcademico_id" required="">
+							<option ng-repeat="depto in mat.deptosAcademicos" value="{{depto._id}}">{{depto.descripcionCorta}}</option>
+						</select>
+					</div>
 			    </div>
-			    <div class="row">
-			    	<div class="col-sm-12">
-						  <label>Descripcion</label>
-					    <textarea class="form-control" ng-model="mat.materia.descripcion"></textarea>
-			    	</div>
-			    </div>
+			   
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
@@ -47,9 +48,8 @@
 			<thead>
 				<tr>
 					<th width="10%"><div class="text-center">Clave</div></th>
-					<th width="20%"><div class="text-center">Etiqueta</div></th>
-					<th width="10%"><div class="text-center">Descripción Corta</div></th>
-					<th width="30%"><div class="text-center">Descripción Larga</div></th>		
+					<th ><div class="text-center">Nombre</div></th>
+					<th width="10%"><div class="text-center">Nombre Corto</div></th>	
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -65,9 +65,8 @@
 			<tbody>
 		    <tr ng-repeat="materia in mat.materias">
 			    <td>{{materia.clave}}</td>
-			    <td>{{materia.etiqueta}}</td>
-			    <td>{{materia.descripcionCorta}}</td>
-			    <td>{{materia.descripcion}} </td>
+			    <td>{{materia.nombre}}</td>
+			    <td>{{materia.nombreCorto}}</td>
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="materia.estatus" class="label label-success">

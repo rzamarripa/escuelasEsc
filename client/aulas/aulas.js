@@ -4,7 +4,7 @@ angular.module("casserole")
  	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('aulas',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 
 	this.helpers({
@@ -29,7 +29,7 @@ angular.module("casserole")
 	    }
 		this.aula.estatus = true;
 		this.aula.campus_id = Meteor.user().profile.campus_id;
-		this.aula.seccion_id = Meteor.user().profile.seccion_id;
+		//this.aula.seccion_id = Meteor.user().profile.seccion_id;
 		console.log(this.aula);
 		Aulas.insert(this.aula);
 		toastr.success('aula guardada.');

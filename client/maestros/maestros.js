@@ -6,7 +6,7 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	let rc = $reactive(this).attach($scope);
 	this.action = true;
 	this.subscribe('maestros',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 
 	this.helpers({
@@ -33,7 +33,7 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	
 		this.maestro.estatus = true;
 		this.maestro.campus_id = Meteor.user().profile.campus_id;
-		this.maestro.seccion_id = Meteor.user().profile.seccion_id;
+		//this.maestro.seccion_id = Meteor.user().profile.seccion_id;
 		var id = Maestros.insert(this.maestro);
 		rc.maestro.maestro_id = id;
 		Meteor.call('createUsuario', rc.maestro, 'maestro');

@@ -25,9 +25,13 @@ angular.module('casserole').directive('validaForm', validaForm);
 	function validaForm () {
   return {
     restrict: 'A',
+      scope:{
+          formulario:"="
+      },
      link: function(scope, element, attrs) {
 			element.on("click", function () {
-				errors = scope.form.$error.required;
+        console.log(scope);
+				errors = scope.formulario.$error.required;
         if(errors != undefined){
   				errors.forEach(function(error){
   					if(error.$invalid == true){

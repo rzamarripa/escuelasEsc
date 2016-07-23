@@ -20,7 +20,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   var y = date.getFullYear();
   
   this.subscribe("maestros",()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   this.subscribe("materias",()=>{
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
@@ -29,7 +29,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("aulas",()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
   	
 	this.helpers({
@@ -57,15 +57,20 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  this.action 	= true;	  
 	}
 	
-  this.agregarClase = function(clase){
+  this.agregarClase = function(clase,form){
+  	if(form.$invalid){
+	    toastr.error('Error al agregar la Clase.');
+	    return;
+    }
 	  console.log(clase);
 	  eliminarTemporalesOcupados();
 	  var materia 	= Materias.findOne(clase.materia_id);
 		var maestro 	= Maestros.findOne(clase.maestro_id);
 		var aula 			= Aulas.findOne(clase.aula_id);
+		console.log(materia);
 
-	  clase.materia = materia.descripcionCorta;
-	  clase.title 	= maestro.nombre + " " + maestro.apPaterno + "\n"+ materia.descripcionCorta + "\n" + aula.nombre;
+	  clase.materia = materia.nombreCorto;
+	  clase.title 	= maestro.nombre + " " + maestro.apPaterno + "\n"+ materia.nombreCorto + "\n" + aula.nombre;
 	  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
 	  clase.aula 		= aula.nombre;
 	  clase.className = ["event", this.clase.className];
@@ -97,8 +102,9 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 			  var materia = $meteor.object(Materias, this.clase.materia_id, false);
 				var maestro = $meteor.object(Maestros, this.clase.maestro_id, false);
 				var aula 		= $meteor.object(Aulas, this.clase.aula_id, false);
-			  clase.materia = materia.descripcionCorta;
-			  clase.title = maestro.nombre + " " + maestro.apPaterno + "\n" + materia.descripcionCorta + "\n" + aula.nombre;
+				console.log(materia);
+			  clase.materia = materia.nombreCorto;
+			  clase.title = maestro.nombre + " " + maestro.apPaterno + "\n" + materia.nombreCorto + "\n" + aula.nombre;
 			  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
 			  clase.aula 	= aula.nombre;
 			  clase.estatus = true;
@@ -125,7 +131,11 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  eliminarTemporalesOcupados();
   }
   
-  this.modificarHorario = function(horario){
+  this.modificarHorario = function(horario,form){
+  	if(form.$invalid){
+	    toastr.error('Error al guardar los datos del Horario.');
+	    return;
+    }
 	  this.horario.semana = horario.semana;
 	  var idTemp = horario._id;
 	  delete horario._id;
@@ -202,10 +212,14 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   };
   
   /* add custom event*/
-  this.guardarHorario = function() {
-	  eliminarTemporalesOcupados();
-	  this.horario.campus_id = Meteor.user().profile.campus_id;
-	  this.horario.seccion_id = Meteor.user().profile.seccion_id;
+  this.guardarHorario = function(form) {
+  	if(form.$invalid){
+	    toastr.error('Error al guardar los datos del Horario.');
+	    return;
+    }
+	eliminarTemporalesOcupados();
+	this.horario.campus_id = Meteor.user().profile.campus_id;
+	this.horario.seccion_id = Meteor.user().profile.seccion_id;
     Horarios.insert(this.horario);
     toastr.success("Se guardó el horario");
 		$state.go("root.listarHorarios");

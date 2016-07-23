@@ -1,3 +1,3 @@
-Meteor.publish("turnos", function(){
-	return Turnos.find({estatus:true});
+Meteor.publish("turnos", function(options){
+	return Turnos.find(options);
 });
