@@ -85,16 +85,13 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
 			}
 		}
 
-		Meteor.call('createGerenteVenta', usuario, 'director');
-				console.log(this.seccion);
-				console.log(usuario);
-		
+		Meteor.call('createGerenteVenta', usuario, 'director');		
 		toastr.success('Sección guardado.');
 		this.seccion = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 		$state.go('root.secciones');
 		
 	};
@@ -111,11 +108,9 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
 	this.actualizar = function(seccion,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al actualizar los datos de la Sección.');
-	        return;
-	    }
-		console.log(seccion);
-		console.log(rc.campus);
+      toastr.error('Error al actualizar los datos de la Sección.');
+      return;
+	  }
 		var idTemp = seccion._id;
 		delete seccion._id;		
 		Secciones.update({_id:idTemp},{$set:seccion});
@@ -153,8 +148,7 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
 		else
 			seccion.estatus = true;
 		
-		Secciones.update({_id:id}, {$set : {estatus : seccion.estatus}});
-		
-    };
+		Secciones.update({_id:id}, {$set : {estatus : seccion.estatus}});	
+	};
 		
 }

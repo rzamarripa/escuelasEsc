@@ -79,6 +79,11 @@ angular.module('casserole').config(['$injector', function ($injector) {
       abstract: true,
       templateUrl: 'client/layouts/root.ng.html',
       controller: 'RootCtrl as ro',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
     })
     .state('root.home', {
       url: '/',
