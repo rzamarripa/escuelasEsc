@@ -151,9 +151,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								anio 		: plan.anio,
 								estatus 	: 1,
 								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-								tipo 		: "Recargo",
+								tipo 		: "Descuento",
 								usuario_id 	: Meteor.userId(),
-								importe 	: procedimiento.monto
+								importe 	: procedimiento.monto * -1
 							});
 			}	
 		}
