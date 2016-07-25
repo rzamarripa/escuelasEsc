@@ -3,7 +3,7 @@ angular
   .controller('HorarioDetalleCtrl', HorarioDetalleCtrl);
  
 function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $stateParams, toastr) {
-	$reactive(this).attach($scope);
+	let rc = $reactive(this).attach($scope);
 	
 	this.clase = {};
   this.actionAgregar = true;
@@ -26,11 +26,13 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("horarios",()=>{
-		return [{estatus:true, _id : $stateParams.id }]
+		return [{estatus:true, _id : $stateParams.id}]
 	 });
   this.subscribe("aulas",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
+	 
+	 console.log($stateParams.id);
   	
 	this.helpers({
 		maestros : () => {
@@ -49,6 +51,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		
 	if($stateParams.id != ""){
 		this.horario 	= Horarios.findOne($stateParams.id);
+		console.log(this.horario);
 		this.action 	= false;
 	}else{
 		this.horario 	= {};
@@ -57,7 +60,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  this.action 	= true;	  
 	}
 	
-  this.agregarClase = function(clase,form){
+  this.agregarClase = function(clase, form){
   	if(form.$invalid){
 	    toastr.error('Error al agregar la Clase.');
 	    return;
@@ -72,14 +75,14 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  clase.title 	= maestro.nombre + " " + maestro.apPaterno + "\n"+ materia.nombreCorto + "\n" + aula.nombre;
 	  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
 	  clase.aula 		= aula.nombre;
-	  clase.className = ["event", this.clase.className];
+	  clase.className = ["event", rc.clase.className];
 	  clase.estatus = true;
 	  clase.start 	= moment(clase.start).format("YYYY-MM-DD HH:mm");
 		clase.end 		= moment(clase.end).format("YYYY-MM-DD HH:mm");
 	  
-	  this.horario.clases.push(clase);
-	  this.horario.semana = moment(clase.start).week();
-	  this.clase 	= {};
+	  rc.horario.clases.push(clase);
+	  rc.horario.semana = moment(clase.start).week();
+	  rc.clase 	= {};
   }
   
   this.cancelarClase = function(){
@@ -125,7 +128,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 			  claseActual.estatus = true;
 		  }
 	  });
-	  this.clase = {};
+	  rc.clase = {};
 	  this.actionAgregar = true;
 	  eliminarTemporalesOcupados();
   }
@@ -149,7 +152,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		  if(horario._id != $stateParams.id){
 			  for(i = 0; i < horario.clases.length; i++){
 				  if(horario.clases[i].maestro_id == maestro_id){
-					  horario.clases[i]._id 	= Math.random();
+					  horario.clases[i]._id 	= i;
 					  horario.clases[i].start 		= moment(horario.clases[i].start).format("YYYY-MM-DD HH:mm");
 					  horario.clases[i].end 			= moment(horario.clases[i].end).format("YYYY-MM-DD HH:mm");
 					  horario.clases[i].className = ["event", "bg-color-magenta"];
@@ -173,27 +176,36 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 					  horario.clases[i].className = ["event", "bg-color-grayDark"];
 					  aulasTotales.push(angular.copy(horario.clases[i]));
 				  }
-			  }		
+			  }
 		  }
-	  });	  
+	  });
   }
   
   /* alert on eventClick */
   this.alertOnEventClick = function(date, jsEvent, view){
+	  
 	  eliminarTemporalesOcupados();
-	  for(i = 0; i < this.horario.clases.length; i++){
-		  if(this.horario.clases[i]._id == date._id){
-			  this.horario.clases[i].className = ["event", "bg-color-orange"];
-			}else if(this.horario.clases[i]._id == this.clase._id){
-				this.horario.clases[i].className = this.clase.className;
+	  
+	  console.log(date);
+	  console.log(rc.horario.clases);
+	  
+	  rc.clase = angular.copy(date);
+	  rc.colorSeleccionado = date.className;
+    rc.clase.start 	= moment(date.start).format("YYYY-MM-DD HH:mm");
+    rc.clase.end 		= moment(date.end).format("YYYY-MM-DD HH:mm");
+    rc.actionAgregar = false;
+    
+    console.log(rc.clase);
+	  
+	  for(i = 0; i < rc.horario.clases.length; i++){
+		  if(rc.horario.clases[i]._id == rc.clase._id){
+			  console.log("entre");
+			  rc.horario.clases[i].className = ["event", "bg-color-orange"];
+			}else{
+				console.log("salí");
+				rc.horario.clases[i].className = rc.clase.className;
 			}
 		}
-
-    this.clase = angular.copy(date);
-    this.colorSeleccionado = date.className;
-    this.clase.start 	= moment(date.start).format("YYYY-MM-DD HH:mm");
-    this.clase.end 		= moment(date.end).format("YYYY-MM-DD HH:mm");
-    this.actionAgregar = false;
   };
   
   /* alert on Drop */
@@ -216,9 +228,9 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	    toastr.error('Error al guardar los datos del Horario.');
 	    return;
     }
-	eliminarTemporalesOcupados();
-	this.horario.campus_id = Meteor.user().profile.campus_id;
-	this.horario.seccion_id = Meteor.user().profile.seccion_id;
+		eliminarTemporalesOcupados();
+		this.horario.campus_id = Meteor.user().profile.campus_id;
+		this.horario.seccion_id = Meteor.user().profile.seccion_id;
     Horarios.insert(this.horario);
     toastr.success("Se guardó el horario");
 		$state.go("root.listarHorarios");
@@ -242,10 +254,12 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   }
     
   /* Render Tooltip */
+/*
   this.eventRender = function( event, element, view ) { 
     element.attr({'tooltip': event.title, 'tooltip-append-to-body': true});
     $compile(element)(this);
   };
+*/
   
   /* config object */
   this.uiConfig = {
@@ -281,7 +295,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   };
 
   /* event southises array*/
-  this.eventSources = [this.horario.clases, clasesTotales, aulasTotales];
+  this.eventSources = [rc.horario.clases, clasesTotales, aulasTotales];
   
   var view = $('#calendar').fullCalendar('getView');
 	console.log(view)
