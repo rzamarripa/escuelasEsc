@@ -6,7 +6,7 @@
 		  {{nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
-			<form class="form-horizontal" role="form" novalidate>
+			<form name="form" class="form-horizontal" role="form" novalidate >
 		  	<div class="well">
 			    <div class="row">
 			    	<div class="col-sm-4">					    
@@ -17,8 +17,8 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
-						<input type="submit" ng-click="guardar(institucion)" value="Guardar" class="btn btn-primary" ng-show="action">
-						<input type="submit" ng-click="actualizar(institucion)" value="Actualizar" class="btn btn-primary" ng-show="!action">				
+						<input type="submit" ng-click="guardar(institucion)" value="Guardar" class="btn btn-primary" ng-show="action" valida-form formulario="form">
+						<input type="submit" ng-click="actualizar(institucion)" value="Actualizar" class="btn btn-primary" ng-show="!action" valida-form formulario="form">				
 					</div>
 				</div>	  
 		  </form>
