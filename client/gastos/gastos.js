@@ -8,13 +8,17 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.gasto = {};
   this.gasto.fechaLimite = new Date();
   semanaActual = moment(new Date()).isoWeek();
-  console.log(semanaActual);
+  //console.log(semanaActual);
   this.subscribe('gastos', () => {
     return [{tipoGasto: this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.subscribe('conceptosGasto', () => {
     return [{estatus: true, tipoGasto: this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+  });
+
+  this.subscribe('pagos', () => {
+    return [{semana: semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.helpers({
