@@ -4,7 +4,7 @@ angular
  
 function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $stateParams, toastr) {
 	let rc = $reactive(this).attach($scope);
-	
+	  
 	this.clase = {};
   this.actionAgregar = true;
   this.colorSeleccionado = null;
@@ -87,14 +87,14 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   
   this.cancelarClase = function(){
 	  eliminarTemporalesOcupados();
-	  for(i = 0; i < this.horario.clases.length; i++){
-		  if(this.horario.clases[i]._id == this.clase._id){
-				this.horario.clases[i].className = this.colorSeleccionado;
+	  for(i = 0; i < rc.horario.clases.length; i++){
+		  if(rc.horario.clases[i]._id == rc.clase._id){
+				rc.horario.clases[i].className = rc.colorSeleccionado;
 			}
 		}
 	  
-	  this.actionAgregar = true; 
-	  this.clase 	= {};
+	  rc.actionAgregar = true; 
+	  rc.clase 	= {};
   }
 
   this.modificaClase = function(clase){
@@ -129,7 +129,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		  }
 	  });
 	  rc.clase = {};
-	  this.actionAgregar = true;
+	  rc.actionAgregar = true;
 	  eliminarTemporalesOcupados();
   }
   
@@ -212,9 +212,9 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
 		console.log(delta);
 		
-		this.clase.start 	= moment(this.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
-		this.clase.end 		= moment(this.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
-		this.actionAgregar = false;
+		rc.clase.start 	= moment(this.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
+		rc.clase.end 		= moment(this.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
+		rc.actionAgregar = false;
   };
   
   /* alert on Resize */
@@ -239,11 +239,11 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   /* remove event */
   this.eliminarClase = function() {
 	  eliminarTemporalesOcupados();
-	  for(i = 0; i <= this.horario.clases.length -1; i++){
-		  if(this.horario.clases[i]._id == this.clase._id){
-			  this.horario.clases.splice(i, 1);
-			  this.actionAgregar = true;
-			  this.clase = {};
+	  for(i = 0; i <= rc.horario.clases.length -1; i++){
+		  if(rc.horario.clases[i]._id == rc.clase._id){
+			  rc.horario.clases.splice(i, 1);
+			  rc.actionAgregar = true;
+			  rc.clase = {};
 		  }
 	  }
   };
