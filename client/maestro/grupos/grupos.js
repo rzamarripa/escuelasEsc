@@ -22,7 +22,7 @@ angular
 	});
 	this.subscribe('maestros', () => {		
 		return [{
-			_id : {$in:this.getCollectionReactively('maestros_id')}
+			_id : Meteor.user().profile.maestro_id
 		}]
 	});
 	this.subscribe('materias', () => {		

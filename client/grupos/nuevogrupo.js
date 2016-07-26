@@ -34,7 +34,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('grupos', () => {
 			return [{
 				_id : $stateParams.id,
-				estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+				estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 			}];
 		}, {
 		onReady:function(){
@@ -42,7 +42,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	}});
 
 	this.subscribe('conceptosComision',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	});
 	
 	this.subscribe('secciones',()=>{
@@ -50,7 +50,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	 });
 	 
 	this.subscribe('horarios',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	 
 	this.subscribe('ciclos', () => {

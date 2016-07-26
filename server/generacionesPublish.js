@@ -1,3 +1,3 @@
-Meteor.publish("generaciones", function(){
-	return Generaciones.find({estatus:true});
+Meteor.publish("generaciones", function(options){
+	return Generaciones.find(options);
 });
