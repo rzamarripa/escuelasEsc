@@ -7,7 +7,8 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	var myCanvas = document.getElementById("myCanvas");
 	this.pizarron = myCanvas.getContext("2d");
-	
+	//console.log(this.pizarron );
+
 	this.subscribe("pizarrones",()=>{
 		return [{}]
 	});

@@ -31,21 +31,12 @@
 					    <label for="descripcion">Descripción</label>
 					    <input name="descripcion" type="text" class="form-control" placeholder="Descripción" ng-model="pl.plan.descripcion" required>
 			    	</div>
-			    	<div class="col-sm-4" valida>
-							<label for="seccion_id">Sección</label>
-							<select name="seccion" class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id" required>
-								<option ng-repeat="seccion in pl.secciones" value="{{seccion._id}}">{{seccion.descripcion}}</option>
+			    	<div class="col-sm-4">
+							<label for="seccion_id">Rvoe</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.rvoe_id">
+								<option ng-repeat="rvoe in pl.rvoes" value="{{rvoe._id}}">{{rvoe.nombre}}</option>
 							</select>
-							<!--<ui-select ng-model="plan.seccion_id"
-						             theme="bootstrap"
-						             ng-disabled="disabled"
-						             reset-search-input="false">
-						    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
-						    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
-						      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
-						    </ui-select-choices>
-						  </ui-select>-->
-						</div>	
+						</div>
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
@@ -85,12 +76,7 @@
 								<option ng-repeat="ciclo in pl.ciclos" value="{{ciclo._id}}">{{ciclo.descripcion}}</option>
 							</select>
 						</div>
-						<div class="col-sm-4">
-							<label for="seccion_id">Rvoe</label>
-							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.rvoe_id">
-								<option ng-repeat="rvoe in pl.rvoes" value="{{rvoe._id}}">{{rvoe.nombre}}</option>
-							</select>
-						</div>
+						
 			    </div>
 			</div>
 			<div class="well">
@@ -104,7 +90,7 @@
 					<div class="col-sm-4">
 					    <label>Materia</label>
 					    <select class="form-control" placeholder="Seleccione" 
-					    	    ng-options="option.etiqueta for option in pl.materias track by option._id" ng-model="pl.nuevaMateria.materia">							
+					    	    ng-options="option.nombre for option in pl.materias track by option._id" ng-model="pl.nuevaMateria.materia">							
 						</select>				     					
 					</div>	
 					<div class="col-sm-4">
@@ -127,7 +113,7 @@
 										<input type="button" class="btn btn-danger btn-xs" ng-click="pl.quitarMateria(_materia)"  value="x">
 									</div>
 								</div>
-								<h6><small>{{_materia.materia.descripcion}}</small></h6>										
+								<h6><small>{{_materia.materia.nombreCorto}}</small></h6>										
 							</td>
 						</tr>
 					</table>

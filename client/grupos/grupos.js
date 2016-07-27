@@ -15,15 +15,14 @@ angular.module("casserole")
 	this.periodos_ids = [];
 	this.subCiclos = [];
 	
-	this.subscribe('grupos', () => {
-		return [{
-			estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
-		}]
-	});
+	
 	this.subscribe('grupo', () => {
 		
 		return [{_id : $stateParams.id, estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}];
 	});
+	this.subscribe("secciones",()=>{
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	 });
 	
 	this.subscribe('inscripciones', () => {
 		return [{
@@ -53,7 +52,7 @@ angular.module("casserole")
 	 });
 	
 	this.subscribe('turnos',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 }); 
 
 	this.helpers({		
@@ -208,13 +207,14 @@ angular.module("casserole")
 
 	this.getCiclo = function(ciclo_id)
 	{
-		ciclo = Ciclos.findOne();
+		ciclo = Ciclos.findOne(ciclo_id);
 		if(ciclo)
 			return ciclo.descripcion;
 	};	
 	
 	this.getTurno = function(turno_id)
 	{
+		console.log(turno_id);
 		var turno = Turnos.findOne(turno_id);
 		if (turno) 
 		return turno.nombre;
