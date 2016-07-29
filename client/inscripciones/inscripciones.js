@@ -5,34 +5,35 @@ function InscripcionesCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true,
+		seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
+	}]
 	});
 	this.subscribe("secciones",() => {
-		return [{
-		
-		}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	});
 	this.subscribe("tiposingresos",() => {
-		return [{
-		
-		}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	});
 	this.subscribe('alumnos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	});
 	this.subscribe("grupos", () => {
 		return [{
 		 estatus:true,
+		 seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 	this.subscribe("planesEstudios",() => {
 		return [{
+			estatus:true,
+			seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		
 		}]
 	});
 	this.subscribe('inscripciones',() => {
 		return [{
-		 
+		 	seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 

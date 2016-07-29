@@ -11,7 +11,7 @@ angular.module("casserole")
   
   this.subscribe('etapasVenta', function(){
 	  return [{
-		  campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 	  }]
   });
   

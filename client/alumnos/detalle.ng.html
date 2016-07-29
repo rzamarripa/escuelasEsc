@@ -222,7 +222,7 @@
 		            <form class="smart-form" ng-repeat = "curso in al.inscripciones" novalidate> 
 									<header>
 
-										<h1> Grupo {{al.grupo(curso.grupo_id).nombre}} </h1>
+										<h1>  {{al.grupo(curso.grupo_id).nombre}} </h1>
 	
 									</header>		
 									<div ng-repeat ="(idconcepto, concepto) in curso.plan" ng-if='al.periodoVisible(concepto) && (idconcepto==curso.tipoInscripcion || idconcepto==curso.tipoColegiatura)'>
