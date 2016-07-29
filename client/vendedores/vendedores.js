@@ -7,16 +7,15 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 	  this.action = true;
 	  this.nuevo = true;  
   
-	this.subscribe('vendedores',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
-	 });
+	this.subscribe('vendedores',()=>{ });
+	
  
   this.helpers({
 	  vendedores : () => {
 		  var usuarios = Meteor.users.find().fetch();
 		  var vendedores = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "vendedor" && usuario.profile.seccion_id == Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" ){
+			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == (Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" )){
 				  vendedores.push(usuario);
 			  }
 		  });
@@ -26,7 +25,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		  var usuarios = Meteor.users.find().fetch();
 		  var gerentes = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.seccion_id == Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""){
+			  if(usuario.roles[0] == "gerenteVenta" && usuario.profile.campus_id == (Meteor.user() != undefined ? Meteor.user().profile.campus_id : "")){
 				  gerentes.push(usuario);
 			  }
 		  });
@@ -51,7 +50,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 		console.log(vendedor);
 		vendedor.profile.estatus = true;
 		vendedor.profile.campus_id = Meteor.user().profile.campus_id;
-		vendedor.seccion_id = Meteor.user().profile.seccion_id;
+		vendedor.profile.seccion_id = Meteor.user().profile.seccion_id;
 		Meteor.call('createGerenteVenta', vendedor, 'vendedor');
 		toastr.success('Vendedor Guardado.');
 		this.nuevo = true;
@@ -92,7 +91,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 	this.getGerenteVenta = function(gerente_id){
 		var gerente = Meteor.users.findOne({_id: gerente_id});
 		if(gerente){
-			return gerente.profile.nombre + " " + gerente.profile.apPaterno;
+			return gerente.profile.nombre + " " + gerente.profile.apPaterno+ " " + gerente.profile.apMaterno;
 		}
 			
 	}

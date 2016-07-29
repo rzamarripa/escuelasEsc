@@ -10,8 +10,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
   rc.subscribe('planesEstudios',function(){
   		if($stateParams.id){
   			
-			console.log(PlanesEstudios.findOne({ _id: $stateParams.id }));
-			console.log("|"+$stateParams.id+"|");
+			
 			rc.plan = PlanesEstudios.findOne({ _id: $stateParams.id });
 			if(!rc.plan){
 				rc.plan={};
@@ -19,10 +18,11 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 			}
 			console.log(rc.plan); 
 			rc.action = false;
-			$('.collapse').coll
+			//$('.collapse').coll
 			
 			rc.nuevo = false;
 		}
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }] 
   });
   rc.subscribe('secciones',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
@@ -166,6 +166,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 		rc.nuevo = true;
 		form.$setPristine();
         form.$setUntouched();
+        $state.go("root.planEstudio");	
 	};
 
 

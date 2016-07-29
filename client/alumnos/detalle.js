@@ -172,7 +172,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  rc.hayParaPagar = true;
 	  rc.totalPagar=0;
 	  for (var i = 0; i < cobro.no; i++) {
-	  		if(plan.planPago[i].pagada!=1){
+	  		if(plan.planPago[i].pagada!=1 && plan.planPago[i].pagada!=5 ){
 	  			rc.hayParaPagar = false;
 	  			plan.planPago[i].pagada =2;
 	  			
@@ -189,7 +189,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  };
 	  //console.log(rc.totalPagar);
 	  for (var i = cobro.no; i < plan.planPago.length; i++) {
-	  	if(plan.planPago[i].pagada!=1){
+	  	if(plan.planPago[i].pagada!=1 & plan.planPago[i].pagada!=5){
 	  		plan.planPago[i].pagada=0;
 	  	}
 	  }
@@ -243,6 +243,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	 	}
 	 	else  if(cobro.pagada==2){
 	 		return "bg-color-blue txt-color-white";
+	 	}
+	 	else if(cobro.pagada==5){
+	 		return "bg-color-blueDark txt-color-white";
 	 	}
 	 	else {
 	  		for (var i = 0; concepto && concepto.datos && i < concepto.datos.length; i++) {

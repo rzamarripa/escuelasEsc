@@ -9,6 +9,7 @@ Meteor.publish("prospectos",function(options){
 	let selector = {
   	nombre: { '$regex' : '.*' + options.where.nombre || '' + '.*', '$options' : 'i' },
   	etapaVenta_id : options.where.etapaVenta_id,
+  	vendedor_id: options.where.vendedor_id
 	}	
 	console.log(selector);
 	return Prospectos.find(selector, options.options); 

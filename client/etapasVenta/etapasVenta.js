@@ -65,7 +65,7 @@ angular.module("casserole")
 
 	this.cambiarEstatus = function(id)
 	{
-		var etapaVenta = etapaVentas.findOne({_id:id});
+		var etapaVenta = EtapasVenta.findOne({_id:id});
 		if(etapaVenta.estatus == true)
 			etapaVenta.estatus = false;
 		else
