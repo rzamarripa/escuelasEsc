@@ -157,7 +157,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								semana 		: plan.numero,
 								anio 		: plan.anio,
 								estatus 	: 1,
-								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+								concepto 	: concepto.nombre+" - "+procedimiento.nombre,
 								tipo 		: "Recargo",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto
@@ -174,7 +174,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								semana 		: plan.numero,
 								anio 		: plan.anio,
 								estatus 	: 1,
-								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+								concepto 	: concepto.nombre+" - "+procedimiento.nombre,
 								tipo 		: "Descuento",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto * -1
