@@ -1,3 +1,3 @@
-Meteor.publish("planesEstudios", function(){
-	return PlanesEstudios.find({estatus:true});
+Meteor.publish("planesEstudios", function(options){
+	return PlanesEstudios.find(options);
 });

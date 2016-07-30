@@ -31,7 +31,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.subscribe("aulas",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
-  	
+	 
 	this.helpers({
 		maestros : () => {
 			return Maestros.find();
@@ -49,7 +49,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		
 	if($stateParams.id != ""){
 		this.horario 	= Horarios.findOne($stateParams.id);
-		console.log(this.horario);
 		this.action 	= false;
 	}else{
 		this.horario 	= {};
@@ -67,8 +66,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  var materia 	= Materias.findOne(clase.materia_id);
 		var maestro 	= Maestros.findOne(clase.maestro_id);
 		var aula 			= Aulas.findOne(clase.aula_id);
-		console.log(materia);
-
 	  clase.materia = materia.nombreCorto;
 	  clase.title 	= maestro.nombre + " " + maestro.apPaterno + "\n"+ materia.nombreCorto + "\n" + aula.nombre;
 	  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
@@ -77,10 +74,9 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  clase.estatus = true;
 	  clase.start 	= moment(clase.start).format("YYYY-MM-DD HH:mm");
 		clase.end 		= moment(clase.end).format("YYYY-MM-DD HH:mm");
-	  
-	  rc.horario.clases.push(clase);
-	  rc.horario.semana = moment(clase.start).week();
-	  rc.clase 	= {};
+	  this.horario.clases.push(clase);
+	  this.horario.semana = moment(clase.start).isoWeek();
+	  this.clase 	= {};
   }
   
   this.cancelarClase = function(){
@@ -102,7 +98,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 			  var materia = $meteor.object(Materias, this.clase.materia_id, false);
 				var maestro = $meteor.object(Maestros, this.clase.maestro_id, false);
 				var aula 		= $meteor.object(Aulas, this.clase.aula_id, false);
-				console.log(materia);
 			  clase.materia = materia.nombreCorto;
 			  clase.title = maestro.nombre + " " + maestro.apPaterno + "\n" + materia.nombreCorto + "\n" + aula.nombre;
 			  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
@@ -183,24 +178,16 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.alertOnEventClick = function(date, jsEvent, view){
 	  
 	  eliminarTemporalesOcupados();
-	  
-	  console.log(date);
-	  console.log(rc.horario.clases);
-	  
 	  rc.clase = angular.copy(date);
 	  rc.colorSeleccionado = date.className;
     rc.clase.start 	= moment(date.start).format("YYYY-MM-DD HH:mm");
     rc.clase.end 		= moment(date.end).format("YYYY-MM-DD HH:mm");
     rc.actionAgregar = false;
-    
-    console.log(rc.clase);
-	  
+
 	  for(i = 0; i < rc.horario.clases.length; i++){
 		  if(rc.horario.clases[i]._id == rc.clase._id){
-			  console.log("entre");
 			  rc.horario.clases[i].className = ["event", "bg-color-orange"];
 			}else{
-				console.log("salí");
 				rc.horario.clases[i].className = rc.clase.className;
 			}
 		}

@@ -46,7 +46,7 @@
 			    <td> {{_plan.descripcion}}</td>
 			    <td> {{pl.getSeccionById(_plan.seccion_id).descripcionCorta}}</td>
 			    
-			    <td> {{_plan.tipo}}</td>
+			    <td> {{_plan.tipo=='Baja'? 'Interno':'Externo'}}</td>
 			    <td> {{_plan.grado}}</td>
 			    <td>
 				    <div class="text-center">

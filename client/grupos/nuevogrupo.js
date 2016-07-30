@@ -34,7 +34,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('grupos', () => {
 			return [{
 				_id : $stateParams.id,
-				estatus : true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+				estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 			}];
 		}, {
 		onReady:function(){
@@ -42,7 +42,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	}});
 
 	this.subscribe('conceptosComision',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	});
 	
 	this.subscribe('secciones',()=>{
@@ -50,7 +50,7 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	 });
 	 
 	this.subscribe('horarios',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	 
 	this.subscribe('ciclos', () => {
@@ -78,8 +78,6 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 	this.subscribe('maestros',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
-
-
 
 	this.helpers({
 	  subCiclosAcademicos : () => {
@@ -190,13 +188,10 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		horario = Horarios.findOne(grupo.horario_id);
 		_grupo =quitarhk(grupo)
 		__grupo_id = Grupos.insert(_grupo);
-		_.each(horario.clases, function(clase){
-			mmg = {}; 
-			mmg.materia_id = clase.materia_id; 
-			mmg.maestro_id = clase.maestro_id;
-			mmg.grupo_id = __grupo_id;
-			MaestrosMateriasGrupos.insert(mmg);
+		var clases = _.uniq(horario.clases, function(clase){
+			return clase.materia_id;
 		});
+		$meteor.call("insertMaestrosMateriasGrupos", clases, __grupo_id);
 		toastr.success('Grupo guardado.');
 		this.grupo = {}; 
 		$('.collapse').collapse('hide');
@@ -224,6 +219,12 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 		delete grupo._id;	
 		_grupo =quitarhk(grupo)	
 		Grupos.update({_id:$stateParams.id}, {$set : _grupo});
+		$meteor.call("deleteMaestrosMateriasGrupos", $stateParams.id);
+		horario = Horarios.findOne(grupo.horario_id);
+		var clases = _.uniq(horario.clases, function(clase){
+			return clase.materia_id;
+		});
+		$meteor.call("insertMaestrosMateriasGrupos", clases, $stateParams.id);
 		toastr.success('Grupo guardado.');
 		$state.go("root.grupos",{"id":$stateParams.id});
 		form.$setPristine();

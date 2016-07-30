@@ -3,22 +3,44 @@ angular.module("casserole")
 function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	let rc = $reactive(this).attach($scope);
 
-	this.subscribe('ciclos',()=>{
-		return [{estatus:true}]
-	});
+	this.inscripcion = {tipoInscripcion:""};
+	this.inscripcion.totalPagar = 0.00;
+	
 	this.subscribe('vendedores');
-	this.subscribe("secciones");
+	this.subscribe('ciclos',()=>{
+		return [{estatus:true,
+		seccion_id : this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):""
+	}]
+	});
+	this.subscribe('generaciones',()=>{
+		return [{estatus:true, seccion_id : this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):"" }]
+	 });
+	this.subscribe("secciones",() => {
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+	});
 	//this.subscribe("conceptosPago");
-	this.subscribe("tiposingresos");
+	this.subscribe("tiposingresos",() => {
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+	});
 	this.subscribe('alumnos',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	});
-	this.subscribe("grupos",()=>{
-		return [{estatus:true}]
+	this.subscribe("grupos", () => {
+		return [{
+		 estatus:true,
+		 seccion_id :  this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):"",
+		 ciclo_id : this.getReactively('inscripcion.ciclo_id')? this.getReactively('inscripcion.ciclo_id'):"",
+		}]
 	});
-	this.subscribe("planesEstudios");
+	this.subscribe("planesEstudios",() => {
+		return [{
+			estatus:true,
+			seccion_id :  this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):""
+		
+		}]
+	});
 	this.subscribe('inscripciones',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	});
 
 	var quitarhk=function(obj){
@@ -49,12 +71,15 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  var usuarios = Meteor.users.find().fetch();
 		  var vendedores = [];
 		  _.each(usuarios, function(usuario){
-			  if(usuario.roles[0] == "vendedor" && usuario.profile.campus_id == Meteor.user().profile.campus_id ){
+			  if(usuario.roles[0] == "vendedor"&& usuario.profile.campus_id == Meteor.user().profile.campus_id ){
 				  vendedores.push(usuario);
 			  }
 		  });
 		  return vendedores;
 	  	},
+	  	generaciones : () => {
+		  return Generaciones.find();
+	  },
 	  secciones : () => {
 		  return Secciones.find();
 	  },
@@ -79,8 +104,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
 
 
-	this.inscripcion = {tipoInscripcion:""};
-	this.inscripcion.totalPagar = 0.00;
+	
 	//this.inscripcion.fechaInscripcion = new Date();
 	//this.inscripcion.conceptosSeleccionados = [];
 	this.alumnoSeleccionado = {};
@@ -127,13 +151,13 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								fechaPago 	: new Date(),
 								alumno_id 	: this.inscripcion.alumno_id,
 								grupo_id	: this.inscripcion.grupo_id,
-								seccion_id  : Meteor.user().profile.seccion_id,
+								seccion_id  : this.inscripcion.seccion_id,
 								campus_id 	: Meteor.user().profile.campus_id,
 								numero 		: plan.no,
 								semana 		: plan.numero,
 								anio 		: plan.anio,
 								estatus 	: 1,
-								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+								concepto 	: concepto.nombre+" - "+procedimiento.nombre,
 								tipo 		: "Recargo",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto
@@ -144,13 +168,13 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								fechaPago 	: new Date(),
 								alumno_id 	: this.inscripcion.alumno_id,
 								grupo_id	: this.inscripcion.grupo_id,
-								seccion_id  : Meteor.user().profile.seccion_id,
+								seccion_id  : this.inscripcion.seccion_id,
 								campus_id 	: Meteor.user().profile.campus_id,
 								numero 		: plan.no,
 								semana 		: plan.numero,
 								anio 		: plan.anio,
 								estatus 	: 1,
-								concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+								concepto 	: concepto.nombre+" - "+procedimiento.nombre,
 								tipo 		: "Descuento",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto * -1
@@ -251,7 +275,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 
 		inscripcion.campus_id=Meteor.user().profile.campus_id;
-		inscripcion.seccion_id = Meteor.user().profile.seccion_id;
+		//inscripcion.seccion_id = Meteor.user().profile.seccion_id;
 
 		
 		for (var i in inscripcion.plan) {
@@ -288,7 +312,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 					var pago = _periodo.planPago[j];
 					var fechaPago = new Date(pago.fecha);
 					
-					if((fechaPago-this.inscripcion.fechaInscripcion)>0){
+					if(fechaPago>this.inscripcion.fechaInscripcion){
 						pago.pagada=1
 						pago.pago = (valorColegiatura>=resta)? valorColegiatura: resta;
 						for(var k in _periodo.datos){

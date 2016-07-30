@@ -163,7 +163,7 @@
 					<div class="panel-body">
 						<div class="row" ng-repeat='comision in gp.grupo.comisiones'>
 							<div class="col-sm-4">
-								{{comision.nombre}}
+								{{comision.nombre }} ({{comision.beneficiario=='vendedor'? 'Vendedor':'Gerente de Ventas' }})
 					  		</div>
 					  		<div class="col-sm-4">
 									<label >Importe			
