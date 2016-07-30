@@ -2,16 +2,37 @@ angular
 .module("casserole")
 .controller("MaestrosCtrl", MaestrosCtrl);
 function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
-	
 	let rc = $reactive(this).attach($scope);
+	
 	this.action = true;
+	this.maestro = {}; 
+	
 	this.subscribe('maestros',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
-
+//TODO me quedé validando maestros
 	this.helpers({
 	  maestros : () => {
 		  return Maestros.find();
+	  },
+	  cantidad : () => {
+		  return Maestros.find({campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}).count();
+	  },
+	  nombreUsuario : () => {
+		  if(Meteor.user()){
+			  anio = '' + new Date().getFullYear();
+			  anio = anio.substring(2,4);
+			  if(this.getReactively("cantidad") > 0){
+				  var ultimo = Maestros.findOne({}, {sort: {fechaCreacion:-1}});
+				  if(ultimo){
+					  usuarioAnterior = parseInt(ultimo.nombreUsuario) + 1;
+					  usuarioAnterior = '' + usuarioAnterior;
+					  rc.maestro.nombreUsuario = usuarioAnterior;
+				  }
+			  }else{
+				  rc.maestro.nombreUsuario = anio + Meteor.user().profile.campus_clave + "001";
+			  }
+		  }
 	  }
   });
 
@@ -21,29 +42,28 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
   {
     this.action = true;
     this.nuevo = !this.nuevo;
-    this.maestro = {}; 
+    
   };
 
 	this.guardar = function(maestro,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Maestro.');
-	        return;
-	    }
+      toastr.error('Error al guardar los datos del Maestro.');
+      return;
+	  }
 	
-		this.maestro.estatus = true;
-		this.maestro.campus_id = Meteor.user().profile.campus_id;
-		//this.maestro.seccion_id = Meteor.user().profile.seccion_id;
-		var id = Maestros.insert(this.maestro);
-		rc.maestro.maestro_id = id;
+		maestro.estatus = true;
+		maestro.campus_id = Meteor.user().profile.campus_id;
+		maestro.fechaCreacion = new Date();				
+		var id = Maestros.insert(maestro);	
+		maestro.maestro_id = id;
 		Meteor.call('createUsuario', rc.maestro, 'maestro');
 		toastr.success("Maestro Creado \n Usuario Creado");
-		this.maestro = {};
+		maestro = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
-		$state.go('root.maestros');
+    form.$setUntouched();	
 	};
 
 	this.editar = function(id)

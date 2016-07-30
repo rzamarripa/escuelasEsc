@@ -4,16 +4,18 @@ angular.module("casserole")
  	$reactive(this).attach($scope);
   this.action = true;
   this.nuevo = true;
+  this.parametros = $stateParams;
+  //TODO tengo que corregir las subscripciones porque cambia de valor
 
 	this.subscribe('campus', function(){
 		return [{
-			_id : $stateParams.id
+			_id : this.getReactively("parametros.id")
 		}]
 	});
 	
 	this.subscribe('secciones', function(){
 		return [{
-			campus_id : $stateParams.id
+			campus_id : this.getReactively("parametros.id")
 		}]
 	});
 

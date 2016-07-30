@@ -36,7 +36,7 @@
 							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.rvoe_id">
 								<option ng-repeat="rvoe in pl.rvoes" value="{{rvoe._id}}">{{rvoe.nombre}}</option>
 							</select>
-						</div>
+						</div>	
 			    </div>
 			    <div class="row">
 			    	<div class="col-sm-4">
@@ -57,9 +57,9 @@
 			    </div>				  
 			    <div class="row">
 			    	<div class="col-sm-4">
-					    <label for="fecha">Fecha</label>
-					    <input type="date" class="form-control" ng-model="pl.plan.fecha">
-			    	</div>
+							<label for="fecha">Fecha</label>
+							<input name="fecha" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="pl.plan.fecha"/>
+						</div>
 			    	<div class="col-sm-4" valida>
 					    <label for="grado">Grados</label>
 					    <input name="grados" type="number" class="form-control" min="0" ng-model="pl.plan.grado" required="">

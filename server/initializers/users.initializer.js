@@ -1,10 +1,10 @@
 Meteor.startup(function () {
   if (Meteor.users.find().count() === 0) {
     var usuario_id = Accounts.createUser({
-      username: 'zama',
-      password: '123',
+      username: 'admin',
+      password: '123qwe',
       profile : {
-	      nombre: 'Roberto Zamarripa'
+	      nombre: 'Super Administrador',
       }
     });
     

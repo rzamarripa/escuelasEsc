@@ -4,22 +4,30 @@ angular
  
 function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	let rc = $reactive(this).attach($scope);
-
-  this.subscribe("secciones",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
+	this.parametros = $stateParams;
+	
+  this.subscribe('campus', function(){
+		return [{
+			_id : this.getReactively("parametros.campus_id")
+		}]
+	});
+	
+	this.subscribe('secciones', function(){
+		return [{
+			campus_id : this.getReactively("parametros.campus_id")
+		}]
+	});
+	
   this.subscribe("deptosAcademicos",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
+		return [{estatus:true, campus_id : this.getReactively("parametros.campus_id") }]
+	});
   this.subscribe("turnos",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
-  this.subscribe("campus",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
+		return [{estatus:true, campus_id : this.getReactively("parametros.campus_id") }]
+	});
+  
+	
   this.action = true;  
   this.nuevo = true;
-  $('.collapse').collapse('show');
   
   this.helpers({
 	  secciones : () => {
@@ -35,23 +43,29 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
 		  return Campus.findOne();
 	  }
   });
-
  
   this.getDeptoAcademico = function(id)
   { 
-  	var depto = $meteor.object(DeptosAcademicos, id, false);
-  	return depto.descripcionCorta; 
+	  if(id){
+		 var depto = DeptosAcademicos.findOne(id);
+		 return depto.descripcionCorta;  
+	  }else{
+		  return "Sin Departamento";
+	  }
+  	
   }; 
   
   this.getCampus = function(id)
   { 
-  	var campus = $meteor.object(Campus, id, false);
-  	return campus.nombre; 
+	  if(id){
+	  	var campus = Campus.findOne(id);
+	  	return campus.nombre; 
+  	}
   }; 
 	
   this.nuevoSeccion = function()
   {
-     this.action = true;
+    this.action = true;
     this.nuevo = !this.nuevo;
     this.seccion = {}; 
   };
@@ -128,7 +142,7 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
 				nombreCompleto : nombre + apPaterno + apMaterno,
 				campus_id : $stateParams.campus_id,
 				campus_clave : rc.campus.clave,
-				seccion_id : seccion_id,
+				seccion_id : idTemp,
 				estatus : true
 			}
 		}

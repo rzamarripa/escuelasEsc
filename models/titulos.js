@@ -1,4 +1,4 @@
-Titulos 						= new Meteor.Collection("Titulos");
+Titulos 						= new Meteor.Collection("titulos");
 Titulos.allow({
   insert: function () { return true; },
   update: function () { return true; },

@@ -1,4 +1,4 @@
-Nacionalidades 						= new Mongo.Collection("Nacionalidades");
+Nacionalidades 						= new Mongo.Collection("nacionalidades");
 Nacionalidades.allow({
   insert: function () { return true; },
   update: function () { return true; },
