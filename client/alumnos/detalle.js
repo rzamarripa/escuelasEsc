@@ -47,7 +47,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
     }];
   });
-
+	this.subscribe("cuentas",()=>{
+		return [{activo:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
+	}),
 	this.subscribe("grupos",() => {
 	    return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }];
 	  });
@@ -70,6 +72,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  },
 	  inscripciones : () =>{
 	  	return Inscripciones.find();
+	  },
+	  cuenta : () =>{
+	  	return Cuentas.findOne()
 	  }
 
 	 /* misSemanas : () => {
@@ -298,7 +303,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 										concepto 	: concepto.datos[k].nombre,
 										tipo 		: "Cobro",
 										usuario_id 	: Meteor.userId(),
-										importe 	: concepto.datos[k].importe
+										importe 	: concepto.datos[k].importe,
+										cuenta_id : this.cuenta._id
 									});
 									semanasPagadas.push({
 										fechaPago 	: new Date(),
@@ -311,7 +317,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 										concepto 	: concepto.datos[k].nombre,
 										tipo 		: "Cobro",
 										usuario_id 	: Meteor.userId(),
-										importe 	: concepto.datos[k].importe
+										importe 	: concepto.datos[k].importe,
+										cuenta_id : this.cuenta._id
 									});
 									var procedimientos= concepto.datos[k].procedimientos;
 									var fechaActual = new Date();
@@ -333,7 +340,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
 												tipo 		: "Recargo",
 												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto
+												importe 	: procedimiento.monto,
+												cuenta_id : this.cuenta._id
 											});
 											semanasPagadas.push({
 												fechaPago 	: new Date(),
@@ -346,7 +354,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
 												tipo 		: "Recargo",
 												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto
+												importe 	: procedimiento.monto,
+												cuenta_id : this.cuenta._id
 											});
 	  									}
 							  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
@@ -361,7 +370,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
 												tipo 		: "Descuento",
 												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto * (-1)
+												importe 	: procedimiento.monto * (-1),
+												cuenta_id : this.cuenta._id
 											});
 											semanasPagadas.push({
 												fechaPago 	: new Date(),
@@ -374,7 +384,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
 												tipo 		: "Descuento",
 												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto * (-1)
+												importe 	: procedimiento.monto * (-1),
+												cuenta_id : this.cuenta._id
 											});
 							  			}
 

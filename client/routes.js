@@ -655,6 +655,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.cuentas', {
+      url: '/cuentas',
+      templateUrl: 'client/cuentas/cuentas.ng.html',
+      controller: 'CuentasCtrl as cc',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
+    })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id/:materia_id',
       templateUrl: 'client/maestro/asistencias/asistencias.ng.html',

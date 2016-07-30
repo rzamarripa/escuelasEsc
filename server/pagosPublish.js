@@ -1,5 +1,5 @@
-Meteor.publish("pagos", function(){
-	return Pagos.find({estatus:true});
+Meteor.publish("pagos", function(params){
+	return Pagos.find(params);
 });
 
 Meteor.publish("pagosAlumno",function(options){

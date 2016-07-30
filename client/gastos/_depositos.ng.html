@@ -1,5 +1,5 @@
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#depositosForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="depositosForm">
-  Agregar
+  Agregar deposito
 </button>
 <div class="row">
   <div class="col-sm-12">
@@ -20,19 +20,40 @@
 					</div>
 					<div class="form-group col-sm-4" valida>
 					  <label>Importe</label>
-				  	<input type="number" class="form-control"  ng-model="gc.gasto.importe" name="improte" required>
+				  	<input type="number" class="form-control"  ng-model="gc.gasto.importe" name="importe" required>
 					</div>
 					<div class="form-group col-sm-4" valida>
-						<label for="tipo">Tipo</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.tipo" name="tipo" required>
-						  <option value="carrera">Carrera</option>
-						  <option value="curso">Curso</option>
+						<label for="cuenta">Cuenta</label>
+						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.cuenta" name="cuenta" required>
+						  <option ng-repeat="cuenta in gc.cuentas" value="{{cuenta._id}}">{{cuenta.nombre}}</option>
 						</select>
 					</div>
 				</div>
 				<a class="btn btn-primary pull-right" ng-click="gc.guardar(gc.gasto, form)" valida-form formulario="form">Guardar</a>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div ng-repeat="cuenta in gc.cuentas" class="col-sm-4">
+		<table class="table table-striped table-bordered table-list">
+	    <thead>
+	      <tr>
+	        <th colspan="2" class="hidden-xs">Cobranza de {{cuenta.nombre}}</th>
+	      </tr> 
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="(key, dia) in gc.diasActuales track by $index">
+	        <td class="hidden-xs">{{dia}}</td>
+	        <td align="right" class="hidden-xs">{{gc.importeDiario(key+1, cuenta._id) | currency}}</td>
+	      </tr>
+	      <tr>
+	      	<td>Total</td>
+	      	<td align="right">{{gc.importeSemana(cuenta._id) | currency}}</td>
+	      </tr>
+	    </tbody>
+	  </table>
 	</div>
 </div>
 
