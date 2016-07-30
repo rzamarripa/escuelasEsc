@@ -122,7 +122,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.pagosRealizados =[];
 	this.comisiones = []
 
-	this.llenarPago=function(concepto,plan){
+	this.llenarPago=function(concepto,plan,tipoPlan){
 		this.pagosRealizados.push({
 						fechaPago 	: new Date(),
 						alumno_id 	: this.inscripcion.alumno_id,
@@ -146,7 +146,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
 		for (var procid in procedimientos) {
 			var procedimiento = procedimientos[procid];
-			if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
+			if(procedimiento.tipoProcedimiento == 'Recargo' && tipoPlan=='inscripcion' && diasRecargo >=procedimiento.dias){
 					this.pagosRealizados.push({
 								fechaPago 	: new Date(),
 								alumno_id 	: this.inscripcion.alumno_id,
@@ -163,7 +163,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								importe 	: procedimiento.monto
 							});
 			}
-			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
+			if(procedimiento.tipoProcedimiento == 'Descuento' && tipoPlan=='inscripcion' && diasDescuento >=procedimiento.dias){
 				this.pagosRealizados.push({
 								fechaPago 	: new Date(),
 								alumno_id 	: this.inscripcion.alumno_id,
@@ -285,16 +285,24 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 				_periodo.pago= parseFloat(inscripcion.importePagado)-comisionColegiaturaObligatoria;	
 
 				console.log(_periodo.pago)
-				if(inscripcion.totalPagar<=parseFloat(inscripcion.importePagado)
+				if(inscripcion.totalPagar<=_periodo.pago
 					&& _periodo.planPago && _periodo.planPago instanceof Array){
-					_periodo.planPago[0].pago= parseFloat(inscripcion.importePagado)-comisionColegiaturaObligatoria;	
+					_periodo.planPago[0].pago= _periodo.pago;	
 					_periodo.planPago[0].pagada =1;
 					for (var conceptoid in  _periodo.datos) {
 						var concepto = _periodo.datos[conceptoid]
 						console.log(concepto.nombre)
-						this.llenarPago(concepto,_periodo.planPago[0]);
+						this.llenarPago(concepto,_periodo.planPago[0],_periodo.tipoPlan);
 						
 					}
+
+				}
+				else if( _periodo.planPago && _periodo.planPago instanceof Array){
+					_periodo.planPago[0].pago= _periodo.pago	
+					_periodo.planPago[0].faltante= inscripcion.totalPagar-_periodo.pago	
+					_periodo.planPago[0].pagada =6;
+					this.llenarPago({nombre:'Abono a inscripcion',importe:_periodo.pago,procedimientos:[]},_periodo.planPago[0],_periodo.tipoPlan);
+
 
 				}
 				//break;
@@ -317,7 +325,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 						pago.pago = (valorColegiatura>=resta)? valorColegiatura: resta;
 						for(var k in _periodo.datos){
 							var concepto = _periodo.datos[k];
-							this.llenarPago(concepto,pago);
+							this.llenarPago(concepto,pago,_periodo.tipoPlan);
 						}
 						if(resta>valorColegiatura){
 							resta-=valorColegiatura;
@@ -359,7 +367,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		console.log(this.comisiones)
 	};
 
-	this.calcularImporteU= function(datos,pago){
+	this.calcularImporteU= function(datos,pago,tipoPlan){
 		//console.log(datos,pago)
 		//console.log(this.inscripcion);
 		if(datos && datos.activa==false)
@@ -373,11 +381,11 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
   		//console.log(diasRecargo,diasDescuento);
   		for (var i = 0; datos.procedimientos && i < datos.procedimientos.length; i++) {
   			console.log(importe);
-  			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && diasRecargo >=datos.procedimientos[i].dias ){
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Recargo' && tipoPlan=='inscripcion' && diasRecargo >=datos.procedimientos[i].dias ){
   			//	console.log('Recargo');
   				importe+=datos.procedimientos[i].monto;
   			}
-  			if(datos.procedimientos[i].tipoProcedimiento == 'Descuento' && diasDescuento >=datos.procedimientos[i].dias){
+  			if(datos.procedimientos[i].tipoProcedimiento == 'Descuento' && tipoPlan=='inscripcion' && diasDescuento >=datos.procedimientos[i].dias){
   			//	console.log('Descuento');
   				importe-=datos.procedimientos[i].monto;
   			}
@@ -418,7 +426,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	  		 
 	  		//console.log(_periodo);
 	  		for (var j = 0; _periodo && j < _periodo.datos.length; j++) {
-	  			this.inscripcion.totalPagar+=this.calcularImporteU(_periodo.datos[j],_periodo.planPago[0]);
+	  			this.inscripcion.totalPagar+=this.calcularImporteU(_periodo.datos[j],_periodo.planPago[0],_periodo.tipoPlan);
 
 	  		}
 	  		/*if(_periodo.tipoPlan=='inscripcion'){
