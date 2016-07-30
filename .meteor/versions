@@ -87,6 +87,7 @@ reywood:bootstrap3-sass@3.3.5_2
 reywood:font-awesome-sass@4.5.0_1
 reywood:publish-composite@1.4.2
 routepolicy@1.0.10
+rshashkov:angular-meteor-breadcrumb@0.0.1
 s2corp:angular-ui-grid@3.1.0_2
 service-configuration@1.0.9
 session@1.1.5

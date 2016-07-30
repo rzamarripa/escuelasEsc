@@ -8,7 +8,7 @@ angular.module("casserole")
 
 	this.subscribe('campus', function(){
 		return [{
-			campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+			
 		}]
 	});
 
@@ -44,13 +44,12 @@ angular.module("casserole")
   
   this.guardar = function(campus,form)
 	{
-		console.log(campus);
 		if(form.$invalid){
 			toastr.error('Error al guardar los datos del Campus.');
 			return;
 	    }
 		this.campus.estatus = true;
-		this.campus.campus_id = Meteor.user().profile.campus_id;
+		//this.campus.campus_id = Meteor.user().profile.campus_id;
 		this.campus.fechaCreacion = new Date();
 		Campus.insert(this.campus);
 		toastr.success('campus guardado.');

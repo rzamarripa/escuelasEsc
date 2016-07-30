@@ -195,9 +195,12 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   
   /* alert on Drop */
 	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
-		rc.clase.start 	= moment(this.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
-		rc.clase.end 		= moment(this.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
+		console.log(delta);
+		this.clase = event;
+		rc.clase.start 	= moment(event.start).add(delta).add('hours', 0).format("YYYY-MM-DD HH:mm");
+		rc.clase.end 		= moment(event.end).add(delta).add('hours', 0).format("YYYY-MM-DD HH:mm");
 		rc.actionAgregar = false;
+		//this.alertOnEventClick(event, jsEvent, view);
   };
   
   /* alert on Resize */

@@ -28,10 +28,10 @@ angular.module("casserole")
 	        toastr.error('Error al guardar los datos del Turno.');
 	        return;
 	    }
-		this.turno.estatus = true;
-		this.turno.campus_id = Meteor.user().profile.campus_id;
+		turno.estatus = true;
+		turno.campus_id = Meteor.user().profile.campus_id;
 		//this.turno.seccion_id = Meteor.user().profile.seccion_id;
-		Turnos.insert(this.turno);
+		Turnos.insert(turno);
 		toastr.success('Turno guardado.');
 		this.turno = {}; 
 		$('.collapse').collapse('hide');
@@ -55,6 +55,7 @@ angular.module("casserole")
 	        toastr.error('Error al actualizar los datos del Turno.');
 	        return;
 	    }
+	    console.log(turno);
 		var idTemp = turno._id;
 		delete turno._id;		
 		Turnos.update({_id:idTemp},{$set:turno});

@@ -57,8 +57,8 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 				  	rc.alumno.matricula = matriculaAnterior;
 				  }
 			  }else{
-				  rc.alumno.nombreUsuario = anio + Meteor.user().profile.campus_clave + "001";
-				  rc.alumno.matricula = anio + Meteor.user().profile.campus_clave + "001";
+				  rc.alumno.nombreUsuario = "e" + anio + Meteor.user().profile.campus_clave + "001";
+				  rc.alumno.matricula = "e" + anio + Meteor.user().profile.campus_clave + "001";
 			  }
 		  }
 	  }

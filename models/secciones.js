@@ -1,4 +1,4 @@
-Secciones 						= new Mongo.Collection("Secciones");
+Secciones 						= new Mongo.Collection("secciones");
 Secciones.allow({
   insert: function () { return true; },
   update: function () { return true; },

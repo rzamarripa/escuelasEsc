@@ -1,9 +1,9 @@
-<h2>Secciones</h2>
+<h2>{{sec.campus.nombre}} - <small>Secciones</small></h2>
 <div class="row">
 	<div class="col-sm-12">
-		<a class="btn btn-{{!sec.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
+		<a class="btn btn-{{sec.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
 			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" ng-click="sec.nuevoSeccion()">
-		  {{!sec.nuevo == true ? 'Nuevo' : 'Cancelar'}}
+		  {{sec.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form name="form" class="form-horizontal" role="form"  novalidate>
@@ -21,7 +21,7 @@
 									    	<label>Nombre *</label>
 									    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="sec.seccion.nombre" required>
 								    	</div>
-								    	<div class="col-sm-3" valida>					    
+								    	<div class="col-sm-3" valida>
 									    	<label>Apellido Paterno *</label>
 									    	<input name="apPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="sec.seccion.apPaterno" required>
 								    	</div>
@@ -32,7 +32,7 @@
 								    	<div class="col-sm-2" valida>					    
 									    	<label>Usuario *</label>
 									    	<input name="usuario" type="text" class="form-control" placeholder="Usuario" ng-model="sec.seccion.username" required>
-								    	</div>																									
+								    	</div>
 								    	<div class="col-sm-2" valida>					    										
 									    	<label>Contraseña *</label>																	
 									    	<input name="password" type="password" class="form-control" placeholder="Contraseña" ng-model="sec.seccion.password" required>
@@ -43,8 +43,6 @@
 				      </div>
 				    </div>
 				  </div>
-				</section>
-				<section id="informacion" data-widget-grid="data-widget-grid2" >
 					<div class="row">
 				    <div class="col-sm-12">
 				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget2">
@@ -107,8 +105,6 @@
 				      </div>
 				    </div>
 				  </div>
-				</section>
-				<section id="periodos" data-widget-grid="data-widget-grid3" >
 				  <div class="row">
 				    <div class="col-sm-12">
 				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget3">
@@ -152,8 +148,6 @@
 				      </div>
 				    </div>
 				  </div>
-				</section>
-				<section id="equipo" data-widget-grid="data-widget-grid4" >
 					<div class="row">
 				    <div class="col-sm-12">
 				      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
@@ -188,7 +182,7 @@
 							    	</div>
 							    	<div class="col-sm-4" valida>
 							    		<label>Nivel educativo *</label>
-									    <select name="nivelEdu" ng-model="seccion.nivelEdu" class="form-control" required="">
+									    <select name="nivelEdu" ng-model="sec.seccion.nivelEdu" class="form-control" required="">
 											  <option value="Bachillerato">Bachillerato</option>
 										    <option value="Carrera">Carrera</option>
 										    <option value="Curso">Curso</option>
@@ -289,3 +283,8 @@
 		</table>
 	</div>
 </div>
+
+
+
+
+
