@@ -12,7 +12,7 @@
 				    <div class="col-sm-3" valida>					    
 				    	<label>Gerente</label>
 				    	<select name="gerente" class="form-control" ng-model="v.vendedor.profile.gerenteVenta_id" required>
-					    	<option value="{{gerente._id}}" ng-repeat="gerente in v.gerentesVenta">{{gerente.profile.nombre}} {{gerente.profile.apPaterno}}</option>
+					    	<option value="{{gerente._id}}" ng-repeat="gerente in v.gerentesVenta">{{gerente.profile.nombre}} {{gerente.profile.apPaterno}} {{gerente.profile.apMaterno}}</option>
 				    	</select>
 			    	</div>
 			    	<div class="col-sm-3" valida>					    
@@ -98,7 +98,7 @@
 		    <tr ng-repeat="vendedor in v.vendedores">
 			    <td>{{v.getGerenteVenta(vendedor.profile.gerenteVenta_id)}}</td>
 		    	<td><img width="100px" ng-src="{{vendedor.profile.fotografia}}" ng-class="{'img-thumbnail': !!vendedor.fotografia}"/> </td>
-			    <td>{{vendedor.profile.nombre}} {{vendedor.profile.apPaterno}} {{vendedor.profile.apMaterno}}</td>
+			    <td>{{vendedor.profile.nombre}} {{vendedor.profile.apPaterno}} {{vendedor.profile.apMaterno}} </td>
 			    <td>{{vendedor.username}} </td>
 			    <td>{{vendedor.profile.telefono}} </td>
 			    <td>{{vendedor.profile.correo}} </td>

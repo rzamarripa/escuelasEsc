@@ -1,4 +1,4 @@
-Instituciones = new Mongo.Collection("Instituciones");
+Instituciones = new Mongo.Collection("instituciones");
 
 Instituciones.allow({
   insert: function () { return true; },

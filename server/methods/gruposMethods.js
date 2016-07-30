@@ -22,5 +22,19 @@ Meteor.methods({
         return x._id == valor;
       });
     }
+  },
+  insertMaestrosMateriasGrupos: function (clases, grupo_id) {
+    clases.forEach(function(clase){
+      mmg = {}; 
+      mmg.materia_id = clase.materia_id; 
+      mmg.maestro_id = clase.maestro_id;
+      mmg.grupo_id = grupo_id;
+      MaestrosMateriasGrupos.insert(mmg);
+    });
+    return
+  },
+  deleteMaestrosMateriasGrupos: function (grupo_id) {
+    MaestrosMateriasGrupos.remove({grupo_id: grupo_id});
+    return
   }
 });

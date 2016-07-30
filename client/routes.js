@@ -2,6 +2,7 @@ angular.module("casserole").run(function ($rootScope, $state, toastr) {
   $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
     // We can catch the error thrown when the $requireUser promise is rejected
     // and redirect the user back to the main page
+    console.log(error);
     switch(error) {
       case "AUTH_REQUIRED":
         $state.go('anon.login');
@@ -15,6 +16,7 @@ angular.module("casserole").run(function ($rootScope, $state, toastr) {
         break;
       default:
         $state.go('internal-client-error');
+        
     }
 /*
     if (error === 'AUTH_REQUIRED') {
@@ -89,11 +91,15 @@ angular.module('casserole').config(['$injector', function ($injector) {
       url: '/',
       templateUrl: 'client/home/home.ng.html',      
       controller: 'HomeCtrl as ho',
+      ncyBreadcrumb: {
+		    label: "Hola"
+		  },
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();
 	      }]
-	    }
+	    },
+	    
     })
     .state('root.alumnos', {
       url: '/alumnos',
@@ -426,7 +432,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	    }
     })    
     .state('root.campusDetalle', {
-      url: '/campus/:id',
+      url: '/campusDetalle/:id',
       templateUrl: 'client/campus/campusDetalle.ng.html',
       controller: 'CampusDetalleCtrl as cd',
       resolve: {
@@ -654,6 +660,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	        return $meteor.requireUser();
 	      }]
 	    }
+    })
+    .state('root.cuentas', {
+      url: '/cuentas',
+      templateUrl: 'client/cuentas/cuentas.ng.html',
+      controller: 'CuentasCtrl as cc',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
     })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id/:materia_id',

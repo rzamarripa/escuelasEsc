@@ -11,11 +11,11 @@
 			    <div class="row">
 			    	<div class="col-sm-1">					    
 				    	<label>Clave</label>
-				    	<input type="text" class="form-control" placeholder="Clave" ng-model="cp.campus.clave" disabled="">
+				    	<input type="text" class="form-control" placeholder="Clave" ng-model="cp.campus.clave" readonly="">
 			    	</div>
 			    	<div class="col-sm-11" valida>					    
 				    	<label>Nombre</label>
-				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="8">
+				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="cp.campus.nombre" required="" minlength="4">
 			    	</div>
 			    </div>
 			    <div class="row">
@@ -60,7 +60,7 @@
 			<tbody>
 		    <tr ng-repeat="campus in cp.campuses">
 			    <td>{{campus.clave}} </td>
-			    <td><a href="/campus/{{campus._id}}">{{campus.nombre}}</a></td>
+			    <td><a ui-sref="root.secciones({campus_id : campus._id})">{{campus.nombre}}</a></td>
 			    <td>{{campus.descripcion}} </td>
 			    <td>
 				    <div class="text-center">

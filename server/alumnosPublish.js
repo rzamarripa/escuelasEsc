@@ -1,7 +1,7 @@
 Meteor.publish("buscarAlumnos",function(options){
 	let selector = {
   	nombreCompleto: { '$regex' : '.*' + options.where.nombre || '' + '.*', '$options' : 'i' },
-  	campus_id: options.where.campus_id
+  	seccion_id: options.where.seccion_id
 	}	
 	return Alumnos.find(selector, options.options);
 });

@@ -27,18 +27,18 @@ angular.module("casserole")
 	this.subscribe('prospectos', () => {
     return [{
 	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id") }
+	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id"), vendedor_id:Meteor.userId() }
     }] ;
   });
   
   this.subscribe("empleados");
   
   this.subscribe("etapaVenta", () =>{
-	  return [{orden : "1", estatus : true, campus_id : this.getReactively("Meteor.user().profile.campus_id")}]
+	  return [{orden : "1", estatus : true,  campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
   });
   
   this.subscribe("etapaVenta", () =>{
-	  return [{estatus : true, campus_id : this.getReactively("Meteor.user().profile.campus_id")}]
+	  return  [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
   });
   
   this.helpers({
