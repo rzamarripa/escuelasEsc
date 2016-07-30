@@ -31,8 +31,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.subscribe("aulas",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
-	 
-	 console.log($stateParams.id);
   	
 	this.helpers({
 		maestros : () => {
@@ -211,10 +209,11 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   /* alert on Drop */
 	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
 		console.log(delta);
-		
-		rc.clase.start 	= moment(this.clase.start).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
-		rc.clase.end 		= moment(this.clase.end).add(delta).add('hours', -1).format("YYYY-MM-DD HH:mm");
+		this.clase = event;
+		rc.clase.start 	= moment(event.start).add(delta).add('hours', 0).format("YYYY-MM-DD HH:mm");
+		rc.clase.end 		= moment(event.end).add(delta).add('hours', 0).format("YYYY-MM-DD HH:mm");
 		rc.actionAgregar = false;
+		//this.alertOnEventClick(event, jsEvent, view);
   };
   
   /* alert on Resize */
@@ -298,5 +297,4 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.eventSources = [rc.horario.clases, clasesTotales, aulasTotales];
   
   var view = $('#calendar').fullCalendar('getView');
-	console.log(view)
 };

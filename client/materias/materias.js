@@ -52,9 +52,9 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
   	this.guardar = function(materia,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos de la Materia.');
-	        return;
-	    }
+      toastr.error('Error al guardar los datos de la Materia.');
+      return;
+	  }
 		this.materia.estatus = true;
 		this.materia.campus_id = Meteor.user().profile.campus_id;
 		this.materia.seccion_id = Meteor.user().profile.seccion_id;
@@ -64,7 +64,7 @@ function MateriasCtrl($scope, $meteor, $reactive, $state, toastr) {
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 	};
 	
 	this.editar = function(id)

@@ -36,15 +36,6 @@
 							<select name="seccion" class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.seccion_id" required>
 								<option ng-repeat="seccion in pl.secciones" value="{{seccion._id}}">{{seccion.descripcion}}</option>
 							</select>
-							<!--<ui-select ng-model="plan.seccion_id"
-						             theme="bootstrap"
-						             ng-disabled="disabled"
-						             reset-search-input="false">
-						    <ui-select-match placeholder="Seleccione">{{$select.selected.descripcion}}</ui-select-match>
-						    <ui-select-choices repeat="seccion._id as seccion in secciones | filter: $select.search">
-						      <div ng-bind-html="seccion.descripcion | highlight: $select.search"></div>
-						    </ui-select-choices>
-						  </ui-select>-->
 						</div>	
 			    </div>
 			    <div class="row">
@@ -66,9 +57,9 @@
 			    </div>				  
 			    <div class="row">
 			    	<div class="col-sm-4">
-					    <label for="fecha">Fecha</label>
-					    <input type="date" class="form-control" ng-model="pl.plan.fecha">
-			    	</div>
+							<label for="fecha">Fecha</label>
+							<input name="fecha" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="pl.plan.fecha"/>
+						</div>
 			    	<div class="col-sm-4" valida>
 					    <label for="grado">Grados</label>
 					    <input name="grados" type="number" class="form-control" min="0" ng-model="pl.plan.grado" required="">

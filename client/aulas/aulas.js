@@ -4,7 +4,7 @@ angular.module("casserole")
  	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('aulas',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 
 	this.helpers({

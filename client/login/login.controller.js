@@ -24,7 +24,13 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
         $state.go('root.home');        
       },
       function (error) {
-        toastr.error(error.reason);
+	      if(error.reason == "Match failed"){
+		      toastr.error("Escriba su usuario y contraseña para iniciar");
+	      }else if(error.reason == "User not found"){
+		      toastr.error("Usuario no encontrado");
+	      }else if(error.reason == "Incorrect password"){
+		      toastr.error("Contraseña incorrecta");
+	      }        
       }
     )
   }
@@ -121,7 +127,6 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
 			},
 			end: function(evt) {
 				this.started = false;
-				console.log("terminé", evt);
 			}
 		};
 		

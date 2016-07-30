@@ -11,7 +11,8 @@ angular.module('casserole',
     'datePicker',
     'ui.calendar',
     'ui.bootstrap',
-    'checklist-model'
+    'checklist-model',
+    'ncy-angular-breadcrumb'
   ]
 );
 

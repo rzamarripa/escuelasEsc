@@ -1,4 +1,4 @@
-DeptosAcademicos 						= new Mongo.Collection("deptosacademicos");
+DeptosAcademicos 						= new Mongo.Collection("deptosAcademicos");
 DeptosAcademicos.allow({
   insert: function () { return true; },
   update: function () { return true; },
