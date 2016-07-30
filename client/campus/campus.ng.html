@@ -81,7 +81,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="cp.editar(campus._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cp.cambiarEstatus(campus._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="cp.cambiarEstatus(campus._id)"><i class="fa fa-trash"></i> 
+									  		<span ng-if="campus.estatus">
+											  	Desactivar
+												</span>
+											  <span ng-if="!campus.estatus">
+											   	Activar
+												</span>  
+							    	  </a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -17,7 +17,7 @@
 							<label >Ciclo Escolar</label>
 							<select name="ciclo" class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id" required>
 								<option  value="{{ciclo._id}}" ng-repeat="ciclo in sub.ciclos">
-									{{ciclo.descripcion}}
+									{{ciclo.nombre}}
 								</option>
 							</select>
 						</div>
@@ -99,7 +99,14 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="sub.editar(subCiclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="sub.cambiarEstatus(subCiclo._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="sub.cambiarEstatus(subCiclo._id)"><i class="fa fa-trash"></i> 
+								    	<span ng-if="subCiclo.estatus">
+										  	Desactivar
+											</span>
+										  <span ng-if="!subCiclo.estatus">
+										   	Activar
+											</span>
+							    </a></li>
 							  </ul>
 							</div>
 				    </div>				    
