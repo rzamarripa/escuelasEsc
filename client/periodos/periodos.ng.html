@@ -10,11 +10,11 @@
 		  		<div class="container-fluid well">	    
 			    	<div class="row">
 			    		<div class="col-sm-4" valida>					    
-					    	<label>Nombre</label>
+					    	<label>Nombre *</label>
 					    	<input name="nombre" type="text" class="form-control" placeholder="Periodo" ng-model="per.periodo.nombre" required="">
 				    	</div>	
 				    	<div class="col-sm-4" valida>
-							<label >Ciclo Escolar</label>
+							<label >Ciclo Escolar *</label>
 							<select name="ciclo" class="form-control" placeholder="Seleccione" ng-model="per.periodo.ciclo_id" required>
 							 	<option  value="{{ciclo._id}}" ng-repeat="ciclo in per.ciclos">
 									{{ciclo.descripcion}} 
@@ -22,7 +22,7 @@
 							</select>
 						</div>
 				    	<div class="col-sm-4" valida>
-							<label >Subciclo Escolar</label>
+							<label >Subciclo Escolar *</label>
 							<select name="subciclo" class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" required>
 							 	<option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">
 									{{subCiclo.nombre}} | {{subCiclo.tipo}}
@@ -34,11 +34,11 @@
 						<div ng-if="per.tipoFormulario == 'academico'">
 				    			    
 				    		<div class="col-sm-4" valida>
-					    		<label>Fecha Inicio</label>
+					    		<label>Fecha Inicio *</label>
 						    	<input name="fechainicioAc" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" required/>
 				    		</div>
 				    		<div class="col-sm-4" valida>
-					    		<label>Fecha Fin</label>
+					    		<label>Fecha Fin *</label>
 						    	<input name="fechafinAc" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" required/>
 				    		</div>  
 						</div> 	
@@ -46,16 +46,16 @@
 							
 							
 							<div class="col-sm-4" valida>
-					    		<label>Fecha Inicio</label>
+					    		<label>Fecha Inicio *</label>
 						    	<input name="fechainicioAd" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaInicio" required/>
 				    		</div>
 				    		<div class="col-sm-4" valida>
-					    		<label>Fecha Fin</label>
+					    		<label>Fecha Fin *</label>
 						    	<input name="fechafinAd" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="per.periodo.fechaFin" required/>
 				    		</div>
 
 				    		<div class="col-sm-4" valida>
-								<label >Plazo</label>
+								<label >Plazo *</label>
 								<select name="plazo" class="form-control select2" placeholder="Seleccione" ng-model="per.periodo.plazo" required>
 								  	<option value="Semanal">Semanal</option>
 								  	<option value="Mensual">Mensual</option>
@@ -72,7 +72,7 @@
 			    	</div>
 			    	<div class="row" ng-if="per.tipoFormulario == 'administrativo'">
 				    	<div class="col-sm-4" valida>
-				    		<label>Módulo</label>
+				    		<label>Módulo *</label>
 				    		<select name="modulo" class="form-control" ng-model="per.periodo.modulo" required>
 					    		<option value="inscripcion">Inscripción</option>
 					    		<option value="colegiatura">Colegiatura</option>
@@ -204,7 +204,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="per.editar(periodo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="per.cambiarEstatus(periodo._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="per.cambiarEstatus(periodo._id)"><i class="fa fa-trash"></i> 
+									    	<span ng-if="periodo.estatus">
+											  	Desactivar
+												</span>
+											  <span ng-if="!periodo.estatus">
+											   	Activar
+												</span>
+											</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -12,6 +12,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		seccion_id : this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):""
 	}]
 	});
+	this.subscribe('cuentas', ()=>{
+		return [{activo: true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
+	});
 	this.subscribe('generaciones',()=>{
 		return [{estatus:true, seccion_id : this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):"" }]
 	 });
@@ -66,6 +69,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.helpers({
 		ciclos : () => {
 			return Ciclos.find();
+		},
+		cuenta : () =>{
+			return Cuentas.findOne();
 		},
 		vendedores : () => {
 		  var usuarios = Meteor.users.find().fetch();
@@ -136,7 +142,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 						concepto 	: concepto.nombre,
 						tipo 		: "Cobro",
 						usuario_id 	: Meteor.userId(),
-						importe 	: concepto.importe
+						importe 	: concepto.importe,
+						cuenta_id : this.cuenta._id
 					});
 		var procedimientos= concepto.procedimientos;
 		var fechaActual = this.inscripcion.fechaInscripcion;
@@ -160,7 +167,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								concepto 	: concepto.nombre+" - "+procedimiento.nombre,
 								tipo 		: "Recargo",
 								usuario_id 	: Meteor.userId(),
-								importe 	: procedimiento.monto
+								importe 	: procedimiento.monto,
+								cuenta_id : this.cuenta._id
 							});
 			}
 			if(procedimiento.tipoProcedimiento == 'Descuento' && tipoPlan=='inscripcion' && diasDescuento >=procedimiento.dias){
@@ -177,7 +185,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								concepto 	: concepto.nombre+" - "+procedimiento.nombre,
 								tipo 		: "Descuento",
 								usuario_id 	: Meteor.userId(),
-								importe 	: procedimiento.monto * -1
+								importe 	: procedimiento.monto * -1,
+								cuenta_id : this.cuenta._id
 							});
 			}	
 		}
@@ -197,7 +206,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			beneficiario : comision.beneficiario,
 			importe 	: importe,
 			modulo		: comision.modulo,
-			comision_id : comision._id
+			comision_id : comision._id,
+			cuenta_id : this.cuenta._id
 		});
 	}
 	
