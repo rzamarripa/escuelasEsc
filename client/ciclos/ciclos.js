@@ -73,13 +73,12 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 	this.cambiarEstatus = function(id)
 	{
-		var ciclo = Ciclos.findOne({_id:id});
-		if(ciclo.estatus == true)
-			ciclo.estatus = false;
-		else
-			ciclo.estatus = true;
-		
-		Ciclos.update({_id:id}, {$set : {estatus : ciclo.estatus}});
-	};
-	
+			var ciclo = Ciclos.findOne({_id:id});
+			if(ciclo.estatus == true)
+				ciclo.estatus = false;
+			else
+				ciclo.estatus = true;
+			
+			Ciclos.update({_id:id}, {$set : {estatus : ciclo.estatus}});
+	};	
 };

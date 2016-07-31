@@ -92,13 +92,13 @@
 									    <label>Zona escolar </label>
 									    <input type="text" class="form-control" placeholder="Zona escolar" ng-model="sec.seccion.zonaEsc">
 							    	</div>
-							    	<div class="col-sm-2">
+							    	<div class="col-sm-2" valida>
 									    <label>Edad de </label>
-									    <input type="text"  class="form-control" placeholder="Edad" ng-model="sec.seccion.edad">
+									    <input name="edadde" type="text"  class="form-control" placeholder="Edad" ng-model="sec.seccion.edad" min="0">
 							    	</div>
-							    	<div class="col-sm-1">
+							    	<div class="col-sm-1" valida>
 									    <label>A </label>
-									    <input type="text"  class="form-control" placeholder="18" ng-model="sec.seccion.a">
+									    <input name="edada" type="text"  class="form-control" placeholder="18" ng-model="sec.seccion.a" min="0">
 							    	</div>
 									</div>
 								</div>
@@ -116,31 +116,31 @@
 								    <div class="row">
 								    	<div class="col-sm-2" valida>					    
 									    	<label>Semanas *</label>
-									    	<input name="semanas" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semanas" required>
+									    	<input name="semanas" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semanas" min="0" required>
 								    	</div>																									
 								    	<div class="col-sm-2" valida>					    										
 									    	<label>Meses *</label>																	
-									    	<input name="meses" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.meses" required>
+									    	<input name="meses" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.meses" min="0" required>
 								    	</div>																									
 								    	<div class="col-sm-2" valida>					    										
 									    	<label>Bimestres *</label>															
-									    	<input name="bimestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.bimestres" required>
+									    	<input name="bimestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.bimestres" min="0" required>
 								    	</div>																									
 								    	<div class="col-sm-2" valida>					    										
 									    	<label>Trimestres *</label>															
-									    	<input name="trimestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.trimestres" required>
+									    	<input name="trimestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.trimestres" min="0" required>
 								    	</div>																									
 								    	<div class="col-sm-2" valida>					    										
 									    	<label>Tetramestres *</label>														
-									    	<input name="tetramestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.tetramestres" required>
+									    	<input name="tetramestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.tetramestres" min="0" required>
 								    	</div>																									
 								    	<div class="col-sm-1" valida>					    										
 									    	<label>Semestres *</label>															
-									    	<input name="semestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semestres" required>
+									    	<input name="semestres" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.semestres" min="0" required>
 								    	</div>																									
 								    	<div class="col-sm-1" valida>					    										
 									    	<label>Años *</label>																		
-									    	<input name="anios" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.anios" required>
+									    	<input name="anios" type="number" class="form-control" placeholder="Cantidad" ng-model="sec.seccion.anios" min="0" required>
 								    	</div>
 								    </div>
 				          </div>
@@ -273,7 +273,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="sec.editar(seccion._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="sec.cambiarEstatus(seccion._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="sec.cambiarEstatus(seccion._id)"><i class="fa fa-trash"></i> 
+								    		<span ng-if="seccion.estatus">
+											  	Desactivar
+												</span>
+											  <span ng-if="!seccion.estatus">
+											   	Activar
+												</span>
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    
