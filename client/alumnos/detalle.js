@@ -167,11 +167,16 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   		return importe
 	}	
 
+  this.semanasSeleccionada=[];
+
+  
+
   this.seleccionarSemana = function(cobro,plan){
 	  //console.log(cobro);
 	  //var semSel = cobro.anio + cobro.numero;	
 	  rc.hayParaPagar = true;
 	  rc.totalPagar=0;
+	  this.semanasSeleccionada=[]
 	  for (var i = 0; i < cobro.no; i++) {
 	  		if(plan.planPago[i].pagada!=1 && plan.planPago[i].pagada!=5 ){
 	  			rc.hayParaPagar = false;
@@ -185,7 +190,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  					//console.log(rc.totalPagar);
 	  				}
 
-
+	  			this.semanasSeleccionada.push(plan.planPago[i]);
 
 	  		}
 	  };

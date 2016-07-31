@@ -39,8 +39,29 @@ var quitarhk=function(obj){
 Mongo.Collection.prototype.insert = function insert(doc, callback) {
   // Make sure we were passed a document to insert
   console.log("Insertar",this._name);
-  	
-  doc = quitarhk(doc);
+  try{
+    doc = quitarhk(doc);
+    if(this._name!='bitacora'){
+      var _usuario = null;
+      if (Meteor.isClient) {
+          _usuario =Meteor.userId()
+      }
+      var doctoBitacora ={
+        fecha: new Date(),
+        usuario: _usuario,
+        accion: 'insert',
+        isClient: Meteor.isClient,
+        isServer: Meteor.isServer,
+        coleccion: this._name,
+        documentoNuevo: doc,
+        documentoAnterior: {}
+      };
+      console.log(doctoBitacora);
+      Bitacora.insert(doctoBitacora);
+    }
+  }catch(e){}
+  
+  
 
   
   if (!doc) {
@@ -102,24 +123,7 @@ Mongo.Collection.prototype.insert = function insert(doc, callback) {
     // If the user provided a callback and the collection implements this
     // operation asynchronously, then queryRet will be undefined, and the
     // result will be returned through the callback instead.
-    if(this._name!='bitacora'){
-	  	var _usuario = null;
-	  	if (Meteor.isClient) {
-	        _usuario =Meteor.userId()
-	    }
-	  	var doctoBitacora ={
-			fecha: new Date(),
-			usuario: _usuario,
-			accion: 'insert',
-			isClient: Meteor.isClient,
-			isServer: Meteor.isServer,
-			coleccion: this._name,
-			documentoNuevo: doc,
-			documentoAnterior: {}
-		};
-		console.log(doctoBitacora);
-	  	Bitacora.insert(doctoBitacora);
-	}
+    
 
     const result = this._collection.insert(doc, wrappedCallback);
     return chooseReturnValueFromCollectionResult(result);
@@ -139,71 +143,97 @@ Mongo.Collection.prototype.update = function update(selector, modifier, ...optio
 	//console.log(selector,modifier);
   if(this._name=='bitacora') return false;
 
+  try{
   	var docset = modifier["$set"]? modifier["$set"]:{};
     var docunset = modifier["$unset"]? modifier["$unset"]:{};
     var docaddToSet = modifier["$addToSet"]? modifier["$addToSet"]:{};
     var doctoNuevo=undefined;
     var doctoAnterior=undefined;
     
-	if(this._name!='bitacora'){
-		var _usuario = null;
-	  	if (Meteor.isClient) {
-	        _usuario =Meteor.userId()
-	    }
-	   
-	    var opciones = _.clone(optionsAndCallback[0]) || {};
-	    
-	    if(opciones.multi){
-	    	
-	    	doctoNuevo = this._collection.find(selector).fetch();
-	    	for(var i in doctoNuevo)
-	    	{
-	    		for(var j in docset){
-	    			doctoNuevo[i][j]=docset[j];
-	    		}
-	    		for(var j in docunset){
-	    			if(docunset[j])
-	    				doctoNuevo[i][j]=null;
-	    		}
-	    		for(var j in docaddToSet){
-	    			doctoNuevo[i][j].push(docset[j]);
-	    		}
-	    	}
-	    	doctoAnterior = this._collection.find(selector).fetch();
+  	if(this._name!='bitacora'){
+  		var _usuario = null;
+  	  	if (Meteor.isClient) {
+  	        _usuario =Meteor.userId()
+  	    }
+  	   
+  	    var opciones = _.clone(optionsAndCallback[0]) || {};
+  	    
+  	    if(opciones.multi){
+  	    	
+  	    	doctoNuevo = this._collection.find(selector).fetch();
+  	    	for(var i in doctoNuevo)
+  	    	{
+            try{
+    	    		for(var j in docset){
+    	    			doctoNuevo[i][j]=docset[j];
+    	    		}
+            }
+            catch(e){}
+            try{
+              for(var j in docunset){
+                if(docunset[j])
+                  doctoNuevo[i][j]=null;
+              }
+            }
+            catch(e){}
+            try{
+              for(var j in docaddToSet){
+                if(!doctoNuevo[i][j])
+                  doctoNuevo[i][j]=[]
+                doctoNuevo[i][j].push(docset[j]);
+              }
+            }
+            catch(e){}	
+  	    		
+  	    	}
+  	    	doctoAnterior = this._collection.find(selector).fetch();
 
-	    }
-	    else{
-	    	//console.log(this._collection);
-	    	
-	    	doctoNuevo = this._collection.findOne(selector);
-	    	for(var j in docset){
-	    		doctoNuevo[j]=docset[j];
-	    	}
-	    	for(var j in docunset){
-	    		if(docunset[j])
-	    			doctoNuevo[j]=null;
-	    	}
-	    	for(var j in docaddToSet){
-	    		doctoNuevo[i][j].push(docset[j]);
-	    	}
-	    	doctoAnterior = this._collection.findOne(selector);
-	    }
+  	    }
+  	    else{
+  	    	//console.log(this._collection);
+  	    	
+  	    	doctoNuevo = this._collection.findOne(selector);
+          try{
+            for(var j in docset){
+              doctoNuevo[j]=docset[j];
+            }
+          }
+          catch(e){} 
+          try{
+            for(var j in docunset){
+              if(docunset[j])
+                doctoNuevo[j]=null;
+            }
+          }
+          catch(e){} 
+          try{
+            for(var j in docaddToSet){
+              if(!doctoNuevo[i][j])
+                doctoNuevo[i][j]=[];
+              doctoNuevo[i][j].push(docset[j]);
+            }
+          }
+          catch(e){} 
+  	    	doctoAnterior = this._collection.findOne(selector);
+  	    }
 
-	    var doctoBitacora ={
-			fecha: new Date(),
-			usuario: _usuario,
-			accion: 'update',
-			isClient: Meteor.isClient,
-			isServer: Meteor.isServer,
-			selector: JSON.stringify(selector),
-			coleccion: this._name,
-			documentoNuevo: doctoNuevo,
-			documentoAnterior: doctoAnterior
-		};
-		console.log(doctoBitacora);
-  		Bitacora.insert(doctoBitacora);
-	}
-
+  	    var doctoBitacora ={
+  			fecha: new Date(),
+  			usuario: _usuario,
+  			accion: 'update',
+  			isClient: Meteor.isClient,
+  			isServer: Meteor.isServer,
+  			selector: JSON.stringify(selector),
+  			coleccion: this._name,
+  			documentoNuevo: doctoNuevo,
+  			documentoAnterior: doctoAnterior
+  		};
+  		console.log(doctoBitacora);
+    		Bitacora.insert(doctoBitacora);
+  	}
+  }
+  catch(e){ 
+  }
   const callback = popCallbackFromArgs(optionsAndCallback);
 
   selector = Mongo.Collection._rewriteSelector(selector);
@@ -258,27 +288,28 @@ Mongo.Collection.prototype.update = function update(selector, modifier, ...optio
 Mongo.Collection.prototype.remove = function remove(selector, callback) {
   
   if(this._name=='bitacora') return false;
-
-  if(this._name!='bitacora'){
-	    var doctoAnterior = this._collection.find(selector).fetch();
-	    
-    	var _usuario = null;
-	  	if (Meteor.isClient) {
-	        _usuario =Meteor.userId()
-	    }
-	  	var doctoBitacora ={
-			fecha: new Date(),
-			usuario: _usuario,
-			accion: 'remove',
-			isClient: Meteor.isClient,
-			isServer: Meteor.isServer,
-			coleccion: this._name,
-			documentoNuevo: null,
-			documentoAnterior: doctoAnterior
-		};
-		console.log(doctoBitacora);
-	  	Bitacora.insert(doctoBitacora);
-  }
+  try{
+    if(this._name!='bitacora'){
+  	    var doctoAnterior = this._collection.find(selector).fetch();
+  	    
+      	var _usuario = null;
+  	  	if (Meteor.isClient) {
+  	        _usuario =Meteor.userId()
+  	    }
+  	  	var doctoBitacora ={
+  			fecha: new Date(),
+  			usuario: _usuario,
+  			accion: 'remove',
+  			isClient: Meteor.isClient,
+  			isServer: Meteor.isServer,
+  			coleccion: this._name,
+  			documentoNuevo: null,
+  			documentoAnterior: doctoAnterior
+  		};
+  		console.log(doctoBitacora);
+  	  Bitacora.insert(doctoBitacora);
+    }
+  }catch(e){}
   selector = Mongo.Collection._rewriteSelector(selector);
 
   const wrappedCallback = wrapCallback(callback);
