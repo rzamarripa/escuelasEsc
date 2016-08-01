@@ -11,8 +11,8 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4" valida>
-				    	<label>Nombre</label>
-					    <input name="nombre" type="text" class="form-control" ng-model="cl.ciclo.descripcion" required>
+				    	<label>Nombre *</label>
+					    <input name="nombre" type="text" class="form-control" ng-model="cl.ciclo.nombre" required>
 			    	</div>
 			    	<div class="col-sm-4">
 				    	<label>Fecha Inicio</label>
@@ -79,7 +79,14 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="cl.editar(ciclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cl.cambiarEstatus(ciclo._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="cl.cambiarEstatus(ciclo._id)"><i class="fa fa-trash"></i>
+											<span ng-if="ciclo.estatus">
+										  	Desactivar
+											</span>
+										  <span ng-if="!ciclo.estatus">
+										   	Activar
+											</span>
+							    </a></li>
 							  </ul>
 							</div>
 				    </div>				    

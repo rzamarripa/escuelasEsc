@@ -6,7 +6,7 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('subCiclos',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 
 
@@ -34,20 +34,21 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.guardar = function(subCiclo,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del SubCiclo.');
+	        toastr.error('Error al guardar los datos.');
 	        return;
 	    }
 	
-		this.subCiclo.estatus = true;
-		this.subCiclo.campus_id = Meteor.user().profile.campus_id;
-		this.subCiclo.seccion_id = Meteor.user().profile.seccion_id;
-		SubCiclos.insert(this.subCiclo);
-		toastr.success('SubCiclo guardado.');
-		this.subCiclo = {};
+		subCiclo.estatus = true;
+		subCiclo.campus_id = Meteor.user().profile.campus_id;
+		subCiclo.seccion_id = Meteor.user().profile.seccion_id;
+		subCiclo.usuarioInserto = Meteor.userId();
+		SubCiclos.insert(subCiclo);
+		toastr.success('Guardado correctamente.');
+		subCiclo = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 		$state.go('root.subCiclos');
 	};
 	
@@ -62,13 +63,15 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.actualizar = function(subCiclo,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Ciclo.');
+	        toastr.error('Error al actualizar los datos.');
 	        return;
 	    }
 	
 		var idTemp = subCiclo._id;
 		delete subCiclo._id;		
+		subCiclo.usuarioActualizo = Meteor.userId();
 		SubCiclos.update({_id:idTemp},{$set:subCiclo});
+		toastr.success('Actualizado correctamente.');
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		form.$setPristine();
@@ -78,19 +81,18 @@ function SubCiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 	this.getCiclo= function(ciclo_id)
 	{
-		var ciclo = Ciclos.findOne(ciclo_id);
-		if(ciclo)
-		return ciclo.descripcion;
+			var ciclo = Ciclos.findOne(ciclo_id);
+			if(ciclo)
+				return ciclo.nombre;
 	};
 		
 	this.cambiarEstatus = function(id)
 	{
 		var subCiclo = SubCiclos.findOne({_id:id});
 		if(subCiclo.estatus == true)
-			subCiclo.estatus = false;
+				subCiclo.estatus = false;
 		else
-			subCiclo.estatus = true;
-		
+				subCiclo.estatus = true;
 		SubCiclos.update({_id:id}, {$set : {estatus : subCiclo.estatus}});
 	};
 	

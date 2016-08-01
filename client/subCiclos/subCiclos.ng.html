@@ -14,19 +14,19 @@
 				<div class="well">	    
 			    <div class="row">
 				    <div class="col-sm-4" valida>
-							<label >Ciclo Escolar</label>
+							<label >Ciclo Escolar *</label>
 							<select name="ciclo" class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.ciclo_id" required>
 								<option  value="{{ciclo._id}}" ng-repeat="ciclo in sub.ciclos">
-									{{ciclo.descripcion}}
+									{{ciclo.nombre}}
 								</option>
 							</select>
 						</div>
 				    <div class="col-sm-4" valida>
-				    	<label>Nombre</label>
+				    	<label>Nombre *</label>
 					    <input name="nombre" type="text" class="form-control" ng-model="sub.subCiclo.nombre" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-				    	<label>Tipo de Subciclo</label>
+				    	<label>Tipo de Subciclo *</label>
 				    	<select name="tiposubciclo" class="form-control select2" placeholder="Seleccione" ng-model="sub.subCiclo.tipo" required="">
 							  <option value="Administrativo">Administrativo </option>
 								<option value="Academico">Académico</option>
@@ -99,7 +99,14 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="sub.editar(subCiclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="sub.cambiarEstatus(subCiclo._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="sub.cambiarEstatus(subCiclo._id)"><i class="fa fa-trash"></i> 
+								    	<span ng-if="subCiclo.estatus">
+										  	Desactivar
+											</span>
+										  <span ng-if="!subCiclo.estatus">
+										   	Activar
+											</span>
+							    </a></li>
 							  </ul>
 							</div>
 				    </div>				    
