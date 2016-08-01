@@ -56,8 +56,8 @@
 								    	<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="sec.seccion.clave" required="">
 							    	</div>
 							    	<div class="col-sm-4" valida>
-							    		<label>Descripción Corta *</label>
-								    	<input name="descripcionCorta" type="text" class="form-control" placeholder="Descripción Corta" ng-model="sec.seccion.descripcionCorta" required="">
+							    		<label>Nombre *</label>
+								    	<input name="nombreseccion" type="text" class="form-control" placeholder="Nombre Sección" ng-model="sec.seccion.nombreseccion" required="">
 							    	</div>
 							    	<div class="col-sm-6" valida>
 									    <label>Descripción *</label>
@@ -230,8 +230,8 @@
 			<thead>
 				<tr>
 					<th width="5%"><div class="text-center">Clave</div></th>
+					<th width="10%"><div class="text-center">Nombre</div></th>	
 					<th width="20%"><div class="text-center">Descripción</div></th>	
-					<th width="10%"><div class="text-center">Descripción Corta</div></th>				
 					<th width="10%"><div class="text-center">Departamento Académico</div></th>
 					<th width="10%"><div class="text-center">Campus</div></th>		
 				    <th width="10%">
@@ -250,8 +250,8 @@
 				<!--{{getDeptoAcademicoById(seccion.deptoAcademico_id).descripcionCorta}-->
 		    <tr ng-repeat="seccion in sec.secciones">
 			    <td>{{seccion.clave}}</td>
+			    <td>{{seccion.nombreseccion}}</td>
 			    <td>{{seccion.descripcion}}</td>
-			    <td>{{seccion.descripcionCorta}}</td>
 			    <td>{{sec.getDeptoAcademico(seccion.deptoAcademico_id)}}</td>
 			    <td>{{sec.getCampus(seccion.campus_id)}}</td>
 			    <td> 
