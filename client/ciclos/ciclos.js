@@ -4,13 +4,13 @@ angular
  
 function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
-  this.action = true;
+	this.action = true;
 	this.subscribe('ciclos',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "",  }]
-	 });
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+	});
   
   this.helpers({
-	  ciclos : () => {
+		ciclos : () => {
 		  return Ciclos.find();
 	  }
   });
@@ -26,22 +26,23 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.guardar = function(ciclo,form)
 	{
 		if(form.$invalid){
-      toastr.error('Error al guardar los datos del Ciclo.');
+      toastr.error('Error al guardar los datos.');
       return;
     }
 		
-		this.ciclo.estatus = true;
-		this.ciclo.campus_id = Meteor.user().profile.campus_id;
-		this.ciclo.seccion_id = Meteor.user().profile.seccion_id;
-		console.log(this.ciclo);
-		Ciclos.insert(this.ciclo);
-		toastr.success('Ciclo guardado.');
-		this.ciclo = {};
+		ciclo.estatus = true;
+		ciclo.campus_id = Meteor.user().profile.campus_id;
+		ciclo.seccion_id = Meteor.user().profile.seccion_id;
+		ciclo.usuarioInserto = Meteor.userId();
+		console.log(ciclo);
+		Ciclos.insert(ciclo);
+		toastr.success('Guardado correctamente.');
+		ciclo = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		$state.go('root.ciclos');
 		form.$setPristine();
-        form.$setUntouched();
+    form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -55,27 +56,29 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.actualizar = function(ciclo,form)
 	{
 	    if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Ciclo.');
+	        toastr.error('Error al actualizar los datos.');
 	        return;
 	    }
-		var idTemp = ciclo._id;
-		delete ciclo._id;		
-		Ciclos.update({_id:idTemp},{$set:ciclo});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+		 			var idTemp = ciclo._id;
+			delete ciclo._id;		
+			ciclo.usuarioActualizo = Meteor.userId(); 
+			Ciclos.update({_id:idTemp},{$set:ciclo});
+			toastr.success('Actualizado correctamente.');
+			console.log(ciclo);
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)
 	{
-		var ciclo = Ciclos.findOne({_id:id});
-		if(ciclo.estatus == true)
-			ciclo.estatus = false;
-		else
-			ciclo.estatus = true;
-		
-		Ciclos.update({_id:id}, {$set : {estatus : ciclo.estatus}});
-	};
-	
+			var ciclo = Ciclos.findOne({_id:id});
+			if(ciclo.estatus == true)
+				ciclo.estatus = false;
+			else
+				ciclo.estatus = true;
+			
+			Ciclos.update({_id:id}, {$set : {estatus : ciclo.estatus}});
+	};	
 };

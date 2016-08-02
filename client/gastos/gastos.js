@@ -6,11 +6,15 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
   this.tipoGasto = 'cheques';
   this.gasto = {};
-  this.gasto.fechaLimite = new Date();
-  semanaActual = moment(new Date()).isoWeek();
-  //console.log(semanaActual);
+  this.semanaActual = moment(new Date()).week();
+  this.diaActual = moment(new Date()).weekday();
+  dias = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"];
+  this.colores = ["active","success","warning","danger","info"];
+  this.diasActuales = [];
+  for(i = 0; i < this.diaActual; i++){this.diasActuales.push(dias[i])};
+
   this.subscribe('gastos', () => {
-    return [{tipoGasto: this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{tipoGasto  : this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.subscribe('conceptosGasto', () => {
@@ -18,7 +22,11 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
 
   this.subscribe('pagos', () => {
-    return [{semana: semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{semana: this.semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+  });
+
+  this.subscribe('cuentas', () => {
+    return [{estatus: true, seccion_id: Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ''}];
   });
 
   this.helpers({
@@ -26,7 +34,10 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			return Gastos.find();
 		},
     conceptos : () =>{
-      return ConceptosGasto.find()
+      return ConceptosGasto.find();
+    },
+    cuentas : ()=>{
+      return Cuentas.find();
     }
   });
 
@@ -40,8 +51,11 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
       toastr.error('error.');
       return;
     }
+    gasto.semana = this.semanaActual;
     gasto.campus_id = Meteor.user().profile.campus_id;
+    gasto.seccion_id = Meteor.user().profile.seccion_id;
     gasto.tipoGasto = this.tipoGasto;
+    gasto.weekday = this.diaActual;
     Gastos.insert(gasto);
     form.$setPristine();
     form.$setUntouched();
@@ -70,9 +84,41 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
     if(concepto != undefined)
       return concepto.codigo + " | " + concepto.nombre;
   }
-
   this.sum = function(){
     var sum = _.reduce(this.gastos, function(memo, gasto){ return memo + gasto.importe; },0);
     return sum
   }
+////////Depositos
+  this.importeDiarioPagos = function(dia, cuenta_id){
+    pagos = Pagos.find({weekday:dia, cuenta_id:cuenta_id}).fetch();
+    importe = _.reduce(pagos, function(memo, pago){return memo + pago.importe},0);
+    return importe
+  }
+
+  this.importeSemanalPagos = function(cuenta_id){
+    pagos = Pagos.find({cuenta_id:cuenta_id}).fetch();
+    importe = _.reduce(pagos, function(memo, pago){return memo + pago.importe},0);
+    return importe
+  }
+
+  this.importeDiarioGastos = function(dia, cuenta_id){
+    gastos = Gastos.find({weekday:dia, cuenta_id:cuenta_id}).fetch();  
+    importe = _.reduce(gastos, function(memo, gasto){return memo + gasto.importe},0);
+    return importe
+  }
+
+  this.importeSemanalGastos = function(cuenta_id){
+    gastos = Gastos.find({cuenta_id:cuenta_id}).fetch();
+    importe = _.reduce(gastos, function(memo, gasto){return memo + gasto.importe},0);
+    return importe
+  }
+
+  this.porDepositar = function(cuenta_id){
+    pagos = Pagos.find({cuenta_id:cuenta_id}).fetch();
+    gastos = Gastos.find({cuenta_id:cuenta_id}).fetch();
+    totalPagos = _.reduce(pagos, function(memo, pago){return memo + pago.importe},0);
+    totalGastos = _.reduce(gastos, function(memo, gasto){return memo + gasto.importe},0);
+    return totalPagos - totalGastos
+  }
+////////////////////////
 };

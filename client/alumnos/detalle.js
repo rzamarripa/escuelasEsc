@@ -48,6 +48,10 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
     }];
   });
 
+	this.subscribe("cuentas",()=>{
+		return [{activo:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
+	});
+
 	this.subscribe("grupos",() => {
 	    return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }];
 	  });
@@ -70,6 +74,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  },
 	  inscripciones : () =>{
 	  	return Inscripciones.find();
+	  },
+	  cuentas : () =>{
+	  	return Cuentas.find();
 	  }
 
 	 /* misSemanas : () => {
@@ -144,6 +151,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		if(datos && datos.activa==false)
 			return 0;
 		//console.log(this.inscripcion);
+
 		var fechaActual = new Date();
   		var fechaCobro = new Date(pago.fecha);
   		//console.log(fechaActual,fechaCobro);
@@ -166,30 +174,36 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   		return importe
 	}	
 
+  this.semanasSeleccionada=[];
+
+  
+
   this.seleccionarSemana = function(cobro,plan){
 	  //console.log(cobro);
 	  //var semSel = cobro.anio + cobro.numero;	
 	  rc.hayParaPagar = true;
 	  rc.totalPagar=0;
+	  this.semanasSeleccionada=[]
 	  for (var i = 0; i < cobro.no; i++) {
 	  		if(plan.planPago[i].pagada!=1 && plan.planPago[i].pagada!=5 ){
 	  			rc.hayParaPagar = false;
 	  			plan.planPago[i].pagada =2;
 	  			
-	  			
-  				//rc.totalPagar+=plan.cuota;
-  				for (var j = 0; j < plan.datos.length; j++) {
-  					rc.totalPagar +=this.calcularImporteU( plan.datos[j],plan.planPago[i]);
-  					//console.log(rc.totalPagar);
-  				}
+	  			if(plan.planPago[i].pagada==6)
+	  				rc.totalPagar=planPago.planPago[i].faltante;
+	  			else
+  					for (var j = 0; j < plan.datos.length; j++) {
+	  					rc.totalPagar +=this.calcularImporteU( plan.datos[j],plan.planPago[i]);
+	  					//console.log(rc.totalPagar);
+	  				}
 
-
+	  			this.semanasSeleccionada.push(plan.planPago[i]);
 
 	  		}
 	  };
 	  //console.log(rc.totalPagar);
 	  for (var i = cobro.no; i < plan.planPago.length; i++) {
-	  	if(plan.planPago[i].pagada!=1 & plan.planPago[i].pagada!=5){
+	  	if(plan.planPago[i].pagada!=1 && plan.planPago[i].pagada!=5 && plan.planPago[i].pagada!=6){
 	  		plan.planPago[i].pagada=0;
 	  	}
 	  }
@@ -283,11 +297,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 						if(cobro.pagada==2){
 							cobro.pagada = 1;
 							cobro.pago = 0;
-							for (var k = 0; k < concepto.datos.length  ; k++) {
-								if(concepto.datos[k].activa){
-				  					cobro.pago +=this.calcularImporteU( concepto.datos[k],cobro);
-				  					console.log(cobro);
-					  				Pagos.insert({
+							if(cobro.faltante){
+								Pagos.insert({
 										fechaPago 	: new Date(),
 										alumno_id 	: $stateParams.id,
 										campus_id 	:Meteor.user().profile.campus_id,
@@ -295,10 +306,11 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 										semana 		: cobro.numero,
 										anio 		: cobro.anio,
 										estatus 	: 1,
-										concepto 	: concepto.datos[k].nombre,
+										concepto 	: 'Liquidacion de '+(concepto.tipoPlan=='inscripcion'? 'Inscripción':'Colegiatura '+cobro.no),
 										tipo 		: "Cobro",
 										usuario_id 	: Meteor.userId(),
-										importe 	: concepto.datos[k].importe
+										importe 	: cobro.faltante,
+										cuenta_id : this.cuenta._id
 									});
 									semanasPagadas.push({
 										fechaPago 	: new Date(),
@@ -308,78 +320,119 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 										semana 		: cobro.numero,
 										anio 		: cobro.anio,
 										estatus 	: 1,
-										concepto 	: concepto.datos[k].nombre,
+										concepto 	:'Liquidacion de '+(concepto.tipoPlan=='inscripcion'? 'Inscripción':'Colegiatura '+cobro.no),
 										tipo 		: "Cobro",
 										usuario_id 	: Meteor.userId(),
-										importe 	: concepto.datos[k].importe
+										importe 	: cobro.faltante,
+										cuenta_id : this.cuenta._id
 									});
-									var procedimientos= concepto.datos[k].procedimientos;
-									var fechaActual = new Date();
-							  		var fechaCobro = new Date(cobro.fecha);
-							  		//console.log(fechaActual,fechaCobro);
-							  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
-							  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
-									for (var l = 0; procedimientos && l < procedimientos.length; l++) {
-										var procedimiento = procedimientos[l]
-										if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
-	  										Pagos.insert({
-												fechaPago 	: new Date(),
-												alumno_id 	: $stateParams.id,
-												numero 		: cobro.no,
-												campus_id 	:Meteor.user().profile.campus_id,
-												semana 		: cobro.numero,
-												anio 		: cobro.anio,
-												estatus 	: 1,
-												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-												tipo 		: "Recargo",
-												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto
-											});
-											semanasPagadas.push({
-												fechaPago 	: new Date(),
-												alumno_id 	: $stateParams.id,
-												campus_id 	:Meteor.user().profile.campus_id,
-												numero 		: cobro.no,
-												semana 		: cobro.numero,
-												anio 		: cobro.anio,
-												estatus 	: 1,
-												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-												tipo 		: "Recargo",
-												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto
-											});
-	  									}
-							  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
-							  				Pagos.insert({
-												fechaPago 	: new Date(),
-												alumno_id 	: $stateParams.id,
-												campus_id 	:Meteor.user().profile.campus_id,
-												numero 		: cobro.no,
-												semana 		: cobro.numero,
-												anio 		: cobro.anio,
-												estatus 	: 1,
-												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-												tipo 		: "Descuento",
-												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto * (-1)
-											});
-											semanasPagadas.push({
-												fechaPago 	: new Date(),
-												alumno_id 	: $stateParams.id,
-												campus_id 	:Meteor.user().profile.campus_id,
-												numero 		: cobro.no,
-												semana 		: cobro.numero,
-												anio 		: cobro.anio,
-												estatus 	: 1,
-												concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
-												tipo 		: "Descuento",
-												usuario_id 	: Meteor.userId(),
-												importe 	: procedimiento.monto * (-1)
-											});
-							  			}
+							}
+							else{
+								for (var k = 0; k < concepto.datos.length  ; k++) {
+									if(concepto.datos[k].activa){
 
+					  					cobro.pago +=this.calcularImporteU( concepto.datos[k],cobro);
+					  					console.log(cobro);
+						  				Pagos.insert({
+											fechaPago 	: new Date(),
+											alumno_id 	: $stateParams.id,
+											campus_id 	:Meteor.user().profile.campus_id,
+											numero 		: cobro.no,
+											semana 		: cobro.numero,
+											anio 		: cobro.anio,
+											estatus 	: 1,
+											concepto 	: concepto.datos[k].nombre,
+											tipo 		: "Cobro",
+											usuario_id 	: Meteor.userId(),
+											importe 	: concepto.datos[k].importe,
+											cuenta_id : this.cuenta._id
+										});
+										semanasPagadas.push({
+											fechaPago 	: new Date(),
+											alumno_id 	: $stateParams.id,
+											campus_id 	:Meteor.user().profile.campus_id,
+											numero 		: cobro.no,
+											semana 		: cobro.numero,
+											anio 		: cobro.anio,
+											estatus 	: 1,
+											concepto 	: concepto.datos[k].nombre,
+											tipo 		: "Cobro",
+											usuario_id 	: Meteor.userId(),
+											importe 	: concepto.datos[k].importe,
+											cuenta_id : this.cuenta._id
+										});
+										var procedimientos= concepto.datos[k].procedimientos;
+										var fechaActual = new Date();
+								  		var fechaCobro = new Date(cobro.fecha);
+								  		//console.log(fechaActual,fechaCobro);
+								  		var diasRecargo = Math.floor((fechaActual-fechaCobro) / (1000 * 60 * 60 * 24)); 
+								  		var diasDescuento = Math.floor((fechaCobro-fechaActual) / (1000 * 60 * 60 * 24));
+										for (var l = 0; procedimientos && l < procedimientos.length; l++) {
+											var procedimiento = procedimientos[l]
+											if(procedimiento.tipoProcedimiento == 'Recargo' && diasRecargo >=procedimiento.dias){
+		  										Pagos.insert({
+													fechaPago 	: new Date(),
+													alumno_id 	: $stateParams.id,
+													numero 		: cobro.no,
+													campus_id 	:Meteor.user().profile.campus_id,
+													semana 		: cobro.numero,
+													anio 		: cobro.anio,
+													estatus 	: 1,
+													concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+													tipo 		: "Recargo",
+													usuario_id 	: Meteor.userId(),
+													importe 	: procedimiento.monto,
+													cuenta_id : this.cuenta._id
+												});
+												semanasPagadas.push({
+													fechaPago 	: new Date(),
+													alumno_id 	: $stateParams.id,
+													campus_id 	:Meteor.user().profile.campus_id,
+													numero 		: cobro.no,
+													semana 		: cobro.numero,
+													anio 		: cobro.anio,
+													estatus 	: 1,
+													concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+													tipo 		: "Recargo",
+													usuario_id 	: Meteor.userId(),
+													importe 	: procedimiento.monto,
+													cuenta_id : this.cuenta._id
+												});
+		  									}
+								  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
+								  				Pagos.insert({
+													fechaPago 	: new Date(),
+													alumno_id 	: $stateParams.id,
+													campus_id 	:Meteor.user().profile.campus_id,
+													numero 		: cobro.no,
+													semana 		: cobro.numero,
+													anio 		: cobro.anio,
+													estatus 	: 1,
+													concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+													tipo 		: "Descuento",
+													usuario_id 	: Meteor.userId(),
+													importe 	: procedimiento.monto * (-1),
+													cuenta_id : this.cuenta._id
+												});
+												semanasPagadas.push({
+													fechaPago 	: new Date(),
+													alumno_id 	: $stateParams.id,
+													campus_id 	:Meteor.user().profile.campus_id,
+													numero 		: cobro.no,
+													semana 		: cobro.numero,
+													anio 		: cobro.anio,
+													estatus 	: 1,
+													concepto 	: concepto.datos[k].nombre+" - "+procedimiento.nombre,
+													tipo 		: "Descuento",
+													usuario_id 	: Meteor.userId(),
+													importe 	: procedimiento.monto * (-1),
+													cuenta_id : this.cuenta._id
+												});
+								  			}
+
+										}
 									}
-								}
+				  				}
 			  				}
 						}
 					}

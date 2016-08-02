@@ -32,7 +32,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	}
 
 	this.subscribe('periodos',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	});
 
 	this.subscribe('subCiclos',()=>{
@@ -77,51 +77,49 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
   	});
 
   
- 	this.nuevoPeriodo = function()
+		this.nuevoPeriodo = function()
   	{
-    	this.action = true;
-    	this.nuevo = !this.nuevo;
-    	this.periodo = {};		
+	    	this.action = true;
+	    	this.nuevo = !this.nuevo;
+	    	this.periodo = {};		
 
   	};
 	
   	this.guardar = function(periodo,form)
-	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del SubCiclo.');
-	        return;
-	    }
-
+		{
+				if(form.$invalid){
+			        toastr.error('Error al guardar los datos.');
+			        return;
+			  }
 	
-		var sub = SubCiclos.findOne(this.periodo.subCiclo_id);
-		if(sub && sub.tipo === "Administrativo")
-			this.generar(periodo);
-
-		periodo.estatus = true;
-		this.periodo.campus_id = Meteor.user().profile.campus_id;
-		this.periodo.seccion_id = Meteor.user().profile.seccion_id;
-		periodo.conceptos = [];
-		var conceptos = ConceptosPago.find().fetch();
-		console.log(periodo);
-		for (var i = 0; i < conceptos.length; i++) {
-			if(periodo.modulo==conceptos[i].modulo){
-				var procc=[];
-				if(periodo.procedimiento &&  periodo.procedimiento[conceptos[i].nombre] )
-					procc= periodo.procedimiento[conceptos[i].nombre];
-				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
+			
+				var sub = SubCiclos.findOne(this.periodo.subCiclo_id);
+				if(sub && sub.tipo === "Administrativo")
+					this.generar(periodo);
+		
+				periodo.estatus = true;
+				periodo.campus_id = Meteor.user().profile.campus_id;
+				periodo.seccion_id = Meteor.user().profile.seccion_id;
+				periodo.conceptos = [];
+				var conceptos = ConceptosPago.find().fetch();
+				console.log(periodo);
+				for (var i = 0; i < conceptos.length; i++) {
+						if(periodo.modulo==conceptos[i].modulo){
+								var procc=[];
+								if(periodo.procedimiento &&  periodo.procedimiento[conceptos[i].nombre] )
+										procc= periodo.procedimiento[conceptos[i].nombre];
+								periodo.conceptos.push( { nombre : conceptos[i].nombre, 
 								importe : conceptos[i].importe,
 								procedimientos : procc,
 								estatus : 1 })
-			}
-				
-
-
-		}
+						}
+				}
 		var _perdiodo = quitarhk(periodo);
 		console.log(_perdiodo);
+		periodo.usuarioInserto = Meteor.userId();
 		Periodos.insert(_perdiodo);
 
-		toastr.success('Periodo guardado.');
+		toastr.success('Guardado correctamente.');
 		this.periodo = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
@@ -140,53 +138,52 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	this.actualizar = function(periodo,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del SubCiclo.');
-	        return;
-	    }
-		
-		var idTemp = periodo._id;
-		delete periodo._id;
-		var sub = SubCiclos.findOne(this.periodo.subCiclo_id);
-		if(sub && sub.tipo === "Administrativo")
-			this.generar(periodo);
-		var conceptos = ConceptosPago.find().fetch();
-		periodo.conceptos=[];
-		for (var i = 0; i < conceptos.length; i++) {
-			if(conceptos[i].modulo==periodo.modulo){
-				var procc=[];
-				if(periodo.procedimiento &&  periodo.procedimiento[conceptos[i].nombre] )
-					procc= periodo.procedimiento[conceptos[i].nombre];
-
-				periodo.conceptos.push( { nombre : conceptos[i].nombre, 
-								importe : conceptos[i].importe,
-								procedimientos : procc,
-								estatus : 1 });
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		  }
+			
+			var idTemp = periodo._id;
+			delete periodo._id;
+			var sub = SubCiclos.findOne(this.periodo.subCiclo_id);
+			if(sub && sub.tipo === "Administrativo")
+					this.generar(periodo);
+			var conceptos = ConceptosPago.find().fetch();
+			periodo.conceptos=[];
+			for (var i = 0; i < conceptos.length; i++) {
+					if(conceptos[i].modulo==periodo.modulo){
+							var procc=[];
+							if(periodo.procedimiento &&  periodo.procedimiento[conceptos[i].nombre] )
+									procc= periodo.procedimiento[conceptos[i].nombre];		
+									periodo.conceptos.push( { nombre : conceptos[i].nombre, 
+									importe : conceptos[i].importe,
+									procedimientos : procc,
+									estatus : 1 });
+					}
 			}
-
-
-		}
-		var _perdiodo = quitarhk(periodo);
-		console.log(_perdiodo);
-		Periodos.update({_id:idTemp},{$set:_perdiodo});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+			var _perdiodo = quitarhk(periodo);
+			console.log(_perdiodo);
+			periodo.usuarioActualizo = Meteor.userId();
+			Periodos.update({_id:idTemp},{$set:_perdiodo});
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
 	};
 
 	this.getSubCiclo= function(subCiclo_id)
 	{
-		var subCiclo = SubCiclos.findOne(subCiclo_id);
-		if(subCiclo)
-		return subCiclo.descripcion;
+			var subCiclo = SubCiclos.findOne(subCiclo_id);
+			if(subCiclo)
+				return subCiclo.nombre;
 	};
 	
 	this.getCiclo= function(ciclo_id)
 	{
-		var ciclo = Ciclos.findOne(ciclo_id);
-		if(ciclo)
-		return ciclo.descripcion;
+			var ciclo = Ciclos.findOne(ciclo_id);
+			if(ciclo)
+				return ciclo.nombre;
 	};
 		
 	this.cambiarEstatus = function(id)
@@ -198,7 +195,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			periodo.estatus = true;
 		
 		Periodos.update({_id:id}, {$set : {estatus : periodo.estatus}});*/
-		Periodos.remove(id);
+			Periodos.remove(id);
 	};
 	
 	/*this.planPagos = function(subCiclo){
