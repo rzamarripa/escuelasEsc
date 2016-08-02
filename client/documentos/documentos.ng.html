@@ -10,7 +10,7 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4" valida>					    
-				    	<label>Documento</label>
+				    	<label>Documento *</label>
 				    	<input name="documento" type="text" class="form-control" placeholder="Nombre de documento" ng-model="doc.documento.nombre" required>
 			    	</div>    	   			    
 			    </div>
@@ -68,7 +68,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="doc.editar(documento._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="doc.cambiarEstatus(documento._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="doc.cambiarEstatus(documento._id)"><i class="fa fa-trash"></i> 
+									    	<span ng-if="documento.estatus">
+											  	Desactivar
+												</span>
+											  <span ng-if="!documento.estatus">
+											   	Activar
+												</span>
+							    	  </a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

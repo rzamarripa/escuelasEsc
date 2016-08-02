@@ -11,15 +11,15 @@
 			    <div class="row">
 			    	<div class="col-sm-12">					    
                     <div class="col-sm-4" valida>
-						    <label>Nombre</label>
+						    <label>Nombre *</label>
 					    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="escu.escuela.nombre" required>
 					    </div>
 					     <div class="col-sm-4" valida>
-						    <label> Nombre corto</label>
+						    <label> Nombre corto *</label>
 					    	<input name="nombrecorto" type="text" class="form-control" placeholder="Nombre corto" ng-model="escu.escuela.nombreCorto" required>
 					    </div>
 					     <div class="col-sm-4" valida>
-						    <label>Domicilio</label>
+						    <label>Domicilio *</label>
 					    	<input name="domicilio" type="text" class="form-control" placeholder="Domicilio" ng-model="escu.escuela.domicilio" required>
 					    </div>
 					  </div>
@@ -29,15 +29,15 @@
 			    <div class="row">
 			    	      <div class="col-sm-12">	
 					     <div class="col-sm-4" valida>
-						    <label>Colonia</label>
+						    <label>Colonia *</label>
 					    	<input name="colonia" type="text" class="form-control" placeholder="Colonia" ng-model="escu.escuela.colonia" required>
 					    </div>
 					     <div class="col-sm-4" valida>
 						    <label>Código Postal</label>
-					    	<input type="text" class="form-control" placeholder="Codigo Postal" ng-model="escu.escuela.cp">
+					    	<input name="cp" type="number" class="form-control" placeholder="Codigo Postal" ng-model="escu.escuela.cp" min="0">
 					    </div>
 					     <div class="col-sm-4" valida>
-						    <label>Ciudad</label>
+						    <label>Ciudad *</label>
 					    	<input name="ciudad" type="text" class="form-control" placeholder="Ciudad" ng-model="escu.escuela.ciudad" required>
 					    </div>
 					     <div class="col-sm-4">
@@ -115,7 +115,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="escu.editar(escuela._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							  <li><a href="#" ng-click="escu.cambiarEstatus(escuela._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							  <li><a href="#" ng-click="escu.cambiarEstatus(escuela._id)"><i class="fa fa-trash"></i> 
+								  		<span ng-if="escuela.estatus">
+										  	Desactivar
+											</span>
+										  <span ng-if="!escuela.estatus">
+										   	Activar
+											</span>
+							  	  </a>
+							  </li>
 							  </ul>
 							</div>
 				    </div>				    
