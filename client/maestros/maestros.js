@@ -25,12 +25,13 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 			  if(this.getReactively("cantidad") > 0){
 				  var ultimo = Maestros.findOne({}, {sort: {fechaCreacion:-1}});
 				  if(ultimo){
-					  usuarioAnterior = parseInt(ultimo.nombreUsuario) + 1;
-					  usuarioAnterior = '' + usuarioAnterior;
+					  identificador = ultimo.nombreUsuario.substring(1, ultimo.nombreUsuario.length);
+					  usuarioAnterior = parseInt(identificador) + 1;
+					  usuarioAnterior = 'm' + usuarioAnterior;
 					  rc.maestro.nombreUsuario = usuarioAnterior;
 				  }
 			  }else{
-				  rc.maestro.nombreUsuario = anio + Meteor.user().profile.campus_clave + "001";
+				  rc.maestro.nombreUsuario = "m" + anio + Meteor.user().profile.campus_clave + "001";
 			  }
 		  }
 	  }
