@@ -25,7 +25,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		
 	//dfs
 	//deep first search
-
+	this.masInfo = true;
 	this.totalPagar = 0.00;
 	this.alumno = {};
 	this.fechaActual = new Date();
@@ -137,7 +137,17 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  });
 	  return temp;
   }
-  
+  this.masInformacion = function(){
+  	this.masInfo = !this.masInfo;
+  	console.log(this.masInfo);
+  }
+  this.estaInscrito = function(alumno_id){
+		inscrito = Inscripciones.findOne({alumno_id: alumno_id});
+		if(inscrito != undefined)
+			return true
+		else
+			return false
+  }
   this.periodoVisible = function(periodo){
   	for (var i = 0; periodo && periodo.datos && i < periodo.datos.length; i++) {
   		if(periodo.datos[i] && periodo.datos[i].activa )
@@ -173,7 +183,20 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
   		//console.log(importe);
   		return importe
 	}	
-
+	this.tieneFoto = function(sexo, foto){
+	  if(foto === undefined){
+		  if(sexo === "masculino")
+			  return "img/badmenprofile.jpeg";
+			else if(sexo === "femenino"){
+				return "img/badgirlprofile.jpeg";
+			}else{
+				return "img/badprofile.jpeg";
+			}
+			  
+	  }else{
+		  return foto;
+	  }
+  }  
   this.semanasSeleccionada=[];
 
   

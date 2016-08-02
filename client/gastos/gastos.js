@@ -4,21 +4,21 @@ angular
  
 function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
+  this.nuevo = false;
   this.tipoGasto = 'cheques';
   this.gasto = {};
   this.semanaActual = moment(new Date()).week();
   this.diaActual = moment(new Date()).weekday();
   dias = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"];
-  this.colores = ["active","success","warning","danger","info"];
   this.diasActuales = [];
   for(i = 0; i < this.diaActual; i++){this.diasActuales.push(dias[i])};
 
   this.subscribe('gastos', () => {
-    return [{tipoGasto  : this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{semana: this.semanaActual, tipoGasto  : this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.subscribe('conceptosGasto', () => {
-    return [{estatus: true, tipoGasto: this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{estatus: true, tipoGasto: this.getReactively('tipoGasto')}];
   });
 
   this.subscribe('pagos', () => {
@@ -45,7 +45,10 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
     this.tipoGasto = tipoGasto;
     this.gasto = {};
   }
-
+  this.boton = function(){
+    this.nuevo = !this.nuevo;
+    console.log(this.nuevo)
+  }
   this.guardar = function(gasto, form){
     if(form.$invalid){
       toastr.error('error.');
@@ -69,7 +72,6 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
       toastr.error('error.');
       return;
     }
-    concepto.campus_id = Meteor.user().profile.campus_id;
     concepto.tipoGasto = this.tipoGasto;
     concepto.estatus = true;
     ConceptosGasto.insert(concepto);
@@ -87,6 +89,17 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.sum = function(){
     var sum = _.reduce(this.gastos, function(memo, gasto){ return memo + gasto.importe; },0);
     return sum
+  }
+  this.descripcion = function(concepto_id){
+    if(concepto_id != undefined){
+      concepto = ConceptosGasto.findOne(concepto_id);
+      if(concepto.campoDeDescripcion)
+        return true
+      else
+        return false
+    }else{
+      return false
+    }
   }
 ////////Depositos
   this.importeDiarioPagos = function(dia, cuenta_id){

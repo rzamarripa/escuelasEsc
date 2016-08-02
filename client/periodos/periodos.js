@@ -36,7 +36,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	});
 
 	this.subscribe('subCiclos',()=>{
-		return [{estatus:true,ciclo_id:this.getReactively('periodo.ciclo_id'), seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	});
 	this.subscribe('ciclos',()=>{
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
@@ -47,7 +47,7 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
   	this.helpers({
 	  	subCiclos : () => {
-		  	return SubCiclos.find();
+		  	return SubCiclos.find({ciclo_id:this.getReactively('periodo.ciclo_id')});
 	 	},
 	  	periodos : () => {
 		  	return Periodos.find();
