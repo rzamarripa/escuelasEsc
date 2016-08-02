@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{escu.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoescuela" ng-click="escu.nuevoEscuela()">
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoescuela" ng-click="escu.nuevoEscuelas()">
 		   {{escu.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
@@ -115,15 +115,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="escu.editar(escuela._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							  <li><a href="#" ng-click="escu.cambiarEstatus(escuela._id)"><i class="fa fa-trash"></i> 
-								  		<span ng-if="escuela.estatus">
-										  	Desactivar
-											</span>
-										  <span ng-if="!escuela.estatus">
-										   	Activar
-											</span>
-							  	  </a>
-							  </li>
+							    <li><a href="#" ng-click="escu.cambiarEstatus(escuela._id)">
+							    				<i class="fa fa-{{escuela.estatus ? 'trash' : 'check' }}"></i> {{escuela.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    
