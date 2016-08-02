@@ -21,7 +21,7 @@
 								</option>
 							</select>
 						</div>
-				    	<div class="col-sm-4" valida>
+				    <div ng-if="per.periodo.ciclo_id != undefined" class="col-sm-4" valida>
 							<label >Subciclo Escolar *</label>
 							<select name="subciclo" class="form-control" placeholder="Seleccione" ng-model="per.periodo.subCiclo_id" required>
 							 	<option  value="{{subCiclo._id}}" ng-repeat="subCiclo in per.subCiclos">

@@ -51,8 +51,10 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			  if(this.getReactively("cantidad") > 0){
 				  var ultimoAlumno = Alumnos.findOne({}, {sort: {fechaCreacion:-1}});
 				  if(ultimoAlumno){
-					  matriculaAnterior = parseInt(ultimoAlumno.matricula) + 1;
-					  matriculaAnterior = '' + matriculaAnterior;
+					  identificador = ultimoAlumno.matricula.substring(1, ultimoAlumno.matricula.length);
+					  console.log(identificador);
+					  matriculaAnterior = parseInt(identificador) + 1;
+					  matriculaAnterior = 'e' + matriculaAnterior;
 					  rc.alumno.nombreUsuario = matriculaAnterior;
 				  	rc.alumno.matricula = matriculaAnterior;
 				  }
@@ -67,6 +69,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.guardar = function (alumno,form) {
 		if(form.$invalid){
 			this.validation = true;
+			console.log(form.$invalid);
       toastr.error('Error al guardar los datos del Alumno.');
       return;
     }

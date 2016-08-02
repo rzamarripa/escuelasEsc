@@ -1,6 +1,6 @@
 <header id="header">
 	<div id="logo-group">
-		<span id="logo" style="margin-top: 0px !important;"> <img ng-src="{{ro.seccion.logo}}" style="width: 110px;" alt="Escuelas"> </span>
+		<span id="logo" style="margin-top: 0px !important;"> <img ng-if="ro.seccion.logo != undefined" ng-src="{{ro.seccion.logo}}" style="width: 110px;" alt="Escuelas"> </span>
 	</div>
   <div class="pull-right">
     <div id="hide-menu" class="btn-header pull-right">
@@ -14,7 +14,7 @@
     <div class="btn-header pull-right">
       <span>
         <a ui-sref="anon.logout" title="Cerrar Sesión">
-          <i class="fa fa-sign-{{isLoggedIn() ? 'out' : 'in'}}"></i>
+          <i class="fa fa-sign-{{ro.isLoggedIn() ? 'out' : 'in'}}"></i>
         </a>
       </span>
     </div>

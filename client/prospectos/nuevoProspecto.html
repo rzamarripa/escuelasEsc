@@ -32,26 +32,7 @@
 			</fieldset>
 			<fieldset class="text-left">
 				<div class="row text-left">
-					<section class="col col-sm-3">
-						<h4>¿Cuál es la espectativa?</h4>
-						<label class="select">
-							<select name="country" ng-model="fa.prospecto.quieroSer" required>
-								<option value="Chef" selected="" >Ser Chef</option>
-								<option value="Pasatiempo">Hacer de esto un pasatiempo</option>
-								<option value="Aprender">Aprender a cocinar</option>
-								<option value="Repostería">Dedicarme a la repostería</option>
-							</select> <i></i> </label>
-					</section>
-
-					<section class="col col-sm-6">										
-						<h4>¿Qué te gustaría aprender?</h4>
-					  <label ng-repeat="tipoComida in fa.tipoComidas">
-					  	<br/>
-						  <input type="checkbox" checklist-model="fa.prospecto.tipoComidasSeleccionadas" checklist-value="tipoComida"> {{tipoComida}}
-						</label>
-					</section>
-
-					<section class="col col-sm-3">
+					<section class="col col-sm-4">
 						<h4>Quieres estudiar...</h4>
 						<div class="inline-group">
 							<label class="radio">
@@ -65,18 +46,14 @@
 								<i></i>Talleres</label>
 						</div>
 					</section>
+					<section class="col col-sm-8">
+						<h4>Información adicional</h4>
+						<label class="textarea"> 										
+							<textarea rows="3" name="info" ng-model="fa.prospecto.informacion" placeholder="Información Adicional"></textarea> 
+						</label>
+					</section>
 				</div>
 			</fieldset>
-			<fieldset class="text-left">
-				<section>
-					<h4>Información adicional</h4>
-					<label class="textarea"> 										
-						<textarea rows="3" name="info" ng-model="fa.prospecto.informacion" placeholder="Información Adicional"></textarea> 
-					</label>
-				</section>
-			</fieldset>							
-			
-
 			<footer>
 				<button type="submit" class="btn btn-primary" ng-click="fa.guardar(fa.prospecto)">
 					Enviar

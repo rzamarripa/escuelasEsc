@@ -7,10 +7,12 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<div id="myCarousel" class="carousel profile-carousel">
+								<!--
 									<div class="air air-bottom-right padding-10">
 										<a href="javascript:void(0);" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-check"></i> Follow</a>&nbsp;
 										<a href="javascript:void(0);" class="btn txt-color-white bg-color-pinkDark btn-sm"><i class="fa fa-envelope-o"></i> Enviar Mensaje</a>
 									</div>
+								-->
 									<div class="air air-top-left padding-10">
 										<h4 class="txt-color-white font-md"><i class="fa fa-calendar"></i>&nbsp;&nbsp;{{al.fechaActual | date:'dd-MM-yyyy'}}<small> <a class="btn btn-primary" href="alumnos/{{al.alumno._id}}" ng-show="elMismo(alumno._id)">Modificar</a></small></h4>
 									</div>
@@ -37,8 +39,8 @@
 							</div>
 							<div class="col-sm-12">
 								<div class="row">
-									<div class="col-sm-3 profile-pic">
-										<img src="{{al.alumno.fotografia}}" >
+									<div class="col-sm-2 profile-pic" style="text-align:left;width:initial;">
+										<img style="max-width:200px;" src="{{al.tieneFoto(al.alumno.sexo, al.alumno.fotografia)}}" >
 										<div class="padding-10">
 											<h4 class="font-md"><strong>0</strong>
 											<br>
@@ -51,22 +53,22 @@
 									</div>
 									<div class="col-sm-6">
 										<h1>{{al.alumno.nombre}} <span class="semi-bold">{{al.alumno.apPaterno}} {{al.alumno.apMaterno}}</span>
-										<br>
-										<small> Alumno</small></h1>
+										
+										<small> (Alumno)</small></h1>
 										<ul class="list-unstyled">
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-phone"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.tel1}}</span>
+													<i class="fa fa-phone fa-lg"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.tel1}}</span>
 												</p>
 											</li>
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="mailto:{{al.alumno.correo}}">{{al.alumno.correo}}</a>
+													<i class="fa fa-envelope fa-lg"></i>&nbsp;&nbsp;<a href="mailto:{{al.alumno.correo}}">{{al.alumno.correo}}</a>
 												</p>
 											</li>
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.fechaNac | date:"dd-MM-yyyy"}}</span>
+													<i class="fa fa-birthday-cake fa-lg"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.fechaNac | date:"dd-MM-yyyy"}}</span>
 												</p>
 											</li>
 										</ul>
@@ -78,7 +80,8 @@
 											{{al.alumno.observacionesGenerales}}
 										</p>
 										<br>
-									</div>																		
+									</div>
+									<!--																
 									<div class="col-sm-3">
 										<h1><small>Amigos</small></h1>
 										<ul class="list-inline friends-list">
@@ -99,16 +102,18 @@
 											</li>
 										</ul>
 									</div>
+									-->
 								</div>
 								<div class="row">
 									<div class="col-sm-12">
-										<ul class="nav nav-tabs ">
-											<li>
-												<a href="#masinfo" data-toggle="tab">Más Información</a>
+										<ul class="nav nav-tabs">
+											<li class="pull-right">
+												<a ng-click="al.masInformacion()" role="button" data-toggle="collapse"
+			href="#masInformacion" aria-expanded="false" aria-controls="masInformacion"><i class="fa fa-{{al.masInfo == true ? 'plus':'minus'}} fa-lg"></i></a>
 											</li>
 										</ul>
-										<div class="tab-content padding-10">
-											<div class="tab-pane" id="masinfo">
+										<div class="collapse padding-10" id="masInformacion">
+											<div class="tab-pane">
 												<div class="col-sm-6">
 													<ul class="list-unstyled">															
 														<li>
@@ -208,7 +213,7 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+<div class="row" ng-if="al.estaInscrito(al.alumno._id)">
 	<div class="col col-sm-12">
 		<section id="widget-pagos" data-widget-grid="data-widget-grid">
 		  <div class="row">

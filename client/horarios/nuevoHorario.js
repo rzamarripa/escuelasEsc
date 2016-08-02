@@ -91,13 +91,16 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  rc.clase 	= {};
   }
 
-  this.modificaClase = function(clase){
+  this.modificarClase = function(clase,form2){
+	  console.log(clase);
+	  console.log(this.horario.clases);
 	  
 	  _.each(this.horario.clases, function(claseActual){
+		  console.log("entre", clase);
 		  if(claseActual._id == clase._id){
-			  var materia = $meteor.object(Materias, this.clase.materia_id, false);
-				var maestro = $meteor.object(Maestros, this.clase.maestro_id, false);
-				var aula 		= $meteor.object(Aulas, this.clase.aula_id, false);
+			  var materia = $meteor.object(Materias, clase.materia_id, false);
+				var maestro = $meteor.object(Maestros, clase.maestro_id, false);
+				var aula 		= $meteor.object(Aulas, clase.aula_id, false);
 			  clase.materia = materia.nombreCorto;
 			  clase.title = maestro.nombre + " " + maestro.apPaterno + "\n" + materia.nombreCorto + "\n" + aula.nombre;
 			  clase.maestro = maestro.nombre + " " + maestro.apPaterno;
@@ -196,9 +199,10 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   /* alert on Drop */
 	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
 		console.log(delta);
+		console.log(event);
 		this.clase = event;
-		rc.clase.start 	= moment(event.start).add(delta).add('hours', 0).format("YYYY-MM-DD HH:mm");
-		rc.clase.end 		= moment(event.end).add(delta).add('hours', 0).format("YYYY-MM-DD HH:mm");
+		rc.clase.start 	= moment(event.start).add(delta).format("YYYY-MM-DD HH:mm");
+		rc.clase.end 		= moment(event.end).add(delta).format("YYYY-MM-DD HH:mm");
 		rc.actionAgregar = false;
 		//this.alertOnEventClick(event, jsEvent, view);
   };
@@ -251,10 +255,10 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   this.uiConfig = {
     calendar:{
       height: 500,
-      editable: true,
+      editable: false,
       lang:'es',
       defaultView:'agendaWeek',
-      weekends : false,
+      weekends : true,
       header:{
         left: 'title',
         center: '',
@@ -274,7 +278,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
       dayNames : ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
       dayNamesShort : ["Dom", "Lun", "Ma", "Mi", "Jue", "Vie", "Sab"],
       eventClick: this.alertOnEventClick,
-      eventDrop: this.alertOnDrop,
+      //eventDrop: this.alertOnDrop,
       eventResize: this.alertOnResize,
       eventRender: this.eventRender
     }
