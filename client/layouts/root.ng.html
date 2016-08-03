@@ -1,7 +1,9 @@
 <header id="header">
 	<div id="logo-group">
 		<span id="logo" style="margin-top: 0px !important;"> <img ng-if="ro.seccion.logo != undefined" ng-src="{{ro.seccion.logo}}" style="width: 110px;" alt="Escuelas"> </span>
+		<span id="activity" class="activity-dropdown"> <i class="fa fa-user"></i> <b class="badge  bounceIn animated">0</b> </span>
 	</div>
+	
   <div class="pull-right">
     <div id="hide-menu" class="btn-header pull-right">
       <span>
@@ -10,7 +12,7 @@
         </a>
       </span>
     </div>
-
+    
     <div class="btn-header pull-right">
       <span>
         <a ui-sref="anon.logout" title="Cerrar Sesión">

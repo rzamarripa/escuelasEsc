@@ -1,5 +1,5 @@
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#admonForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="admonForm">
-  Agregar
+<button class="btn {{gc.nuevo == false ? 'btn-primary':'btn-danger'}}" type="button" data-toggle="collapse" data-target="#admonForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="admonForm" ng-click="gc.boton()">
+  {{gc.nuevo == false ? 'Agregar':'Cancelar'}}
 </button>
 <div class="row">
   <div class="col-sm-12">
@@ -22,7 +22,7 @@
 						  </option>
 						</select>
 					</div>
-					<div ng-if="descrepcion(gc.gasto.concepto_id)" class="form-group col-sm-4" valida>
+					<div ng-if="gc.descripcion(gc.gasto.concepto_id)" class="form-group col-sm-4" valida>
 					  <label>Descripción</label>
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.descripcion" name="descripcion" required>
 					</div>

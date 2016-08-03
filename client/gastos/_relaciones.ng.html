@@ -1,5 +1,5 @@
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#relacionesForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="relacionesForm">
-  Agregar
+<button class="btn {{gc.nuevo == false ? 'btn-primary':'btn-danger'}}" type="button" data-toggle="collapse" data-target="#relacionesForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="relacionesForm" ng-click="gc.boton()">
+  {{gc.nuevo == false ? 'Agregar':'Cancelar'}}
 </button>
 <div class="row">
   <div class="col-sm-12">
@@ -26,7 +26,7 @@
 						  </option>
 						</select>
 					</div>
-					<div class="form-group col-sm-4" valida>					    
+					<div ng-if="gc.descripcion(gc.gasto.concepto_id)" class="form-group col-sm-4" valida>
 					  <label>Descripción</label>
 				  	<input type="text" class="form-control"  ng-model="gc.gasto.descripcion" name="descripcion" required>
 					</div>
@@ -55,7 +55,7 @@
 	        <td>{{gasto.fechaLimite}}</td>
 	        <td align="center">
 	          <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
-	          <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+	          <a ng-click="gc.cambiarEstatus(gasto)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
 	        </td>
 	      </tr>
 	    </tbody>

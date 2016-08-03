@@ -8,7 +8,6 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
   this.nuevo = true;  
   
 	this.subscribe('gerentesVenta',()=>{
-
 		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
  
@@ -63,7 +62,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 	this.actualizar = function(gerenteVenta,form)
 	{
 			if(form.$invalid){
-		        toastr.error('Error al actualizar los datos del Gerente de Venta.');
+		        toastr.error('Error al actualizar los datos.');
 		        return;
 		  }
 			Meteor.call('updateGerenteVenta', gerenteVenta, 'gerenteVenta');
