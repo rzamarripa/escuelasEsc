@@ -8,7 +8,7 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	this.maestro = {}; 
 	
 	this.subscribe('maestros',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
 //TODO me quedé validando maestros
 	this.helpers({
@@ -41,65 +41,67 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
   	  
   this.nuevoMaestro = function()
   {
-    this.action = true;
-    this.nuevo = !this.nuevo;
-    
+	    this.action = true;
+	    this.nuevo = !this.nuevo;
   };
 
 	this.guardar = function(maestro,form)
 	{
-		if(form.$invalid){
-      toastr.error('Error al guardar los datos del Maestro.');
-      return;
-	  }
-	
-		maestro.estatus = true;
-		maestro.campus_id = Meteor.user().profile.campus_id;
-		maestro.fechaCreacion = new Date();				
-		var id = Maestros.insert(maestro);	
-		maestro.maestro_id = id;
-		Meteor.call('createUsuario', rc.maestro, 'maestro');
-		toastr.success("Maestro Creado \n Usuario Creado");
-		maestro = {};
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-    form.$setUntouched();	
+			if(form.$invalid){
+	      toastr.error('Error al guardar los datos.');
+	      return;
+		  }
+		
+			maestro.estatus = true;
+			maestro.campus_id = Meteor.user().profile.campus_id;
+			maestro.usuarioInserto = Meteor.userId();
+			maestro.fechaCreacion = new Date();				
+			var id = Maestros.insert(maestro);	
+			maestro.maestro_id = id;
+			Meteor.call('createUsuario', rc.maestro, 'maestro');
+			toastr.success("Maestro Creado \n Usuario Creado");
+			maestro = {};
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();	
 	};
 
 	this.editar = function(id)
 	{
-		console.log(id);
-	    this.maestro = Maestros.findOne({_id:id});
-	    this.action = false;
-	    $('.collapse').collapse('show');
-	    this.nuevo = false;
+			//console.log(id);
+		  this.maestro = Maestros.findOne({_id:id});
+		  this.action = false;
+		  $('.collapse').collapse('show');
+		  this.nuevo = false;
 	};
 	
 	this.actualizar = function(maestro,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Maestro.');
-	        return;
-	    }
-		var idTemp = maestro._id;
-		delete maestro._id;		
-		Maestros.update({_id:idTemp},{$set:maestro});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		  }
+			var idTemp = maestro._id;
+			delete maestro._id;		
+			maestro.usuarioActualizo = Meteor.userId();
+			Maestros.update({_id:idTemp},{$set:maestro});
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)
 	{
-		var maestro = Mestros.findOne({_id:id});
-		if(maestro.estatus == true)
-			maestro.estatus = false;
-		else
-			maestro.estatus = true;
-		
-		Maestros.update({_id:id}, {$set : {estatus : maestro.estatus}});
+			var maestro = Maestros.findOne({_id:id});
+			if(maestro.estatus == true)
+				maestro.estatus = false;
+			else
+				maestro.estatus = true;
+			
+			Maestros.update({_id:id}, {$set : {estatus : maestro.estatus}});
 	};
 
 	this.tomarFoto = function(){

@@ -10,15 +10,15 @@
 		  	<div class="well">	    
 			    <div class="row">
 				    	<div class="col-sm-4" valida>					    
-					    	<label>Nombre de usuario</label>
+					    	<label>Nombre de usuario *</label>
 					    	<input name="nombreusuario" type="text" class="form-control" placeholder="Nombre de usuario" ng-model="maes.maestro.nombreUsuario" required="" disabled="">
 				    	</div>    	   
 				    	<div class="col-sm-4" valida>					    
-					    	<label>Contraseña</label>
+					    	<label>Contraseña *</label>
 					    	<input name="contrasena" type="password" class="form-control" placeholder="Contraseña" ng-model="maes.maestro.contrasena" required="">
 				    	</div>		    				    	    
 				    	<div class="col-sm-4" valida>					    
-					    	<label>Confirmar Contraseña</label>
+					    	<label>Confirmar Contraseña *</label>
 					    	<input name="confirmar" type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="maes.maestro.confirmarContrasena" required="">
 				    	</div>
 				</div>
@@ -26,15 +26,15 @@
 			  <div class="well">	
 			    <div class="row">
 			    	<div class="col-sm-1" valida>					    
-				    	<label>Título</label>
+				    	<label>Título *</label>
 				    	<input name="titulo" type="text" class="form-control" placeholder="Título" ng-model="maes.maestro.titulo" required="">
 			    	</div>
 			    	<div class="col-sm-3" valida>					    
-				    	<label>Nombre</label>
+				    	<label>Nombre *</label>
 				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="maes.maestro.nombre" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>					    
-				    	<label>Apellido Paterno</label>
+				    	<label>Apellido Paterno *</label>
 				    	<input name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="maes.maestro.apPaterno" required="">
 			    	</div>
 			    	<div class="col-sm-4">					    
@@ -48,7 +48,7 @@
 				    	<input type="text" class="form-control" placeholder="Correo" ng-model="maes.maestro.correo">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-				    	<label>Género</label>
+				    	<label>Género *</label>
 					    <select name="genero" ng-model="maes.maestro.genero" class="form-control" required>
 							  <option value="Masculino">Masculino</option>
 							  <option value="Femenino">Femenino</option>
@@ -135,7 +135,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="maes.editar(maestro._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="maes.cambiarEstatus(maestro._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="maes.cambiarEstatus(maestro._id)">
+							    				<i class="fa fa-{{maestro.estatus ? 'trash' : 'check' }}"></i> {{maestro.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

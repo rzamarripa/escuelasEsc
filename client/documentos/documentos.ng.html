@@ -32,8 +32,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th width="10%"><div class="text-center">Nombre</div></th>
-		
+					<th width="10%"><div class="text-center">Nombre</div></th>	
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -68,14 +67,9 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="doc.editar(documento._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="doc.cambiarEstatus(documento._id)"><i class="fa fa-trash"></i> 
-									    	<span ng-if="documento.estatus">
-											  	Desactivar
-												</span>
-											  <span ng-if="!documento.estatus">
-											   	Activar
-												</span>
-							    	  </a>
+							    <li><a href="#" ng-click="doc.cambiarEstatus(documento._id)">
+							    				<i class="fa fa-{{documento.estatus ? 'trash' : 'check' }}"></i> {{documento.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
 							    </li>
 							  </ul>
 							</div>

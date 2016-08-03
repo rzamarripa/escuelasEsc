@@ -10,7 +10,7 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4" valida>					    
-						    <label>Estado civil</label>
+						    <label>Estado civil *</label>
 					    	<input name="estadocivil" type="text" class="form-control" placeholder="Estado civil" ng-model="civ.civil.estado" required>
 			    	</div>
 			    </div>   
@@ -72,7 +72,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="civ.editar(civil._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							  <li><a href="#" ng-click="civ.cambiarEstatus(civil._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="civ.cambiarEstatus(civil._id)">
+							    				<i class="fa fa-{{civil.estatus ? 'trash' : 'check' }}"></i> {{civil.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -10,19 +10,19 @@
 		  	<div class="well">		  		
 			    <div class="row">
 			    	<div class="col-sm-4" valida>					    
-						  <label>Clave</label>
+						  <label>Clave *</label>
 				    	<input name="clave" type="text" class="form-control"  ng-model="mat.materia.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-						  <label>Nombre</label>
+						  <label>Nombre *</label>
 				    	<input name="nombre" type="text" class="form-control"  ng-model="mat.materia.nombre" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-						  <label>Nombre Corto</label>
+						  <label>Nombre Corto *</label>
 				    	<input name="nombreCorto" type="text" class="form-control"  ng-model="mat.materia.nombreCorto" required="" maxlength="6">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-						<label>Departamento Academico</label>
+						<label>Departamento Academico *</label>
 						<select name="deptoAcademico" class="form-control" placeholder="Seleccione" ng-model="mat.materia.deptoAcademico_id" required="">
 							<option ng-repeat="depto in mat.deptosAcademicos" value="{{depto._id}}">{{depto.descripcionCorta}}</option>
 						</select>
@@ -86,7 +86,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="mat.editar(materia._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="mat.cambiarEstatus(materia._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="mat.cambiarEstatus(materia._id)">
+							    				<i class="fa fa-{{materia.estatus ? 'trash' : 'check' }}"></i> {{materia.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    
