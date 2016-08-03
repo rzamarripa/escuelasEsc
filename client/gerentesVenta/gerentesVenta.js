@@ -8,7 +8,7 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
   this.nuevo = true;  
   
 	this.subscribe('gerentesVenta',()=>{
-		return [{}]
+		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	 });
  
   this.helpers({
@@ -61,17 +61,15 @@ function GerentesVentaCtrl($scope, $meteor, $reactive,  $state, $stateParams, to
 	
 	this.actualizar = function(gerenteVenta,form)
 	{
-		console.log(gerenteVenta);
-		if(form.$invalid){
-			toastr.error('Error al actualizar los datos del Gerente de Venta.');
-			return;
-		}
-		Meteor.call('updateGerenteVenta', gerenteVenta, 'gerenteVenta');
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		this.gerenteVenta = {};
-		form.$setPristine();
-		form.$setUntouched();
+			if(form.$invalid){
+		        toastr.error('Error al actualizar los datos.');
+		        return;
+		  }
+			Meteor.call('updateGerenteVenta', gerenteVenta, 'gerenteVenta');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
 	};
 	
 	/*
