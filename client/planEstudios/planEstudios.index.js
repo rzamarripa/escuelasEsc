@@ -22,7 +22,7 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 			
 			rc.nuevo = false;
 		}
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }] 
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }] 
   });
   rc.subscribe('secciones',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
@@ -114,28 +114,29 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 
 	rc.guardar = function(plan,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Plan.');
-	        return;
-	    }
-		plan.estatus = true;
-		this.plan.campus_id = Meteor.user().profile.campus_id;
-		this.plan.seccion_id = Meteor.user().profile.seccion_id;
-		delete plan.$$hashKey;
-		for (var i = 0; i < plan.grados.length; i++) {
-			for (var j = 0; j < plan.grados[i].length; j++) {
-				delete plan.grados[i][j].$$hashKey;
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		    }
+			plan.estatus = true;
+			plan.campus_id = Meteor.user().profile.campus_id;
+			plan.seccion_id = Meteor.user().profile.seccion_id;
+			delete plan.$$hashKey;
+			for (var i = 0; i < plan.grados.length; i++) {
+				for (var j = 0; j < plan.grados[i].length; j++) {
+					delete plan.grados[i][j].$$hashKey;
+				};
 			};
-		};
-		console.log(plan);
-		PlanesEstudios.insert(plan);	
-		toastr.success('Plan de estudio guardado');	
-		rc.plan = {}; 
-		$('.collapse').collapse('hide');
-		rc.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
-		$state.go("root.planEstudio");
+			console.log(plan);
+			plan.usuarioInserto = Meteor.userId();
+			PlanesEstudios.insert(plan);	
+			toastr.success('Guardado correctamente.');	
+			rc.plan = {}; 
+			$('.collapse').collapse('hide');
+			rc.nuevo = true;
+			form.$setPristine();
+	        form.$setUntouched();
+			$state.go("root.planEstudio");
 	};
 
 	rc.editar = function(id)
@@ -149,36 +150,38 @@ function PlanEstudiosIndexCtrl($scope, $meteor, $reactive, $state, $stateParams,
 
 	rc.actualizar = function(plan,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Plan.');
-	        return;
-	    }
-		var idTemp = rc.plan._id;
-		delete rc.plan._id;	
-		delete rc.plan.$$hashKey;
-		for (var i = 0; i < rc.plan.grados.length; i++) {
-			for (var j = 0; j < rc.plan.grados[i].length; j++) {
-				delete rc.plan.grados[i][j].$$hashKey;
+			if(form.$invalid){
+		        toastr.error('Error al actualizar los datos.');
+		        return;
+		  }
+			var idTemp = rc.plan._id;
+			delete rc.plan._id;	
+			delete rc.plan.$$hashKey;
+			for (var i = 0; i < rc.plan.grados.length; i++) {
+				for (var j = 0; j < rc.plan.grados[i].length; j++) {
+					delete rc.plan.grados[i][j].$$hashKey;
+				};
 			};
-		};
-		PlanesEstudios.update({_id:idTemp},{$set:rc.plan});
-		$('.collapse').collapse('hide');
-		rc.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
-        $state.go("root.planEstudio");	
+			plan.usuarioActualizo = Meteor.userId(); 
+			PlanesEstudios.update({_id:idTemp},{$set:rc.plan});
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			rc.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
+	    $state.go("root.planEstudio");	
 	};
 
 
 	rc.cambiarEstatus = function(id)
 	{
-		var plan = PlanesEstudios.findOne({_id:id});
-		if(plan.estatus == true)
-			plan.estatus = false;
-		else
-			plan.estatus = true;
-		
-		PlanesEstudios.update({_id: id},{$set :  {estatus : plan.estatus}});
+			var plan = PlanesEstudios.findOne({_id:id});
+			if(plan.estatus == true)
+				plan.estatus = false;
+			else
+				plan.estatus = true;
+			
+			PlanesEstudios.update({_id: id},{$set :  {estatus : plan.estatus}});
   };
 	/*rc.action = true;  
 

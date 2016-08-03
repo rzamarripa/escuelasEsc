@@ -32,7 +32,7 @@
 			<form name="form2" novalidate>
 				<fieldset>
 					<div class="form-group" valida>
-						<label for="materia">Materia</label>
+						<label for="materia">Materia *</label>
 						<select name="materia_id" class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.materia_id" required="">
 							<option value=""></option>
 						  <option ng-repeat="materia in ho.materias" value="{{materia._id}}">
@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="form-group" valida>
-						<label >Maestro</label>
+						<label >Maestro *</label>
 						<select name="maestro_id" class="form-control select2" placeholder="Seleccione" ng-model="ho.clase.maestro_id" required>
 							<option value=""></option>
 						  <option ng-repeat="maestro in ho.maestros" value="{{maestro._id}}">
@@ -61,12 +61,12 @@
 					</div>
 
 					<div class="form-group" valida>
-						<label for="fechaNac">Inicio</label>
+						<label for="fechaNac">Inicio *</label>
 						<input name="start" date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="ho.clase.start" required=""/>
 					</div>
 					
 					<div class="form-group" valida>
-						<label for="fechaNac">Fin</label>
+						<label for="fechaNac">Fin *</label>
 						<input name="end" date-time class="form-control" auto-close="true" view="date" max-view="date" min-view="minutes" ng-model="ho.clase.end" required=""/>
 					</div>
 					

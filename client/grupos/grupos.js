@@ -18,7 +18,7 @@ angular.module("casserole")
 	
 	this.subscribe('grupo', () => {
 		
-		return [{_id : $stateParams.id, estatus : true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}];
+		return [{_id : $stateParams.id, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}];
 	});
 	this.subscribe("secciones",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
@@ -32,7 +32,7 @@ angular.module("casserole")
 	
 	this.subscribe('subCiclos', () => {
 		return [{
-			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
+			ciclo_id : {$in : this.getCollectionReactively('ciclos_ids')},estatus:true,seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
 		}]
 	});
 	
@@ -154,48 +154,50 @@ angular.module("casserole")
 
   this.guardar = function(grupo,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Grupo.');
-	        return;
-	    }
-		this.grupo.estatus = true;
-		this.grupo.campus_id = Meteor.user().profile.campus_id;
-		this.grupo.seccion_id = Meteor.user().profile.seccion_id;
-		grupo.inscritos = 0;
-		Grupos.insert(this.grupo);
-		toastr.success('Grupo guardado.');
-		this.grupo = {}; 
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
-		$state.go('root.grupos');
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		    }
+			grupo.estatus = true;
+			grupo.campus_id = Meteor.user().profile.campus_id;
+			grupo.seccion_id = Meteor.user().profile.seccion_id;
+			grupo.usuarioInserto = Meteor.userId();
+			grupo.inscritos = 0;
+			Grupos.insert(this.grupo);
+			toastr.success('Guardado correctamente.');
+			this.grupo = {}; 
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
+			$state.go('root.grupos');
 	};
 
 	
   this.actualizar = function(grupo){
-    	if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Grupo.');
-	        return;
-	    }
-    	var idTemp = grupo._id;
-		delete grupo._id;		
-		Grupos.update({_id:$stateParams.id}, {$set : grupo});
-		toastr.success('Grupo guardado.');
-		$state.go("root.grupos",{"id":$stateParams.id});
-		form.$setPristine();
-        form.$setUntouched();
+	    if(form.$invalid){
+		        toastr.error('Error al actualizar los datos.');
+		        return;
+		  }
+	    var idTemp = grupo._id;
+			delete grupo._id;		
+			grupo.usuarioActualizo = Meteor.userId(); 
+			Grupos.update({_id:$stateParams.id}, {$set : grupo});
+			toastr.success('Actualizado correctamente.');
+			$state.go("root.grupos",{"id":$stateParams.id});
+			form.$setPristine();
+	        form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)
 	{
-		/*var grupo = Grupos.findOne({_id:id});
-		if(grupo.estatus == true)
-			grupo.estatus = false;
-		else
-			grupo.estatus = true;		
-		Grupos.update({_id:id},  {$set : {estatus: grupo.estatus}});*/
-		Grupos.remove(id);
+			var grupo = Grupos.findOne({_id:id});
+			if(grupo.estatus == true)
+				grupo.estatus = false;
+			else
+				grupo.estatus = true;		
+			Grupos.update({_id:id},  {$set : {estatus: grupo.estatus}});
+		//Grupos.remove(id);
 	};
 
 	this.getSeccion = function(seccion_id)
@@ -209,7 +211,7 @@ angular.module("casserole")
 	{
 		ciclo = Ciclos.findOne(ciclo_id);
 		if(ciclo)
-			return ciclo.descripcion;
+			return ciclo.nombre;
 	};	
 	
 	this.getTurno = function(turno_id)

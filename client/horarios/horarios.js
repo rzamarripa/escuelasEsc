@@ -6,7 +6,7 @@ function HorariosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 	
 	this.subscribe("horarios",()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	});
 
 	this.helpers({

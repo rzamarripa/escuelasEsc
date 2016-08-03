@@ -176,9 +176,9 @@
 									    <label> Orden</label>
 									    <input type="text" class="form-control" placeholder="Orden" ng-model="sec.seccion.orden">
 							    	</div>
-							    	<div class="col-sm-4">
-									    <label>Grados </label>
-									    <input type="text" class="form-control" placeholder="Grados" ng-model="sec.seccion.grados">
+							    	<div class="col-sm-4" valida>
+									    <label>Grados *</label>
+									    <input type="number" class="form-control" placeholder="Grados" ng-model="sec.seccion.grados" min="0" required="">
 							    	</div>
 							    </div>
 							    <div class="row">
