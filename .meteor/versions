@@ -12,6 +12,7 @@ angular:angular-cookies@1.5.3_1
 angular:angular-sanitize@1.5.3_1
 angularui:angular-ui-bootstrap@0.13.0
 angularui:angular-ui-router@0.2.15
+angularutils:pagination@0.9.1_2
 autoupdate@1.2.9
 babel-compiler@6.6.4
 babel-runtime@0.1.8
@@ -100,6 +101,7 @@ standard-minifier-js@1.0.6
 stevezhu:lodash@3.10.1
 templating@1.1.9
 templating-tools@1.0.4
+tmeasday:publish-counts@0.7.3
 tracker@1.0.13
 ui@1.0.11
 underscore@1.0.8

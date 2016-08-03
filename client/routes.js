@@ -641,6 +641,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.bitacora', {
+      url: '/bitacora',
+      templateUrl: 'client/bitacora/bitacora.ng.html',
+      controller: 'BitacoraCtrl as bita',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
+    })
     .state('root.gastos', {
       url: '/gastos',
       templateUrl: 'client/gastos/gastos.ng.html',
