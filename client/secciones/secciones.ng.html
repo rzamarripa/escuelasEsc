@@ -27,7 +27,7 @@
 								    	</div>
 								    	<div class="col-sm-3">					    
 									    	<label>Apellido Materno</label>
-									    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="sec.seccion.apMaterno" >
+									    	<input name="apMaterno"  type="text" class="form-control" placeholder="Apellido Materno" ng-model="sec.seccion.apMaterno" >
 								    	</div>
 								    	<div class="col-sm-2" valida>					    
 									    	<label>Usuario *</label>
@@ -100,7 +100,7 @@
 							    <div class='row'>
 						    		<div class="col-sm-3">
 									    <label>Zona escolar </label>
-									    <input type="text" class="form-control" placeholder="Zona escolar" ng-model="sec.seccion.zonaEsc">
+									    <input name="zonaEscolar" type="text" class="form-control" placeholder="Zona escolar" ng-model="sec.seccion.zonaEsc">
 							    	</div>
 							    	<div class="col-sm-2" valida>
 									    <label>Edad de </label>
@@ -168,17 +168,17 @@
 							    <div class='row'>
 							    	<div class="col-sm-4">
 											<label >Departamento académico</label>
-											<select class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.deptoAcademico_id">
+											<select name="deptoAcademico" class="form-control select2" placeholder="Seleccione" ng-model="sec.seccion.deptoAcademico_id">
 												<option ng-repeat="deptoAcademico in sec.deptosAcademicos" value="{{deptoAcademico._id}}">{{deptoAcademico.descripcionCorta}}</option>
 											</select>
 										</div>
 							    	<div class="col-sm-4">
 									    <label> Orden</label>
-									    <input type="text" class="form-control" placeholder="Orden" ng-model="sec.seccion.orden">
+									    <input  name="ordenoman" type="text" class="form-control" placeholder="Orden" ng-model="sec.seccion.orden">
 							    	</div>
 							    	<div class="col-sm-4" valida>
 									    <label>Grados *</label>
-									    <input type="number" class="form-control" placeholder="Grados" ng-model="sec.seccion.grados" min="0" required="">
+									    <input name="grados2" type="number" class="form-control" placeholder="Grados" ng-model="sec.seccion.grados" min="0" required="">
 							    	</div>
 							    </div>
 							    <div class="row">
