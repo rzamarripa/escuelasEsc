@@ -9,6 +9,12 @@ angular.module("casserole")
     }];
   });
   
+  this.subscribe('secciones', function(){
+	  return [{
+		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+	  }]
+  });
+  
   this.subscribe('etapasVenta', function(){
 	  return [{
 		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
@@ -48,8 +54,11 @@ angular.module("casserole")
 	  },
 	  etapasVenta : () => {
 		  return EtapasVenta.find();
+	  },
+	  secciones : () => {
+		  return Secciones.find();
 	  }
-  });
+	});
   
   this.nuevaLlamada = true;
   this.llamada = {};
@@ -202,6 +211,13 @@ angular.module("casserole")
 	  var etapaVenta = EtapasVenta.findOne(etapaVenta_id);
 	  if(etapaVenta)
 	  	return etapaVenta.nombre;
+  }
+  
+  this.seleccionarSeccion = function(seccion){
+	  console.log(this.prospecto);
+	  this.prospecto.estudioInteres = seccion.nombreseccion; 
+	  this.prospecto.seccion_id = seccion._id
+	  console.log(this.prospecto);
   }
 		
 };

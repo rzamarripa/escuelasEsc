@@ -7,9 +7,9 @@
 		<label>Buscar: <input ng-model="fa.buscar.nombre" class="form-control"></label>
 	</div>
 </div>
-<div class="row">
-	<div class="col-sm-2" ng-repeat="etapaVenta in fa.etapasVenta">
-		<button class="btn btn-primary" ng-click="fa.filtrarEtapaVenta(etapaVenta._id)">{{etapaVenta.nombre}}</button>
+<div class="row well">
+	<div class="btn-group btn-group-justified">
+		<a href="javascript:void(0);" ng-click="fa.filtrarEtapaVenta(etapaVenta._id)" class="btn btn-primary" ng-repeat="etapaVenta in fa.etapasVenta">{{etapaVenta.nombre}}</a>
 	</div>
 </div>
 <br/>
