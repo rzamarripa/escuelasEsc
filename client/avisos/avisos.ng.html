@@ -14,10 +14,14 @@
 				    	<label>Título *</label>
 					    <input name="titulo" type="text" class="form-control" ng-model="av.aviso.titulo" required>
 			    	</div>
-			    	<div class="col-sm-4" valida>
+			    </div>
+			    <div class="row">
+			    	<div class="col-sm-10" valida>
 				    	<label>Descripción *</label>
-					     <input name="descripcion" type="text" class="form-control" ng-model="av.aviso.descripcion" required>
+					     <input name="descripcion" type="textarea" class="form-control" ng-model="av.aviso.descripcion" required>
 			    	</div>	
+			    </div>
+			    <div class="row">
 				  	<div class="col-sm-4" valida>
 								<label >Agregar Campus *</label>
 								<select multiple="true" name="campusids" class="form-control select2" placeholder="Seleccione" ng-model="av.aviso.campusids" required>

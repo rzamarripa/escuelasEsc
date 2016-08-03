@@ -5,8 +5,6 @@ angular
 function AvisosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 	this.action = true;
-	this.pagos = [];
-	
 	
 	this.subscribe('avisos',()=>{
 		return [{}]
@@ -35,17 +33,14 @@ function AvisosCtrl($scope, $meteor, $reactive, $state, toastr) {
   };
 	
   this.guardar = function(aviso,form)
-	{
-	
-			//console.log(aviso);
-			
+	{			
 			if(form.$invalid){
 	      toastr.error('Error al guardar los datos.');
 	      return;
 	    }
 			
 			aviso.estatus = true;
-			aviso.estadoEnvio = "Sin Enviar";
+			aviso.estadoEnvio = "Enviado";
 			aviso.campus_id = Meteor.user().profile.campus_id;
 			aviso.usuarioInserto = Meteor.userId();
 			Avisos.insert(aviso);
