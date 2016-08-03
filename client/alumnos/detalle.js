@@ -33,14 +33,15 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	
 	this.subscribe("ocupaciones",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
+	});
 
 	this.subscribe('inscripciones', () => {
-	    return [{
-		    alumno_id : $stateParams.id,
-		    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
-	    }];
-	  });
+    return [{
+	    alumno_id : $stateParams.id,
+	    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+    }];
+  });
+  
 	this.subscribe('alumno', () => {
     return [{
 	    id : $stateParams.id,
@@ -75,8 +76,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  inscripciones : () =>{
 	  	return Inscripciones.find();
 	  },
-	  cuentas : () =>{
-	  	return Cuentas.find();
+	  cuenta : () =>{
+	  	return Cuentas.findOne();
 	  }
 
 	 /* misSemanas : () => {

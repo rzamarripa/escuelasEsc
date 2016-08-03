@@ -221,46 +221,22 @@
 												</fieldset>
 												<fieldset>
 													<div class="row">
-														<section class="col col-4">
-															<h4>¿Cuál es tu objetivo en Casserole?</h4>
-															<label class="select">
-																<select name="country" ng-model="fa.prospecto.quieroSer">
-																	<option value="Chef" selected="">Ser Chef</option>
-																	<option value="Pasatiempo">Hacer de esto un pasatiempo</option>
-																	<option value="Aprender">Aprender a cocinar</option>
-																	<option value="Repostería">Dedicarme a la repostería</option>
-																</select> <i></i> </label>
-														</section>
-							
-														<section class="col col-4">
-															<h4>¿Qué te gustaría aprender?</h4>
-														  <label ng-repeat-start="tipoComida in fa.tipoComidas">
-															  <input type="checkbox" checklist-model="fa.prospecto.tipoComidasSeleccionadas" checklist-value="tipoComida">
-															  {{tipoComida}}
-															</label><br ng-repeat-end>
-														</section>
-							
-														<section class="col col-4">
+														<section class="col col-6">
 															<h4>Quieres estudiar...</h4>
 															<div class="inline-group">
-																<label class="radio">
-																	<input type="radio" ng-model="fa.prospecto.estudioInteres" value="Carrera" name="radio-inline">
-																	<i></i>Carrera</label>
-																<label class="radio">
-																	<input type="radio" ng-model="fa.prospecto.estudioInteres" value="Diplomado" name="radio-inline">
-																	<i></i>Diplomado</label>
-																<label class="radio">
-																	<input type="radio" ng-model="fa.prospecto.estudioInteres" value="Taller" name="radio-inline">
-																	<i></i>Taller</label>
+																<label class="radio" ng-repeat="seccion in fa.secciones">
+																	<input type="radio" ng-click="fa.seleccionarSeccion(seccion);" name="radio-inline">
+																	<i></i>{{seccion.nombreseccion}}
+																</label>
 															</div>
 														</section>
-													</div>
-													<div class="row">
-														<section class="col col-sm-3">
+														<section class="col col-6">
 															<h4>Etapa de Venta</h4>
 															<select required ng-model="fa.prospecto.etapaVenta_id" class="form-control" ng-options="etapaVenta._id as etapaVenta.nombre for etapaVenta in fa.etapasVenta" ng-change="fa.cambiarEtapaVenta(fa.prospecto.etapaVenta_id)"></select>
 														</section>
-														<section class="col col-sm-9">
+													</div>
+													<div class="row">
+														<section class="col col-sm-12">
 															<h4>Información adicional</h4>
 															<label class="textarea"> 										
 																<textarea rows="3" name="info" ng-model="fa.prospecto.informacion" placeholder="Información Adicional"></textarea> 
@@ -280,8 +256,8 @@
 								<section id="widget-grid" data-widget-grid="data-widget-grid">
 								  <div class="row">
 									  <div class="col-sm-3 profile-pic" style="text-align: center;">
-											<img class="thumbnail" ng-if="fa.prospecto.fotografia" ng-src="{{fa.prospecto.fotografia}}" style="height: 100px; text-align: center;" alt="Foto Perfil">
-											<img class="thumbnail" ng-if="!fa.prospecto.fotografia" src="/img/avatars/male.png" style="height: 100px; text-align: center;" alt="Foto Perfil">
+											<img class="thumbnail" ng-if="fa.prospecto.fotografia" ng-src="{{fa.prospecto.fotografia}}" style="height: 150px; max-width: 150px; text-align: center;" alt="Foto Perfil">
+											<img class="thumbnail" ng-if="!fa.prospecto.fotografia" src="/img/avatars/male.png" style="height: 150px; max-width: 150px; text-align: center;" alt="Foto Perfil">
 											<div class="padding-10" style="text-align: left;">
 												<ul class="list-unstyled">
 													<li>
@@ -297,11 +273,6 @@
 													<li>
 														<p class="text-muted">
 															<i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{fa.prospecto.fechaNac | date:"dd-MM-yyyy"}}</span>
-														</p>
-													</li>
-													<li>
-														<p class="text-muted">
-															<i class="fa fa-graduation-cap"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{fa.prospecto.quieroSer}}</span>
 														</p>
 													</li>
 													<li>
@@ -328,8 +299,8 @@
 														<ul class="list-unstyled">															
 															<li>
 																<ul class="list-unstyled" >
-																	<span class="txt-color-darken">Quiero aprender: </span><br/>
-																	<li class="text-muted fa fa-cutlery" style="margin-left: 5px;" ng-repeat-start="tipoComida in fa.prospecto.tipoComidasSeleccionadas"> {{tipoComida}}</li>
+																	<span class="txt-color-darken">Quiero estudiar en: </span><br/>
+																	<li class="text-muted fa fa-book" style="margin-left: 15px;" > {{fa.prospecto.estudioInteres}}</li>
 																	<br ng-repeat-end>
 																</ul>
 															</li>
