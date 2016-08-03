@@ -30,6 +30,7 @@ angular.module("casserole")
 		  }
 			escuela.estatus = true;
 			escuela.campus_id = Meteor.user().profile.campus_id;
+			escuela.usuarioInserto = Meteor.userId();
 			console.log(this.escuela);
 			Escuelas.insert(escuela);
 			toastr.success('Guardado correctamente.');
@@ -68,13 +69,12 @@ angular.module("casserole")
 
 	this.cambiarEstatus = function(id)
 	{
-		var escuela = Escuelas.findOne({_id:id});
-		if(escuela.estatus == true)
-			escuela.estatus = false;
-		else
-			escuela.estatus = true;
-		
-		Escuelas.update({_id: id},{$set :  {estatus : escuela.estatus}});
-    };
-		
+			var escuela = Escuelas.findOne({_id:id});
+			if(escuela.estatus == true)
+				escuela.estatus = false;
+			else
+				escuela.estatus = true;
+			
+			Escuelas.update({_id: id},{$set :  {estatus : escuela.estatus}});
+  };	
 };

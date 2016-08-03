@@ -76,14 +76,9 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="tiping.editar(tipoingreso._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="tiping.cambiarEstatus(tipoingreso._id)"><i class="fa fa-trash"></i> 
-								    		<span ng-if="tipoingreso.estatus">
-											  	Desactivar
-												</span>
-											  <span ng-if="!tipoingreso.estatus">
-											   	Activar
-												</span>
-							    	  </a>
+							    <li><a href="#" ng-click="tiping.cambiarEstatus(tipoingreso._id)">
+							    				<i class="fa fa-{{tipoingreso.estatus ? 'trash' : 'check' }}"></i> {{tipoingreso.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
 							    </li>
 							  </ul>
 							</div>

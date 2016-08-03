@@ -99,14 +99,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="sub.editar(subCiclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="sub.cambiarEstatus(subCiclo._id)"><i class="fa fa-trash"></i> 
-								    	<span ng-if="subCiclo.estatus">
-										  	Desactivar
-											</span>
-										  <span ng-if="!subCiclo.estatus">
-										   	Activar
-											</span>
-							    </a></li>
+							    <li><a href="#" ng-click="sub.cambiarEstatus(subCiclo._id)">
+							    				<i class="fa fa-{{subCiclo.estatus ? 'trash' : 'check' }}"></i> {{subCiclo.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

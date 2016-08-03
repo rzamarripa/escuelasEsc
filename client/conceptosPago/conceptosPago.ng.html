@@ -11,19 +11,19 @@
 		  	<div class="well">	    
 			    <div class="row">
 				    <div class="col-sm-4" valida>
-				    	<label>Orden</label>
+				    	<label>Orden *</label>
 					    <input name="orden" type="text" class="form-control" ng-model="cp.conceptoPago.orden" required=""/>
 			    	</div>
 			    	<div class="col-sm-4" valida>
-				    	<label>Nombre</label>
+				    	<label>Nombre *</label>
 					    <input name="nombre" type="text" class="form-control" ng-model="cp.conceptoPago.nombre" required=""/>
 			    	</div>
 			    	<div class="col-sm-4" valida>
-				    	<label>Importe</label>
+				    	<label>Importe *</label>
 					    <input name="importe" type="number" class="form-control" ng-model="cp.conceptoPago.importe" required=""/>
 			    	</div>
 			    	<div class="col-sm-4" valida>
-			    		<label>Módulo</label>
+			    		<label>Módulo *</label>
 			    		<select name="modulo" class="form-control" ng-model="cp.conceptoPago.modulo" required>
 				    		<option value="inscripcion">Inscripción</option>
 				    		<option value="colegiatura">Colegiatura</option>
@@ -91,7 +91,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="cp.editar(conceptoPago._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cp.cambiarEstatus(conceptoPago._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="cp.cambiarEstatus(conceptoPago._id)">
+							    				<i class="fa fa-{{conceptoPago.estatus ? 'trash' : 'check' }}"></i> {{conceptoPago.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

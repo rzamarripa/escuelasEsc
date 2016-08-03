@@ -16,29 +16,29 @@ angular.module("casserole")
   this.nuevo = true;	  
   this.nuevoAula = function()
   {
-    this.action = true;
-    this.nuevo = !this.nuevo;
-    this.aula = {};		
+	    this.action = true;
+	    this.nuevo = !this.nuevo;
+	    this.aula = {};		
   };
   
   this.guardar = function(aula,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Aula.');
-	        return;
-	    }
-		this.aula.estatus = true;
-		this.aula.campus_id = Meteor.user().profile.campus_id;
-		//this.aula.seccion_id = Meteor.user().profile.seccion_id;
-		console.log(this.aula);
-		Aulas.insert(this.aula);
-		toastr.success('aula guardada.');
-		this.aula = {}; 
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
-		$state.go('root.aulas')
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		  }
+			aula.estatus = true;
+			aula.campus_id = Meteor.user().profile.campus_id;
+			//this.aula.seccion_id = Meteor.user().profile.seccion_id;
+			aula.usuarioInserto = Meteor.userId();	
+			Aulas.insert(aula);
+			toastr.success('Guardado correctamente.');
+			aula = {}; 
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
+			$state.go('root.aulas')
 	};
 	
 	this.editar = function(id)
@@ -51,17 +51,19 @@ angular.module("casserole")
 	
 	this.actualizar = function(aula,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Aula.');
-	        return;
-	    }
-		var idTemp = aula._id;
-		delete aula._id;		
-		Aulas.update({_id:idTemp},{$set:aula});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+			if(form.$invalid){
+		        toastr.error('Error al actualizar los datos.');
+		        return;
+		  }
+			var idTemp = aula._id;
+			delete aula._id;		
+			aula.usuarioActualizo = Meteor.userId(); 
+			Aulas.update({_id:idTemp},{$set:aula});
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)

@@ -79,14 +79,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="cl.editar(ciclo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="cl.cambiarEstatus(ciclo._id)"><i class="fa fa-trash"></i>
-											<span ng-if="ciclo.estatus">
-										  	Desactivar
-											</span>
-										  <span ng-if="!ciclo.estatus">
-										   	Activar
-											</span>
-							    </a></li>
+							    <li><a href="#" ng-click="cl.cambiarEstatus(ciclo._id)">
+							    				<i class="fa fa-{{ciclo.estatus ? 'trash' : 'check' }}"></i> {{ciclo.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

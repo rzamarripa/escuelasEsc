@@ -63,10 +63,10 @@ Meteor.methods({
 		
 	},
 	updateGerenteVenta: function (usuario, rol) {		
-	  var user = Meteor.users.findOne({"profile.seccion_id" : usuario.profile.seccion_id});
-	  console.log(user._id);
-	  console.log(user);
-	  console.log(usuario);
+	  var user = Meteor.users.findOne({"_id" : usuario._id});
+	  console.log("id usuario", user._id);
+	  console.log("usuario", user);
+	  console.log("mende", usuario);
 	  Meteor.users.update({_id: user._id}, {$set:{
 			username: usuario.username,
 			roles: [rol],

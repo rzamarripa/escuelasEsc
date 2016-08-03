@@ -9,12 +9,12 @@
 			<form name="form" class="form-horizontal" role="form" novalidate >
 		  	<div class="well">	    
 			    <div class="row">
-			    <div class="col-sm-1" valida>
-				    <label>Orden</label>
+			    <div class="col-sm-2" valida>
+				    <label>Orden *</label>
 			    	<input name="orden" type="text" class="form-control" placeholder="Orden" ng-model="ev.etapaVenta.orden" required>
 			    </div>
 			    <div class="col-sm-4" valida>
-				    <label>Nombre</label>
+				    <label>Nombre *</label>
 			    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="ev.etapaVenta.nombre" required>
 			    </div>
 				</div>
@@ -73,7 +73,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="ev.editar(etapaVenta._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="ev.cambiarEstatus(etapaVenta._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="ev.cambiarEstatus(etapaVenta._id)">
+							    				<i class="fa fa-{{etapaVenta.estatus ? 'trash' : 'check' }}"></i> {{etapaVenta.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -1,4 +1,4 @@
-<h2>Conceptos de Comision</h2>
+<h2>Conceptos de Comisión</h2>
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{ccm.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
@@ -11,7 +11,7 @@
 		  	<div class="well">	    
 			    <div class="row">
 				    <div class="col-sm-4">
-				    	<label>Prioridad</label>
+				    	<label>Prioridad *</label>
 					    <select name="prioridad" class="form-control" ng-model="ccm.conceptoComision.prioridad" required>
 				    		<option value="Baja">Baja</option>
 				    		<option value="Media">Media</option>
@@ -19,15 +19,15 @@
 			    		</select>
 			    	</div>
 			    	<div class="col-sm-4" valida>
-				    	<label>Nombre</label>
+				    	<label>Nombre *</label>
 					    <input name="nombre" type="text" class="form-control" ng-model="ccm.conceptoComision.nombre" required=""/>
 			    	</div>
 			    	<div class="col-sm-4" valida>
-				    	<label>Importe</label>
+				    	<label>Importe *</label>
 					    <input name="importe" type="number" class="form-control" ng-model="ccm.conceptoComision.importe" required=""/>
 			    	</div>
 			    	<div class="col-sm-4">
-			    		<label>Módulo</label>
+			    		<label>Módulo *</label>
 			    		<select name="modulo" class="form-control" ng-model="ccm.conceptoComision.modulo" required>
 				    		<option value="inscripcion">Inscripción</option>
 				    		<option value="colegiatura">Colegiatura</option>
@@ -104,7 +104,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="ccm.editar(conceptoComision._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="ccm.cambiarEstatus(conceptoComision._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="ccm.cambiarEstatus(conceptoComision._id)">
+							    				<i class="fa fa-{{conceptoComision.estatus ? 'trash' : 'check' }}"></i> {{conceptoComision.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

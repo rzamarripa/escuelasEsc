@@ -10,30 +10,30 @@
 		  	<div class="well">	    
 			    <div class="row">
 				    <div class="col-sm-3" valida>					    
-				    	<label>Gerente</label>
+				    	<label>Gerente *</label>
 				    	<select name="gerente" class="form-control" ng-model="v.vendedor.profile.gerenteVenta_id" required>
 					    	<option value="{{gerente._id}}" ng-repeat="gerente in v.gerentesVenta">{{gerente.profile.nombre}} {{gerente.profile.apPaterno}} {{gerente.profile.apMaterno}}</option>
 				    	</select>
 			    	</div>
 			    	<div class="col-sm-3" valida>					    
-				    	<label>Usuario</label>
+				    	<label>Usuario *</label>
 				    	<input name="usuario" type="text" class="form-control" placeholder="Usuario" ng-model="v.vendedor.username" required>
 			    	</div>
 			    	<div class="col-sm-3" valida>					    
-				    	<label>Contraseña</label>
+				    	<label>Contraseña *</label>
 				    	<input name="contrasena" type="password" class="form-control" placeholder="Contraseña" ng-model="v.vendedor.password" required>
 			    	</div>		    				    	    
 			    	<div class="col-sm-3" valida>					    
-				    	<label>Confirmar Contraseña</label>
+				    	<label>Confirmar Contraseña *</label>
 				    	<input name="confirmar" type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="v.vendedor.confirmarContrasena" required>
 					</div>
 			    	<div class="col-sm-4" valida>
-			    		<label>Nombre </label>
+			    		<label>Nombre *</label>
 				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="v.vendedor.profile.nombre" required>
 			    	</div>
 
 			    	<div class="col-sm-4" valida>
-			    		<label>Apellido Paterno </label>
+			    		<label>Apellido Paterno *</label>
 				    	<input name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido Paterno" ng-model="v.vendedor.profile.apPaterno" required>
 			    	</div>
 			    	<div class="col-sm-4">
@@ -45,11 +45,11 @@
 				    	<input type="text" class="form-control" placeholder="Dirección" ng-model="v.vendedor.profile.direccion">
 			    	</div>
 			    	<div class="col-sm-4">
-			    		<label>Teléfono</label>
+			    		<label>Teléfono *</label>
 				    	<input name="telefono" type="text" class="form-control" placeholder="Teléfono" ng-model="v.vendedor.profile.telefono" required>
 			    	</div>
 			    	<div class="col-sm-4">
-			    		<label>Correo</label>
+			    		<label>Correo *</label>
 				    	<input name="correo" type="email" class="form-control" placeholder="Correo" ng-model="v.vendedor.profile.correo" required>
 			    	</div>
 			    	<div class="col-sm-4">
@@ -121,7 +121,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="v.editar(vendedor._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							   <li><a href="#" ng-click="v.cambiarEstatus(vendedor._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
+							    <li><a href="#" ng-click="v.cambiarEstatus(vendedor._id)">
+							    				<i class="fa fa-{{vendedor.estatus ? 'trash' : 'check' }}"></i> {{vendedor.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

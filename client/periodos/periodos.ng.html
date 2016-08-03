@@ -17,7 +17,7 @@
 							<label >Ciclo Escolar *</label>
 							<select name="ciclo" class="form-control" placeholder="Seleccione" ng-model="per.periodo.ciclo_id" required>
 							 	<option  value="{{ciclo._id}}" ng-repeat="ciclo in per.ciclos">
-									{{ciclo.descripcion}} 
+									{{ciclo.nombre}} 
 								</option>
 							</select>
 						</div>
@@ -163,7 +163,7 @@
 					<th width="10%"><div class="text-center">Nombre</div></th>
 					<th width="20%"><div class="text-center">Ciclo</div></th>
 					<th width="20%"><div class="text-center">Subcliclo</div></th>
-					<th width="10%"><div class="text-center">Fecha de incio</div></th>
+					<th width="10%"><div class="text-center">Fecha de inicio</div></th>
 					<th width="10%"><div class="text-center">Fecha final</div></th>
 		
 					<th width="10%">
@@ -176,7 +176,7 @@
 							Acciones
 						</div>
 					</th>
-				</tr>
+				</tr> 
 			</thead>
 			<tbody>
 		    <tr ng-repeat="periodo in per.periodos">
@@ -204,14 +204,9 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="per.editar(periodo._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="per.cambiarEstatus(periodo._id)"><i class="fa fa-trash"></i> 
-									    	<span ng-if="periodo.estatus">
-											  	Desactivar
-												</span>
-											  <span ng-if="!periodo.estatus">
-											   	Activar
-												</span>
-											</a>
+							    <li><a href="#" ng-click="per.cambiarEstatus(periodo._id)">
+							    				<i class="fa fa-{{periodo.estatus ? 'trash' : 'check' }}"></i> {{periodo.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
 							    </li>
 							  </ul>
 							</div>
