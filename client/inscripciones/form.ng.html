@@ -135,8 +135,8 @@
 												
 											    <div class="row">
 
-											    		<div class="col-sm-4">
-															<label>Seccion</label>
+											    		<div class="col-sm-4" valida>
+															<label>Seccion *</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id" ng-change="ins.getGrupos(ins.inscripcion.seccion_id, ins.inscripcion.alumno_id)" required="">
 															  <option value="{{seccion._id}}" ng-repeat="seccion in ins.secciones">
 															  	{{seccion.nombre}}
