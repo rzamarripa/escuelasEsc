@@ -1,5 +1,5 @@
 <button class="btn {{gc.nuevo == false ? 'btn-primary':'btn-danger'}}" type="button" data-toggle="collapse" data-target="#chequesForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="chequesForm" ng-click="gc.boton()">
-  Agregar
+  {{gc.nuevo == false ? 'Agregar':'Cancelar'}}
 </button>
 <div class="row">
   <div class="col-sm-12">
@@ -59,7 +59,7 @@
 	        <td>{{gasto.fechaLimite | date:medium}}</td>
 	        <td>{{gasto.importe | currency}}</td>
 	        <td align="center">
-	          <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+	          <a ng-click="gc.cambiarEstatus(gasto)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
 	        </td>
 	      </tr>
 	    </tbody>

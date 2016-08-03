@@ -1,5 +1,5 @@
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#depositosForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="depositosForm">
-  Agregar deposito
+<button class="btn {{gc.nuevo == false ? 'btn-primary':'btn-danger'}}" type="button" data-toggle="collapse" data-target="#depositosForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="depositosForm" ng-click="gc.boton()">
+  {{gc.nuevo == false ? 'Agregar':'Cancelar'}}
 </button>
 <div class="row">
   <div class="col-sm-12">
@@ -24,7 +24,7 @@
 					</div>
 					<div class="form-group col-sm-4" valida>
 						<label for="cuenta_id">Cuenta</label>
-						<select class="form-control select2" placeholder="Seleccione" ng-model="gc.gasto.cuenta_id" name="cuenta_id" required>
+						<select class="form-control" placeholder="Seleccione" ng-model="gc.gasto.cuenta_id" name="cuenta_id" required>
 						  <option ng-repeat="cuenta in gc.cuentas" value="{{cuenta._id}}">{{cuenta.nombre}}</option>
 						</select>
 					</div>
@@ -90,7 +90,7 @@
 	        <td>{{gasto.cuenta_id}}</td>
 	        <td align="center">
 	          <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
-	          <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+	          <a ng-click="gc.cambiarEstatus(gasto)" class="btn btn-danger"><em class="fa fa-trash"></em></a>
 	        </td>
 	      </tr>
 	    </tbody>

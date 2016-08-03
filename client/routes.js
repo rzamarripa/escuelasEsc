@@ -651,6 +651,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.conceptosGasto', {
+      url: '/conceptosGasto',
+      templateUrl: 'client/conceptosGasto/conceptosGasto.ng.html',
+      controller: 'ConceptosGastoCtrl as cgc',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
+    })
     .state('root.agregarGasto', {
       url: '/agregarGasto/:tipoGasto',
       templateUrl: 'client/gastos/agregarGasto.ng.html',

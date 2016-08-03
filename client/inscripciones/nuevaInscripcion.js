@@ -5,7 +5,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 
 	this.inscripcion = {tipoInscripcion:""};
 	this.inscripcion.totalPagar = 0.00;
-	
+	this.diaActual = moment(new Date()).weekday();
+	this.semanaPago = moment(new Date()).isoWeek();
 	this.subscribe('vendedores');
 	this.subscribe('ciclos',()=>{
 		return [{estatus:true,
@@ -143,7 +144,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 						tipo 		: "Cobro",
 						usuario_id 	: Meteor.userId(),
 						importe 	: concepto.importe,
-						cuenta_id : this.cuenta._id
+						cuenta_id : this.cuenta._id,
+						weekday : this.diaActual,
+						semanaPago: this.semanaPago
 					});
 		var procedimientos= concepto.procedimientos;
 		var fechaActual = this.inscripcion.fechaInscripcion;
@@ -168,7 +171,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								tipo 		: "Recargo",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto,
-								cuenta_id : this.cuenta._id
+								cuenta_id : this.cuenta._id,
+								weekday : this.diaActual,
+								semanaPago: this.semanaPago
 							});
 			}
 			if(procedimiento.tipoProcedimiento == 'Descuento' && tipoPlan=='inscripcion' && diasDescuento >=procedimiento.dias){
@@ -186,7 +191,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								tipo 		: "Descuento",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto * -1,
-								cuenta_id : this.cuenta._id
+								cuenta_id : this.cuenta._id,
+								weekday : this.diaActual,
+								semanaPago: this.semanaPago
 							});
 			}	
 		}
@@ -207,7 +214,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			importe 	: importe,
 			modulo		: comision.modulo,
 			comision_id : comision._id,
-			cuenta_id : this.cuenta._id
+			cuenta_id : this.cuenta._id,
+			weekday : this.diaActual,
+			semanaPago: this.semanaPago
 		});
 	}
 	

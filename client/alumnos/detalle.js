@@ -29,6 +29,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	this.totalPagar = 0.00;
 	this.alumno = {};
 	this.fechaActual = new Date();
+	this.diaActual = moment(new Date()).weekday();
+	this.semanaPago = moment(new Date()).isoWeek();
 	this.hayParaPagar = true;
 	
 	this.subscribe("ocupaciones",()=>{
@@ -75,8 +77,8 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  inscripciones : () =>{
 	  	return Inscripciones.find();
 	  },
-	  cuentas : () =>{
-	  	return Cuentas.find();
+	  cuenta : () =>{
+	  	return Cuentas.findOne();
 	  }
 
 	 /* misSemanas : () => {
@@ -333,7 +335,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 										tipo 		: "Cobro",
 										usuario_id 	: Meteor.userId(),
 										importe 	: cobro.faltante,
-										cuenta_id : this.cuenta._id
+										cuenta_id : this.cuenta._id,
+										weekday : this.diaActual,
+										semanaPago: this.semanaPago
 									});
 									semanasPagadas.push({
 										fechaPago 	: new Date(),
@@ -347,7 +351,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 										tipo 		: "Cobro",
 										usuario_id 	: Meteor.userId(),
 										importe 	: cobro.faltante,
-										cuenta_id : this.cuenta._id
+										cuenta_id : this.cuenta._id,
+										weekday : this.diaActual,
+										semanaPago: this.semanaPago
 									});
 							}
 							else{
@@ -368,7 +374,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 											tipo 		: "Cobro",
 											usuario_id 	: Meteor.userId(),
 											importe 	: concepto.datos[k].importe,
-											cuenta_id : this.cuenta._id
+											cuenta_id : this.cuenta._id,
+											weekday : this.diaActual,
+											semanaPago: this.semanaPago
 										});
 										semanasPagadas.push({
 											fechaPago 	: new Date(),
@@ -382,7 +390,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 											tipo 		: "Cobro",
 											usuario_id 	: Meteor.userId(),
 											importe 	: concepto.datos[k].importe,
-											cuenta_id : this.cuenta._id
+											cuenta_id : this.cuenta._id,
+											weekday : this.diaActual,
+											semanaPago: this.semanaPago
 										});
 										var procedimientos= concepto.datos[k].procedimientos;
 										var fechaActual = new Date();
@@ -405,7 +415,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 													tipo 		: "Recargo",
 													usuario_id 	: Meteor.userId(),
 													importe 	: procedimiento.monto,
-													cuenta_id : this.cuenta._id
+													cuenta_id : this.cuenta._id,
+													weekday : this.diaActual,
+													semanaPago: this.semanaPago
 												});
 												semanasPagadas.push({
 													fechaPago 	: new Date(),
@@ -419,7 +431,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 													tipo 		: "Recargo",
 													usuario_id 	: Meteor.userId(),
 													importe 	: procedimiento.monto,
-													cuenta_id : this.cuenta._id
+													cuenta_id : this.cuenta._id,
+													weekday : this.diaActual,
+													semanaPago: this.semanaPago
 												});
 		  									}
 								  			if(procedimiento.tipoProcedimiento == 'Descuento' && diasDescuento >=procedimiento.dias){
@@ -435,7 +449,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 													tipo 		: "Descuento",
 													usuario_id 	: Meteor.userId(),
 													importe 	: procedimiento.monto * (-1),
-													cuenta_id : this.cuenta._id
+													cuenta_id : this.cuenta._id,
+													weekday : this.diaActual,
+													semanaPago: this.semanaPago
 												});
 												semanasPagadas.push({
 													fechaPago 	: new Date(),
@@ -449,7 +465,9 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 													tipo 		: "Descuento",
 													usuario_id 	: Meteor.userId(),
 													importe 	: procedimiento.monto * (-1),
-													cuenta_id : this.cuenta._id
+													cuenta_id : this.cuenta._id,
+													weekday : this.diaActual,
+													semanaPago: this.semanaPago
 												});
 								  			}
 

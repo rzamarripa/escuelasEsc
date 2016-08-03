@@ -7,14 +7,14 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
   this.nuevo = false;
   this.tipoGasto = 'cheques';
   this.gasto = {};
-  this.semanaActual = moment(new Date()).week();
+  this.semanaActual = moment(new Date()).isoWeek();
   this.diaActual = moment(new Date()).weekday();
   dias = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"];
   this.diasActuales = [];
   for(i = 0; i < this.diaActual; i++){this.diasActuales.push(dias[i])};
 
   this.subscribe('gastos', () => {
-    return [{semana: this.semanaActual, tipoGasto  : this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{estatus: true, semana: this.semanaActual, tipoGasto  : this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.subscribe('conceptosGasto', () => {
@@ -22,7 +22,7 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
 
   this.subscribe('pagos', () => {
-    return [{semana: this.semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{semanaPago: this.semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.subscribe('cuentas', () => {
@@ -43,6 +43,7 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
   this.cambiar = function(tipoGasto){
     this.tipoGasto = tipoGasto;
+    this.nuevo = false;
     this.gasto = {};
   }
   this.boton = function(){
@@ -54,6 +55,7 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
       toastr.error('error.');
       return;
     }
+    gasto.estatus = true;
     gasto.semana = this.semanaActual;
     gasto.campus_id = Meteor.user().profile.campus_id;
     gasto.seccion_id = Meteor.user().profile.seccion_id;
@@ -63,6 +65,7 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
     form.$setPristine();
     form.$setUntouched();
     this.gasto = {}; 
+    this.nuevo = false;
     $('.collapse').collapse('hide');
     return toastr.success('Guardado correctamente');
   }
@@ -79,6 +82,12 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
     form.$setPristine();
     form.$setUntouched();
     return toastr.success('Guardado correctamente');
+  }
+
+  this.cambiarEstatus = function(gasto){
+    estatus = !gasto.estatus;
+    console.log(estatus)
+    Gastos.update(gasto._id,{$set:{estatus:estatus}});
   }
 
   this.getConcepto = function(concepto_id){
