@@ -4,7 +4,7 @@ angular.module("casserole")
  	$reactive(this).attach($scope);
   this.action = true;
 	this.subscribe('documentos',()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
+		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	 });
 
 
@@ -17,27 +17,28 @@ angular.module("casserole")
   this.nuevo = true;	  
   this.nuevoDocumento = function()
   {
-    this.action = true;
-    this.nuevo = !this.nuevo;
-    this.documento = {};		
+	    this.action = true;
+	    this.nuevo = !this.nuevo;
+	    this.documento = {};		
   };
   
   this.guardar = function(documento,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Documento.');
-	        return;
-	    }
-		this.documento.estatus = true;
-		this.documento.campus_id = Meteor.user().profile.campus_id;
-		Documentos.insert(this.documento);
-		toastr.success('Documento guardado.');
-		this.documento = {}; 
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
-		$state.go('root.documentos')
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		  }
+			documento.estatus = true;
+			documento.campus_id = Meteor.user().profile.campus_id;
+			documento.usuarioInserto = Meteor.userId();
+			Documentos.insert(this.documento);
+			toastr.success('Guardado correctamente.');
+			documento = {}; 
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
+			$state.go('root.documentos')
 	};
 	
 	this.editar = function(id)
@@ -50,17 +51,19 @@ angular.module("casserole")
 	
 	this.actualizar = function(documento,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Documento.');
-	        return;
-	    }
-		var idTemp = documento._id;
-		delete documento._id;		
-		Documentos.update({_id:idTemp},{$set:documento});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+			if(form.$invalid){
+		        toastr.error('Error al actualizar los datos.');
+		        return;
+		  }
+			var idTemp = documento._id;
+			delete documento._id;		
+			ciclo.usuarioActualizo = Meteor.userId(); 
+			Documentos.update({_id:idTemp},{$set:documento});
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
 	};
 
 	this.cambiarEstatus = function(id)

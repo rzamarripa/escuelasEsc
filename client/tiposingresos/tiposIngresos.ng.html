@@ -11,12 +11,12 @@
 					<div class="row">
 						<div class="col-sm-12" valida>
 							<div class="col-sm-4">
-								<label> Clave </label>
+								<label> Clave *</label>
 								<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="tiping.tipoingreso.clave" required="">
 					    </div>
 					    <div class="col-sm-8" valida>
-						    <label>Descripción</label>
-					    	<input name="descripcion" type="text" class="form-control" placeholder="Descripción" ng-model="tiping.tipoingreso.descripcion" required="">
+						    <label>Nombre *</label>
+					    	<input name="Nombre" type="text" class="form-control" placeholder="Nombre" ng-model="tiping.tipoingreso.nombre" required="">
 					    </div>
 			    	</div>
 					</div>
@@ -40,7 +40,7 @@
 			<thead>
 				<tr>
 					<th width="30%"><div class="text-center">Clave</div></th>
-					<th width="30%"><div class="text-center">Descripción</div></th>				
+					<th width="30%"><div class="text-center">Nombre</div></th>				
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -56,7 +56,7 @@
 			<tbody>
 		    <tr ng-repeat="tipoingreso in tiping.tiposingresos">
 			    <td>{{tipoingreso.clave}} </td>
-			    <td>{{tipoingreso.descripcion}} </td>
+			    <td>{{tipoingreso.nombre}} </td>
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="tipoingreso.estatus" class="label label-success">
@@ -76,7 +76,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="tiping.editar(tipoingreso._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="tiping.cambiarEstatus(tipoingreso._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="tiping.cambiarEstatus(tipoingreso._id)"><i class="fa fa-trash"></i> 
+								    		<span ng-if="tipoingreso.estatus">
+											  	Desactivar
+												</span>
+											  <span ng-if="!tipoingreso.estatus">
+											   	Activar
+												</span>
+							    	  </a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

@@ -11,22 +11,22 @@
 			    <div class="row">
 			    	<div class="col-sm-4">					    
 					    <div class="col-sm-6" valida>
-						    <label>Clave</label>
+						    <label>Clave *</label>
 					    	<input name="clave" type="text" class="form-control" placeholder="clave" ng-model="emp.empresa.clave" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Razón Social;</label>
+						    <label>Razón Social *</label>
 					    	<input name="razonsocial" type="text" class="form-control" placeholder="Razón Social" ng-model="emp.empresa.razonSocial" required>
 					    </div>
 			    	</div>
 
 			    	<div class="col-sm-4" valida>
-					    <label for="domicilio">Domicilio</label>
+					    <label for="domicilio">Domicilio *</label>
 					    <input name="domicilio" type="text" class="form-control" placeholder="Domicilio" ng-model="emp.empresa.domicilio" required>
 			    	</div>
 			    	<div class="col-sm-4">				    	
 					    <div class="col-sm-6" valida>
-						    <label>No.Exterior</label>
+						    <label>No.Exterior *</label>
 					    	<input name="numeroext" type="text" class="form-control" placeholder="No.Exterior" ng-model="emp.empresa.nEx" required>
 					    </div>
 					    <div class="col-sm-6">
@@ -37,59 +37,59 @@
 			    </div>
 					 <div class="row">
 					    <div class="col-sm-6" valida>
-						    <label>Referencia Domicilio;</label>
+						    <label>Referencia Domicilio *</label>
 					    	<input name="referenciadom" type="text" class="form-control" placeholder="Referencia Domicilio" ng-model="emp.empresa.refDomicilio" required>
 					    </div>
 					     <div class="col-sm-6" valida>
-						    <label>CP</label>
-					    	<input name="cp" type="text" class="form-control" placeholder="codigo postal" ng-model="emp.empresa.CP" required>
+						    <label>CP *</label>
+					    	<input name="cp" type="number" class="form-control" placeholder="codigo postal" ng-model="emp.empresa.CP" min="0" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Colonia</label>
+						    <label>Colonia *</label>
 					    	<input name="colonia" type="text" class="form-control" placeholder="Colonia" ng-model="emp.empresa.colonia" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Municipio</label>
+						    <label>Municipio *</label>
 					    	<input name="municipio" type="text" class="form-control" placeholder="Municipio" ng-model="emp.empresa.municipio" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Ciudad</label>
+						    <label>Ciudad *</label>
 					    	<input name="ciudad" type="text" class="form-control" placeholder="Ciudad" ng-model="emp.empresa.ciudad" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Estado</label>
+						    <label>Estado *</label>
 					    	<input name="estado" type="text" class="form-control" placeholder="Estado" ng-model="emp.empresa.estado" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>País</label>
+						    <label>País *</label>
 					    	<input name="pais" type="text" class="form-control" placeholder="Pais" ng-model="emp.empresa.pais" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Teléfonos</label>
+						    <label>Teléfonos *</label>
 					    	<input name="telefono" type="text" class="form-control" placeholder="Teléfonos" ng-model="emp.empresa.telefonos" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Fax</label>
+						    <label>Fax *</label>
 					    	<input name="fax" type="text" class="form-control" placeholder="Fax" ng-model="emp.empresa.fax" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>RFC</label>
+						    <label>RFC *</label>
 					    	<input name="rfc" type="text" class="form-control" placeholder="RFC" ng-model="emp.empresa.rfc" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Tipo Persona</label>
+						    <label>Tipo Persona *</label>
 					    	<input name="tipopersona" type="text" class="form-control" placeholder="Tipo Persona" ng-model="emp.empresa.tipoPersona" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>E-mail</label>
+						    <label>E-mail *</label>
 					    	<input name="correo" type="text" class="form-control" placeholder="E-mail" ng-model="emp.empresa.email" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Titular</label>
+						    <label>Titular *</label>
 					    	<input name="titular" tape="text" class="form-control" placeholder="Titular" ng-model="emp.empresa.titular" required>
 					    </div>
 					    <div class="col-sm-6" valida>
-						    <label>Puesto del titular</label>
+						    <label>Puesto del titular *</label>
 					    	<input name="puestotitular" type="text" class="form-control" placeholder="Puesto del titular" ng-model="emp.empresa.puestoTitular" required>
 					    </div>
 			    	</div>
@@ -172,8 +172,15 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="emp.editar(empresa._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							   <li><a href="#" ng-click="emp.cambiarEstatus(empresa._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
-							    <!--<li><a href="/empresas" ng-click="remove(empresas)"><span class="fa fa-trash"> Eliminar</span></a></li>-->
+							   <li><a href="#" ng-click="emp.cambiarEstatus(empresa._id)"><i class="fa fa-trash"></i> 
+								   		<span ng-if="empresa.estatus">
+										  	Desactivar
+											</span>
+										  <span ng-if="!empresa.estatus">
+										   	Activar
+											</span>
+							    	 </a>
+							   </li>
 							  </ul>
 							</div>
 				    </div>				    
