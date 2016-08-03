@@ -5,6 +5,8 @@ angular
 function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	let rc = $reactive(this).attach($scope);
 	this.parametros = $stateParams;
+	this.action = true;  
+  this.nuevo = true;
 	
   this.subscribe('campus', function(){
 		return [{
@@ -23,11 +25,7 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
   this.subscribe("turnos",()=>{
 		return [{estatus:true, campus_id : this.getReactively("parametros.campus_id") }]
 	});
-  
 	
-  this.action = true;  
-  this.nuevo = true;
-  
   this.helpers({
 	  secciones : () => {
 		  return Secciones.find();
@@ -71,42 +69,43 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
   
   this.guardar = function(seccion,form)
 	{
-			if(form.$invalid){
-		      toastr.error('Error al guardar los datos.');
-		      return;
+		if(form.$invalid){
+	      toastr.error('Error al guardar los datos.');
+	      return;
+		}
+		seccion.estatus = true;
+		seccion.campus_id = $stateParams.campus_id;
+		seccion.usuarioInserto = Meteor.userId();
+		
+		seccion_id = Secciones.insert(this.seccion);
+		var nombre = seccion.nombre != undefined ? seccion.nombre + " " : "";
+		var apPaterno = seccion.apPaterno != undefined ? seccion.apPaterno + " " : "";
+		var apMaterno = seccion.apMaterno != undefined ? seccion.apMaterno : ""
+		seccion.nombreCompleto = nombre + apPaterno + apMaterno;
+		var usuario = {
+			username : seccion.username,
+			password : seccion.password,
+			profile : {
+				nombre : seccion.nombre,
+				apPaterno : seccion.apPaterno,
+				apMaterno : seccion.apMaterno,
+				nombreCompleto : nombre + apPaterno + apMaterno,
+				campus_id : $stateParams.campus_id,
+				campus_clave : rc.campus.clave,
+				seccion_id : seccion_id,
+				estatus : true
 			}
-			seccion.estatus = true;
-			seccion.campus_id = $stateParams.campus_id;
-			seccion.usuarioInserto = Meteor.userId();
-			
-			seccion_id = Secciones.insert(this.seccion);
-			var nombre = seccion.nombre != undefined ? seccion.nombre + " " : "";
-			var apPaterno = seccion.apPaterno != undefined ? seccion.apPaterno + " " : "";
-			var apMaterno = seccion.apMaterno != undefined ? seccion.apMaterno : ""
-			seccion.nombreCompleto = nombre + apPaterno + apMaterno;
-			var usuario = {
-				username : seccion.username,
-				password : seccion.password,
-				profile : {
-					nombre : seccion.nombre,
-					apPaterno : seccion.apPaterno,
-					apMaterno : seccion.apMaterno,
-					nombreCompleto : nombre + apPaterno + apMaterno,
-					campus_id : $stateParams.campus_id,
-					campus_clave : rc.campus.clave,
-					seccion_id : seccion_id,
-					estatus : true
-				}
-			}
+		}
+		
+		delete seccion.password;
 
-			Meteor.call('createGerenteVenta', usuario, 'director');		
-			toastr.success('Guardado correctamente.');
-			this.seccion = {};
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			form.$setPristine();
-	    form.$setUntouched();
-			$state.go('root.secciones');		
+		Meteor.call('createGerenteVenta', usuario, 'director');
+		toastr.success('Guardado correctamente.');
+		this.seccion = {};
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		form.$setPristine();
+    form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -164,5 +163,9 @@ function SeccionesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams)
 			
 			Secciones.update({_id:id}, {$set : {estatus : seccion.estatus}});	
 	};
+	
+	this.seleccionarLogo = function(logo){
+		rc.seccion.logo = logo;
+	}
 		
 }

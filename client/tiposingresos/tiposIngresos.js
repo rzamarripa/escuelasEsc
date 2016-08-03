@@ -42,7 +42,6 @@ function TiposIngresosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			this.nuevo = true;
 			form.$setPristine();
 	    form.$setUntouched();
-			$state.go('root.tiposingresos');
 	};
 	
 	this.editar = function(id)
