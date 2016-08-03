@@ -26,7 +26,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
   
   this.subscribe('ocupaciones',()=>{
-		return [{estatus:true}]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
 	 });
 	
 	this.subscribe('campus',()=>{
@@ -67,23 +67,24 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
   });
   
   this.guardar = function (alumno,form) {
-		if(form.$invalid){
-			this.validation = true;
-			console.log(form.$invalid);
-      toastr.error('Error al guardar los datos del Alumno.');
-      return;
-    }
-		this.alumno.estatus = true;
-		var nombre = alumno.nombre != undefined ? alumno.nombre + " " : "";
-		var apPaterno = alumno.apPaterno != undefined ? alumno.apPaterno + " " : "";
-		var apMaterno = alumno.apMaterno != undefined ? alumno.apMaterno : "";
-		this.alumno.nombreCompleto = nombre + apPaterno + apMaterno;
-		this.alumno.fechaCreacion = new Date();
-		this.alumno.campus_id = Meteor.user().profile.campus_id;
-		this.alumno.seccion_id = Meteor.user().profile.seccion_id;
-		Alumnos.insert(this.alumno, function(err, doc){
+			if(form.$invalid){
+				this.validation = true;
+				console.log(form.$invalid);
+	      toastr.error('Error al guardar los datos.');
+	      return;
+	    }
+			this.alumno.estatus = true;
+			var nombre = alumno.nombre != undefined ? alumno.nombre + " " : "";
+			var apPaterno = alumno.apPaterno != undefined ? alumno.apPaterno + " " : "";
+			var apMaterno = alumno.apMaterno != undefined ? alumno.apMaterno : "";
+			alumno.nombreCompleto = nombre + apPaterno + apMaterno;
+			alumno.fechaCreacion = new Date();
+			alumno.campus_id = Meteor.user().profile.campus_id;
+			alumno.seccion_id = Meteor.user().profile.seccion_id;
+			alumno.usuarioInserto = Meteor.userId();
+			Alumnos.insert(alumno, function(err, doc){
 			Meteor.call('createUsuario', rc.alumno, 'alumno');
-			toastr.success('Alumno guardado.');
+			toastr.success('Guardado correctamente.');
 			$state.go('root.alumnoDetalle',{'id':doc});			
 			this.nuevo = true;
 		});
@@ -92,9 +93,9 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	};
   	
 	this.cambiarEstatus = function (id) {
-		var alumno = Alumnos.findOne({_id:id});
-    this.alumno.estatus = !alumno.estatus;
-		this.alumno.save();
+			var alumno = Alumnos.findOne({_id:id});
+	    this.alumno.estatus = !alumno.estatus;
+			this.alumno.save();
 	};
 	
 	this.tomarFoto = function () {

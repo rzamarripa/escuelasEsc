@@ -1,0 +1,31 @@
+<div class="row">	
+	<div class="col-sm-4 col-sm-offset-8 text-right">
+		<label> <strong>Buscar:  </strong></label>
+		<input type="text"  ng-model="bita.search"/>
+	</div>
+</div>
+<br/>
+<div class="row">
+	<div class="col-sm-12">
+		{{bita.bitacoraCount}}
+		{{bita.perPage}}
+		{{bita.page}}
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+
+					<th ><div class="text-center">Fecha</div></th>
+					<th ><div class="text-center">Usuario</div></th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr dir-paginate="registro in bita.bitacoras | itemsPerPage: bita.perPage" total-items="bita.bitacoraCount">
+					<td>{{registro.fecha}}</td>
+					<td>{{registro.usuario}}</td>				
+				</tr>
+			</tbody>
+		</table>
+		<dir-pagination-controls on-page-change="bita.pageChanged(newPageNumber)"></dir-pagination-controls>
+	</div>
+</div>

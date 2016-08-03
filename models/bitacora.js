@@ -38,7 +38,7 @@ var quitarhk=function(obj){
 
 Mongo.Collection.prototype.insert = function insert(doc, callback) {
   // Make sure we were passed a document to insert
-  console.log("Insertar",this._name);
+  //console.log("Insertar",this._name);
   try{
     doc = quitarhk(doc);
     if(this._name!='bitacora'){
@@ -56,7 +56,7 @@ Mongo.Collection.prototype.insert = function insert(doc, callback) {
         documentoNuevo: doc,
         documentoAnterior: {}
       };
-      console.log(doctoBitacora);
+      //console.log(doctoBitacora);
       Bitacora.insert(doctoBitacora);
     }
   }catch(e){}
@@ -139,7 +139,7 @@ Mongo.Collection.prototype.insert = function insert(doc, callback) {
 
 Mongo.Collection.prototype.update = function update(selector, modifier, ...optionsAndCallback) {
     
-  console.log("update",this._name);
+  //console.log("update",this._name);
 	//console.log(selector,modifier);
   if(this._name=='bitacora') return false;
 
@@ -228,7 +228,7 @@ Mongo.Collection.prototype.update = function update(selector, modifier, ...optio
   			documentoNuevo: doctoNuevo,
   			documentoAnterior: doctoAnterior
   		};
-  		console.log(doctoBitacora);
+  		//console.log(doctoBitacora);
     		Bitacora.insert(doctoBitacora);
   	}
   }
@@ -306,7 +306,7 @@ Mongo.Collection.prototype.remove = function remove(selector, callback) {
   			documentoNuevo: null,
   			documentoAnterior: doctoAnterior
   		};
-  		console.log(doctoBitacora);
+  		//console.log(doctoBitacora);
   	  Bitacora.insert(doctoBitacora);
     }
   }catch(e){}
