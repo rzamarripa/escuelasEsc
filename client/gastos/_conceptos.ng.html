@@ -8,6 +8,11 @@
 		  <label>Nombre</label>
 	  	<input type="text" class="form-control"  ng-model="gc.concepto.nombre" name="nombre" required>
 		</div>
+		<div class="checkbox">
+		  <label class="checkbox-inline">
+	  		<input type="checkbox" ng-model="gc.concepto.campoDeDescripcion">
+	  	Agregar campo de descripción</label>
+		</div>
 	</div>
 	<input value="Guardar" type="submit" class="btn btn-primary pull-right" ng-click="gc.guardarConcepto(gc.concepto, form1)" valida-form formulario="form1">
 </div>

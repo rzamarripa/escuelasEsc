@@ -72,6 +72,8 @@ function CuentasCtrl($scope, $meteor, $reactive, $state, toastr) {
 	this.cambiarEstatus = function(id)
 	{
 		var cuenta = Cuentas.findOne({_id:id});
+		if(cuenta.activo == true)
+			return alert("No puedes eliminar una cuenta activa");
 		if(cuenta.estatus == true)
 			cuenta.estatus = false;
 		else
