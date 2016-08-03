@@ -26,7 +26,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
   this.subscribe("horarios",()=>{
-		return [{estatus:true, _id : $stateParams.id}]
+		return [{_id : $stateParams.id}]
 	 });
   this.subscribe("aulas",()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
@@ -215,14 +215,15 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   /* add custom event*/
   this.guardarHorario = function(form) {
   	if(form.$invalid){
-	    toastr.error('Error al guardar los datos del Horario.');
+	    toastr.error('Error al guardar los datos.');
 	    return;
     }
 		eliminarTemporalesOcupados();
 		this.horario.campus_id = Meteor.user().profile.campus_id;
 		this.horario.seccion_id = Meteor.user().profile.seccion_id;
+		this.horario.usuarioInserto = Meteor.userId();
     Horarios.insert(this.horario);
-    toastr.success("Se guardó el horario");
+    toastr.success('Guardado correctamente.');
 		$state.go("root.listarHorarios");
   };
   

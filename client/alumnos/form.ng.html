@@ -29,15 +29,15 @@
 						<img width="100px" ng-src="{{al.alumno.fotografia}}" ng-class="{'img-thumbnail': !!al.alumno.fotografia}" />
 					</div>
 				  <div class="col-sm-3" ng-class="form.nombreUsuario.$invalid == true && al.validation == true ? 'has-error':''" valida>				    
-				    <label for="nombre">Usuario</label>
-				    <input name="nombreUsuario" type="text" class="form-control"  placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="">
+				    <label for="nombre">Usuario *</label>
+				    <input name="nombreUsuario" type="text" class="form-control"  placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="" disabled="">
 					</div>
 					<div class="col-sm-3" ng-class="form.contrasena.$invalid == true && al.validation == true ? 'has-error':''" valida>
-				    <label for="nombre">Contraseña</label>
+				    <label for="nombre">Contraseña *</label>
 				    <input name="contrasena" type="password" class="form-control " placeholder="Contraseña" ng-model="al.alumno.contrasena" required="">						
 					</div>
 					<div class="col-sm-3" ng-class="form.contrasena2.$invalid == true && al.validation == true ? 'has-error':''" valida>
-				    <label for="apPaterno">Repetir Contraseña</label>
+				    <label for="apPaterno">Repetir Contraseña *</label>
 				    <input name="contrasena2" type="password" class="form-control" placeholder="Repetir Contraseña" ng-model="al.alumno.repetirContrasena" required="">
 					</div>
 				</div>
@@ -46,15 +46,15 @@
 	  	<div class="well">		
 		  	<div class="row">
 			    <div class="col-sm-3" ng-class="form.matricula.$invalid == true && al.validation == true ? 'has-error':''" valida>				    
-				    <label for="nombre">Matrícula</label>
-				    <input name="matricula" type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="">
+				    <label for="nombre">Matrícula *</label>
+				    <input name="matricula" type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="" disabled="">
 		    	</div>
 		    	<div class="col-sm-3" ng-class="form.nombre.$invalid == true && al.validation == true ? 'has-error':''" valida>				    
-				    <label for="nombre">Nombre</label>
+				    <label for="nombre">Nombre *</label>
 				    <input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="al.alumno.nombre" required="">						
 		    	</div>
 		    	<div class="col-sm-3" ng-class="form.apPaterno.$invalid == true && al.validation == true ? 'has-error':''" valida>
-				    <label for="apPaterno">Apellido Paterno</label>
+				    <label for="apPaterno">Apellido Paterno *</label>
 				    <input name="apPaterno" type="text" class="form-control" id="apPaterno" placeholder="Apellido Paterno" ng-model="al.alumno.apPaterno" required="">
 		    	</div>
 		    	<div class="col-sm-3">
@@ -68,7 +68,7 @@
 				    <input type="text" class="form-control" id="curp" placeholder="CURP" ng-model="al.alumno.curp">
 		    	</div>
 					<div class="col-sm-4" ng-class="form.fechaNac.$invalid == true && al.validation == true ? 'has-error':''" valida>
-						<label for="fechaNac">Fecha de nacimiento</label>
+						<label for="fechaNac">Fecha de nacimiento *</label>
 						<input name="fechaNac" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="al.alumno.fechaNac" required="" />
 					</div>
 					<div class="col-sm-4">
@@ -78,7 +78,7 @@
 				</div>
 				<div class="row">						
 					<div class="col-sm-4" valida>
-				    <label for="sexo">Sexo</label>
+				    <label for="sexo">Sexo *</label>
 				    <select name="sexo" ng-model="al.alumno.sexo" data-placeholder="Seleccione" class="form-control" required>
 						    <option value=""></option>
 						    <option value="masculino">Masculino</option>
@@ -86,15 +86,15 @@
 						</select>
 		    	</div>
 					<div class="col-sm-4" ng-class="form.ocupacion.$invalid == true && al.validation == true ? 'has-error':''" valida>
-						<label for="ocupacion">Ocupación</label>
+						<label for="ocupacion">Ocupación *</label>
 						<select name="ocupacion" class="form-control" placeholder="Seleccione" ng-model="al.alumno.ocupacion_id" required="">
 						  <option ng-repeat="ocupacion in al.ocupaciones" value="{{ocupacion._id}}">
-						  	{{ocupacion.descripcion}}
+						  	{{ocupacion.nombre}}
 						  </option>
 						</select>
 					</div>	
 					<div class="col-sm-4" ng-class="form.escolaridad.$invalid == true && al.validation == true ? 'has-error':''" valida>
-						<label for="escolaridad">Escolaridad</label>
+						<label for="escolaridad">Escolaridad *</label>
 						<input name="escolaridad" type="text" class="form-control" id="escolaridad" placeholder="Escolaridad" ng-model="al.alumno.escolaridad" required="">
 					</div>
 				</div>
@@ -161,11 +161,11 @@
 		  <div class="well">
 			  <div class="row">
 			  	<div class="col-sm-6" ng-class="form.calleNum.$invalid == true && al.validation == true ? 'has-error':''" valida>
-			  		<label for="calleNum">Calle y número</label>
+			  		<label for="calleNum">Calle y número *</label>
 				    <input name="calleNum" type="text" class="form-control" id="calleNum" placeholder="Calle y Número" ng-model="al.alumno.calleNum" required="">
 			  	</div>
 			  	<div class="col-sm-6" ng-class="form.colonia.$invalid == true && al.validation == true ? 'has-error':''" valida>
-						<label for="colonia">Colonia</label>
+						<label for="colonia">Colonia *</label>
 						<input name="colonia" type="text" class="form-control" id="colonia" placeholder="Colonia" ng-model="al.alumno.colonia" required="">
 			  	</div>
 			  </div>
@@ -204,21 +204,21 @@
 			<div class="well">  
 			  <div class="row">
 			  	<div class="col-sm-6" ng-class="form.padreTutor.$invalid == true && al.validation == true ? 'has-error':''" valida>
-			  		<label for="padreTutor">Padre o Tutor</label>
+			  		<label for="padreTutor">Padre o Tutor *</label>
 				    <input name="padreTutor" type="text" class="form-control" id="padreTutor" placeholder="Padre o Tutor" ng-model="al.alumno.padreTutor" required="">
 			  	</div>
 			  	<div class="col-sm-6">
-						<label for="ocupacionPadreTutor">Ocupación</label>
+						<label for="ocupacionPadreTutor">Ocupación *</label>
 						<input type="text" class="form-control" id="ocupacionPadreTutor" placeholder="Ocupación" ng-model="al.alumno.ocupacionPadreTutor">
 			  	</div>
 			  </div>
 			  <div class="row">
 			  	<div class="col-sm-6" ng-class="form.madre.$invalid == true && al.validation == true ? 'has-error':''" valida>
-			  		<label for="madre">Madre</label>
+			  		<label for="madre">Madre *</label>
 						<input name="madre" type="text" class="form-control" id="madre" placeholder="Madre" ng-model="al.alumno.madre" required="">
 			  	</div>
 			  	<div class="col-sm-6">
-						<label for="ocupacionMadre">Ocupación</label>
+						<label for="ocupacionMadre">Ocupación *</label>
 						<input type="text" class="form-control" id="ocupacionMadre" placeholder="Ocupación" ng-model="al.alumno.ocupacionMadre">
 			  	</div>
 			  </div>

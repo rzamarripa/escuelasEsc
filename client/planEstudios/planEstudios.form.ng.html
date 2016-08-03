@@ -24,11 +24,11 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4" valida>					    
-						<label for="clave">Clave</label>
+						<label for="clave">Clave *</label>
 					    <input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="pl.plan.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-					    <label for="descripcion">Descripción</label>
+					    <label for="descripcion">Descripción *</label>
 					    <input name="descripcion" type="text" class="form-control" placeholder="Descripción" ng-model="pl.plan.descripcion" required>
 			    	</div>
 			    	<div class="col-sm-4">
@@ -44,7 +44,7 @@
 					    <input type="text" class="form-control" ng-model="pl.plan.formulo">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-							<label for="tipo">Tipo</label><br/>
+							<label for="tipo">Tipo *</label><br/>
 					    	<select name="tipo" ng-model="pl.plan.tipo" class="form-control" required="">
 							  <option value="Baja">Interno</option>
 							  <option value="Media">Externo</option>
@@ -61,11 +61,11 @@
 							<input name="fecha" date-time class="form-control" view="year" max-view="year" min-view="date" ng-model="pl.plan.fecha"/>
 						</div>
 			    	<div class="col-sm-4" valida>
-					    <label for="grado">Grados</label>
+					    <label for="grado">Grados *</label>
 					    <input name="grados" type="number" class="form-control" min="0" ng-model="pl.plan.grado" required="">
 			    	</div>
 						<div class="col-sm-4">
-							<label for="seccion_id">Generación</label>
+							<label for="seccion_id">Generación *</label>
 							<select class="form-control select2" placeholder="Seleccione" ng-model="pl.plan.generacion_id" required="">
 								<option ng-repeat="generacion in pl.generaciones" value="{{generacion._id}}">{{generacion.nombre}}</option>
 							</select>
