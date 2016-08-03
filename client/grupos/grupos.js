@@ -214,7 +214,6 @@ angular.module("casserole")
 	
 	this.getTurno = function(turno_id)
 	{
-		console.log(turno_id);
 		var turno = Turnos.findOne(turno_id);
 		if (turno) 
 		return turno.nombre;

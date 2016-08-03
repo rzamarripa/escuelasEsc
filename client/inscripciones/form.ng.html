@@ -136,7 +136,7 @@
 											    <div class="row">
 											    		<div class="col-sm-4">
 															<label>Seccion</label>
-															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id" required="">
+															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.seccion_id" ng-change="ins.getGrupos(ins.inscripcion.seccion_id, ins.inscripcion.alumno_id)" required="">
 															  <option value="{{seccion._id}}" ng-repeat="seccion in ins.secciones">
 															  	{{seccion.descripcion}}
 															  </option>
@@ -146,7 +146,7 @@
 															<label >Ciclo Escolar</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.ciclo_id">
 															  <option  value="{{ciclo._id}}" ng-repeat="ciclo in ins.ciclos">
-															  	{{ciclo.descripcion}}
+															  	{{ciclo.nombre}}
 															  </option>
 															</select>
 																
@@ -208,7 +208,7 @@
 														  </div>															  
 														</div>
 														<div class="col-sm-8">
-															<label>Generacion</label>
+															<label>Generación</label>
 															<select class="form-control" placeholder="Seleccione" ng-model="ins.inscripcion.generacion_id" required="">
 															  <option value="{{generacion._id}}" ng-repeat="generacion in ins.generaciones">
 															  	{{generacion.nombre}}
@@ -226,7 +226,7 @@
 										<h3><strong>Paso 4</strong> - Cobros Iniciales</h3>
 										<div class="well">	 
 									  		<div class="panel panel-default">
-												<div class="panel-heading">Tipo de inscripcion</div>
+												<div class="panel-heading">Tipo de inscripción</div>
 												<div class="panel-body">
 													<div ng-repeat="(nombre, plan) in ins.inscripcion.plan">
 														<label  ng-if="plan.tipoPlan=='inscripcion'"> 

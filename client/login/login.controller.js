@@ -6,7 +6,7 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
 	let rc = $reactive(this).attach($scope);
 	
 	var myCanvas = document.getElementById("myCanvas");
-	this.pizarron = myCanvas.getContext("2d");
+	//this.pizarron = myCanvas.getContext("2d");
 	//console.log(this.pizarron );
 
 	this.subscribe("pizarrones",()=>{
@@ -35,7 +35,7 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
       }
     )
   }
-  
+  /*
   this.guardarPizarron = function(pizarron){
 	  var pizarra = Pizarrones.findOne();
 	  if(pizarra){
@@ -141,4 +141,5 @@ function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
 			evt.preventDefault();
 		},false);
 	};
+	*/
 }
