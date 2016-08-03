@@ -10,11 +10,11 @@
 		  	<div class="well">	    
 			    <div class="row">
 			    	<div class="col-sm-4" valida>					    
-				    	<label>Clave</label>
+				    	<label>Clave *</label>
 				    	<input name="clave" type="text" class="form-control" placeholder="Clave" ng-model="au.aula.clave" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>					    
-				    	<label>Nombre</label>
+				    	<label>Nombre *</label>
 				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="au.aula.nombre" required="">
 			    	</div>
 			    </div> 
@@ -81,7 +81,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="au.editar(aula._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="au.cambiarEstatus(aula._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							    <li><a href="#" ng-click="au.cambiarEstatus(aula._id)">
+							    				<i class="fa fa-{{aula.estatus ? 'trash' : 'check' }}"></i> {{aula.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

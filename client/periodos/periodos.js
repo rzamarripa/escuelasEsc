@@ -114,17 +114,17 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 								estatus : 1 })
 						}
 				}
-		var _perdiodo = quitarhk(periodo);
-		console.log(_perdiodo);
-		periodo.usuarioInserto = Meteor.userId();
-		Periodos.insert(_perdiodo);
-
-		toastr.success('Guardado correctamente.');
-		this.periodo = {};
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+				var _perdiodo = quitarhk(periodo);
+			
+				periodo.usuarioInserto = Meteor.userId();
+				Periodos.insert(_perdiodo);
+		
+				toastr.success('Guardado correctamente.');
+				this.periodo = {};
+				$('.collapse').collapse('hide');
+				this.nuevo = true;
+				form.$setPristine();
+		    form.$setUntouched();
 	};
 	
 	this.editar = function(id)
@@ -188,14 +188,14 @@ function PeriodosCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 	this.cambiarEstatus = function(id)
 	{
-		/*var periodo = SubCiclos.findOne({_id:id});
-		if(periodo.estatus == true)
-			periodo.estatus = false;
-		else
-			periodo.estatus = true;
-		
-		Periodos.update({_id:id}, {$set : {estatus : periodo.estatus}});*/
-			Periodos.remove(id);
+			var periodo = Periodos.findOne({_id:id});
+			if(periodo.estatus == true)
+				periodo.estatus = false;
+			else
+				periodo.estatus = true;
+			
+			Periodos.update({_id:id}, {$set : {estatus : periodo.estatus}});
+		//Periodos.remove(id);
 	};
 	
 	/*this.planPagos = function(subCiclo){

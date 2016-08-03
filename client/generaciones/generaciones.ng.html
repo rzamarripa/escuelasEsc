@@ -11,7 +11,7 @@
 			    <div class="row">
 			    	<div class="col-sm-12">	
 					    <div class="col-sm-4" valida>
-						    <label>Nombre</label>
+						    <label>Nombre *</label>
 					    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="gen.generacion.nombre" required="">
 					    </div>
 				    	<div class="col-sm-4">
@@ -91,7 +91,10 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="gen.editar(generacion._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							  <li><a href="#" ng-click="gen.cambiarEstatus(generacion._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+									<li><a href="#" ng-click="gen.cambiarEstatus(generacion._id)">
+							    				<i class="fa fa-{{generacion.estatus ? 'trash' : 'check' }}"></i> {{generacion.estatus ? "Desactivar" : "Activar" }}
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

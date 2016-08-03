@@ -7,7 +7,7 @@ let rc = $reactive(this).attach($scope);
 
   this.action = true;
 	this.subscribe('trabajadores',()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
 	 });
 	//this.subscribe('deptosAcademicos');
  
@@ -23,83 +23,86 @@ let rc = $reactive(this).attach($scope);
   this.nuevo = true;  
   this.nuevoTrabajador = function()
   {
-	this.action = true;
-    this.nuevo = !this.nuevo;
-    this.trabajador = {}; 
+			this.action = true;
+		  this.nuevo = !this.nuevo;
+		  this.trabajador = {}; 
   };
  
 	this.guardar = function(trabajador,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Empleado.');
-	        return;
-	    }
-
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		  }
 	
-		Accounts.createUser({
-			username: this.trabajador.nombreUsuario,
-			password: this.trabajador.contrasena,
-			profile: {
-				 nombre: this.trabajador.nombre,
-				 apellidos: this.trabajador.apPaterno + " " + this.trabajador.apMaterno,
-				 tipoUsuario: "Trabajador"
-			},function(err) {
-				if (err)
-				   console.log(err);
-				  else
-				    console.log('success!');
-				}
-		});
-		this.trabajador.estatus = true;
-		this.trabajador.campus_id = Meteor.user().profile.campus_id;
-		this.trabajador.seccion_id = Meteor.user().profile.seccion_id;
-		Trabajadores.insert(this.trabajador);
-		toastr.success('Trabajador guardado.');
-		this.trabajador = {};
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
-		$state.go('root.trabajadores');
+		
+			Accounts.createUser({
+				username: this.trabajador.nombreUsuario,
+				password: this.trabajador.contrasena,
+				profile: {
+					 nombre: this.trabajador.nombre,
+					 apellidos: this.trabajador.apPaterno + " " + this.trabajador.apMaterno,
+					 tipoUsuario: "Trabajador"
+				},function(err) {
+					if (err)
+					   console.log(err);
+					  else
+					    console.log('success!');
+					}
+			});
+			trabajador.estatus = true;
+			trabajador.campus_id = Meteor.user().profile.campus_id;
+			trabajador.seccion_id = Meteor.user().profile.seccion_id;
+			trabajador.usuarioInserto = Meteor.userId();
+			Trabajadores.insert(this.trabajador);
+			toastr.success('Guardado correctamente.');
+			this.trabajador = {};
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	    form.$setUntouched();
+			$state.go('root.trabajadores');
 		
 	};
 	
 	this.editar = function(id)
 	{
-    	this.trabajador = Trabajadores.findOne({_id:id});
-		this.action = false;
-		$('.collapse').collapse('show');
-		this.nuevo = false;
+	    this.trabajador = Trabajadores.findOne({_id:id});
+			this.action = false;
+			$('.collapse').collapse('show');
+			this.nuevo = false;
 	};
 	
 	this.actualizar = function(trabajador,form)
 	{
-		if(form.$invalid){
-	        toastr.error('Error al guardar los datos del Empleado.');
-	        return;
-	    }
-		
-		var idTemp = trabajador._id;
-		delete trabajador._id;		
-		Trabajadores.update({_id:idTemp},{$set:trabajador});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		form.$setPristine();
-        form.$setUntouched();
+			if(form.$invalid){
+		        toastr.error('Error al guardar los datos.');
+		        return;
+		    }
+			
+			var idTemp = trabajador._id;
+			delete trabajador._id;		
+			trabajador.usuarioActualizo = Meteor.userId(); 
+			Trabajadores.update({_id:idTemp},{$set:trabajador});
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+			form.$setPristine();
+	        form.$setUntouched();
 	};
 		
 	this.cambiarEstatus = function(id)
 	{
-		var trabajador = Trabajadores.findOne({_id:id});
-		if(trabajador.estatus == true)
-			trabajador.estatus = false;
-		else
-			trabajador.estatus = true;
-		
-		Trabajadores.update({_id:id}, {$set : {estatus : trabajador.estatus}});
+			var trabajador = Trabajadores.findOne({_id:id});
+			if(trabajador.estatus == true)
+				trabajador.estatus = false;
+			else
+				trabajador.estatus = true;
+			
+			Trabajadores.update({_id:id}, {$set : {estatus : trabajador.estatus}});
 	};
 
-	 this.tomarFoto = function(){
+	this.tomarFoto = function(){
 			$meteor.getPicture().then(function(data){
 			rc.trabajador.fotografia = data;
 		});
