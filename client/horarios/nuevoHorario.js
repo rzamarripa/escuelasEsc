@@ -139,6 +139,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  delete horario._id;
 		Horarios.update({_id:idTemp},{$set:horario});
 		toastr.success("Se modificó el horario");
+		$state.go("root.listarHorarios");
   }
    
   this.muestraMateriasMaestro = function(maestro_id){
@@ -191,7 +192,7 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		  if(rc.horario.clases[i]._id == rc.clase._id){
 			  rc.horario.clases[i].className = ["event", "bg-color-orange"];
 			}else{
-				rc.horario.clases[i].className = rc.clase.className;
+				//rc.horario.clases[i].className = rc.clase.className;
 			}
 		}
   };

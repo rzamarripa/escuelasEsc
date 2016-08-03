@@ -82,9 +82,19 @@
 								    <div class="col-sm-3">
 											<img src="{{sec.seccion.logo}}" height="100" class="thumbnail" style="height: 100px !important"/>
 								    </div>
-								    <div class="col-sm-9" valida>
+								    <div class="col-sm-3" valida>
 								    	<label>Logo de la sección *</label>																	
 								    	<input name="logo" type="text" class="form-control" placeholder="http://" ng-model="sec.seccion.logo" required>
+								    </div>
+								    <div class="col-sm-3">
+									    <button ng-click="sec.seleccionarLogo('/img/logoCasserole.png')" class="btn btn-lg">
+												<img src="/img/logoCasserole.png" class="thumbnail" style="height: 60px !important"/>
+									    </button>
+								    </div>
+								    <div class="col-sm-3">
+									    <button ng-click="sec.seleccionarLogo('/img/logoIcep.jpg')" class="btn btn-lg">
+												<img src="/img/logoIcep.jpg" class="thumbnail" style="height: 60px !important"/>
+									    </button>
 								    </div>
 							    </div>
 							    <div class='row'>

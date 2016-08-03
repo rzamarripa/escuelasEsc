@@ -30,7 +30,7 @@
 					</div>
 				  <div class="col-sm-3" ng-class="form.nombreUsuario.$invalid == true && al.validation == true ? 'has-error':''" valida>				    
 				    <label for="nombre">Usuario</label>
-				    <input name="nombreUsuario" type="text" class="form-control"  placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="">
+				    <input name="nombreUsuario" type="text" class="form-control"  placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="" readonly="">
 					</div>
 					<div class="col-sm-3" ng-class="form.contrasena.$invalid == true && al.validation == true ? 'has-error':''" valida>
 				    <label for="nombre">Contraseña</label>
@@ -47,7 +47,7 @@
 		  	<div class="row">
 			    <div class="col-sm-3" ng-class="form.matricula.$invalid == true && al.validation == true ? 'has-error':''" valida>				    
 				    <label for="nombre">Matrícula</label>
-				    <input name="matricula" type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="">
+				    <input name="matricula" type="text" class="form-control" placeholder="Matrícula" ng-model="al.alumno.matricula" required="" readonly="">
 		    	</div>
 		    	<div class="col-sm-3" ng-class="form.nombre.$invalid == true && al.validation == true ? 'has-error':''" valida>				    
 				    <label for="nombre">Nombre</label>
