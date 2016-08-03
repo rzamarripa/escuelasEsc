@@ -1,31 +1,41 @@
 <div class="row">	
-	<div class="col-sm-4 col-sm-offset-8 text-right">
-		<label> <strong>Buscar:  </strong></label>
-		<input type="text"  ng-model="bita.search"/>
-	</div>
-</div>
-<br/>
-<div class="row">
-	<div class="col-sm-12">
-		{{bita.bitacoraCount}}
-		{{bita.perPage}}
-		{{bita.page}}
-		<table class="table table-bordered">
-			<thead>
-				<tr>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">	
+		<div class="well well-sm">
+			<!-- Timeline Content -->
+			<div class="smart-timeline">
+				<ul class="smart-timeline-list">
+					<li ng-repeat='registro in bita.bitacoras'>
+						<div class="smart-timeline-icon">
+							<img width="32" height="32" alt="user" src="img/avatars/sunny.png">
+						</div>
+						<div class="smart-timeline-time">
+							<small>{{bita.hora(registro.fecha)}}</small>
+						</div>
+						<div class="smart-timeline-content">
+							<p>
+								<a href="javascript:void(0);"><strong>Trip to Adalaskar</strong></a>
+							</p>
+							<p>
+								Check out my tour to Adalaskar
+							</p>
+							<p>
+								<a class="btn btn-xs btn-primary" href="javascript:void(0);"><i class="fa fa-file"></i> Read the post</a>
+							</p>
+	
 
-					<th ><div class="text-center">Fecha</div></th>
-					<th ><div class="text-center">Usuario</div></th>
+									
+								
+						</div>
+					</li>
 					
-				</tr>
-			</thead>
-			<tbody>
-				<tr dir-paginate="registro in bita.bitacoras | itemsPerPage: bita.perPage" total-items="bita.bitacoraCount">
-					<td>{{registro.fecha}}</td>
-					<td>{{registro.usuario}}</td>				
-				</tr>
-			</tbody>
-		</table>
-		<dir-pagination-controls on-page-change="bita.pageChanged(newPageNumber)"></dir-pagination-controls>
+					<li class="text-center">
+						<a class="btn btn-sm btn-default" href="javascript:void(0)"><i class="fa fa-arrow-down text-muted"></i> LOAD MORE</a>
+					</li>
+				</ul>
+			</div>
+			<!-- END Timeline Content -->
+
+		</div>
+
 	</div>
 </div>

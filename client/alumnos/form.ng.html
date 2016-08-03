@@ -28,6 +28,7 @@
 						<button class="btn btn-primary" ng-click="al.tomarFoto()"><i class="fa fa-camera"></i></button>
 						<img width="100px" ng-src="{{al.alumno.fotografia}}" ng-class="{'img-thumbnail': !!al.alumno.fotografia}" />
 					</div>
+
 				  <div class="col-sm-3" ng-class="form.nombreUsuario.$invalid == true && al.validation == true ? 'has-error':''" valida>
 				    <label for="nombre">Usuario *</label>
 				    <input name="nombreUsuario" type="text" class="form-control"  placeholder="Usuario" ng-model="al.alumno.nombreUsuario" required="" readonly="">
