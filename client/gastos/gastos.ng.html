@@ -11,20 +11,6 @@
       </div>
       <div class="panel-body">
         <div class="tab-content">
-        <div ng-if="gc.tipoGasto != 'depositos'">
-          <a href="" class="pull-right" type="button" data-toggle="collapse" data-target="#conceptoForm" aria-expanded="false" style="margin-bottom:10px;" aria-controls="conceptoForm">
-            Agregar concepto
-          </a>
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="collapse" id="conceptoForm">
-                <form name="form1" novalidate>
-                  <conceptos></conceptos>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
         <form name="form" novalidate>
           <div class="tab-pane fade in active" id="tabcheques">
           	<cheques ng-if="gc.tipoGasto == 'cheques'"></cheques>

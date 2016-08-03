@@ -35,15 +35,10 @@
 					<section class="col col-sm-4">
 						<h4>Quieres estudiar...</h4>
 						<div class="inline-group">
-							<label class="radio">
-								<input type="radio" ng-click="fa.prospecto.estudioInteres = {}; fa.prospecto.estudioInteres = 'Carrera'" name="radio-inline">
-								<i></i>Carrera</label>
-							<label class="radio">
-								<input type="radio" ng-click="fa.prospecto.estudioInteres = {}; fa.prospecto.estudioInteres = 'Diplomado'" name="radio-inline">
-								<i></i>Diplomado</label>
-							<label class="radio">
-								<input type="radio" ng-click="fa.prospecto.estudioInteres = {}; fa.prospecto.estudioInteres = 'Talleres'" name="radio-inline">
-								<i></i>Talleres</label>
+							<label class="radio" ng-repeat="seccion in fa.secciones">
+								<input type="radio" ng-click="fa.seleccionarSeccion(seccion);" name="radio-inline">
+								<i></i>{{seccion.nombreseccion}}
+							</label>
 						</div>
 					</section>
 					<section class="col col-sm-8">

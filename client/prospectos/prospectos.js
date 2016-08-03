@@ -7,19 +7,6 @@ angular.module("casserole")
   
   this.prospecto = {};
   
-  this.prospecto.tipoComidasSeleccionadas = [];
-  
-  this.tipoComidas = [
-    'Comida Mexicana',
-    'Comida Mediterranea',
-    'Comida Oriental',
-    'Comida Internacional', 
-    'Comida Vegetariana',
-    'Repostería',
-    'Enología y Coctelería'
-  ];  
-  
-  
   this.buscar = {};
   this.buscar.nombre = '';
   this.buscar.etapaVenta_id = '';
@@ -33,8 +20,10 @@ angular.module("casserole")
   
   this.subscribe("empleados");
   
-  this.subscribe("etapaVenta", () =>{
-	  return [{orden : "1", estatus : true,  campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+  this.subscribe('secciones', function(){
+	  return [{
+		  estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+	  }]
   });
   
   this.subscribe("etapaVenta", () =>{
@@ -50,6 +39,9 @@ angular.module("casserole")
 	  },
 	  etapasVenta : () => {
 		  return EtapasVenta.find();
+	  },
+	  secciones : () => {
+		  return Secciones.find();
 	  }
   });
   

@@ -651,6 +651,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.bitacora', {
+      url: '/bitacora',
+      templateUrl: 'client/bitacora/bitacora.ng.html',
+      controller: 'BitacoraCtrl as bita',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
+    })
     .state('root.gastos', {
       url: '/gastos',
       templateUrl: 'client/gastos/gastos.ng.html',
@@ -660,6 +670,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	        return $meteor.requireUser();
 	      }]
 	    }
+    })
+    .state('root.conceptosGasto', {
+      url: '/conceptosGasto',
+      templateUrl: 'client/conceptosGasto/conceptosGasto.ng.html',
+      controller: 'ConceptosGastoCtrl as cgc',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
     })
     .state('root.agregarGasto', {
       url: '/agregarGasto/:tipoGasto',

@@ -4,7 +4,8 @@ angular.module("casserole")
  	let rc = $reactive(this).attach($scope); 
  	this.usuarioActual = {};
  	
- 	if(Meteor.user() && Meteor.user().roles[0] != "admin"){
+ 	if(Meteor.user() && Meteor.user().roles && Meteor.user().roles[0] != "admin"){
+
 	 	this.subscribe('campus', function(){
 			return [{
 				_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
