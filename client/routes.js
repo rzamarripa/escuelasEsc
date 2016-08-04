@@ -441,6 +441,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.avisos', {
+      url: '/avisos',
+      templateUrl: 'client/avisos/avisos.ng.html',
+      controller: 'AvisosCtrl as av',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })    
     .state('root.aulas', {
       url: '/aulas',
       templateUrl: 'client/aulas/aulas.ng.html',

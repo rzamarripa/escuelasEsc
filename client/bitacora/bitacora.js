@@ -9,7 +9,7 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
 	self.perPage = 10;
     self.page = 1;
     self.sort = {
-      fecha: 1
+      fecha: -1
     };
 
 	self.subscribe('bitacora',()=>{
@@ -22,12 +22,13 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
 		{
 			//seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "",
 			//usuario : self.getReactively("usuario_id")
+			usuario:{$ne:null}
 		}]
 	});
   
 	self.helpers({
 			bitacoras : () => {
-			  	return Bitacora.find();
+			  	return Bitacora.find({},{sort:self.getReactively('sort')});
 		  	},
 		  	bitacoraCount: () => {
 		        return Counts.get('numberOfBitacora');
@@ -36,5 +37,31 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
 	self.pageChanged = (newPage) => {
       	self.page = newPage;
     };
+    self.hora = function(fecha){
+    	//console.log(fecha)
+    	var ahora = new Date();
+    	var minuto = 60 * 1000;
+    	var hora = minuto * 60;
+    	var dia = hora * 24;
+    	var anio = dia * 365;
+    	var diferencia = ahora-fecha;
+    	if(diferencia<minuto)
+    		return "Hace menos de un minuto"
+    	else if(diferencia<hora)
+    		return "Hace "+Math.round(diferencia/minuto)+" minutos"
+    	else if(diferencia<dia)
+    		return "Hace "+Math.round(diferencia/hora)+" horas"
+    	else if(diferencia<anio)
+    		return "Hace "+Math.round(diferencia/dia)+" dias"
+    	else
+    		return "Hace mucho tiempo"
+    }
+    self.tipoAccion=function(registro){
+    	switch(registro.accion){
+    		case 'insert':
+    			return 'Crear '+registro.coleccion;
+    		break;
+    	}
+    }
 
 };
