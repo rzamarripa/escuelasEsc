@@ -671,6 +671,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.reporteCobranza', {
+      url: '/reporte/cobranza',
+      templateUrl: 'client/reportes/cobranza.ng.html',
+      controller: 'CobranzaCtrl as cc',
+      resolve: {
+        "currentUser": ["$meteor", function($meteor){
+          return $meteor.requireUser();
+        }]
+      }
+    })
     .state('root.conceptosGasto', {
       url: '/conceptosGasto',
       templateUrl: 'client/conceptosGasto/conceptosGasto.ng.html',

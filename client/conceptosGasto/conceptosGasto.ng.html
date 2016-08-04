@@ -4,13 +4,14 @@
 			<div class="well col-sm-12">	
 				<div class="row">
 					<div class="form-group col-sm-3" valida>					    
-					  <label>Codigo</label>
+					  <label>Tipo Gasto</label>
 					  <select name="tipoGasto" class="form-control" ng-model="cgc.conceptoGasto.tipoGasto" required>
 					  	<option value="{{tipoGasto}}" ng-repeat="tipoGasto in cgc.tiposGasto track by $index">{{tipoGasto}}</option>
 					  </select>
 					</div>
+
 					<div class="form-group col-sm-3" valida>					    
-					  <label>Codigo</label>
+					  <label>Código</label>
 				  	<input type="text" class="form-control"  ng-model="cgc.conceptoGasto.codigo" name="codigo" required>
 					</div>
 					<div class="form-group col-sm-3" valida>
@@ -37,7 +38,7 @@
 	    <thead>
 	      <tr>
 	        <th class="hidden-xs">TipoGasto</th>
-	        <th>Codigo</th>
+	        <th>Código</th>
 	        <th>Nombre</th>
 	        <th>Campo de descripción</th>
 	        <th>Estatus</th>
