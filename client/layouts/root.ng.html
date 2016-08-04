@@ -20,8 +20,21 @@
 				Inventa una vista bonita, no pongas una tabla horrible
 				-->
 					<div ng-if="ro.usuarioActual.roles[0] == 'director'" class="row">
-						<div class="col-sm-12">
-							<table class="table table-hover table-bordered">
+						<div class="col-sm-10">
+						  <div class="class=ajax-notifications custom-scroll" style="opacity: 1;">
+						   <ul class="notification-body">
+						   		 <li ng-repeat="aviso in ro.avisos">
+						   		 		<span>
+						   		 			<a href="" class="msg">
+													<img src="" alt="" class="air air-top-left margin-top-5" width="40" height="40">
+													<span class="from">Admin</span>
+													<span class="subject">{{aviso.titulo}}</span>
+													<span class="msg-body">{{aviso.descripcion}}</span>
+												</a>						   		 			
+						   		 		</span>
+						   		 </li>
+						   </ul>
+							<!--<table class="table table-striped table-bordered table-hover dataTable no-footer">
 									<thead>
 										<tr>
 											<th>Título</th>
@@ -35,6 +48,8 @@
 										</tr>
 									</tbody>
 							</table>
+							-->
+						  </div>
 						</div>
 					</div>
 			</div>
