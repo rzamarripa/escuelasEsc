@@ -245,8 +245,8 @@
 											<div class="panel panel-default">
 												<div class="panel-heading">Tipo de Colegiatura</div>
 												<div class="panel-body">
-													<div  ng-repeat="(nombre, plan) in ins.inscripcion.plan" ng-if="plan.tipoPlan=='colegiatura'">
-													  	<label > 
+													<div  ng-repeat="(nombre, plan) in ins.inscripcion.plan" ng-if="plan.tipoPlan=='colegiatura' && ins.periodoVisible(plan)">
+													  	<label> 
 													  		<input type="radio" name="rbColegiatura" ng-model="ins.inscripcion.tipoColegiatura"  ng-value="nombre">
 													  		{{nombre}}
 													  		<div ng-show="nombre==ins.tipoColegiatura">
