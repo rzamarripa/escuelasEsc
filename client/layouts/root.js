@@ -3,6 +3,7 @@ angular.module("casserole")
  function RootCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
  	let rc = $reactive(this).attach($scope); 
  	this.usuarioActual = {};
+ 	this.avisos = "none";
  	
  	if(Meteor.user() && Meteor.user().roles && Meteor.user().roles[0] != "admin"){
 
@@ -35,4 +36,12 @@ angular.module("casserole")
 		  }
 	  });
  	}
+ 	
+ 	 this.muestraAvisos = function(){
+	  if(rc.avisos == "none"){
+		  rc.avisos = "block";
+	  }else{
+		  rc.avisos = "none";
+	  }
+  }
 };
