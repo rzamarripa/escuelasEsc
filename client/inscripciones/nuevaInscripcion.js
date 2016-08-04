@@ -215,8 +215,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			status		: 1,
 			beneficiario : _comision.beneficiario,
 			importe 	: importe,
-			modulo		: comision.modulo,
-			comision_id : comision._id,
+			modulo		: _comision.modulo,
+			comision_id : _comision._id,
 			cuenta_id : this.cuentaInscripcion._id,
 			weekday : this.diaActual,
 			semanaPago: this.semanaPago
