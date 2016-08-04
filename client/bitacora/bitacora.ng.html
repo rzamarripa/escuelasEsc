@@ -12,19 +12,24 @@
 							<small>{{bita.hora(registro.fecha)}}</small>
 						</div>
 						<div class="smart-timeline-content">
-							<p>
-								<a href="javascript:void(0);"><strong>Trip to Adalaskar</strong></a>
-							</p>
-							<p>
-								Check out my tour to Adalaskar
-							</p>
-							<p>
-								<a class="btn btn-xs btn-primary" href="javascript:void(0);"><i class="fa fa-file"></i> Read the post</a>
-							</p>
-	
-
-									
-								
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion-2" href="#{{registro._id}}" class="collapsed"> 
+											<i class="fa fa-fw fa-plus-circle txt-color-green"></i> 
+											{{bita.tipoAccion(registro)}}
+										</a>
+									</h4>
+								</div>
+								<div id="{{registro._id}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div ng-repeat='(k,attr) in registro'>
+											{{k}} : {{attr}}
+										</div>
+										
+									</div>
+								</div>
+							</div>
 						</div>
 					</li>
 					
