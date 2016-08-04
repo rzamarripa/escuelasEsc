@@ -4,6 +4,7 @@ angular.module("casserole")
  	let rc = $reactive(this).attach($scope); 
  	this.usuarioActual = {};
  	this.avisosVentana = "none";
+ 	this.hoy = new Date();
  	
  	if(Meteor.user() && Meteor.user().roles && Meteor.user().roles[0] != "admin"){
 
@@ -15,8 +16,7 @@ angular.module("casserole")
 		
 		this.subscribe('avisos', function(){
 			return [{
-				estatus : true,
-				campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
+				estatus : true
 			}]
 		});
 		

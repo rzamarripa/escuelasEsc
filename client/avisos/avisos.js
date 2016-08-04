@@ -41,6 +41,7 @@ function AvisosCtrl($scope, $meteor, $reactive, $state, toastr) {
 			
 			aviso.estatus = true;
 			aviso.estadoEnvio = "Enviado";
+			aviso.fecha = new Date();
 			aviso.campus_id = Meteor.user().profile.campus_id;
 			aviso.usuarioInserto = Meteor.userId();
 			Avisos.insert(aviso);
