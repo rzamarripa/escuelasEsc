@@ -201,9 +201,9 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			}	
 		}
 	}
-	this.llenarComision = function(comision,importe){
+	this.llenarComision = function(_comision,importe){
 		var vendedor = Meteor.users.findOne({_id:this.inscripcion.vendedor_id});
-		console.log(vendedor)
+		console.log(_comision)
 		this.comisiones.push({
 			fechaPago 	: new Date(),
 			alumno_id 	: this.inscripcion.alumno_id,
@@ -213,7 +213,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			vendedor_id	: vendedor._id,
 			gerente_id	: vendedor.profile.gerenteVenta_id,
 			status		: 1,
-			beneficiario : comision.beneficiario,
+			beneficiario : _comision.beneficiario,
 			importe 	: importe,
 			modulo		: comision.modulo,
 			comision_id : comision._id,
@@ -243,6 +243,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			
   			for(var ind in grupo.comisiones){
   				var comision = grupo.comisiones[ind];
+  				console.log(comision);
 				if(comision && comision.activa && comision.prioridad=='Alta' && comision.modulo=='colegiatura'){
 	  				comisionColegiaturaObligatoria+=comision.importe;
 	  				console.log(comisionColegiaturaObligatoria)
@@ -302,14 +303,17 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 		for (var i in inscripcion.plan) {
 			var _periodo = inscripcion.plan[i];
+			var totIns =inscripcion.totalPagar-comisionColegiaturaObligatoria;
+			var abonon = (parseFloat(inscripcion.importePagado)-inscripcion.totalPagar )>0? (parseFloat(inscripcion.importePagado)-inscripcion.totalPagar ):0;
+			abonon = this.inscripcion.quiereAbonar? abonon:0;
+
 			//console.log(_periodo);
 			if(_periodo.tipoPlan=='inscripcion' && this.periodoVisible(_periodo)==true){
 				_periodo.pago= parseFloat(inscripcion.importePagado)-comisionColegiaturaObligatoria;	
-
-				console.log(_periodo.pago)
-				if(inscripcion.totalPagar<=_periodo.pago
+				//console.log(_periodo.pago)
+				if(totIns<=_periodo.pago
 					&& _periodo.planPago && _periodo.planPago instanceof Array){
-					_periodo.planPago[0].pago= _periodo.pago;	
+					_periodo.planPago[0].pago= totIns;	
 					_periodo.planPago[0].pagada =1;
 					for (var conceptoid in  _periodo.datos) {
 						var concepto = _periodo.datos[conceptoid]
@@ -329,8 +333,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 				}
 				//break;
 			}
-			if(comisionColegiaturaObligatoria>0 && _periodo.tipoPlan=='colegiatura' && this.periodoVisible(_periodo)==true){
-				var resta = comisionColegiaturaObligatoria;
+			if((comisionColegiaturaObligatoria+abonon)>0 && _periodo.tipoPlan=='colegiatura' && this.periodoVisible(_periodo)==true){
+				var resta = comisionColegiaturaObligatoria+abonon;
 				var valorColegiatura =0;
 				for(var j in _periodo.datos){
 					var datoColegiatura = _periodo.datos[j];
@@ -343,7 +347,8 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 					var fechaPago = new Date(pago.fecha);
 					
 					if(fechaPago>this.inscripcion.fechaInscripcion){
-						pago.pagada=1
+						pago.pagada= (valorColegiatura<=resta)? 1:6;
+						pago.faltante = (valorColegiatura<=resta)? 0: valorColegiatura-resta;
 						pago.pago = (valorColegiatura>=resta)? valorColegiatura: resta;
 						for(var k in _periodo.datos){
 							var concepto = _periodo.datos[k];

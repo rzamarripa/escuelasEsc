@@ -213,15 +213,16 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  for (var i = 0; i < cobro.no; i++) {
 	  		if(plan.planPago[i].pagada!=1 && plan.planPago[i].pagada!=5 ){
 	  			rc.hayParaPagar = false;
-	  			plan.planPago[i].pagada =2;
 	  			
-	  			if(plan.planPago[i].pagada==6)
-	  				rc.totalPagar=planPago.planPago[i].faltante;
+	  			
+	  			if(plan.planPago[i].pagada==6 || plan.planPago[i].faltante>0)
+	  				rc.totalPagar+=plan.planPago[i].faltante;
 	  			else
   					for (var j = 0; j < plan.datos.length; j++) {
 	  					rc.totalPagar +=this.calcularImporteU( plan.datos[j],plan.planPago[i]);
 	  					//console.log(rc.totalPagar);
 	  				}
+	  			plan.planPago[i].pagada =2;
 
 	  			this.semanasSeleccionada.push(plan.planPago[i]);
 
@@ -287,15 +288,21 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	 	else if(cobro.pagada==5){
 	 		return "bg-color-blueDark txt-color-white";
 	 	}
+	 	else if(cobro.pagada==6){
+	 		return "bg-color-greenLight txt-color-white";
+	 	}
 	 	else {
 	  		for (var i = 0; concepto && concepto.datos && i < concepto.datos.length; i++) {
 	  			var procedimientos = concepto.datos[i].procedimientos;
 	  			procedimientos = procedimientos? procedimientos:[];
-
+	  			//console.log('procedimientos',procedimientos,dias,concepto.datos[i].activa);
 	  			for (var j = 0;concepto.datos[i].activa && j < procedimientos.length; j++) {
-	  				var procedimiento = procedimientos[i];
-	  				if(procedimiento && procedimiento.dias<=dias && procedimiento.tipoProcedimiento=='Recargo')
+	  				var procedimiento = procedimientos[j];
+	  				//console.log(procedimientos,procedimiento,dias)
+	  				if(procedimiento && procedimiento.dias<=dias && procedimiento.tipoProcedimiento=='Recargo'){
+	  					//console.log('si entroe?')
 	  					return "bg-color-orange txt-color-white";
+	  				}
 	  			}
 	  		}
 	  			//console.log(dias,recargos[i].dias,cobro);

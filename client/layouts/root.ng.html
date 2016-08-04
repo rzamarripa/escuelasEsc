@@ -1,8 +1,8 @@
 <header id="header">
 	<div id="logo-group">
 		<span id="logo" style="margin-top: 0px !important;"> <img ng-if="ro.seccion.logo != undefined" ng-src="{{ro.seccion.logo}}" style="width: 110px;" alt="Escuelas"> </span>
-		<span id="activity" class="activity-dropdown" ng-click="ro.muestraAvisos()"> <i class="fa fa-user"></i> <b class="badge  bounceIn animated">0</b> </span>
-		<div class="ajax-dropdown" style="display: {{ro.avisos}} ">
+		<span ng-if="ro.usuarioActual.roles[0] == 'director'" id="activity" class="activity-dropdown" ng-click="ro.muestraAvisos()"> <i class="fa fa-user"></i> <b class="badge  bounceIn animated">0</b> </span>
+		<div class="ajax-dropdown" style="display: {{ro.avisosVentana}} ">
 
 		<!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
 		<div class="btn-group btn-group-justified" data-toggle="buttons">
@@ -16,8 +16,42 @@
 		<div class="ajax-notifications custom-scroll">
 
 			<div class="alert alert-transparent">
-				<h4>Aquí poner los avisos</h4>
+				<!--<h4>Aquí poner los avisos</h4>
 				Inventa una vista bonita, no pongas una tabla horrible
+				-->
+					<div ng-if="ro.usuarioActual.roles[0] == 'director'" class="row">
+						<div class="col-sm-10">
+						  <div class="class=ajax-notifications custom-scroll" style="opacity: 1;">
+						   <ul class="notification-body">
+						   		 <li ng-repeat="aviso in ro.avisos">
+						   		 		<span>
+						   		 			<a href="" class="msg">
+													<img src="" alt="" class="air air-top-left margin-top-5" width="40" height="40">
+													<span class="from">Admin</span>
+													<span class="subject">{{aviso.titulo}}</span>
+													<span class="msg-body">{{aviso.descripcion}}</span>
+												</a>						   		 			
+						   		 		</span>
+						   		 </li>
+						   </ul>
+							<!--<table class="table table-striped table-bordered table-hover dataTable no-footer">
+									<thead>
+										<tr>
+											<th>Título</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="aviso in ro.avisos">
+											<td>
+												{{aviso.titulo}}
+											</td>
+										</tr>
+									</tbody>
+							</table>
+							-->
+						  </div>
+						</div>
+					</div>
 			</div>
 
 			<i class="fa fa-lock fa-4x fa-border"></i>

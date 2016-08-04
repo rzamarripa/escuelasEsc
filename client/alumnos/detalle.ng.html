@@ -14,12 +14,16 @@
 									</div>
 								-->
 									<div class="air air-top-left padding-10">
-										<h4 class="txt-color-white font-md"><i class="fa fa-calendar"></i>&nbsp;&nbsp;{{al.fechaActual | date:'dd-MM-yyyy'}}<small> <a class="btn btn-primary" href="alumnos/{{al.alumno._id}}" ng-show="elMismo(alumno._id)">Modificar</a></small></h4>
+										<h4 class="txt-color-white font-md"><i class="fa fa-calendar"></i>&nbsp;&nbsp;{{al.fechaActual | date:'dd-MM-yyyy'}}
+											<small> <a class="btn btn-primary" href="alumnos/{{al.alumno._id}}" ng-show="elMismo(alumno._id)">Modificar</a></small>
+										</h4>
 									</div>
 									<ol class="carousel-indicators">
+<!--
 										<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 										<li data-target="#myCarousel" data-slide-to="1" class=""></li>
 										<li data-target="#myCarousel" data-slide-to="2" class=""></li>
+-->
 									</ol>
 									<div class="carousel-inner">
 										<!-- Slide 1 -->
@@ -27,13 +31,17 @@
 											<img src="img/demo/s1.jpg" alt="" style="width:100%">
 										</div>
 										<!-- Slide 2 -->
+<!--
 										<div class="item">
 											<img src="img/demo/s2.jpg" alt="" style="width:100%">
 										</div>
+-->
 										<!-- Slide 3 -->
+<!--
 										<div class="item">
 											<img src="img/demo/m3.jpg" alt="" style="width:100%">
 										</div>
+-->
 									</div>
 								</div>
 							</div>
@@ -243,6 +251,42 @@
 										</fieldset>
 
 									</div>
+									<fieldset>
+											<div class="row">
+											<section class="col col-2" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input  type="text" value="Seleccionados" disabled="" class="bg-color-blue txt-color-white">
+												</label>
+											</section>
+											<section class="col col-2" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input  type="text" value="Recargos" disabled="" class="bg-color-orange txt-color-white">
+												</label>
+											</section>
+											<section class="col col-2" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input  type="text" value="Pagados" disabled="" class="bg-color-green txt-color-white">
+												</label>
+											</section>
+											<section class="col col-2" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input  type="text" value="Condonados" disabled="" class="bg-color-blueDark txt-color-white">
+												</label>
+											</section>
+											<section class="col col-2" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input  type="text" value="Abonados" disabled="" class="bg-color-greenLight txt-color-white">
+												</label>
+											</section>
+											<section class="col col-2" style="padding-left: 2px; padding-right: 2px; margin-bottom: 5px;">
+												<label class="input">
+													<input  type="text" value="Pendientes" disabled="" class="">
+												</label>
+											</section>
+
+											</div>
+									</fieldset>
+
 									
 								</form>
 								<div class="well well-sm  bg-color-darken txt-color-white no-border">

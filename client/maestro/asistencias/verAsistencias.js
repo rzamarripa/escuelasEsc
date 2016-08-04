@@ -28,8 +28,9 @@ function MaestroVerAsistenciasCtrl($scope, $meteor, $reactive, $state, $statePar
 	*/
 	this.asistencia = {};
 	this.alumnos = [];
-  $meteor.call("getAsistencias", $stateParams.id, $stateParams.materia_id).then(function (data) {	  
+  $meteor.call("getAsistencias", $stateParams.id, $stateParams.materia_id).then(function (data) {
 		this.asistencias = data;
+		console.log(data);
 		var transmutar = {};
 		_.each(this.asistencias, function(asistencia){
 			_.each(asistencia.alumnos, function(alumno){
