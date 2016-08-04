@@ -49,6 +49,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
       controller: 'LoginCtrl',
       controllerAs: 'lc'
     })
+    
     .state('anon.pagosImprimir', {
       url: '/pagosImprimir/:id',
       templateUrl: 'client/pagos/pagosImprimir.ng.html',
@@ -631,6 +632,13 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('anon.pizarron', {
+      url: '/pizarron/:grupoId',
+      templateUrl: 'client/pizarron/pizarron.ng.html',
+      controller: 'PizarronCtrl',
+      controllerAs: 'pzc',
+      
+    })
     .state('root.etapasVenta', {
       url: '/etapasVenta',
       templateUrl: 'client/etapasVenta/etapasVenta.html',
@@ -681,6 +689,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
         }]
       }
     })
+    
     .state('root.agregarGasto', {
       url: '/agregarGasto/:tipoGasto',
       templateUrl: 'client/gastos/agregarGasto.ng.html',
