@@ -38,6 +38,7 @@
 		<table class="table table-striped table-bordered table-list">
 	    <thead>
 	      <tr>
+	      	<th></th>
 	      	<th>Concepto</th>
 	        <th>Fecha Limite</th>
 	        <th class="hidden-xs">Importe</th>
@@ -45,7 +46,8 @@
 	    </thead>
 	    <tbody>
 	      <tr ng-repeat="gasto in gc.gastos">
-	        <td class="hidden-xs"><a class="btn btn-danger"><em class="fa fa-trash"></em></a> {{gc.getConcepto(gasto.concepto_id)}}</td>
+	      	<td align="center"><a ng-click="gc.cambiarEstatus(gasto)" class="btn btn-danger"><em class="fa fa-trash"></em></a></td>
+	        <td class="hidden-xs">{{gc.getConcepto(gasto.concepto_id)}}</td>
 	        <td>{{gasto.fechaLimite | date:'dd/MM/yyyy'}}</td>
 	        <td align="right">{{gasto.importe | currency}}</td>
 	      </tr>

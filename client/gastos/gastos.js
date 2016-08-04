@@ -14,7 +14,7 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
   for(i = 0; i < this.diaActual; i++){this.diasActuales.push(dias[i])};
 
   this.subscribe('gastos', () => {
-    return [{estatus: true, semana: this.semanaActual, tipoGasto  : this.getReactively('tipoGasto'), campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+    return [{estatus: true, semana: this.semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
   this.subscribe('conceptosGasto', () => {
@@ -25,19 +25,31 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
     return [{semanaPago: this.semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
   });
 
+  this.subscribe('comisiones', () => {
+    return [{semanaPago: this.semanaActual, campus_id: Meteor.user() != undefined ? Meteor.user().profile.campus_id : ''}];
+  });
+
   this.subscribe('cuentas', () => {
     return [{estatus: true, seccion_id: Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ''}];
   });
 
   this.helpers({
 		gastos : () => {
-			return Gastos.find();
+			return Gastos.find({tipoGasto  : this.getReactively('tipoGasto')});
 		},
     conceptos : () =>{
       return ConceptosGasto.find();
     },
     cuentas : ()=>{
-      return Cuentas.find();
+      _cuentas = Cuentas.find().fetch();
+      _.each(_cuentas,function(cuenta){
+        cuenta.depositos = Gastos.find({tipoGasto:"depositos",cuenta_id: cuenta._id}).fetch();
+        cuenta.totalDepositos = _.reduce(cuenta.depositos, function(memo, deposito){return memo + deposito.importe},0);
+      });
+      return _cuentas;
+    },
+    cuentaInscripcion : () =>{
+      return Cuentas.findOne({inscripcion:true});
     }
   });
 
@@ -86,7 +98,6 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
   this.cambiarEstatus = function(gasto){
     estatus = !gasto.estatus;
-    console.log(estatus)
     Gastos.update(gasto._id,{$set:{estatus:estatus}});
   }
 
@@ -141,6 +152,25 @@ function GastosCtrl($scope, $meteor, $reactive, $state, toastr) {
     totalPagos = _.reduce(pagos, function(memo, pago){return memo + pago.importe},0);
     totalGastos = _.reduce(gastos, function(memo, gasto){return memo + gasto.importe},0);
     return totalPagos - totalGastos
+  }
+  this.gastosRelaciones = function(cuenta_id){
+    comisiones = Comisiones.find({modulo:"colegiatura", cuenta_id:cuenta_id}).fetch();
+    gastos = Gastos.find({tipoGasto:"relaciones"}).fetch();
+    totalComisiones = _.reduce(comisiones, function(memo, comision){return memo + comision.importe},0);
+    totalGastos = _.reduce(gastos, function(memo, gasto){return memo + gasto.importe},0);
+    return totalComisiones + totalGastos;
+  }
+  this.restosInscripcion = function(cuenta_id){
+    comisiones = Comisiones.find({modulo:"inscripcion", cuenta_id:cuenta_id}).fetch();
+    totalComisiones = _.reduce(comisiones, function(memo, comision){return memo + comision.importe},0);
+    return totalComisiones
+  }
+////////////////////////
+///////////relaciones
+  this.comisiones = function(cuenta_id){
+    comisiones = Comisiones.find({modulo:"colegiatura", cuenta_id:cuenta_id}).fetch();
+    totalComisiones = _.reduce(comisiones, function(memo, comision){return memo + comision.importe},0);
+    return totalComisiones
   }
 ////////////////////////
 };

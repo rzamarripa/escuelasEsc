@@ -14,7 +14,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	}]
 	});
 	this.subscribe('cuentas', ()=>{
-		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	});
 	this.subscribe('generaciones',()=>{
 		return [{estatus:true, seccion_id : this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):"" }]
@@ -217,7 +217,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			importe 	: importe,
 			modulo		: comision.modulo,
 			comision_id : comision._id,
-			cuenta_id : tipoPlan == 'inscripcion' ? this.cuentaInscripcion._id:this.cuentaActiva._id,
+			cuenta_id : this.cuentaInscripcion._id,
 			weekday : this.diaActual,
 			semanaPago: this.semanaPago
 		});
