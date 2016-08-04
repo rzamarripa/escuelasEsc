@@ -55,7 +55,13 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
     		return "Hace "+Math.round(diferencia/dia)+" dias"
     	else
     		return "Hace mucho tiempo"
-
+    }
+    self.tipoAccion=function(registro){
+    	switch(registro.accion){
+    		case 'insert':
+    			return 'Crear '+registro.coleccion;
+    		break;
+    	}
     }
 
 };
