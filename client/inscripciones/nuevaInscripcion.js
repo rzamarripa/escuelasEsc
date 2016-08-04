@@ -14,7 +14,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	}]
 	});
 	this.subscribe('cuentas', ()=>{
-		return [{activo: true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
+		return [{seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}]
 	});
 	this.subscribe('generaciones',()=>{
 		return [{estatus:true, seccion_id : this.getReactively('inscripcion.seccion_id')? this.getReactively('inscripcion.seccion_id'):"" }]
@@ -71,8 +71,11 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 		ciclos : () => {
 			return Ciclos.find();
 		},
-		cuenta : () =>{
-			return Cuentas.findOne();
+		cuentaActiva : () =>{
+			return Cuentas.findOne({activo: true});
+		},
+		cuentaInscripcion: () =>{
+			return Cuentas.findOne({inscripcion: true});
 		},
 		vendedores : () => {
 		  var usuarios = Meteor.users.find().fetch();
@@ -144,7 +147,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 						tipo 		: "Cobro",
 						usuario_id 	: Meteor.userId(),
 						importe 	: concepto.importe,
-						cuenta_id : this.cuenta._id,
+						cuenta_id : tipoPlan == 'inscripcion' ? this.cuentaInscripcion._id:this.cuentaActiva._id,
 						weekday : this.diaActual,
 						semanaPago: this.semanaPago
 					});
@@ -171,7 +174,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								tipo 		: "Recargo",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto,
-								cuenta_id : this.cuenta._id,
+								cuenta_id : tipoPlan == 'inscripcion' ? this.cuentaInscripcion._id:this.cuentaActiva._id,
 								weekday : this.diaActual,
 								semanaPago: this.semanaPago
 							});
@@ -191,7 +194,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 								tipo 		: "Descuento",
 								usuario_id 	: Meteor.userId(),
 								importe 	: procedimiento.monto * -1,
-								cuenta_id : this.cuenta._id,
+								cuenta_id : tipoPlan == 'inscripcion' ? this.cuentaInscripcion._id:this.cuentaActiva._id,
 								weekday : this.diaActual,
 								semanaPago: this.semanaPago
 							});
@@ -214,7 +217,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 			importe 	: importe,
 			modulo		: comision.modulo,
 			comision_id : comision._id,
-			cuenta_id : this.cuenta._id,
+			cuenta_id : tipoPlan == 'inscripcion' ? this.cuentaInscripcion._id:this.cuentaActiva._id,
 			weekday : this.diaActual,
 			semanaPago: this.semanaPago
 		});
