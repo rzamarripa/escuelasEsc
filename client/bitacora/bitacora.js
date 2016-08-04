@@ -15,16 +15,19 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
 	self.subscribe('bitacora',()=>{
 		return [
 		{
-          limit: parseInt(self.perPage),
+          limit: parseInt(self.getReactively('perPage')),
           skip: parseInt((self.getReactively('page') - 1) * self.perPage),
           sort: self.getReactively('sort')
         },
 		{
-			//seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "",
-			//usuario : self.getReactively("usuario_id")
-			usuario:{$ne:null}
+			seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : undefined,
+			usuario : self.getReactively("usuario_id")? self.getReactively("usuario_id"):{$ne:null}
 		}]
 	});
+   
+     this.subscribe("usuarios",() => {
+        return [{}]
+    });
   
 	self.helpers({
 			bitacoras : () => {
@@ -32,7 +35,13 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
 		  	},
 		  	bitacoraCount: () => {
 		        return Counts.get('numberOfBitacora');
-		    }
+		    },
+            secciones : () => {
+                return Secciones.find();
+            },
+            usuarios : () => {
+                return Meteor.users.find();
+            }
 	});
 	self.pageChanged = (newPage) => {
       	self.page = newPage;
@@ -57,11 +66,21 @@ function BitacoraCtrl($scope, $meteor, $reactive, $state, toastr) {
     		return "Hace mucho tiempo"
     }
     self.tipoAccion=function(registro){
-    	switch(registro.accion){
-    		case 'insert':
-    			return 'Crear '+registro.coleccion;
-    		break;
-    	}
+        var usuario_a = Meteor.users.findOne(registro.usuario);
+        var usuario = registro.isServer? 'Server':(usuario_a? usuario_a.username:"Cliente");
+        switch(registro.accion){
+            case 'insert':
+                return '('+usuario+'): Crear '+registro.coleccion;
+            case 'update':
+                return '('+usuario+'): Actualizar '+registro.coleccion;
+            case 'remove':
+                return '('+usuario+'): Eliminar '+registro.coleccion;
+            break;
+        }
+    }
+    self.loadMore=function(){
+        console.log('hola');
+        self.perPage +=10; 
     }
 
 };

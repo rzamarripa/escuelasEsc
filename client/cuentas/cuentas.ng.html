@@ -52,6 +52,11 @@
 					</th>
 					<th width="10%">
 						<div class="text-center">
+							Inscripción
+						</div>
+					</th>
+					<th width="10%">
+						<div class="text-center">
 							Acciones
 						</div>
 					</th>
@@ -71,6 +76,16 @@
 				    </div>
 			    </td>
 			    <td>
+			    	<div class="text-center">
+				    	<span ng-if="cuenta.inscripcion" class="label label-success">
+							  Activo
+							</span>
+							<span ng-if="!cuenta.inscripcion" class="label label-danger">
+							  Inactivo
+							</span>
+				    </div>
+			    </td>
+			    <td>
 				    <div class="text-center">
 					    <div class="btn-group">
 							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,6 +94,7 @@
 							  </button>
 							  <ul class="dropdown-menu text-left dropdown-menu-right">
 							    <li><a href="#" ng-click="cc.editar(cuenta._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							    <li><a href="#" ng-click="cc.cuentaInscripcion(cuenta._id)"><i class="fa fa-trash"></i>Inscripción</a></li>
 							    <li><a href="#" ng-click="cc.cambiarEstatus(cuenta._id)"><i class="fa fa-trash"></i> Eliminar</a></li>
 							  </ul>
 							</div>
