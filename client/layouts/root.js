@@ -15,7 +15,8 @@ angular.module("casserole")
 		
 		this.subscribe('avisos', function(){
 			return [{
-				estatus : true
+				estatus : true,
+				campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""
 			}]
 		});
 		
