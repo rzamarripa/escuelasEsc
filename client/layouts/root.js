@@ -13,6 +13,12 @@ angular.module("casserole")
 			}]
 		});
 		
+		this.subscribe('avisos', function(){
+			return [{
+				estatus : true
+			}]
+		});
+		
 		this.subscribe('secciones', function(){
 			return [{
 				_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""
@@ -33,6 +39,9 @@ angular.module("casserole")
 		  },
 		  seccion : () => {
 			  return Secciones.findOne(Meteor.user().profile.seccion_id);
+		  },
+		  avisos : () => {
+			  return Avisos.find(;
 		  }
 	  });
  	}
