@@ -1,14 +1,14 @@
 <header id="header">
 	<div id="logo-group">
 		<span id="logo" style="margin-top: 0px !important;"> <img ng-if="ro.seccion.logo != undefined" ng-src="{{ro.seccion.logo}}" style="width: 110px;" alt="Escuelas"> </span>
-		<span ng-if="ro.usuarioActual.roles[0] == 'director'" id="activity" class="activity-dropdown" ng-click="ro.muestraAvisos()"> <i class="fa fa-user"></i> <b class="badge  bounceIn animated">0</b> </span>
+		<span ng-if="ro.usuarioActual.roles[0] == 'director'" id="activity" class="activity-dropdown" ng-click="ro.muestraAvisos()"> <i class="fa fa-user"></i> <b class="badge  bounceIn animated">{{ro.avisos.length}}</b> </span>
 		<div class="ajax-dropdown" style="display: {{ro.avisosVentana}} ">
 
 		<!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
 		<div class="btn-group btn-group-justified" data-toggle="buttons">
 			<label class="btn btn-default">
 				<input type="radio" name="activity" id="ajax/notify/mail.html">
-				Avisos (14) 
+				Avisos ({{ro.avisos.length}}) 
 			</label>
 		</div>
 
@@ -20,35 +20,19 @@
 				Inventa una vista bonita, no pongas una tabla horrible
 				-->
 					<div ng-if="ro.usuarioActual.roles[0] == 'director'" class="row">
-						<div class="col-sm-10">
+						<div class="col-sm-11">
 						  <div class="class=ajax-notifications custom-scroll" style="opacity: 1;">
 						   <ul class="notification-body">
-						   		 <li ng-repeat="aviso in ro.avisos">
-						   		 		<span>
-						   		 			<a href="" class="msg">
-													<img src="" alt="" class="air air-top-left margin-top-5" width="40" height="40">
-													<span class="from">Admin</span>
-													<span class="subject">{{aviso.titulo}}</span>
-													<span class="msg-body">{{aviso.descripcion}}</span>
-												</a>						   		 			
-						   		 		</span>
-						   		 </li>
+					   		 <li ng-repeat="aviso in ro.avisos">
+					   		 		<span>
+					   		 			<a href="">
+												<span class="subject">{{aviso.titulo}}</span>
+												<span class="font-xs" style="color:#A0A0A0">{{aviso.descripcion}}</span>
+												<span class="date pull-right font-xs">{{aviso.fecha  | date:'dd-MM-yyyy hh:mm'}}</span>
+											</a>						   		 			
+					   		 		</span>
+					   		 </li>
 						   </ul>
-							<!--<table class="table table-striped table-bordered table-hover dataTable no-footer">
-									<thead>
-										<tr>
-											<th>Título</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="aviso in ro.avisos">
-											<td>
-												{{aviso.titulo}}
-											</td>
-										</tr>
-									</tbody>
-							</table>
-							-->
 						  </div>
 						</div>
 					</div>
@@ -60,7 +44,7 @@
 		<!-- end notification content -->
 
 		<!-- footer: refresh area -->
-		<span> Fecha: 12/12/2016 9:43AM</span>
+		<span> Fecha: {{ro.hoy | date:'dd-MM-yyyy hh:mm'}}</span>
 		<!-- end footer -->
 		</div>
 	</div>
