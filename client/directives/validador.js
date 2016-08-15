@@ -30,18 +30,20 @@ angular.module('casserole').directive('validaForm', validaForm);
       },
      link: function(scope, element, attrs) {
 			element.on("click", function () {
-				errors = scope.formulario.$error.required;
-        if(errors != undefined){
-  				errors.forEach(function(error){
-  					if(error.$invalid == true){
-  						var elem = document.getElementsByName(error.$name)[0].parentElement;
-  						elem.className += " has-error";
-  					}
-  				});
+        errorsType = scope.formulario.$error;
+        if(errorsType != undefined){
+          angular.forEach(errorsType, function(errors){
+            errors.forEach(function(error){
+              if(error.$invalid == true){
+                var elem = document.getElementsByName(error.$name)[0].parentElement;
+                elem.className += " has-error";
+              }
+            })
+          });
         }else{
           setTimeout(function() {$("div").removeClass("has-error");}, 10);  
         }
-			});
+      });
 		}
   }
 }
