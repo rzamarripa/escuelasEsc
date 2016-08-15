@@ -51,6 +51,7 @@ angular.module("casserole")
 		this.prospecto.fecha = new Date();
 		this.prospecto.etapaVenta_id = this.etapaVenta._id;
 		this.prospecto.vendedor_id = Meteor.userId();
+		this.prospecto.campus_id = Meteor.user().profile.campus_id;
 		var prospecto_id = Prospectos.insert(this.prospecto);
 		toastr.success('prospecto guardado.');
 		this.prospecto = {}; 

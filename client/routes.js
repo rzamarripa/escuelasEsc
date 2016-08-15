@@ -1,8 +1,5 @@
 angular.module("casserole").run(function ($rootScope, $state, toastr) {
   $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-    // We can catch the error thrown when the $requireUser promise is rejected
-    // and redirect the user back to the main page
-    console.log(error);
     switch(error) {
       case "AUTH_REQUIRED":
         $state.go('anon.login');
@@ -16,13 +13,7 @@ angular.module("casserole").run(function ($rootScope, $state, toastr) {
         break;
       default:
         $state.go('internal-client-error');
-        
     }
-/*
-    if (error === 'AUTH_REQUIRED') {
-      $state.go('anon.login');
-    }
-*/
   });
 });
 
@@ -97,6 +88,7 @@ angular.module('casserole').config(['$injector', function ($injector) {
 		  },
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
+		      console.log($meteor.requireUser());
 	        return $meteor.requireUser();
 	      }]
 	    },
@@ -783,5 +775,40 @@ angular.module('casserole').config(['$injector', function ($injector) {
          });
        }]
     	}
+    })
+    .state('root.gerenteVendedores', {
+      url: '/gerenteVendedores',
+      templateUrl: 'client/gerentesVenta/gerenteVendedores.html',
+      controller: 'GerenteVendedoresCtrl as gv',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "gerenteVenta"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    //me quede eso
+    .state('root.prospectosPorVendedor', {
+      url: '/gerenteVendedores',
+      templateUrl: 'client/gerentesVenta/gerenteVendedores.html',
+      controller: 'GerenteVendedoresCtrl as gv',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "gerenteVenta"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
     }); 
+    
+    
 }]);     

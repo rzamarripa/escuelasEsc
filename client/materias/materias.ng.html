@@ -2,33 +2,39 @@
 <div class="row">
 	<div class="col-sm-12">
 		<a class="btn btn-{{mat.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaMateria" ng-click="mat.nuevaMateria()">
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevaMateria" 
+				ng-click="mat.nuevaMateria()">
 		  {{mat.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
 		<div class="collapse" id="collapseExample">
 			<form name="form" class="form-horizontal" role="form" novalidate>
 		  	<div class="well">		  		
 			    <div class="row">
-			    	<div class="col-sm-4" valida>					    
+			    	<div class="col-sm-2" valida>					    
 						  <label>Clave *</label>
 				    	<input name="clave" type="text" class="form-control"  ng-model="mat.materia.clave" required="">
 			    	</div>
-			    	<div class="col-sm-4" valida>
+			    	<div class="col-sm-3" valida>
 						  <label>Nombre *</label>
 				    	<input name="nombre" type="text" class="form-control"  ng-model="mat.materia.nombre" required="">
 			    	</div>
-			    	<div class="col-sm-4" valida>
+			    	<div class="col-sm-2" valida>
 						  <label>Nombre Corto *</label>
 				    	<input name="nombreCorto" type="text" class="form-control"  ng-model="mat.materia.nombreCorto" required="" maxlength="6">
 			    	</div>
-			    	<div class="col-sm-4" valida>
-						<label>Departamento Academico *</label>
-						<select name="deptoAcademico" class="form-control" placeholder="Seleccione" ng-model="mat.materia.deptoAcademico_id" required="">
-							<option ng-repeat="depto in mat.deptosAcademicos" value="{{depto._id}}">{{depto.descripcionCorta}}</option>
-						</select>
-					</div>
+			    	<div class="col-sm-5" valida>
+							<label>Departamento Académico *</label>
+							<select name="deptoAcademico" class="form-control" placeholder="Seleccione" ng-model="mat.materia.deptoAcademico_id" required="">
+								<option ng-repeat="depto in mat.deptosAcademicos" value="{{depto._id}}">{{depto.descripcionCorta}}</option>
+							</select>
+						</div>
 			    </div>
-			   
+			    <div class="row">
+			    	<div class="col-sm-12">
+				    	<label>Temario</label>
+			    		<textarea class="form-control" rows="8" ng-model="mat.materia.temario"></textarea>
+			    	</div>
+			    </div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12">
