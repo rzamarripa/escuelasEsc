@@ -130,7 +130,7 @@
 					</div>
 					<div class="col-sm-4" valida>
 						<label>Plan de Estudios *</label>
-						<select name="planestudios" class="form-control" placeholder="Seleccione un plan de estudios" ng-model="gp.grupo.ciclo_id" required="">
+						<select name="planestudios" class="form-control" placeholder="Seleccione un plan de estudios" ng-model="gp.grupo.planEstudios_id" required="">
 							<option ng-repeat="plan in gp.planes" value="{{plan._id}}">{{plan.descripcion}}</option>
 						</select>
 					</div>
@@ -146,6 +146,58 @@
 				</div>
 				</div>
 				-->
+	  	</div>
+	  	<div class="well">
+	  		<div class="row">
+	  			<div class="panel panel-default">
+					<div class="panel-heading">Inscripcion</div>
+					<div class="panel-body">
+						<div class="row" ng-repeat='concepto in gp.grupo.inscripcion.conceptos'>
+							<div class="col-sm-4">
+								{{concepto.nombre}}
+					  		</div>
+					  		<div class="col-sm-4">
+									<label >Importe			
+										
+					  				</label>
+					  				<input type="number" ng-model="concepto.importe">
+									
+					  		</div>
+					  		<div class="col-sm-4">
+									<label >Activo			
+										<input type="checkbox" ng-model="concepto.estatus">
+					  				</label>
+									
+					  		</div>
+						</div>
+					</div>
+				</div>
+	  		</div>
+	  		<div class="row" ng-repeat='tipo in gp.tiposColegiatura'>
+	  			<div class="panel panel-default">
+					<div class="panel-heading">Colegiatura {{tipo}}</div>
+					<div class="panel-body">
+						<div class="row" ng-repeat='concepto in gp.grupo.colegiatura.conceptos[tipo]'>
+							<div class="col-sm-4">
+								{{concepto.nombre}}
+					  		</div>
+					  		<div class="col-sm-4">
+									<label >Importe			
+										
+					  				</label>
+					  				<input type="number" ng-model="concepto.importe">
+									
+					  		</div>
+					  		<div class="col-sm-4">
+									<label >Activo			
+										<input type="checkbox" ng-model="concepto.estatus">
+					  				</label>
+									
+					  		</div>
+						</div>
+					</div>
+				</div>
+	  		</div>
 	  	</div>
 	  	<!--
 	  	<div class="well" ng-if="gp.grupo.subCicloAdministrativo_id">	 
