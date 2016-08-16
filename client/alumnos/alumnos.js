@@ -15,7 +15,7 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
     return [{
 	    options : { limit: 10 },
 	    where : { nombre : this.getReactively('buscar.nombre'), 
-/* 		    seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""  */}
+ 		    campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""  }
     }] ;
   });
   
