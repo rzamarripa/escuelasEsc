@@ -169,6 +169,27 @@
 					  				</label>
 									
 					  		</div>
+
+						</div>
+						<div class="row">
+						    <div class="col-sm-4" >
+						    	<label>Descuento *</label>
+						    	<input name="recargo" type="number"  ng-model="gp.grupo.inscripcion.importeRecargo" required=""/>
+						    </div>
+						    <div class="col-sm-8" >
+						    	<label>Dias para realizar Descuento *</label>
+						    	<input name="diasRecargo" type="number" ng-model="gp.grupo.inscripcion.diasRecargo" required=""/>
+						    </div>					  
+						</div>
+						<div class="row">
+						    <div class="col-sm-4" >
+						    	<label>Recargo *</label>
+						    	<input name="descuento" type="number" ng-model="gp.grupo.inscripcion.importeDescuento" required=""/>
+						    </div>
+						    <div class="col-sm-8" >
+						    	<label>Dias para realizar Descuento *</label>
+						    	<input name="diasDescuento" type="number" ng-model="gp.grupo.inscripcion.diasDescuento" required=""/>
+						    </div>					  
 						</div>
 					</div>
 				</div>
@@ -177,23 +198,45 @@
 	  			<div class="panel panel-default">
 					<div class="panel-heading">Colegiatura {{tipo}}</div>
 					<div class="panel-body">
-						<div class="row" ng-repeat='concepto in gp.grupo.colegiatura.conceptos[tipo]'>
+						<div class="row" ng-repeat='cpa in gp.grupo.colegiatura[tipo].conceptos'>
 							<div class="col-sm-4">
-								{{concepto.nombre}}
+								{{cpa.nombre }}
+
+
 					  		</div>
 					  		<div class="col-sm-4">
 									<label >Importe			
 										
 					  				</label>
-					  				<input type="number" ng-model="concepto.importe">
+					  				<input type="number" ng-model="cpa.importe">
 									
 					  		</div>
 					  		<div class="col-sm-4">
 									<label >Activo			
-										<input type="checkbox" ng-model="concepto.estatus">
+										<input type="checkbox" ng-model="cpa.estatus">
 					  				</label>
 									
 					  		</div>
+						</div>
+						<div class="row">
+						    <div class="col-sm-4" >
+						    	<label>Descuento *</label>
+						    	<input name="recargo" type="number"  ng-model="gp.grupo.colegiatura[tipo].importeRecargo" required=""/>
+						    </div>
+						    <div class="col-sm-8" >
+						    	<label>Dias para realizar Descuento *</label>
+						    	<input name="diasRecargo" type="number" ng-model="gp.grupo.colegiatura[tipo].diasRecargo" required=""/>
+						    </div>					  
+						</div>
+						<div class="row">
+						    <div class="col-sm-4" >
+						    	<label>Recargo *</label>
+						    	<input name="descuento" type="number" ng-model="gp.grupo.colegiatura[tipo].importeDescuento" required=""/>
+						    </div>
+						    <div class="col-sm-8" >
+						    	<label>Dias para realizar Descuento *</label>
+						    	<input name="diasDescuento" type="number" ng-model="gp.grupo.colegiatura[tipo].diasDescuento" required=""/>
+						    </div>					  
 						</div>
 					</div>
 				</div>

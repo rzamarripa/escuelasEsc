@@ -62,7 +62,14 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 				if(!this.grupo)
 					this.grupo={};
 				if(!this.grupo.inscripcion)
-					this.grupo.inscripcion={}
+					this.grupo.inscripcion={
+						recargo : 0,
+						importeRecargo : 0,
+						diasRecargo : 5,
+						descuento : 0,
+						importeDescuento : 0,
+						diasDescuento : 5
+					}
 				if(!this.grupo.inscripcion.conceptos)
 					this.grupo.inscripcion.conceptos={};
 				if (!this.grupo.colegiatura) 
@@ -71,26 +78,37 @@ function NuevoGrupoCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr
 					this.grupo.colegiatura.conceptos ={};
 				for(var idcol in this.tiposColegiatura){
 					var col = this.tiposColegiatura[idcol];
-					if(!this.grupo.colegiatura.conceptos[col])
-						this.grupo.colegiatura.conceptos[col]={};
+					if(!this.grupo.colegiatura[col]){
+						this.grupo.colegiatura[col]={
+							recargo : 0,
+							importeRecargo : 0,
+							diasRecargo : 5,
+							descuento : 0,
+							importeDescuento : 0,
+							diasDescuento : 5,
+							conceptos : {}
+						}
+					}
 				}
 
 				for (var i = 0; i < conceptos.length; i++) {
 					var concepto = conceptos[i]
-					console.log(concepto);
+					
 					if(concepto.modulo=='inscripcion'){
-						console.log(this.grupo.inscripcion.conceptos[conceptos._id]);
-						if(!this.grupo.inscripcion.conceptos[conceptos._id]){
-							this.grupo.inscripcion.conceptos[conceptos._id]=concepto;
-							delete this.grupo.inscripcion.conceptos[conceptos._id]._id
+						console.log(this.grupo.inscripcion.conceptos[concepto._id]);
+						if(!this.grupo.inscripcion.conceptos[concepto._id]){
+							this.grupo.inscripcion.conceptos[concepto._id]=concepto;
+							delete this.grupo.inscripcion.conceptos[concepto._id]._id
+
 						}
 					}
 					else if(concepto.modulo=='colegiatura'){
 						for(var idcol in this.tiposColegiatura){
 							var col = this.tiposColegiatura[idcol];
-							if(!this.grupo.colegiatura.conceptos[col][conceptos._id]){
-								this.grupo.colegiatura.conceptos[col][conceptos._id]=concepto;
-								delete this.grupo.colegiatura.conceptos[col][conceptos._id]._id
+							if(!this.grupo.colegiatura[col].conceptos[concepto._id]){
+								this.grupo.colegiatura[col].conceptos[concepto._id]=angular.copy(concepto);
+								
+								delete this.grupo.colegiatura[col].conceptos[concepto._id]._id
 							}
 						}
 
