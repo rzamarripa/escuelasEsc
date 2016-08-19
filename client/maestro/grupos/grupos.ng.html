@@ -3,7 +3,7 @@
     <div class="panel panel-default coupon">
       <div class="panel-heading" id="head">
         <div class="panel-title" id="title">
-            <h4>{{mmg.materia.clave}} - {{mmg.materia.etiqueta}}<span class="pull-right">{{mmg.grupo.identificador}} - {{mmg.grupo.nombre}}</span></h4>
+            <h4>{{mmg.materia.clave}} - {{mmg.materia.nombre}}<span class="pull-right">{{mmg.grupo.identificador}} - {{mmg.grupo.nombre}}</span></h4>
         </div>
       </div>
       <div class="panel-body">
@@ -15,6 +15,7 @@
 			      <li><a href="/calificacionesGrupo/{{mmg.grupo_id}}">Capturar calificaciones</a></li>
 			      <li><a href="/tareas/{{grupo._id}}/{{mmg.grupo.maestro_id}}">Tareas</a></li>
 			      <li><a href="/calificacionesGrupo/{{mmg.grupo_id}}">Exámenes</a></li>
+			      <li><a ui-sref="root.planeacionClase({grupo_id : mmg.grupo_id, materia_id : mmg.materia_id, maestro_id : mmg.grupo.maestro_id})">Planear la Clase</a></li>
 			    </ul>
 			    <div class="offer">
 			      <span class="usd"><sup>#</sup></span>
@@ -31,11 +32,11 @@
 										
 	                </div>
 	                <div class="avatar">
-	                  <img alt="" ng-src="{{alumno.fotografia}}"/>
+	                  <img ng-src="{{masgrupo.tieneFoto(alumno.sexo, alumno.fotografia)}}" class="img-responsive img-thumbnail">
 	                </div>
 	                <div class="info">
 	                  <h3>
-	                      <a target="_blank" href="/alumno/{{alumno._id}}">{{alumno.nombre}} {{alumno.apPaterno}}</a>
+	                    <a target="_blank" href="/alumno/{{alumno._id}}">{{alumno.nombre}} {{alumno.apPaterno}}</a>
 	                  </h3>
 	                </div>
 	            </div>			
@@ -46,12 +47,12 @@
       </div>
       <div class="panel-footer">
         <div class="coupon-code">
-            Día: {{grupo.hoy | date:'EEEE'}}
+            Día: {{masgrupo.hoy | date:'EEEE'}}
             <span class="print">
                 <a href="#" class="btn btn-link"><i class="fa fa-lg fa-print"></i> Imprimir</a>
             </span>
         </div>
-        <div class="exp">Fecha:{{ grupo.hoy | date:'dd-MM-yyyy'}}</div>
+        <div class="exp">Fecha:{{ masgrupo.hoy | date:'dd-MM-yyyy'}}</div>
       </div>
     </div>
 	</div>

@@ -1,14 +1,14 @@
 Meteor.methods({
   createUsuario: function (usuario, rol) {
-	  console.log(usuario);
-	  console.log(rol);
 	  profile = {
 				email: usuario.correo,
 				nombre: usuario.nombre,
 				apellidos: usuario.apPaterno + " " + usuario.apMaterno,
 				nombreCompleto : usuario.nombre  + " " + usuario.apPaterno + " " + (usuario.apMaterno ? usuario.apMaterno : ""),
 				fotografia : usuario.fotografia,
-				estatus:true
+				estatus:true,
+				campus_id : usuario.campus_id,
+				seccion_id : usuario.seccion_id
 			}
 		if(usuario.maestro_id != undefined)
 			profile.maestro_id = usuario.maestro_id;
@@ -64,9 +64,6 @@ Meteor.methods({
 	},
 	updateGerenteVenta: function (usuario, rol) {		
 	  var user = Meteor.users.findOne({"_id" : usuario._id});
-	  console.log("id usuario", user._id);
-	  console.log("usuario", user);
-	  console.log("mende", usuario);
 	  Meteor.users.update({_id: user._id}, {$set:{
 			username: usuario.username,
 			roles: [rol],

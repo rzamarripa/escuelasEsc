@@ -42,20 +42,22 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		aulas : () => {
 			return Aulas.find();
 		},
-		horario : () => {
+		ultimoHorario : () => {
 			return Horarios.findOne();
 		},
 	});
 		
 	if($stateParams.id != ""){
-		this.horario 	= Horarios.findOne($stateParams.id);
-		this.action 	= false;
+		rc.horario 	= Horarios.findOne($stateParams.id);
+		rc.action 	= false;
 	}else{
-		this.horario 	= {};
-	  this.horario.clases = [];
-	  this.horario.estatus = true;
-	  this.action 	= true;	  
+		rc.horario 	= {};
+	  rc.horario.clases = [];
+	  rc.horario.estatus = true;
+	  rc.action 	= true;	  
 	}
+	
+	window.rc = rc.horario;
 	
   this.agregarClase = function(clase, form){
   	if(form.$invalid){
@@ -74,9 +76,10 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  clase.estatus = true;
 	  clase.start 	= moment(clase.start).format("YYYY-MM-DD HH:mm");
 		clase.end 		= moment(clase.end).format("YYYY-MM-DD HH:mm");
-	  this.horario.clases.push(clase);
-	  this.horario.semana = moment(clase.start).isoWeek();
-	  this.clase 	= {};
+		console.log("horario",rc.horario, new Date());
+	  rc.horario.clases.push(clase);
+	  rc.horario.semana = moment(clase.start).isoWeek();
+	  rc.clase 	= {};
   }
   
   this.cancelarClase = function(){

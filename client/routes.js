@@ -88,11 +88,9 @@ angular.module('casserole').config(['$injector', function ($injector) {
 		  },
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
-		      console.log($meteor.requireUser());
 	        return $meteor.requireUser();
 	      }]
 	    },
-	    
     })
     .state('root.alumnos', {
       url: '/alumnos',
@@ -584,8 +582,18 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.coordinadores', {
+      url: '/coordinadores',
+      templateUrl: 'client/coordinadores/coordinadores.html',
+      controller: 'CoordinadoresCtrl as c',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.prospectos', {
-      url: '/prospectos',
+      url: '/prospectos/:vendedor_id/:etapaVenta_id',
       templateUrl: 'client/prospectos/prospectos.html',
       controller: 'ProspectosCtrl as fa',
       resolve: {
@@ -792,11 +800,10 @@ angular.module('casserole').config(['$injector', function ($injector) {
        }]
     	}
     })
-    //me quede eso
     .state('root.prospectosPorVendedor', {
-      url: '/gerenteVendedores',
-      templateUrl: 'client/gerentesVenta/gerenteVendedores.html',
-      controller: 'GerenteVendedoresCtrl as gv',
+      url: '/prospectosPorVendedor',
+      templateUrl: 'client/gerentesVenta/prospectosPorVendedor.html',
+      controller: 'prospectosPorVendedorCtrl as pv',
       resolve: {
 				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
 					return $meteor.requireValidUser(function(user) {
@@ -808,7 +815,61 @@ angular.module('casserole').config(['$injector', function ($injector) {
          });
        }]
     	}
-    }); 
+    })
+    .state('root.planeacionClase', {
+      url: '/planeacionClase/:grupo_id/:materia_id/:maestro_id',
+      templateUrl: 'client/planeaciones/planeacionClase.html',
+      controller: 'PlaneacionClaseCtrl as pc',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "maestro"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    .state('root.revisarPlaneaciones', {
+      url: '/revisarPlaneaciones/:materia_id/:maestro_id/:grupo_id',
+      templateUrl: 'client/planeaciones/revisarPlaneacionClase.html',
+      controller: 'RevisarPlaneacionClaseCtrl as pc',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "coordinadorAcademico"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    .state('root.panelPlaneaciones', {
+      url: '/panelPlaneaciones',
+      templateUrl: 'client/planeaciones/panelPlaneacionesClase.html',
+      controller: 'PanelPlaneacionesClaseCtrl as pc',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "coordinadorAcademico"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    
+    ; 
     
     
 }]);     
+
+
+
+//TODO ver mensaje de vendedores

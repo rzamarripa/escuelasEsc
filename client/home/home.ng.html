@@ -59,6 +59,9 @@
 							<div class="col-sm-3">
 								<a ui-sref="root.gerentesVenta" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Gerentes de Venta</a>
 							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.coordinadores" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Coordinadores</a>
+							</div>
 						</div>
           </div>
         </div>
@@ -306,7 +309,54 @@
 								<a ui-sref="root.etapasVenta" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Etapas de Venta</a>
 							</div>	
 							<div class="col-sm-3">
-								<a ui-sref="root.gerenteVendedores" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Vendedores</a>
+								<a ui-sref="root.gerenteVendedores" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-group"></i></span>Resumen Vendedores</a>
+							</div>														
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú de Coordinador Académica -->
+<section id="gerenteVenta" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'coordinadorAcademico'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Coordinador Académico</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.panelPlaneaciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Panel Planeaciones</a>
+							</div>												
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú de Coordinador Financiero -->
+<section id="gerenteVenta" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'coordinadorFinanciero'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Coordinador Financiero</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.etapasVenta" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Etapas de Venta</a>
+							</div>	
+							<div class="col-sm-3">
+								<a ui-sref="root.gerenteVendedores" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-group"></i></span>Resumen Vendedores</a>
 							</div>														
 						</div>
           </div>
