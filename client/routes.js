@@ -768,6 +768,22 @@ angular.module('casserole').config(['$injector', function ($injector) {
        }]
       }
     })
+    .state('root.alumnoGrupos', {
+      url: '/alumnoGrupos/:alumno_id',
+      templateUrl: 'client/alumno/grupos/alumnoGrupos.html',
+      controller: 'AlumnoGruposCtrl as ag',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "alumno"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}
+         });
+       }]
+      }
+    })
     .state('root.alumnoCalificaciones', {
       url: '/alumnoCalificaciones',
       templateUrl: 'client/alumno/calificaciones/calificaciones.ng.html',

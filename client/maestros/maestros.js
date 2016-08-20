@@ -9,7 +9,7 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	
 	this.subscribe('maestros',()=>{
 		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
+	});
 
 	this.helpers({
 	  maestros : () => {

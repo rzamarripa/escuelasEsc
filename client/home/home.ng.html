@@ -331,8 +331,49 @@
           <div class="widget-body">
 						<div class="row">
 							<div class="col-sm-3">
+								<a ui-sref="root.planEstudio" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa fa-object-group"></i></span>Plan de Estudio</a>
+							</div>
+<!--
+							<div class="col-sm-3">
+								<a ui-sref="root.campus" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Campus</a>
+							</div>
+-->
+							<div class="col-sm-3">
+								<a ui-sref="root.listarHorarios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-calendar"></i></span>Horarios</a>
+							</div>
+<!--
+							<div class="col-sm-3">
+								<a ui-sref="root.secciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="glyphicon glyphicon-th-list"></i></span>Secciones</a>
+							</div>
+-->
+							<div class="col-sm-3">
+								<a ui-sref="root.aulas" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-home"></i></span>Aulas</a>
+<!-- 								<button type="button" class="btn" style="background: #ff9e00">Aulas</button> -->
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.deptosAcademicos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-cubes"></i></span>Deptos. Académicos</a>
+							</div>
+						</div>
+						<br/>
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.grupos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Grupos</a>
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.materias" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-map-o"></i></span>Materias</a>
+							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.turnos" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-sun-o"></i></span>Turnos</a>
+ 							</div>
+							<div class="col-sm-3">
+								<a ui-sref="root.generaciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Generaciones</a>
+							</div>
+						</div>
+						<br/>
+						<div class="row">
+							<div class="col-sm-3">
 								<a ui-sref="root.panelPlaneaciones" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Panel Planeaciones</a>
-							</div>												
+							</div>
 						</div>
           </div>
         </div>
@@ -358,6 +399,28 @@
 							<div class="col-sm-3">
 								<a ui-sref="root.gerenteVendedores" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-group"></i></span>Resumen Vendedores</a>
 							</div>														
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú de Alumnos -->
+<section id="gerenteVenta" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'alumno'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Alumno</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.alumnoGrupos({alumno_id : currentUser._id})" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-list"></i></span>Mis Grupos</a>
+							</div>												
 						</div>
           </div>
         </div>

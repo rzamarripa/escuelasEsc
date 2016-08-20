@@ -30,7 +30,7 @@
 							<div class="col-sm-12">
 								<div class="row">
 									<div class="col-sm-2 profile-pic" style="text-align:left;width:initial;">
-										<img style="max-width:200px;" src="{{al.tieneFoto(al.alumno.sexo, al.alumno.fotografia)}}" >
+										<img style="max-width:200px;" src="{{al.tieneFoto(al.alumno.profile.sexo, al.alumno.profile.fotografia)}}" >
 										<div class="padding-10">
 											<h4 class="font-md"><strong>0</strong>
 											<br>
@@ -42,23 +42,23 @@
 										</div>
 									</div>
 									<div class="col-sm-6">
-										<h1>{{al.alumno.nombre}} <span class="semi-bold">{{al.alumno.apPaterno}} {{al.alumno.apMaterno}}</span>
+										<h1>{{al.alumno.profile.nombre}} <span class="semi-bold">{{al.alumno.profile.apPaterno}} {{al.alumno.profile.apMaterno}}</span>
 										
 										<small> (Alumno)</small></h1>
 										<ul class="list-unstyled">
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-phone fa-lg"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.tel1}}</span>
+													<i class="fa fa-phone fa-lg"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.profile.tel1}}</span>
 												</p>
 											</li>
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-envelope fa-lg"></i>&nbsp;&nbsp;<a href="mailto:{{al.alumno.correo}}">{{al.alumno.correo}}</a>
+													<i class="fa fa-envelope fa-lg"></i>&nbsp;&nbsp;<a href="mailto:{{al.alumno.profile.correo}}">{{al.alumno.profile.correo}}</a>
 												</p>
 											</li>
 											<li>
 												<p class="text-muted">
-													<i class="fa fa-birthday-cake fa-lg"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.fechaNac | date:"dd-MM-yyyy"}}</span>
+													<i class="fa fa-birthday-cake fa-lg"></i>&nbsp;&nbsp;<span class="txt-color-darken">{{al.alumno.profile.fechaNac | date:"dd-MM-yyyy"}}</span>
 												</p>
 											</li>
 										</ul>
@@ -67,7 +67,7 @@
 											<i>Un poco acerca de mi...</i>
 										</p>
 										<p class="font-xs">
-											{{al.alumno.observacionesGenerales}}
+											{{al.alumno.profile.observacionesGenerales}}
 										</p>
 										<br>
 									</div>
@@ -109,39 +109,40 @@
 														<li>
 															<address>
 															  <strong>Información de la Madre</strong><br>
-															  <strong>Nombre:</strong> {{al.alumno.madre}}<br>
-															  <strong>Ocupación:</strong> {{al.alumno.ocupacionMadre}}
+															  <strong>Nombre:</strong> {{al.alumno.profile.madre}}<br>
+															  <strong>Teléfono:</strong> {{al.alumno.profile.telefonoMadre}}
+															  <strong>Correo:</strong> {{al.alumno.profile.correoMadre}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Dirección</strong><br>
-															  {{al.alumno.calleNum}}, {{al.alumno.colonia}}<br>
-															  {{al.alumno.ciudad}}, {{al.alumno.estado}} {{al.alumno.codigoPostal}}<br>
+															  {{al.alumno.profile.calleNum}}, {{al.alumno.profile.colonia}}<br>
+															  {{al.alumno.profile.ciudad}}, {{al.alumno.profile.estado}} {{al.alumno.profile.codigoPostal}}<br>
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Lugar de Nacimiento</strong><br>
-															  {{al.alumno.lugarNac}}
+															  {{al.alumno.profile.lugarNac}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Escolaridad</strong><br>
-															  {{al.alumno.escolaridad}}
+															  {{al.alumno.profile.escolaridad}}
 															</address>
 														</li>		
 														<li>
 															<address>
 															  <strong>Nivel Social</strong><br>
-															  {{al.alumno.nivelSocial}}
+															  {{al.alumno.profile.nivelSocial}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Correo para Calificaciones</strong><br>
-															  {{al.alumno.correoCalificaciones}}
+															  {{al.alumno.profile.correoCalificaciones}}
 															</address>
 														</li>											
 													</ul>	
@@ -151,32 +152,33 @@
 														<li>
 															<address>
 															  <strong>Información del Padre</strong><br>
-															  <strong>Nombre:</strong> {{al.alumno.padreTutor}}<br>
-															  <strong>Ocupación:</strong> {{al.alumno.ocupacionPadreTutor}}
+															  <strong>Nombre:</strong> {{al.alumno.profile.padreTutor}}<br>
+															  <strong>Teléfono:</strong> {{al.alumno.profile.telefonoPadre}}
+															  <strong>Correo:</strong> {{al.alumno.profile.correoPadre}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Teléfono Secundario</strong><br>
-																{{al.alumno.tel2}}															  
+																{{al.alumno.profile.tel2}}															  
 															</address>
 														</li>													
 														<li>
 															<address>
-															  <strong>Ocupación</strong><br>
-															  {{al.getOcupacion(al.alumno.ocupacion_id)}}
+															  <strong>Ocupación del Alumno</strong><br>
+															  {{al.getOcupacion(al.alumno.profile.ocupacion_id)}}
 															</address>
 														</li>													
 														<li>
 															<address>
 															  <strong>Cómo te enteraste de nosotros</strong><br>
-															  {{al.alumno.medio}}
+															  {{al.alumno.profile.medio}}
 															</address>
 														</li>
 														<li>
 															<address>
 															  <strong>Talla</strong><br>
-																{{al.alumno.talla}}															  
+																{{al.alumno.profile.talla}}															  
 															</address>
 														</li>														
 													</ul>	
@@ -203,7 +205,7 @@
 		</div>
 	</div>
 </div>
-<div class="row" ng-if="al.estaInscrito(al.alumno._id)">
+<div class="row" ng-if="al.estaInscrito(al.alumno.profile._id)">
 	<div class="col col-sm-12">
 		<section id="widget-pagos" data-widget-grid="data-widget-grid">
 		  <div class="row">

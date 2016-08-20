@@ -7,10 +7,17 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
 
   this.action = true;
   this.alumno = {};
+  this.alumno.profile = {};
+  this.alumno.profile.matricula = "";
   this.buscar = {};
   this.buscar.nombre = '';
-  this.alumno.nombreUsuario = '';
 	this.validation = false;
+	
+	this.subscribe('alumnos',()=>{
+		return [{"roles" : ["alumno"], "profile.campus_id" : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}, {sort: {"profile.fechaCreacion":-1}}]
+	});
+	
+/*
 	this.subscribe('buscarAlumnos', () => {
     return [{
 	    options : { limit: 10 },
@@ -18,76 +25,83 @@ function AlumnosCtrl($scope, $meteor, $reactive, $state, toastr) {
  		    seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""  }
     }] ;
   });
+*/
   
+/*
   this.subscribe('buscarUsuario', () => {
     return [{
 	    where : { nombreUsuario : this.getReactively('alumno.nombreUsuario')}
     }] ;
   });
+*/
   
   this.subscribe('ocupaciones',()=>{
 		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : ""}]
-	 });
+	});
 	
 	this.subscribe('campus',()=>{
 		return [{_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
+	});
   
 	this.helpers({
 		alumnos : () => {
-			return Alumnos.find();
+			return Meteor.users.find({roles : ["alumno"]});
 		},
 	  ocupaciones : () => {
 		  return Ocupaciones.find();
 	  },
 	  cantidad : () => {
-		  return Alumnos.find({seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : ""}).count();
+		  return Meteor.users.find({roles : ["alumno"]}).count();
 	  },
 	  matricula : () => {
 		  if(Meteor.user()){
 			  var matriculaAnterior = 0;
 			  anio = '' + new Date().getFullYear();
 			  anio = anio.substring(2,4);
+			  console.log(rc.cantidad);
 			  if(this.getReactively("cantidad") > 0){
-				  var ultimoAlumno = Alumnos.findOne({}, {sort: {fechaCreacion:-1}});
-				  if(ultimoAlumno){
-					  identificador = ultimoAlumno.matricula.substring(1, ultimoAlumno.matricula.length);
+				  var ultimoAlumno = Meteor.users.findOne({roles : ["alumno"]}, {sort: {fechaCreacion:-1}});
+				  console.log("ultimo",ultimoAlumno)
+				  if(ultimoAlumno != undefined){
+					  console.log("entré aquí");
+					  identificador = ultimoAlumno.profile.matricula.substring(1, ultimoAlumno.profile.matricula.length);
 					  console.log(identificador);
 					  matriculaAnterior = parseInt(identificador) + 1;
 					  matriculaAnterior = 'e' + matriculaAnterior;
-					  rc.alumno.nombreUsuario = matriculaAnterior;
-				  	rc.alumno.matricula = matriculaAnterior;
+					  rc.alumno.username = matriculaAnterior;
+				  	rc.alumno.profile.matricula = matriculaAnterior;
 				  }
 			  }else{
-				  rc.alumno.nombreUsuario = "e" + anio + Meteor.user().profile.campus_clave + "001";
-				  rc.alumno.matricula = "e" + anio + Meteor.user().profile.campus_clave + "001";
+				  console.log("entré acá");
+				  rc.alumno.username = "e" + anio + Meteor.user().profile.campus_clave + "0001";
+				  rc.alumno.profile.matricula = "e" + anio + Meteor.user().profile.campus_clave + "0001";
 			  }
 		  }
 	  }
   });
   
   this.guardar = function (alumno,form) {
-			if(form.$invalid){
-				this.validation = true;
-				console.log(form.$invalid);
-	      toastr.error('Error al guardar los datos.');
-	      return;
-	    }
-			this.alumno.estatus = true;
-			var nombre = alumno.nombre != undefined ? alumno.nombre + " " : "";
-			var apPaterno = alumno.apPaterno != undefined ? alumno.apPaterno + " " : "";
-			var apMaterno = alumno.apMaterno != undefined ? alumno.apMaterno : "";
-			alumno.nombreCompleto = nombre + apPaterno + apMaterno;
-			alumno.fechaCreacion = new Date();
-			alumno.campus_id = Meteor.user().profile.campus_id;
-			alumno.seccion_id = Meteor.user().profile.seccion_id;
-			alumno.usuarioInserto = Meteor.userId();
-			Alumnos.insert(alumno, function(err, doc){
-			Meteor.call('createUsuario', rc.alumno, 'alumno');
-			toastr.success('Guardado correctamente.');
-			$state.go('root.alumnoDetalle',{'id':doc});			
-			this.nuevo = true;
-		});
+		if(form.$invalid){
+			this.validation = true;
+      toastr.error('Error al guardar los datos.');
+      return;
+    }
+    
+    delete alumno.profile.repeatPassword;
+		alumno.profile.estatus = true;
+		var nombre = alumno.profile.nombre != undefined ? alumno.profile.nombre + " " : "";
+		var apPaterno = alumno.profile.apPaterno != undefined ? alumno.profile.apPaterno + " " : "";
+		var apMaterno = alumno.profile.apMaterno != undefined ? alumno.profile.apMaterno : "";
+		alumno.profile.nombreCompleto = nombre + apPaterno + apMaterno;
+		alumno.profile.fechaCreacion = new Date();
+		alumno.profile.campus_id = Meteor.user().profile.campus_id;
+		alumno.profile.seccion_id = Meteor.user().profile.seccion_id;
+		alumno.profile.usuarioInserto = Meteor.userId();
+		console.log(alumno);
+		Meteor.call('createGerenteVenta', rc.alumno, 'alumno');
+		toastr.success('Guardado correctamente.');
+		$state.go('root.alumnos');			
+		this.nuevo = true;
 		form.$setPristine();
     form.$setUntouched();
 	};

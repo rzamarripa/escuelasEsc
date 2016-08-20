@@ -7,12 +7,12 @@ Meteor.publish("buscarAlumnos",function(options){
 });
 
 Meteor.publish("alumno",function(options){
-  return Alumnos.find(options.id);
+  return Meteor.users.find(options.id);
 });
 
 Meteor.publish("alumnos",function(params){
 	console.log(params)
-  return Alumnos.find(params);
+  return Meteor.users.find(params);
 });
 
 Meteor.publish("buscarUsuario",function(options){

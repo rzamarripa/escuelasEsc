@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Quicksand:400,300);
 body{
-    font-family: 'Quicksand', sans-serif;
+	font-family: 'Quicksand', sans-serif;
 }
 .team{
-    padding:75px 0;
+	padding:75px 0;
 }
 h6.description{
 	font-weight: bold;
@@ -85,15 +85,15 @@ h6.description{
 }
 .img-box a:hover li{
 	border-color: #fff;
-	color: #88C425;
+	color: #337ab7;
 }
 a{
-    color:#88C425;
+	color:#88C425;
 }
 a:hover{
-    text-decoration:none;
-    color:#519548;
+  text-decoration:none;
+  color:#519548;
 }
 i.red{
-    color:#BC0213;
+	color:#BC0213;
 }

@@ -20,16 +20,16 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   var y = date.getFullYear();
   
   this.subscribe("maestros",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }];
 	 });
   this.subscribe("materias",()=>{
-		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }]
+		return [{estatus:true, seccion_id : Meteor.user() != undefined ? Meteor.user().profile.seccion_id : "" }];
 	 });
   this.subscribe("horarios",()=>{
-		return [{_id : $stateParams.id}]
+		return [{_id : $stateParams.id}];
 	 });
   this.subscribe("aulas",()=>{
-		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{estatus:true, campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }];
 	 });
 	 
 	this.helpers({
@@ -76,7 +76,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  clase.estatus = true;
 	  clase.start 	= moment(clase.start).format("YYYY-MM-DD HH:mm");
 		clase.end 		= moment(clase.end).format("YYYY-MM-DD HH:mm");
-		console.log("horario",rc.horario, new Date());
 	  rc.horario.clases.push(clase);
 	  rc.horario.semana = moment(clase.start).isoWeek();
 	  rc.clase 	= {};
@@ -181,7 +180,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 	  });
   }
   
-  /* alert on eventClick */
   this.alertOnEventClick = function(date, jsEvent, view){
 	  
 	  eliminarTemporalesOcupados();
@@ -200,7 +198,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		}
   };
   
-  /* alert on Drop */
 	this.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
 		console.log(delta);
 		console.log(event);
@@ -211,18 +208,17 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		//this.alertOnEventClick(event, jsEvent, view);
   };
   
-  /* alert on Resize */
   this.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
      this.alertMessage = ('Event Resized to make dayDelta ' + delta);
   };
   
-  /* add custom event*/
   this.guardarHorario = function(form) {
   	if(form.$invalid){
 	    toastr.error('Error al guardar los datos.');
 	    return;
     }
 		eliminarTemporalesOcupados();
+		this.horario.fechaCreacion = new Date();
 		this.horario.campus_id = Meteor.user().profile.campus_id;
 		this.horario.seccion_id = Meteor.user().profile.seccion_id;
 		this.horario.usuarioInserto = Meteor.userId();
@@ -231,7 +227,6 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
 		$state.go("root.listarHorarios");
   };
   
-  /* remove event */
   this.eliminarClase = function() {
 	  eliminarTemporalesOcupados();
 	  for(i = 0; i <= rc.horario.clases.length -1; i++){
@@ -249,20 +244,20 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
   }
     
   /* Render Tooltip */
-/*
-  this.eventRender = function( event, element, view ) { 
-    element.attr({'tooltip': event.title, 'tooltip-append-to-body': true});
-    $compile(element)(this);
-  };
-*/
-  
-  /* config object */
+	/*
+	  this.eventRender = function( event, element, view ) { 
+	    element.attr({'tooltip': event.title, 'tooltip-append-to-body': true});
+	    $compile(element)(this);
+	  };
+	*/
+	
   this.uiConfig = {
     calendar:{
       height: 500,
       editable: false,
       lang:'es',
       defaultView:'agendaWeek',
+      defaultDate: this.getReactively("horario.fechaCreacion"),
       weekends : true,
       header:{
         left: 'title',
@@ -283,14 +278,15 @@ function HorarioDetalleCtrl($compile, $scope, $meteor, $reactive, $state, $state
       dayNames : ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
       dayNamesShort : ["Dom", "Lun", "Ma", "Mi", "Jue", "Vie", "Sab"],
       eventClick: this.alertOnEventClick,
-      //eventDrop: this.alertOnDrop,
+      eventDrop: this.alertOnDrop,
       eventResize: this.alertOnResize,
       eventRender: this.eventRender
     }
   };
 
-  /* event southises array*/
   this.eventSources = [rc.horario.clases, clasesTotales, aulasTotales];
-  
+  var fechaInicioConfig = moment().subtract(10, 'days');
+  var d2 = new Date("2011/02/01")
+  console.log(d2);
   var view = $('#calendar').fullCalendar('getView');
 };

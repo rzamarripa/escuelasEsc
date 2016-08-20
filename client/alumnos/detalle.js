@@ -23,8 +23,6 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 		return obj;
 	}
 		
-	//dfs
-	//deep first search
 	this.masInfo = true;
 	this.totalPagar = 0.00;
 	this.alumno = {};
@@ -67,7 +65,7 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
     
 	this.helpers({
 		alumno : () => {
-			return Alumnos.findOne();
+			return Meteor.users.findOne({_id : $stateParams.id});
 		},
 	  ocupaciones : () => {
 		  return Ocupaciones.find();
@@ -106,30 +104,32 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 	  }*/
   });
 
-	 this.grupo = function (grupoId){
-	  	//console.log(grupoId);
-	  	var _grupo = Grupos.findOne(grupoId);
-	  	//console.log(_grupo);
-	  	return _grupo;
-	  }
+	this.grupo = function (grupoId){
+		var _grupo = Grupos.findOne(grupoId);
+		return _grupo;
+	}
 
   
 	this.actualizar = function(alumno,form)
 	{
 		if(form.$invalid){
-	        toastr.error('Error al actualizar los datos del Alumno.');
-	        return;
-	    }
-		alumno.nombreCompleto = alumno.nombre + " " + alumno.apPaterno + " " + alumno.apMaterno;
-		delete alumno._id;		
-		Alumnos.update({_id:$stateParams.id}, {$set : alumno});
-		toastr.success('Alumno guardado.');
-		$state.go("root.alumnoDetalle",{"id":$stateParams.id});
+      toastr.error('Error al actualizar los datos.');
+      return;
+		}
+
+		delete alumno.profile.repeatPassword;
+		Meteor.call('updateGerenteVenta', rc.alumno, "alumno");
+		toastr.success('Actualizado correctamente.');
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		form.$setPristine();
+		form.$setUntouched();
+		$state.go('root.alumnos');
 	};
 	
 	this.tomarFoto = function () {
 		$meteor.getPicture().then(function(data){
-			rc.alumno.fotografia = data;
+			rc.alumno.profile.fotografia = data;
 		});
 	};
 	
@@ -499,6 +499,12 @@ function AlumnosDetalleCtrl($scope, $meteor, $reactive, $state, toastr, $statePa
 			$state.go("anon.pagosImprimir",{semanas : semanasPagadas, id : $stateParams.id});  
 		};
 		rc.totalPagar = 0.00;
+	}
+	
+	this.getOcupacion = function(ocupacion_id){
+		var ocupacion = Ocupaciones.findOne(ocupacion_id);
+		if(ocupacion)
+			return ocupacion.nombre;
 	}
   
 }

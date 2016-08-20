@@ -1,7 +1,7 @@
 angular
 .module("casserole")
-.controller("MaestroGruposCtrl", MaestroGruposCtrl);
- function MaestroGruposCtrl($scope, $meteor, $reactive , $state, $stateParams){
+.controller("AlumnoGruposCtrl", AlumnoGruposCtrl);
+ function AlumnoGruposCtrl($scope, $meteor, $reactive , $state, $stateParams){
  	let rc = $reactive(this).attach($scope);
  	this.hoy = new Date();
 	//this.grupos = [];
@@ -16,6 +16,10 @@ angular
 	this.materias_id = [];
 	this.alumnos_id = [];
 	this.hoy = new Date();
+	
+	
+
+	
 	this.subscribe('grupos', () => {		
 		return [{
 			_id : {$in:this.getCollectionReactively('grupos_id')}
@@ -32,11 +36,7 @@ angular
 		}]
 	});
 
-	this.subscribe('inscripciones', () => {		
-		return [{
-			grupo_id : {$in:this.getCollectionReactively('grupos_id')}
-		}]
-	});
+	
 
 	this.subscribe('alumnos', () => {		
 		return [{
