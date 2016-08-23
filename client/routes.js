@@ -720,6 +720,16 @@ angular.module('casserole').config(['$injector', function ($injector) {
         }]
       }
     })
+    .state('root.planeaciones', {
+      url: '/planeaciones',
+      templateUrl: 'client/planeaciones/planeaciones.ng.html',
+      controller: 'PlaneacionesCtrl as pl',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.asistenciaGrupo', {
       url: '/asistenciaGrupo/:id/:materia_id',
       templateUrl: 'client/maestro/asistencias/asistencias.ng.html',
