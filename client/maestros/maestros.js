@@ -9,8 +9,8 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	
 	this.subscribe('maestros',()=>{
 		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
-	 });
-//TODO me quedé validando maestros
+	});
+
 	this.helpers({
 	  maestros : () => {
 		  return Maestros.find();
@@ -55,7 +55,8 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 			maestro.estatus = true;
 			maestro.campus_id = Meteor.user().profile.campus_id;
 			maestro.usuarioInserto = Meteor.userId();
-			maestro.fechaCreacion = new Date();				
+			maestro.fechaCreacion = new Date();
+			maestro.campus_id = Meteor.user().profile.campus_id;
 			var id = Maestros.insert(maestro);	
 			maestro.maestro_id = id;
 			Meteor.call('createUsuario', rc.maestro, 'maestro');

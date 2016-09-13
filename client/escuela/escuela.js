@@ -78,3 +78,41 @@ angular.module("casserole")
 			Escuelas.update({_id: id},{$set :  {estatus : escuela.estatus}});
   };	
 };
+
+/*
+
+{
+	cantidadPeriodos : 110,
+	tipoPeriodo : "semana",
+	fechaInicio : new Date(),
+	importe : 550,
+	opciones : [
+		{
+			cantidadPeriodo : 7,
+			tipoRecardo : "dias",
+			operador : "+",
+			importe : 50
+		},
+		{
+			cantidadPeriodo : 7,
+			tipoRecargo : "dias",
+			operador : "-",
+			importe : 50
+		}
+	]
+}
+
+var stooges = [
+			{name: 'moe', age: 40}, 
+			{name: 'larry', age: 50}, 
+			{name: 'curly', age: 60}
+		];
+_.sortBy(stooges, 'name');
+
+[
+	{name: 'curly', age: 60}, 
+	{name: 'larry', age: 50}, 
+	{name: 'moe', age: 40}
+];
+
+*/

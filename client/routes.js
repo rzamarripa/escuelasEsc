@@ -1,8 +1,5 @@
 angular.module("casserole").run(function ($rootScope, $state, toastr) {
   $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-    // We can catch the error thrown when the $requireUser promise is rejected
-    // and redirect the user back to the main page
-    console.log(error);
     switch(error) {
       case "AUTH_REQUIRED":
         $state.go('anon.login');
@@ -16,13 +13,7 @@ angular.module("casserole").run(function ($rootScope, $state, toastr) {
         break;
       default:
         $state.go('internal-client-error');
-        
     }
-/*
-    if (error === 'AUTH_REQUIRED') {
-      $state.go('anon.login');
-    }
-*/
   });
 });
 
@@ -100,7 +91,6 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	        return $meteor.requireUser();
 	      }]
 	    },
-	    
     })
     .state('root.alumnos', {
       url: '/alumnos',
@@ -592,8 +582,18 @@ angular.module('casserole').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.coordinadores', {
+      url: '/coordinadores',
+      templateUrl: 'client/coordinadores/coordinadores.html',
+      controller: 'CoordinadoresCtrl as c',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.prospectos', {
-      url: '/prospectos',
+      url: '/prospectos/:vendedor_id/:etapaVenta_id',
       templateUrl: 'client/prospectos/prospectos.html',
       controller: 'ProspectosCtrl as fa',
       resolve: {
@@ -778,6 +778,22 @@ angular.module('casserole').config(['$injector', function ($injector) {
        }]
       }
     })
+    .state('root.alumnoGrupos', {
+      url: '/alumnoGrupos/:alumno_id',
+      templateUrl: 'client/alumno/grupos/alumnoGrupos.html',
+      controller: 'AlumnoGruposCtrl as ag',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "alumno"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}
+         });
+       }]
+      }
+    })
     .state('root.alumnoCalificaciones', {
       url: '/alumnoCalificaciones',
       templateUrl: 'client/alumno/calificaciones/calificaciones.ng.html',
@@ -793,5 +809,93 @@ angular.module('casserole').config(['$injector', function ($injector) {
          });
        }]
     	}
-    }); 
+    })
+    .state('root.gerenteVendedores', {
+      url: '/gerenteVendedores',
+      templateUrl: 'client/gerentesVenta/gerenteVendedores.html',
+      controller: 'GerenteVendedoresCtrl as gv',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "gerenteVenta"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    .state('root.prospectosPorVendedor', {
+      url: '/prospectosPorVendedor',
+      templateUrl: 'client/gerentesVenta/prospectosPorVendedor.html',
+      controller: 'prospectosPorVendedorCtrl as pv',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "gerenteVenta"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    .state('root.planeacionClase', {
+      url: '/planeacionClase/:grupo_id/:materia_id/:maestro_id',
+      templateUrl: 'client/planeaciones/planeacionClase.html',
+      controller: 'PlaneacionClaseCtrl as pc',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "maestro"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    .state('root.revisarPlaneaciones', {
+      url: '/revisarPlaneaciones/:materia_id/:maestro_id/:grupo_id',
+      templateUrl: 'client/planeaciones/revisarPlaneacionClase.html',
+      controller: 'RevisarPlaneacionClaseCtrl as pc',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "coordinadorAcademico"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    .state('root.panelPlaneaciones', {
+      url: '/panelPlaneaciones',
+      templateUrl: 'client/planeaciones/panelPlaneacionesClase.html',
+      controller: 'PanelPlaneacionesClaseCtrl as pc',
+      resolve: {
+				"currentUser": ["$meteor", "toastr", function($meteor, toastr){
+					return $meteor.requireValidUser(function(user) {
+						if(user.roles[0] == "coordinadorAcademico"){
+							return true;
+						}else{
+							return 'UNAUTHORIZED'; 
+						}					 	
+         });
+       }]
+    	}
+    })
+    
+    ; 
+    
+    
 }]);     
+
+
+
+//TODO ver mensaje de vendedores

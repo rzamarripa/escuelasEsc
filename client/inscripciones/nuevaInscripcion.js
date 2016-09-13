@@ -512,7 +512,7 @@ function NuevaInscripcionCtrl($scope, $meteor, $reactive, $state, toastr) {
 	
 	this.hayCupo = function(grupo_id){
 		var grupo = Grupos.findOne(grupo_id);
-		if(grupo.inscritos < grupo.cupo){
+		if(grupo.inscritos <= grupo.cupo){
 			this.cupo = "check";
 		}else{
 			this.cupo = "remove";

@@ -15,6 +15,7 @@ angular
 	this.maestros_id = [];
 	this.materias_id = [];
 	this.alumnos_id = [];
+	this.hoy = new Date();
 	this.subscribe('grupos', () => {		
 		return [{
 			_id : {$in:this.getCollectionReactively('grupos_id')}
@@ -49,7 +50,7 @@ angular
 		}]
 	});
 
- this.helpers({		
+	this.helpers({		
 		grupo : () => {
 			return Grupos.findOne($stateParams.id);
 		},
@@ -70,15 +71,29 @@ angular
 	       		rc.alumnos_id = _.union(rc.alumnos_id, alumnos_id);
 	       	else
 	       		rc.alumnos_id = alumnos_id;
-	       	console.log(inscripciones, rc.alumnos_id);
-		     	_.each(inscripciones,function(inscripcion){
-		        var alumno = Alumnos.findOne({_id:inscripcion.alumno_id});
-		        mmg.alumnos.push(alumno);
-		      });
-				})
+			     	_.each(inscripciones,function(inscripcion){
+			        var alumno = Alumnos.findOne({_id:inscripcion.alumno_id});
+			        mmg.alumnos.push(alumno);
+			      });
+				});
 				return mmgs
 			}
 
 		}
   });
+  
+  this.tieneFoto = function(sexo, foto){
+	  if(foto === undefined){
+		  if(sexo === "masculino")
+			  return "img/badmenprofile.jpeg";
+			else if(sexo === "femenino"){
+				return "img/badgirlprofile.jpeg";
+			}else{
+				return "img/badprofile.jpeg";
+			}
+			  
+	  }else{
+		  return foto;
+	  }
+  }  
 };

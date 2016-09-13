@@ -8,7 +8,7 @@ function VendedoresCtrl($scope, $meteor, $reactive,  $state, $stateParams, toast
 	  this.nuevo = true;  
   
 	this.subscribe('vendedores',()=>{
-		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
+		return [{}]
 	 });
 
 	

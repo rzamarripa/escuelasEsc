@@ -10,13 +10,28 @@ angular.module("casserole")
   this.buscar = {};
   this.buscar.nombre = '';
   this.buscar.etapaVenta_id = '';
-
-	this.subscribe('prospectos', () => {
-    return [{
-	    options : { limit: 10 },
-	    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id"), vendedor_id:Meteor.userId() }
-    }] ;
-  });
+  
+  console.log("state", $stateParams);
+  
+  if($stateParams.vendedor_id){
+	  console.log("entré aquí");
+	  rc.buscar.etapaVenta_id = $stateParams.etapaVenta_id;
+	  this.subscribe('prospectos', () => {
+	    return [{
+		    options : { limit: 10 },
+		    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id"), vendedor_id:$stateParams.vendedor_id }
+	    }] ;
+	  });
+	  
+  }else{
+	  console.log("entré allá");
+	  this.subscribe('prospectos', () => {
+	    return [{
+		    options : { limit: 10 },
+		    where : { nombre : this.getReactively('buscar.nombre'), etapaVenta_id : this.getReactively("buscar.etapaVenta_id"), vendedor_id:Meteor.userId() }
+	    }] ;
+	  });
+  }
   
   this.subscribe("empleados");
   
@@ -51,6 +66,7 @@ angular.module("casserole")
 		this.prospecto.fecha = new Date();
 		this.prospecto.etapaVenta_id = this.etapaVenta._id;
 		this.prospecto.vendedor_id = Meteor.userId();
+		this.prospecto.campus_id = Meteor.user().profile.campus_id;
 		var prospecto_id = Prospectos.insert(this.prospecto);
 		toastr.success('prospecto guardado.');
 		this.prospecto = {}; 
