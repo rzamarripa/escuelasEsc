@@ -12,8 +12,7 @@ angular.module('casserole',
     'ui.calendar',
     'ui.bootstrap',
     'checklist-model',
-    'ncy-angular-breadcrumb',
-    'angular-loading-bar'
+    'ncy-angular-breadcrumb'
   ]
 );
 
