@@ -4,17 +4,17 @@ angular.module('casserole').directive('valida', validador);
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
-    	element.carga = false
+    	element[0].carga = false;
 			input = element.find('.form-control');
     	var formName = element.parents('form').attr('name');
     	scope.$watch(formName + '.' + input[0].name + '.$invalid', function (val) {
-    		if(element.carga){
+    		if(element[0].carga){
           if(val)
           	element.addClass('has-error');
           else
           	element.removeClass('has-error');
         }else{
-          element.carga = true
+          element[0].carga = true
         }
       });
     }
@@ -31,7 +31,7 @@ angular.module('casserole').directive('validaForm', validaForm);
      link: function(scope, element, attrs) {
 			element.on("click", function () {
         errorsType = scope.formulario.$error;
-        if(errorsType != undefined){
+        if(!_.isEmpty(errorsType)){
           angular.forEach(errorsType, function(errors){
             errors.forEach(function(error){
               if(error.$invalid == true){
@@ -41,7 +41,9 @@ angular.module('casserole').directive('validaForm', validaForm);
             })
           });
         }else{
-          setTimeout(function() {$("div").removeClass("has-error");}, 10);  
+          _.each($("div").find("[valida]"), function(asd){
+            asd.carga = false;
+          }); 
         }
       });
 		}

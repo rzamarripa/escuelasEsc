@@ -29,20 +29,21 @@ function CiclosCtrl($scope, $meteor, $reactive, $state, toastr) {
 	      toastr.error('Error al guardar los datos.');
 	      return;
 	    }
-			
+			NProgress.start();
+			$("body").css("cursor", "progress");
 			ciclo.estatus = true;
 			ciclo.campus_id = Meteor.user().profile.campus_id;
 			ciclo.seccion_id = Meteor.user().profile.seccion_id;
 			ciclo.usuarioInserto = Meteor.userId();
-			console.log(ciclo);
-			Ciclos.insert(ciclo);
-			toastr.success('Guardado correctamente.');
-			ciclo = {};
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			$state.go('root.ciclos');
-			form.$setPristine();
-	    form.$setUntouched();
+			Ciclos.insert(ciclo, function(res){
+				ciclo = {};
+				$('.collapse').collapse('hide');
+				this.nuevo = true;
+				$("body").css("cursor", "default");
+				toastr.success('Guardado correctamente.');
+				NProgress.done();
+			});
+			//$state.go('root.ciclos');
 	};
 	
 	this.editar = function(id)

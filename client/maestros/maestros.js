@@ -3,10 +3,8 @@ angular
 .controller("MaestrosCtrl", MaestrosCtrl);
 function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr){
 	let rc = $reactive(this).attach($scope);
-	
 	this.action = true;
 	this.maestro = {}; 
-	
 	this.subscribe('maestros',()=>{
 		return [{campus_id : Meteor.user() != undefined ? Meteor.user().profile.campus_id : "" }]
 	});
@@ -43,6 +41,7 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
   {
 	    this.action = true;
 	    this.nuevo = !this.nuevo;
+	    this.maestro = {nombreUsuario: this.maestro.nombreUsuario};
   };
 
 	this.guardar = function(maestro,form)
@@ -51,7 +50,8 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	      toastr.error('Error al guardar los datos.');
 	      return;
 		  }
-		
+		  NProgress.start();
+			$("body").css("cursor", "progress");
 			maestro.estatus = true;
 			maestro.campus_id = Meteor.user().profile.campus_id;
 			maestro.usuarioInserto = Meteor.userId();
@@ -59,13 +59,14 @@ function MaestrosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 			maestro.campus_id = Meteor.user().profile.campus_id;
 			var id = Maestros.insert(maestro);	
 			maestro.maestro_id = id;
-			Meteor.call('createUsuario', rc.maestro, 'maestro');
-			toastr.success("Maestro Creado \n Usuario Creado");
-			maestro = {};
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			form.$setPristine();
-	    form.$setUntouched();	
+			Meteor.call('createUsuario', maestro, 'maestro', function(res, res){
+				maestro = {};
+				$('.collapse').collapse('hide');
+				this.nuevo = true;
+		    $("body").css("cursor", "progress");
+		    NProgress.done();
+		    toastr.success("Maestro Creado \n Usuario Creado");
+			});
 	};
 
 	this.editar = function(id)
